@@ -74,6 +74,9 @@ public class GameScreen implements Screen {
     /** Where the FireEngines' spawn, refill and repair */
     private final FireStation station;
 
+    /** Alien patrols to attack fire engines */
+    private final Alien alien;
+
     /** The FireTruck that the user is currently drawing a path for */
     public FireTruck selectedTruck;
 
@@ -134,6 +137,8 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress(30.5f, 17.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 3.5f, FortressType.Clifford));
 
+        alien = new Alien(13,5);
+
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
@@ -172,6 +177,8 @@ public class GameScreen implements Screen {
         for (Fortress fortress : this.fortresses) {
             fortress.draw(mapBatch);
         }
+         //#Assessment3
+        alien.draw(mapBatch);
 
         mapBatch.end();
 
@@ -189,6 +196,9 @@ public class GameScreen implements Screen {
                 bomb.drawBomb(shapeMapRenderer);
             }
         }
+
+        //#Assessment3
+        alien.drawStats(shapeMapRenderer);
 
         shapeMapRenderer.end();
 
@@ -222,6 +232,9 @@ public class GameScreen implements Screen {
         station.restoreTrucks();
         station.checkForCollisions();
         gameState.setTrucksInAttackRange(0);
+
+        //#Assessment3
+        alien.move();
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
             FireTruck truck = station.getTruck(i);
