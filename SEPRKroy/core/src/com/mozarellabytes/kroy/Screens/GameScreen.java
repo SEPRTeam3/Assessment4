@@ -119,10 +119,9 @@ public class GameScreen implements Screen {
         backgroundLayerIndex = new int[]{mapLayers.getIndex("background")};
 
         structureLayersIndices = new int[]{mapLayers.getIndex("structures"),
-                mapLayers.getIndex("structures2"),
                 mapLayers.getIndex("transparentStructures")};
 
-        station = new FireStation(3, 2);
+        station = new FireStation(3, 8);
 
         spawn(FireTruckType.Ocean);
         spawn(FireTruckType.Speed);
@@ -130,9 +129,9 @@ public class GameScreen implements Screen {
         spawn(FireTruckType.Attack);
 
         fortresses = new ArrayList<Fortress>();
-        fortresses.add(new Fortress(12, 18.5f, FortressType.Revs));
-        fortresses.add(new Fortress(30.5f, 17.5f, FortressType.Walmgate));
-        fortresses.add(new Fortress(16, 3.5f, FortressType.Clifford));
+        fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
+        fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
+        fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
 
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
@@ -404,7 +403,7 @@ public class GameScreen implements Screen {
      */
     private void spawn(FireTruckType type) {
         SoundFX.sfx_truck_spawn.play();
-        station.spawn(new FireTruck(this, new Vector2(6,2), type));
+        station.spawn(new FireTruck(this, new Vector2(6,8), type));
         gameState.addFireTruck();
     }
 
