@@ -126,6 +126,8 @@ public class GameScreen implements Screen {
 
         spawn(FireTruckType.Ocean);
         spawn(FireTruckType.Speed);
+        spawn(FireTruckType.Tank);
+        spawn(FireTruckType.Attack);
 
         fortresses = new ArrayList<Fortress>();
         fortresses.add(new Fortress(12, 18.5f, FortressType.Revs));
