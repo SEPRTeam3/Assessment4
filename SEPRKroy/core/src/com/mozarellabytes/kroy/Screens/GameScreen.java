@@ -178,7 +178,7 @@ public class GameScreen implements Screen {
             fortress.draw(mapBatch);
         }
          //#Assessment3
-        alien.draw(mapBatch);
+        alien.drawSprite(mapBatch);
 
         mapBatch.end();
 

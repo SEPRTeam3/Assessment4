@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/Alien.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/Alien.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +111,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579088165226</updated>
-      <workItem from="1580294834819" duration="15661000" />
+      <workItem from="1580294834819" duration="16098000" />
     </task>
     <task id="LOCAL-00001" summary="Alien and patrol path empty classes added">
       <created>1580299923702</created>
@@ -148,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580311746984</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Alien and patrol path empty classes added">
+      <created>1580313699829</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1580313699829</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,34 +183,34 @@
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.689@0.0.1280.689" timestamp="1580295321116" />
-    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580311746200">
+    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580313698926">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580311746200" />
-    <state width="1237" height="111" key="GridCell.Tab.0.bottom" timestamp="1580313667688">
+    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580313698926" />
+    <state width="1237" height="111" key="GridCell.Tab.0.bottom" timestamp="1580314171027">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580313667688" />
-    <state width="1237" height="111" key="GridCell.Tab.0.center" timestamp="1580313667688">
+    <state width="1237" height="111" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580314171027" />
+    <state width="1237" height="111" key="GridCell.Tab.0.center" timestamp="1580314171027">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580313667688" />
-    <state width="1237" height="111" key="GridCell.Tab.0.left" timestamp="1580313667688">
+    <state width="1237" height="111" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580314171027" />
+    <state width="1237" height="111" key="GridCell.Tab.0.left" timestamp="1580314171027">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580313667688" />
-    <state width="1237" height="111" key="GridCell.Tab.0.right" timestamp="1580313667688">
+    <state width="1237" height="111" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580314171027" />
+    <state width="1237" height="111" key="GridCell.Tab.0.right" timestamp="1580314171027">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580313667688" />
+    <state width="1237" height="111" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580314171027" />
     <state x="121" y="0" key="SettingsEditor" timestamp="1580295452871">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="121" y="0" key="SettingsEditor/0.0.1280.689@0.0.1280.689" timestamp="1580295452871" />
-    <state x="233" y="78" key="Vcs.Push.Dialog.v2" timestamp="1580311752064">
+    <state x="233" y="78" key="Vcs.Push.Dialog.v2" timestamp="1580313709074">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state x="233" y="78" key="Vcs.Push.Dialog.v2/0.0.1280.689@0.0.1280.689" timestamp="1580311752064" />
+    <state x="233" y="78" key="Vcs.Push.Dialog.v2/0.0.1280.689@0.0.1280.689" timestamp="1580313709074" />
     <state x="342" y="136" key="git4idea.merge.GitPullDialog" timestamp="1580300314084">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
