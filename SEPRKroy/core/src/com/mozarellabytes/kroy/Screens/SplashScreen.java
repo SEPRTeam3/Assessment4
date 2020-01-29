@@ -39,7 +39,7 @@ public class SplashScreen implements Screen {
     }
 
     /** Renders the splash screen image and changes the screen to the
-     * menu screen after 3 seconds
+     * menu screen after 3 millisecond
      * */
     @Override
     public void render(float delta) {

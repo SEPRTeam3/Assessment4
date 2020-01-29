@@ -51,7 +51,7 @@ public enum FortressType {
      * Constructs the FortressType
      *
      * @param name The name for this type of fortress
-     * @param delay The delay between firing bombs in milliseconds
+     * @param delay The delay between firing bombs in millimillisecond
      * @param range The attack range for this type of fortress in tiles
      * @param maxHP The maximum health points for this type of fortress
      * @param AP The attack points for this type of fortress

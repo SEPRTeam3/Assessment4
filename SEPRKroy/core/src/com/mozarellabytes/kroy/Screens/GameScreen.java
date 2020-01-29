@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.mozarellabytes.kroy.Entities.*;
 import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Kroy;
@@ -86,6 +87,14 @@ public class GameScreen implements Screen {
     public enum PlayState {
         PLAY, PAUSE
     }
+
+    /*
+    Check whether the game is paused,
+    if yes, then pause the clock, otherwise, continue
+    0 represents counting while 1 means pause
+     */
+    private int flag = 0;
+
 
     /**
      * Constructor which has the game passed in
@@ -195,10 +204,12 @@ public class GameScreen implements Screen {
 
         switch (state) {
             case PLAY:
+                flag = 0;
                 this.update(delta);
                 break;
             case PAUSE:
                 // render dark background
+                flag = 1;
                 Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
                 shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
                 shapeMapRenderer.setColor(0, 0, 0, 0.5f);
@@ -207,12 +218,20 @@ public class GameScreen implements Screen {
                 gui.renderPauseScreenText();
         }
         gui.renderButtons();
+        if (flag == 0) {
+            gui.renderClock();
+        }
+        else{
+
+        }
     }
+
+
 
     /**
      * Manages all of the updates/checks during the game
      *
-     * @param delta The time in seconds since the last render
+     * @param delta The time in millisecond since the last render
      */
     private void update(float delta) {
         gameState.hasGameEnded(game);

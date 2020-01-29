@@ -2,8 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/PatrolPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/PatrolPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/FortressType.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/FortressType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/ControlsScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/ControlsScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameOverScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameOverScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/MenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/MenuScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/SplashScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/SplashScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/CameraShake.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/CameraShake.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/desktop/src/com/mozarellabytes/kroy/desktop/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/desktop/src/com/mozarellabytes/kroy/desktop/DesktopLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UpdatedArchitecture.mdj" beforeDir="false" afterPath="$PROJECT_DIR$/UpdatedArchitecture.mdj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +49,12 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IgnoredFileRootStore">
@@ -142,33 +159,76 @@
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.689@0.0.1280.689" timestamp="1580295321116" />
-    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580299922677">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="228" y="0" key="CommitChangelistDialog2" timestamp="1580336153942">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580299922677" />
-    <state width="1237" height="166" key="GridCell.Tab.0.bottom" timestamp="1580299410341">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="228" y="0" key="CommitChangelistDialog2/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336153942" />
+    <state width="1877" height="227" key="GridCell.Tab.0.bottom" timestamp="1580335983643">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="166" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
-    <state width="1237" height="166" key="GridCell.Tab.0.center" timestamp="1580299410341">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1877" height="227" key="GridCell.Tab.0.bottom/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580335983643" />
+    <state width="1877" height="227" key="GridCell.Tab.0.center" timestamp="1580335983643">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="166" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
-    <state width="1237" height="166" key="GridCell.Tab.0.left" timestamp="1580299410341">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1877" height="227" key="GridCell.Tab.0.center/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580335983643" />
+    <state width="1877" height="227" key="GridCell.Tab.0.left" timestamp="1580335983643">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="166" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
-    <state width="1237" height="166" key="GridCell.Tab.0.right" timestamp="1580299410341">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1877" height="227" key="GridCell.Tab.0.left/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580335983643" />
+    <state width="1877" height="227" key="GridCell.Tab.0.right" timestamp="1580335983643">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1237" height="166" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
-    <state x="121" y="0" key="SettingsEditor" timestamp="1580295452871">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1877" height="227" key="GridCell.Tab.0.right/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580335983643" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state x="182" y="0" key="SettingsEditor" timestamp="1580323657602">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="121" y="0" key="SettingsEditor/0.0.1280.689@0.0.1280.689" timestamp="1580295452871" />
-    <state x="342" y="136" key="git4idea.merge.GitPullDialog" timestamp="1580298284795">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="182" y="0" key="SettingsEditor/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580323657602" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1580336087771">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336087771" />
+    <state x="567" y="77" width="786" height="885" key="find.popup" timestamp="1580333758459">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="567" y="77" width="786" height="885" key="find.popup/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580333758459" />
+    <state x="513" y="205" key="git4idea.merge.GitPullDialog" timestamp="1580335979059">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="342" y="136" key="git4idea.merge.GitPullDialog/0.0.1280.689@0.0.1280.689" timestamp="1580298284795" />
+    <state x="513" y="205" key="git4idea.merge.GitPullDialog/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580335979059" />
+    <state x="334" y="130" key="new project wizard" timestamp="1580323813166">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="334" y="130" key="new project wizard/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580323813166" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1580334200678">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580334200678" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1580333644046">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580333644046" />
   </component>
 </project>

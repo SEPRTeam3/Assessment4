@@ -62,7 +62,7 @@ public class GameOverScreen implements Screen {
 
     /** Renders the game over screen
      *
-     *  @param delta The time in seconds since the last render. */
+     *  @param delta The time in millisecond since the last render. */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(51/255f, 34/255f, 99/255f, 1f);
