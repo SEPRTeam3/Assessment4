@@ -55,7 +55,7 @@ public class Bomb extends Sprite {
             this.targetPosition = getMiddleOfTile(this.truckPosition);
 
         }
-        this.damage = fortress.getFortressType().getAP();
+        this.damage = fortress.getFortressType().getAP()*(1+fortress.getLevel()*(int)Math.log(fortress.getLevel()/1.5));//Assessment 3
     }
 
     /**

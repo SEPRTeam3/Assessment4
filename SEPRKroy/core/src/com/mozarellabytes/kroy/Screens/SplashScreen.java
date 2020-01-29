@@ -50,7 +50,8 @@ public class SplashScreen implements Screen {
         game.batch.draw(backgroundLogo, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
         game.batch.end();
 
-        if(TimeUtils.timeSinceMillis(startTime) > 3000){
+        //Assessment 3
+        if(TimeUtils.timeSinceMillis(startTime) > 1000){
             game.setScreen(new ControlsScreen(game, new MenuScreen(game), "menu"));
         }
     }
