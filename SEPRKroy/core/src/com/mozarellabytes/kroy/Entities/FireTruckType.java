@@ -18,8 +18,8 @@ public enum FireTruckType {
      * maximum reserve, speed, trailColour, name, attack range, attack points
      */
     Speed(100, 3, Color.RED, "Speed Truck", 5, 0.08f, 150),
-    Tank(250, 1, Color.CYAN, "Tank Truck", 7, 0.16f, 100),
-    Attack(50,2,Color.CYAN, "Attack Truck",9,0.32f,50),
+    Tank(250, 1, Color.GREEN, "Tank Truck", 7, 0.16f, 100),
+    Attack(50,2,Color.YELLOW, "Attack Truck",9,0.32f,50),
     Ocean(250, 1, Color.CYAN, "Ocean Truck", 7, 0.16f, 100);
 
 
