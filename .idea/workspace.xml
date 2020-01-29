@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="Alien and patrol path empty classes added">
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kroy-assessment3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/Alien.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/PatrolPath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/PatrolPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/PatrolPath.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,8 +105,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579088165226</updated>
-      <workItem from="1580294834819" duration="4382000" />
+      <workItem from="1580294834819" duration="4788000" />
     </task>
+    <task id="LOCAL-00001" summary="Alien and patrol path empty classes added">
+      <created>1580299923702</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1580299923702</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,10 +142,10 @@
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.689@0.0.1280.689" timestamp="1580295321116" />
-    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580299911078">
+    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580299922677">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580299911078" />
+    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580299922677" />
     <state width="1237" height="166" key="GridCell.Tab.0.bottom" timestamp="1580299410341">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
