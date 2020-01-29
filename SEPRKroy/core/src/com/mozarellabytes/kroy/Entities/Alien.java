@@ -61,8 +61,10 @@ public class Alien extends Sprite {
     public Alien(float x, float y){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
 
+        this.position = new Vector2(x,y);
         this.HP = maxHP;
         this.path = new Queue<Vector2>();
+        this.setPath();
         this.bombs = new ArrayList<Bomb>();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -95,7 +97,7 @@ public class Alien extends Sprite {
      */
     public void move() {
             if (this.path.size > 0) {
-                Vector2 nextTile = path.first();
+                Vector2 nextTile = this.getFirstAndAppend();
                 this.position = nextTile;
 
                 if (!this.inCollision) {
@@ -103,8 +105,6 @@ public class Alien extends Sprite {
                 } // add collision case with firetruck or other alien
 
                 previousTile = nextTile;
-                path.removeFirst();
-
             }
             if (this.path.isEmpty() && inCollision) {
                 inCollision = false;
@@ -112,17 +112,15 @@ public class Alien extends Sprite {
     }
 
     /**
-     * Draws the mini health/reserve indicators relative to the truck
+     * Draws the mini health indicators relative to the alien
      *
      * @param shapeMapRenderer  Renderer that the stats are being drawn to (map  dependant)
      */
     public void drawStats(ShapeRenderer shapeMapRenderer) {
         shapeMapRenderer.rect(this.getPosition().x + 0.2f, this.getPosition().y + 1.3f, 0.6f, 0.8f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
-        shapeMapRenderer.rect(this.getPosition().x + 0.266f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE);
         shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
         shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
-
-    }
+}
 
     /**
      * Draws the Alien sprite
@@ -171,16 +169,15 @@ public class Alien extends Sprite {
     }
 
     public void setPath() {
-        this.path = new Queue<Vector2>();
         this.path.addFirst(new Vector2(13,5));
         this.path.addLast(new Vector2(13, 4));
         this.path.addLast(new Vector2(13, 3));
         this.path.addLast(new Vector2(13, 2));
         this.path.addLast(new Vector2(13, 1));
         this.path.addLast(new Vector2(14, 1));
-        this.path.addLast(new Vector2(15, 4));
-        this.path.addLast(new Vector2(16, 4));
-        this.path.addLast(new Vector2(17, 4));
+        this.path.addLast(new Vector2(15, 1));
+        this.path.addLast(new Vector2(16, 1));
+        this.path.addLast(new Vector2(17, 1));
     }
 
 }
