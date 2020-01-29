@@ -20,14 +20,14 @@ public class CountClock {
     }
 
     /*
-    Get X Position
+    Get X Position of the counter clock
      */
     public static int getXPosition(){
         return x;
     }
 
     /*
-   Get Y Position
+   Get Y Position of the counter clock
     */
     public static int getYPosition(){
         return y;

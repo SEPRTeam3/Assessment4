@@ -221,9 +221,6 @@ public class GameScreen implements Screen {
         if (flag == 0) {
             gui.renderClock();
         }
-        else{
-
-        }
     }
 
 
