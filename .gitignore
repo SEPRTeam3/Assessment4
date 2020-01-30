@@ -2,7 +2,8 @@
 
 docs/.DS_Store
 
-/.idea/
+.idea/
+.gradle/
 
 .DS_Store
 
