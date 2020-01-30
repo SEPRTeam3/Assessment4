@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/MinigameScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/CountClock.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/CountClock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/desktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/desktop/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/MenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/MenuScreen.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,6 +61,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -72,18 +70,6 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Application.DesktopLauncher">
     <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -136,6 +122,7 @@
       <workItem from="1580294834819" duration="4788000" />
       <workItem from="1580387687683" duration="275000" />
       <workItem from="1580387974516" duration="1951000" />
+      <workItem from="1580422387161" duration="4230000" />
     </task>
     <task id="LOCAL-00001" summary="Alien and patrol path empty classes added">
       <created>1580299923702</created>
@@ -175,6 +162,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="Alien and patrol path empty classes added" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="184" key="#Images" timestamp="1580424363396">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="552" y="184" key="#Images/-1920.0.1536.840/0.0.1920.1050@0.0.1920.1050" timestamp="1580424363396" />
     <state x="552" y="178" key="#Notifications" timestamp="1580336272386">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -188,24 +179,28 @@
     </state>
     <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580299922677" />
     <state x="228" y="0" key="CommitChangelistDialog2/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336231139" />
-    <state width="1877" height="227" key="GridCell.Tab.0.bottom" timestamp="1580336787890">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="285" key="GridCell.Tab.0.bottom" timestamp="1580426621241">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1877" height="285" key="GridCell.Tab.0.bottom/-1920.0.1536.840/0.0.1920.1050@0.0.1920.1050" timestamp="1580426621241" />
     <state width="1237" height="166" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
     <state width="1877" height="227" key="GridCell.Tab.0.bottom/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
-    <state width="1877" height="227" key="GridCell.Tab.0.center" timestamp="1580336787890">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="285" key="GridCell.Tab.0.center" timestamp="1580426621241">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1877" height="285" key="GridCell.Tab.0.center/-1920.0.1536.840/0.0.1920.1050@0.0.1920.1050" timestamp="1580426621241" />
     <state width="1237" height="166" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
     <state width="1877" height="227" key="GridCell.Tab.0.center/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
-    <state width="1877" height="227" key="GridCell.Tab.0.left" timestamp="1580336787890">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="285" key="GridCell.Tab.0.left" timestamp="1580426621241">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1877" height="285" key="GridCell.Tab.0.left/-1920.0.1536.840/0.0.1920.1050@0.0.1920.1050" timestamp="1580426621241" />
     <state width="1237" height="166" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
     <state width="1877" height="227" key="GridCell.Tab.0.left/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
-    <state width="1877" height="227" key="GridCell.Tab.0.right" timestamp="1580336787890">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1877" height="285" key="GridCell.Tab.0.right" timestamp="1580426621241">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
+    <state width="1877" height="285" key="GridCell.Tab.0.right/-1920.0.1536.840/0.0.1920.1050@0.0.1920.1050" timestamp="1580426621241" />
     <state width="1237" height="166" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
     <state width="1877" height="227" key="GridCell.Tab.0.right/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
     <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1580328537601">
