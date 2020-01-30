@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
@@ -283,7 +284,7 @@ public class FireTruck extends Sprite {
      * @param particle  the particle which damages the fortress
      */
     private void damage(WaterParticle particle) {
-        particle.getTarget().damage(Math.min(this.type.getAP(), particle.getTarget().getHP()));
+        particle.getTarget().damage(Math.min(this.type.getAP()/(1+particle.getTarget().getLevel()*(int)Math.log(particle.getTarget().getLevel()/1.5)), particle.getTarget().getHP()));//Assessment 3
     }
 
     /**

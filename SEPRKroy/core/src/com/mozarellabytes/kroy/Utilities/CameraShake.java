@@ -16,7 +16,7 @@ public class CameraShake {
     /** Keeps track of time inside the update() method */
     private static float internalTimer = 0;
 
-    /** Duration of camera shake in approximate seconds */
+    /** Duration of camera shake in approximate millisecond */
     private static float shakeDuration = 0;
 
     /** Used to calculate sampleCount */
@@ -82,9 +82,9 @@ public class CameraShake {
      * Called in-game whenever a Camera Shake happens. Since duration > 0, the update()
      * method begins shaking the camera
      *
-     * @param seconds Duration of the Camera Shake
+     * @param millisecond Duration of the Camera Shake
      */
-    public void shakeIt(float seconds){
-        shakeDuration = seconds;
+    public void shakeIt(float millisecond){
+        shakeDuration = millisecond;
     }
 }

@@ -5883,7 +5883,7 @@
 																"$ref": "AAAAAAFvo7pHOdRmbDE="
 															},
 															"name": "FortressType",
-															"documentation": "Constructs the FortressType\n@param name The name for this type of fortress\n@param delay The delay between firing bombs in milliseconds\n@param range The attack range for this type of fortress in tiles\n@param maxHP The maximum health points for this type of fortress\n@param AP The attack points for this type of fortress\n@param w The width of the sprite for this type of fortress in tiles\n@param h The height of the sprite for this type of fortress in tiles\n@param texture The sprite for this type of fortress",
+															"documentation": "Constructs the FortressType\n@param name The name for this type of fortress\n@param delay The delay between firing bombs in millimillisecond\n@param range The attack range for this type of fortress in tiles\n@param maxHP The maximum health points for this type of fortress\n@param AP The attack points for this type of fortress\n@param w The width of the sprite for this type of fortress in tiles\n@param h The height of the sprite for this type of fortress in tiles\n@param texture The sprite for this type of fortress",
 															"stereotype": "constructor",
 															"visibility": "package",
 															"parameters": [
@@ -7110,7 +7110,7 @@
 																"$ref": "AAAAAAFvo7pHZNStOSI="
 															},
 															"name": "render",
-															"documentation": "Renders the control screen including explaining how to move\nthe firetrucks and attack the fortresses\n@param delta The time in seconds since the last render.",
+															"documentation": "Renders the control screen including explaining how to move\nthe firetrucks and attack the fortresses\n@param delta The time in millisecond since the last render.",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -7584,7 +7584,7 @@
 																"$ref": "AAAAAAFvo7pHa9TTgSw="
 															},
 															"name": "render",
-															"documentation": "Renders the game over screen\n@param delta The time in seconds since the last render.",
+															"documentation": "Renders the game over screen\n@param delta The time in millisecond since the last render.",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -8146,7 +8146,7 @@
 																"$ref": "AAAAAAFvo7pHh9To43U="
 															},
 															"name": "update",
-															"documentation": "Manages all of the updates/checks during the game\n@param delta The time in seconds since the last render",
+															"documentation": "Manages all of the updates/checks during the game\n@param delta The time in millisecond since the last render",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -9006,7 +9006,7 @@
 																"$ref": "AAAAAAFvo7pHndUmhvI="
 															},
 															"name": "render",
-															"documentation": "Renders the menu screen consisting of the background and the start, controls and sound buttons.\n@param delta The time in seconds since the last render.",
+															"documentation": "Renders the menu screen consisting of the background and the start, controls and sound buttons.\n@param delta The time in millisecond since the last render.",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -9521,7 +9521,7 @@
 																"$ref": "AAAAAAFvo7pHo9VSRTM="
 															},
 															"name": "render",
-															"documentation": "Renders the splash screen image and changes the screen to the\nmenu screen after 3 seconds",
+															"documentation": "Renders the splash screen image and changes the screen to the\nmenu screen after 3 millisecond",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -9828,7 +9828,7 @@
 																	"_parent": {
 																		"$ref": "AAAAAAFvo7pHqdVuoNs="
 																	},
-																	"name": "seconds",
+																	"name": "millisecond",
 																	"type": "float"
 																},
 																{
@@ -16448,7 +16448,7 @@
 																"$ref": "AAAAAAFvo9iv2ObshDM="
 															},
 															"name": "FortressType",
-															"documentation": "Constructs the FortressType\n@param name The name for this type of fortress\n@param delay The delay between firing bombs in milliseconds\n@param range The attack range for this type of fortress in tiles\n@param maxHP The maximum health points for this type of fortress\n@param AP The attack points for this type of fortress\n@param w The width of the sprite for this type of fortress in tiles\n@param h The height of the sprite for this type of fortress in tiles\n@param texture The sprite for this type of fortress",
+															"documentation": "Constructs the FortressType\n@param name The name for this type of fortress\n@param delay The delay between firing bombs in millimillisecond\n@param range The attack range for this type of fortress in tiles\n@param maxHP The maximum health points for this type of fortress\n@param AP The attack points for this type of fortress\n@param w The width of the sprite for this type of fortress in tiles\n@param h The height of the sprite for this type of fortress in tiles\n@param texture The sprite for this type of fortress",
 															"stereotype": "constructor",
 															"visibility": "package",
 															"parameters": [
@@ -17966,7 +17966,7 @@
 																"$ref": "AAAAAAFvo9iwA+czVN8="
 															},
 															"name": "render",
-															"documentation": "Renders the control screen including explaining how to move\nthe firetrucks and attack the fortresses\n@param delta The time in seconds since the last render.",
+															"documentation": "Renders the control screen including explaining how to move\nthe firetrucks and attack the fortresses\n@param delta The time in millisecond since the last render.",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -18440,7 +18440,7 @@
 																"$ref": "AAAAAAFvo9iwCudZVYM="
 															},
 															"name": "render",
-															"documentation": "Renders the game over screen\n@param delta The time in seconds since the last render.",
+															"documentation": "Renders the game over screen\n@param delta The time in millisecond since the last render.",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -19002,7 +19002,7 @@
 																"$ref": "AAAAAAFvo9iwJuduj5I="
 															},
 															"name": "update",
-															"documentation": "Manages all of the updates/checks during the game\n@param delta The time in seconds since the last render",
+															"documentation": "Manages all of the updates/checks during the game\n@param delta The time in millisecond since the last render",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -19862,7 +19862,7 @@
 																"$ref": "AAAAAAFvo9iwPeesIHQ="
 															},
 															"name": "render",
-															"documentation": "Renders the menu screen consisting of the background and the start, controls and sound buttons.\n@param delta The time in seconds since the last render.",
+															"documentation": "Renders the menu screen consisting of the background and the start, controls and sound buttons.\n@param delta The time in millisecond since the last render.",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -20377,7 +20377,7 @@
 																"$ref": "AAAAAAFvo9iwQufY26U="
 															},
 															"name": "render",
-															"documentation": "Renders the splash screen image and changes the screen to the\nmenu screen after 3 seconds",
+															"documentation": "Renders the splash screen image and changes the screen to the\nmenu screen after 3 millisecond",
 															"parameters": [
 																{
 																	"_type": "UMLParameter",
@@ -20684,7 +20684,7 @@
 																	"_parent": {
 																		"$ref": "AAAAAAFvo9iwSef0aUM="
 																	},
-																	"name": "seconds",
+																	"name": "millisecond",
 																	"type": "float"
 																},
 																{
