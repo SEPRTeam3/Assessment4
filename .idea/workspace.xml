@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/CountClock.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/CountClock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/desktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/desktop/build.gradle" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,11 +69,23 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
   </component>
-  <component name="RunManager">
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.DesktopLauncher">
     <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.mozarellabytes.kroy.desktop.DesktopLauncher" />
       <module name="SEPRKroy.desktop.main" />
@@ -84,23 +99,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="H:/kroy-assessment3/SEPRKroy/desktop/build.gradle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/SEPRKroy/desktop/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.H:/kroy-assessment3/SEPRKroy/desktop/build.gradle" />
         <item itemvalue="Application.DesktopLauncher" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -113,6 +134,8 @@
       <option name="presentableId" value="Default" />
       <updated>1579088165226</updated>
       <workItem from="1580294834819" duration="4788000" />
+      <workItem from="1580387687683" duration="275000" />
+      <workItem from="1580387974516" duration="1951000" />
     </task>
     <task id="LOCAL-00001" summary="Alien and patrol path empty classes added">
       <created>1580299923702</created>

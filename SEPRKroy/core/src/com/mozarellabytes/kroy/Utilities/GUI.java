@@ -456,7 +456,7 @@ public class GUI {
 
         game.batch.setProjectionMatrix(pauseCamera.combined);
         game.batch.begin();
-        game.font50.draw(game.batch, time, CountClock.getXPosition(), CountClock.getYPosition());
+        game.font50.draw(game.batch, time, pauseCamera.viewportWidth / 2 - layout.width / 0.45f, pauseCamera.viewportHeight - layout.height / 2);
         game.batch.end();
     }
 

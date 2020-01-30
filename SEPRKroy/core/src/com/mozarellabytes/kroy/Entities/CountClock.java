@@ -65,8 +65,16 @@ public class CountClock {
             flag = 1;
         }
 
+        else if(seconds < 100 && flag == 0 && millisecond < 10){
+            remainTime = Integer.toString(seconds) + " : 0" + Integer.toString(millisecond);
+        }
+
         else if(seconds < 100 && flag == 0){
-            remainTime = "0" + Integer.toString(seconds) + " : " + Integer.toString(millisecond);
+            remainTime = Integer.toString(seconds) + " : " + Integer.toString(millisecond);
+        }
+
+        else if(seconds > 100 && flag == 0 && millisecond < 10){
+            remainTime =Integer.toString(seconds) + " : 0" + Integer.toString(millisecond);
         }
 
         else{
