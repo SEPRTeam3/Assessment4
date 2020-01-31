@@ -448,10 +448,16 @@ public class GUI {
     /*
     Render the counter down clock
      */
-    public void renderClock() {
-
+    public void renderClock(int state) {
         GlyphLayout layout = new GlyphLayout();
-        String time = CountClock.set_clock();
+        String time = null;
+        if(state == 0) {                            //state 0 means counting down while 1 means pause
+            time = CountClock.set_clock();
+        }
+        else{
+            time = CountClock.set_clock_pause();
+        }
+
         layout.setText(game.font26, time);
 
         game.batch.setProjectionMatrix(pauseCamera.combined);

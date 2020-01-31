@@ -218,8 +218,11 @@ public class GameScreen implements Screen {
                 gui.renderPauseScreenText();
         }
         gui.renderButtons();
-        if (flag == 0) {
-            gui.renderClock();
+        if (flag == 0) {                //0 means counting down and 1 means pause counting down
+            gui.renderClock(0);
+        }
+        else{
+            gui.renderClock(1);
         }
     }
 
