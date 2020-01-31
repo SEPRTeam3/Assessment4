@@ -15,6 +15,7 @@ import com.mozarellabytes.kroy.Entities.*;
 import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.*;
+import com.badlogic.gdx.utils.Queue;
 
 import java.util.ArrayList;
 
@@ -105,6 +106,8 @@ public class GameScreen implements Screen {
      * @param game LibGdx game
      */
     public GameScreen(Kroy game) {
+        Queue<Vector2> vertices;
+        vertices = new Queue<Vector2>();
         this.game = game;
 
         state = PlayState.PLAY;
@@ -145,7 +148,12 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
 
-        alien = new Alien(13,5);
+        vertices.addFirst(new Vector2(7,5));
+        vertices.addLast(new Vector2(7,1));
+        vertices.addLast(new Vector2(13,1));
+        vertices.addLast(new Vector2(13,5));
+
+        alien = new Alien(13,5,vertices);
 
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
