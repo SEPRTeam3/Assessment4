@@ -9,7 +9,7 @@ import com.mozarellabytes.kroy.Screens.ControlsScreen;
 /**
  * This class controls the input for the Control screen
  * */
-public class ControlScreenInputHandler implements InputProcessor {
+public class    ControlScreenInputHandler implements InputProcessor {
 
     private final ControlsScreen controlsScreen;
 
