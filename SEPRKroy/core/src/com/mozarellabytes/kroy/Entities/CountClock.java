@@ -46,48 +46,18 @@ public class CountClock {
     }
 
     /*
-    Set remaining time, with counting down
+    Set remaining time, with counting down, state 0 means counting and 1 means pause
     */
-    public static String set_clock(){
-        if (millisecond == 0) {
-            millisecond = 99;
-            seconds--;
-        } else {
-            millisecond--;
+    public static String set_clock(int state){
+        if(state == 0) {
+            if (millisecond == 0) {
+                millisecond = 99;
+                seconds--;
+            } else {
+                millisecond--;
+            }
         }
 
-        /*
-        Get the remaining time and return it
-         */
-        String remainTime = null;
-        if ((seconds == 0 && millisecond == 0) || flag == 1){
-            remainTime = "00:00";
-            flag = 1;
-        }
-
-        else if(seconds < 100 && flag == 0 && millisecond < 10){
-            remainTime = Integer.toString(seconds) + " : 0" + Integer.toString(millisecond);
-        }
-
-        else if(seconds < 100 && flag == 0){
-            remainTime = Integer.toString(seconds) + " : " + Integer.toString(millisecond);
-        }
-
-        else if(seconds > 100 && flag == 0 && millisecond < 10){
-            remainTime =Integer.toString(seconds) + " : 0" + Integer.toString(millisecond);
-        }
-
-        else{
-            remainTime = Integer.toString(seconds) + " : " + Integer.toString(millisecond);
-        }
-
-        return remainTime;
-    }
-
-    /*
-    Set the remaining time for the pause screen
-     */
-    public static String set_clock_pause(){
         /*
         Get the remaining time and return it
          */

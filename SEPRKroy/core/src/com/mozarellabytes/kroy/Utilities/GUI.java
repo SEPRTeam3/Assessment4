@@ -447,16 +447,13 @@ public class GUI {
 
     /*
     Render the counter down clock
+    state 0 means counting down and 1 means pause
      */
     public void renderClock(int state) {
         GlyphLayout layout = new GlyphLayout();
         String time = null;
-        if(state == 0) {                            //state 0 means counting down while 1 means pause
-            time = CountClock.set_clock();
-        }
-        else{
-            time = CountClock.set_clock_pause();
-        }
+        time = CountClock.set_clock(state);
+
 
         layout.setText(game.font26, time);
 
