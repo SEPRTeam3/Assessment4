@@ -6,7 +6,7 @@ import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) {
+	public static void main (String[] arg) throws InterruptedException {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.height = Constants.GAME_HEIGHT;
 		config.width = Constants.GAME_WIDTH;

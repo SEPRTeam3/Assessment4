@@ -113,7 +113,7 @@ public class ControlsScreen implements Screen {
     /** Renders the control screen including explaining how to move
      * the firetrucks and attack the fortresses
      *
-     * @param delta The time in seconds since the last render. */
+     * @param delta The time in millisecond since the last render. */
     @Override
     public void render(float delta) {
 

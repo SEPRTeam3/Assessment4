@@ -140,7 +140,7 @@ public class MenuScreen implements Screen {
 
     /** Renders the menu screen consisting of the background and the start, controls and sound buttons.
      *
-     * @param delta The time in seconds since the last render.
+     * @param delta The time in millisecond since the last render.
      */
     @Override
     public void render(float delta) {

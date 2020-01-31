@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/CountClock.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/CountClock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Screens/GameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Utilities/GUI.java" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,12 +24,6 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/SEPRKroy">
-          <activation />
-        </task>
-        <task path="$PROJECT_DIR$/SEPRKroy/core">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -43,6 +41,12 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IgnoredFileRootStore">
@@ -65,10 +69,23 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
-  <component name="RunManager">
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.DesktopLauncher">
     <configuration name="DesktopLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.mozarellabytes.kroy.desktop.DesktopLauncher" />
       <module name="SEPRKroy.desktop.main" />
@@ -82,23 +99,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="H:/kroy-assessment3/SEPRKroy/desktop/build.gradle" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/SEPRKroy/desktop/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.H:/kroy-assessment3/SEPRKroy/desktop/build.gradle" />
         <item itemvalue="Application.DesktopLauncher" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -110,9 +133,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579088165226</updated>
-      <workItem from="1580294834819" duration="16442000" />
-      <workItem from="1580389240908" duration="143000" />
-      <workItem from="1580474346124" duration="3722000" />
+      <workItem from="1580294834819" duration="4788000" />
+      <workItem from="1580387687683" duration="275000" />
+      <workItem from="1580387974516" duration="2039000" />
+      <workItem from="1580468259781" duration="115000" />
+      <workItem from="1580470768674" duration="322000" />
+      <workItem from="1580474199301" duration="770000" />
+      <workItem from="1580475077772" duration="362000" />
     </task>
     <task id="LOCAL-00001" summary="Alien and patrol path empty classes added">
       <created>1580299923702</created>
@@ -122,69 +149,27 @@
       <updated>1580299923702</updated>
     </task>
     <task id="LOCAL-00002" summary="Alien and patrol path empty classes added">
-      <created>1580300308913</created>
+      <created>1580336231979</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1580300308913</updated>
+      <updated>1580336231979</updated>
     </task>
     <task id="LOCAL-00003" summary="Alien and patrol path empty classes added">
-      <created>1580309983715</created>
+      <created>1580389939778</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1580309983715</updated>
+      <updated>1580389939778</updated>
     </task>
     <task id="LOCAL-00004" summary="Alien and patrol path empty classes added">
-      <created>1580310139959</created>
+      <created>1580474928882</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1580310139959</updated>
+      <updated>1580474928882</updated>
     </task>
-    <task id="LOCAL-00005" summary="Alien and patrol path empty classes added">
-      <created>1580311746984</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1580311746984</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Alien and patrol path empty classes added">
-      <created>1580313699829</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1580313699829</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Alien and patrol path empty classes added">
-      <created>1580314208257</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1580314208257</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Alien and patrol path empty classes added">
-      <created>1580476618279</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1580476618280</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Alien and patrol path empty classes added">
-      <created>1580482114196</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1580482114196</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Alien and patrol path empty classes added">
-      <created>1580482282750</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1580482282750</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -208,45 +193,84 @@
     <option name="LAST_COMMIT_MESSAGE" value="Alien and patrol path empty classes added" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="552" y="178" key="#Notifications" timestamp="1580336272386">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Notifications/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336272386" />
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580295321116">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.689@0.0.1280.689" timestamp="1580295321116" />
-    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580482281261">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="228" y="0" key="CommitChangelistDialog2" timestamp="1580336231139">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580482281261" />
-    <state width="1237" height="111" key="GridCell.Tab.0.bottom" timestamp="1580481726993">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580299922677" />
+    <state x="228" y="0" key="CommitChangelistDialog2/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336231139" />
+    <state width="1877" height="227" key="GridCell.Tab.0.bottom" timestamp="1580336787890">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580481726993" />
-    <state width="1237" height="111" key="GridCell.Tab.0.center" timestamp="1580481726993">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="166" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
+    <state width="1877" height="227" key="GridCell.Tab.0.bottom/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
+    <state width="1877" height="227" key="GridCell.Tab.0.center" timestamp="1580336787890">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580481726993" />
-    <state width="1237" height="111" key="GridCell.Tab.0.left" timestamp="1580481726992">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="166" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
+    <state width="1877" height="227" key="GridCell.Tab.0.center/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
+    <state width="1877" height="227" key="GridCell.Tab.0.left" timestamp="1580336787890">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580481726992" />
-    <state width="1237" height="111" key="GridCell.Tab.0.right" timestamp="1580481726993">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="166" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
+    <state width="1877" height="227" key="GridCell.Tab.0.left/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
+    <state width="1877" height="227" key="GridCell.Tab.0.right" timestamp="1580336787890">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580481726993" />
-    <state x="121" y="0" key="SettingsEditor" timestamp="1580295452871">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state width="1237" height="166" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580299410341" />
+    <state width="1877" height="227" key="GridCell.Tab.0.right/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580336787890" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1580328537601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580328537601" />
+    <state x="182" y="0" key="SettingsEditor" timestamp="1580323657602">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="121" y="0" key="SettingsEditor/0.0.1280.689@0.0.1280.689" timestamp="1580295452871" />
-    <state x="233" y="78" key="Vcs.Push.Dialog.v2" timestamp="1580482289803">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="182" y="0" key="SettingsEditor/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580323657602" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1580337154110">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="233" y="78" key="Vcs.Push.Dialog.v2/0.0.1280.689@0.0.1280.689" timestamp="1580482289803" />
-    <state x="337" y="169" key="com.intellij.ide.util.TipDialog" timestamp="1580474373892">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580337154110" />
+    <state x="567" y="77" width="786" height="885" key="find.popup" timestamp="1580333758459">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="337" y="169" key="com.intellij.ide.util.TipDialog/0.0.1280.689@0.0.1280.689" timestamp="1580474373892" />
-    <state x="342" y="136" key="git4idea.merge.GitPullDialog" timestamp="1580300314084">
-      <screen x="0" y="0" width="1280" height="689" />
+    <state x="567" y="77" width="786" height="885" key="find.popup/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580333758459" />
+    <state x="513" y="205" key="git4idea.merge.GitPullDialog" timestamp="1580337148809">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="342" y="136" key="git4idea.merge.GitPullDialog/0.0.1280.689@0.0.1280.689" timestamp="1580300314084" />
+    <state x="342" y="136" key="git4idea.merge.GitPullDialog/0.0.1280.689@0.0.1280.689" timestamp="1580298284795" />
+    <state x="513" y="205" key="git4idea.merge.GitPullDialog/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580337148809" />
+    <state x="334" y="130" key="new project wizard" timestamp="1580323813166">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="334" y="130" key="new project wizard/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580323813166" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1580334200678">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580334200678" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1580333644046">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.-470.1620.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1580333644046" />
   </component>
 </project>

@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Fortress {
@@ -27,6 +29,10 @@ public class Fortress {
     /*** Gives Fortress certain stats */
     private final FortressType fortressType;
 
+    private long timeSinceLevelUp;//Assessment 3
+
+    private int level;
+
     /**
      * Constructs Fortress at certain position and
      * of a certain type
@@ -36,6 +42,8 @@ public class Fortress {
      * @param type  Type of Fortress to give certain stats
      */
     public Fortress(float x, float y, FortressType type) {
+        timeSinceLevelUp = TimeUtils.millis(); //Assessment 3
+        level = 1;//Assessment 3
         this.fortressType = type;
         this.position = new Vector2(x, y);
         this.HP = type.getMaxHP();
@@ -129,6 +137,14 @@ public class Fortress {
 
     public float getHP() {
         return this.HP;
+    }
+
+    public int getLevel() {
+        if(TimeUtils.timeSinceMillis(timeSinceLevelUp)/5000 >= 1 && level < 5) {
+            level = Math.min(level + (int)TimeUtils.timeSinceMillis(timeSinceLevelUp)/5000, 5);
+            timeSinceLevelUp = TimeUtils.millis();
+        }
+        return level;
     }
 
     public void damage(float HP){
