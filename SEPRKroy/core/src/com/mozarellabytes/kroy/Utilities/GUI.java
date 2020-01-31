@@ -127,6 +127,7 @@ public class GUI {
     private final OrthographicCamera pauseCamera;
 
     private int flag = 0;
+    CountClock countClock;
 
     /**
      * Constructor for GUI
@@ -183,6 +184,8 @@ public class GUI {
 
         pauseCamera = new OrthographicCamera();
         pauseCamera.setToOrtho(false, Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
+
+        countClock = new CountClock();
     }
 
     /**
@@ -452,7 +455,7 @@ public class GUI {
     public void renderClock(int state) {
         GlyphLayout layout = new GlyphLayout();
         String time = null;
-        time = CountClock.set_clock(state);
+        time = countClock.set_clock(state);
 
 
         layout.setText(game.font26, time);
