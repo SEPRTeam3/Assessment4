@@ -410,5 +410,7 @@ public class FireTruck extends Sprite {
     public boolean getMoving() {
         return this.moving;
     }
+
+    public boolean getAttacking() { return this.attacking;}
 }
 

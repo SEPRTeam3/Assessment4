@@ -254,7 +254,8 @@ public class GameScreen implements Screen {
                 gui.renderPauseScreenText();
         }
         gui.renderButtons();
-        gui.renderClock(flag);
+        if(gui.getCountClock() != null)
+            gui.renderClock(flag);
     }
 
 
@@ -291,6 +292,9 @@ public class GameScreen implements Screen {
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
                     truck.attack(fortress);
+                    if(truck.getAttacking() && gui.getCountClock() == null){
+                        gui.newClock();
+                    }
                     break;
                 }
             }
