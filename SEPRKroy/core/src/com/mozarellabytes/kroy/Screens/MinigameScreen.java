@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
 
 import java.util.Iterator;
@@ -24,6 +25,9 @@ import java.util.Iterator;
 *  All code in this class is for Assessment 3.
 * */
 public class MinigameScreen implements Screen {
+
+    /** Instance of the game */
+    private final Kroy game;
 
     /** Images for minigame firetruck */
     private Texture truckImage;
@@ -52,7 +56,9 @@ public class MinigameScreen implements Screen {
     /**
      * Constructor to instantiate all the assets and entities.
      */
-    public MinigameScreen() {
+    public MinigameScreen(Kroy game) {
+        this.game = game;
+
         truckLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
         truckRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
         truckImage = truckLeft;
