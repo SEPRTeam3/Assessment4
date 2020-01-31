@@ -454,7 +454,12 @@ public class GUI {
     public void renderClock(int state) {
         GlyphLayout layout = new GlyphLayout();
         String time = null;
-        time = countClock.set_clock(state);
+        if(countClock != null){
+            time = countClock.set_clock(state);
+        }
+        else{
+            time = "05 : 00";
+        }
 
 
         layout.setText(game.font26, time);

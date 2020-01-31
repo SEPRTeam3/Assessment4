@@ -256,8 +256,7 @@ public class GameScreen implements Screen {
                 gui.renderPauseScreenText();
         }
         gui.renderButtons();
-        if(gui.getCountClock() != null)
-            gui.renderClock(flag);
+        gui.renderClock(flag);
     }
 
 
