@@ -148,8 +148,8 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
 
-        vertices.addFirst(new Vector2(7,5));
-        vertices.addLast(new Vector2(7,1));
+        vertices.addFirst(new Vector2(8,5));
+        vertices.addLast(new Vector2(8,1));
         vertices.addLast(new Vector2(13,1));
         vertices.addLast(new Vector2(13,5));
 

@@ -68,7 +68,7 @@ public class Alien extends Sprite {
         this.mainPatrol = new PatrolPath(vertices);
         this.position = new Vector2(x,y);
         this.HP = maxHP;
-        this.path = new Queue<Vector2>();
+        this.path = mainPatrol.getPath();
         //this.setPath();
         this.bombs = new ArrayList<Bomb>();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
@@ -101,8 +101,8 @@ public class Alien extends Sprite {
      * path
      */
     public void move() {
-            if (this.path.size > 0) {
-                Vector2 nextTile = this.getFirstAndAppend();
+        if (this.path.size > 0) {
+                Vector2 nextTile = mainPatrol.getFirstAndAppend();
                 this.position = nextTile;
 
                 if (!this.inCollision) {
