@@ -185,7 +185,6 @@ public class GUI {
         pauseCamera = new OrthographicCamera();
         pauseCamera.setToOrtho(false, Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
 
-        countClock = new CountClock();
     }
 
     /**
@@ -466,6 +465,11 @@ public class GUI {
         game.batch.end();
     }
 
+    public void newClock(){
+        countClock = new CountClock();
+    }
+
+    public CountClock getCountClock(){ return countClock; }
 
     public Rectangle getHomeButton() { return this.homeButton; }
 

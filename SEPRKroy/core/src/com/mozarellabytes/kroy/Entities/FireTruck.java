@@ -82,8 +82,6 @@ public class FireTruck extends Sprite {
     private final Texture lookUp;
     private final Texture lookDown;
 
-    private static int attack_start = 0;
-
     /**
      * Constructs a new FireTruck at a position and of a certain type
      * which have been passed in
@@ -238,21 +236,9 @@ public class FireTruck extends Sprite {
      */
     public void attack(Fortress fortress) {
         if (this.attacking && this.reserve > 0) {
-            attack_start = 1;
             this.spray.add(new WaterParticle(this, fortress));
             this.reserve -= Math.min(this.reserve, this.type.getAP());
-
         }
-    }
-
-    /*
-    Identify the first attack
-     */
-    public int attack_start(){
-        if(attack_start == 1){
-            return 1;
-        }
-        return 0;
     }
 
     /**
@@ -425,6 +411,6 @@ public class FireTruck extends Sprite {
         return this.moving;
     }
 
-    public boolean startAttcking(){return attacking;}
+    public boolean getAttacking() { return this.attacking;}
 }
 

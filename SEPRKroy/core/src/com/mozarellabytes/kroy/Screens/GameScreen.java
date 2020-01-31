@@ -77,7 +77,7 @@ public class GameScreen implements Screen {
     private final FireStation station;
 
     /** Alien patrols to attack fire engines */
-    private final Alien alien;
+    private Queue<Alien> aliens;
 
     /** The FireTruck that the user is currently drawing a path for */
     public FireTruck selectedTruck;
@@ -148,14 +148,31 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
 
+        //#Assessment3
+        /**
+         * Hardcoded alien paths
+         */
         vertices.addFirst(new Vector2(8,5));
         vertices.addLast(new Vector2(8,1));
         vertices.addLast(new Vector2(13,1));
         vertices.addLast(new Vector2(13,5));
         vertices.addLast(new Vector2(8,5));
-
-        alien = new Alien(13,5,vertices);
-
+        aliens = new Queue<Alien>();
+        aliens.addLast(new Alien(8,5,vertices));
+        vertices.clear();
+        vertices.addFirst(new Vector2(28,5));
+        vertices.addLast(new Vector2(31,5));
+        vertices.addLast(new Vector2(31,6));
+        vertices.addLast(new Vector2(35,6));
+        vertices.addLast(new Vector2(35,1));
+        vertices.addLast(new Vector2(32,1));
+        vertices.addLast(new Vector2(32,2));
+        vertices.addLast(new Vector2(32,2));
+        vertices.addLast(new Vector2(31,2));
+        vertices.addLast(new Vector2(28,2));
+        vertices.addLast(new Vector2(28,5));
+        aliens.addLast(new Alien(28,5,vertices));
+        vertices.clear();
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
@@ -194,9 +211,10 @@ public class GameScreen implements Screen {
         for (Fortress fortress : this.fortresses) {
             fortress.draw(mapBatch);
         }
-         //#Assessment3
-        alien.drawSprite(mapBatch);
-
+        //#Assessment3
+        for(Alien alien:aliens) {
+            alien.drawSprite(mapBatch);
+        }
         mapBatch.end();
 
         mapRenderer.render(structureLayersIndices);
@@ -215,8 +233,9 @@ public class GameScreen implements Screen {
         }
 
         //#Assessment3
-        alien.drawStats(shapeMapRenderer);
-
+        for(Alien alien:aliens) {
+            alien.drawStats(shapeMapRenderer);
+        }
         shapeMapRenderer.end();
 
         gui.renderSelectedEntity(selectedEntity);
@@ -237,7 +256,8 @@ public class GameScreen implements Screen {
                 gui.renderPauseScreenText();
         }
         gui.renderButtons();
-        gui.renderClock(flag);
+        if(gui.getCountClock() != null)
+            gui.renderClock(flag);
     }
 
 
@@ -256,7 +276,9 @@ public class GameScreen implements Screen {
         gameState.setTrucksInAttackRange(0);
 
         //#Assessment3
-        alien.move();
+        for(Alien alien:aliens){
+            alien.move();
+        }
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
             FireTruck truck = station.getTruck(i);
@@ -272,6 +294,9 @@ public class GameScreen implements Screen {
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
                     truck.attack(fortress);
+                    if(truck.getAttacking() && gui.getCountClock() == null){
+                        gui.newClock();
+                    }
                     break;
                 }
             }
