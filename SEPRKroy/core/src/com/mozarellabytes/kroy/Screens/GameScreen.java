@@ -155,15 +155,26 @@ public class GameScreen implements Screen {
         vertices.addFirst(new Vector2(8,5));
         vertices.addLast(new Vector2(8,1));
         vertices.addLast(new Vector2(13,1));
+        vertices.addLast(new Vector2(13,7));
+        vertices.addLast(new Vector2(18,7));
+        vertices.addLast(new Vector2(18,11));
+        vertices.addLast(new Vector2(13,11));
         vertices.addLast(new Vector2(13,5));
         vertices.addLast(new Vector2(8,5));
         aliens = new Queue<Alien>();
         aliens.addLast(new Alien(8,5,vertices));
+
         vertices.clear();
         vertices.addFirst(new Vector2(28,5));
         vertices.addLast(new Vector2(31,5));
         vertices.addLast(new Vector2(31,6));
         vertices.addLast(new Vector2(35,6));
+        vertices.addLast(new Vector2(35,4));
+        vertices.addLast(new Vector2(40,4));
+        vertices.addLast(new Vector2(40,6));
+        vertices.addLast(new Vector2(48,6));
+        vertices.addLast(new Vector2(48,1));
+        vertices.addLast(new Vector2(40,1));
         vertices.addLast(new Vector2(35,1));
         vertices.addLast(new Vector2(32,1));
         vertices.addLast(new Vector2(32,2));
@@ -173,6 +184,36 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(28,5));
         aliens.addLast(new Alien(28,5,vertices));
         vertices.clear();
+
+        vertices.addFirst(new Vector2(48,28));
+        vertices.addLast(new Vector2(44,28));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(47,26));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(44,24));
+        vertices.addLast(new Vector2(41,24));
+        vertices.addLast(new Vector2(48,24));
+        vertices.addLast(new Vector2(44,24));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(47,26));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(44,28));
+        vertices.addLast(new Vector2(48,28));
+        aliens.addLast(new Alien(48,28,vertices));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(26,28));
+        vertices.addLast(new Vector2(37,28));
+        vertices.addLast(new Vector2(37,23));
+        vertices.addLast(new Vector2(34,23));
+        vertices.addLast(new Vector2(34,28));
+        vertices.addLast(new Vector2(30,28));
+        vertices.addLast(new Vector2(30,23));
+        vertices.addLast(new Vector2(26,23));
+        vertices.addLast(new Vector2(26,28));
+        aliens.addLast(new Alien(26,28,vertices));
+        vertices.clear();
+
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
