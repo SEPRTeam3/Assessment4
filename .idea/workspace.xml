@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8e4721e-c2fb-4177-8d12-1a1a07860192" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienDown.png" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienDown.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienLeft.png" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienLeft.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienRight.png" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienRight.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienUp.png" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/assets/sprites/alien/AlienUp.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/Alien.java" beforeDir="false" afterPath="$PROJECT_DIR$/SEPRKroy/core/src/com/mozarellabytes/kroy/Entities/Alien.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +113,7 @@
       <updated>1579088165226</updated>
       <workItem from="1580294834819" duration="16442000" />
       <workItem from="1580389240908" duration="143000" />
-      <workItem from="1580474346124" duration="2242000" />
+      <workItem from="1580474346124" duration="3207000" />
     </task>
     <task id="LOCAL-00001" summary="Alien and patrol path empty classes added">
       <created>1580299923702</created>
@@ -169,7 +164,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580314208257</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Alien and patrol path empty classes added">
+      <created>1580476618279</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1580476618280</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,34 +199,34 @@
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="96" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.689@0.0.1280.689" timestamp="1580295321116" />
-    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580314207398">
+    <state x="152" y="0" key="CommitChangelistDialog2" timestamp="1580476616565">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580314207398" />
-    <state width="1237" height="111" key="GridCell.Tab.0.bottom" timestamp="1580389831056">
+    <state x="152" y="0" key="CommitChangelistDialog2/0.0.1280.689@0.0.1280.689" timestamp="1580476616565" />
+    <state width="1237" height="111" key="GridCell.Tab.0.bottom" timestamp="1580481726993">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580389831056" />
-    <state width="1237" height="111" key="GridCell.Tab.0.center" timestamp="1580389831056">
+    <state width="1237" height="111" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1580481726993" />
+    <state width="1237" height="111" key="GridCell.Tab.0.center" timestamp="1580481726993">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580389831056" />
-    <state width="1237" height="111" key="GridCell.Tab.0.left" timestamp="1580389831056">
+    <state width="1237" height="111" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1580481726993" />
+    <state width="1237" height="111" key="GridCell.Tab.0.left" timestamp="1580481726992">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580389831056" />
-    <state width="1237" height="111" key="GridCell.Tab.0.right" timestamp="1580389831056">
+    <state width="1237" height="111" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1580481726992" />
+    <state width="1237" height="111" key="GridCell.Tab.0.right" timestamp="1580481726993">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="111" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580389831056" />
+    <state width="1237" height="111" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1580481726993" />
     <state x="121" y="0" key="SettingsEditor" timestamp="1580295452871">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="121" y="0" key="SettingsEditor/0.0.1280.689@0.0.1280.689" timestamp="1580295452871" />
-    <state x="233" y="78" key="Vcs.Push.Dialog.v2" timestamp="1580313709074">
+    <state x="233" y="78" key="Vcs.Push.Dialog.v2" timestamp="1580476623957">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state x="233" y="78" key="Vcs.Push.Dialog.v2/0.0.1280.689@0.0.1280.689" timestamp="1580313709074" />
+    <state x="233" y="78" key="Vcs.Push.Dialog.v2/0.0.1280.689@0.0.1280.689" timestamp="1580476623957" />
     <state x="337" y="169" key="com.intellij.ide.util.TipDialog" timestamp="1580474373892">
       <screen x="0" y="0" width="1280" height="689" />
     </state>

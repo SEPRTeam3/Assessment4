@@ -168,10 +168,15 @@ public class Alien extends Sprite {
         return tempVector;
     }
 
-    //Optimised path making inc. different speeds
-    public void incrementPaths(float incrementer){
+    //Optimised path making inc. different speeds incrementer can be negative
+    public void incrementPathsX(float incrementer){
         for(float i = incrementer; i<= 1f; i=i+incrementer){
-            
+            this.path.addLast(new Vector2(this.previousTile.x + incrementer, this.previousTile.y));
+        }
+    }
+    public void incrementPathsY(float incrementer){
+        for(float i = incrementer; i<= 1f; i=i+incrementer){
+            this.path.addLast(new Vector2(this.previousTile.x , this.previousTile.y+ incrementer));
         }
     }
 
@@ -190,11 +195,13 @@ public class Alien extends Sprite {
                         distance = (int) (this.previousTile.y - vertex.y);
                         for (float i = 1; i <= distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (vertex.y + i)));
+                            incrementPathsY(-0.1f);
                         }
                     } else {
                         distance = (int) (vertex.y - this.previousTile.y);
                         for (float i = 1; i <= distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (this.previousTile.y + i)));
+                            incrementPathsY(0.1f);
                         }
                     }
                 } else {
@@ -203,11 +210,13 @@ public class Alien extends Sprite {
                         distance = (int) (this.previousTile.x - vertex.x);
                         for (float i = 1; i <= distance; i++) {
                             this.path.addLast(new Vector2((vertex.x + i), vertex.y));
+                            incrementPathsX(-0.1f);
                         }
                     } else {
                         distance = (int) (vertex.x - this.previousTile.x);
                         for (float i = 1; i <= distance; i++) {
                             this.path.addLast(new Vector2((this.previousTile.x + i), vertex.y));
+                            incrementPathsX(0.1f);
                         }
                     }
                 }
