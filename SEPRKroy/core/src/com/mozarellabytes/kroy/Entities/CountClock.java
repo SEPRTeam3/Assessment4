@@ -12,7 +12,7 @@ public class CountClock {
     Constructor
      */
     public CountClock() {
-        remainTime = 65;
+        remainTime = 300;
     }
 
     /*
