@@ -46,11 +46,15 @@ public class Alien extends Sprite {
     private Vector2 previousTile;
 
     /** Texture for each direction the
-     * truck is facing */
+     * alien is facing */
     private final Texture lookLeft;
     private final Texture lookRight;
     private final Texture lookUp;
     private final Texture lookDown;
+
+    /** PatrolPath initialised for each alien
+     */
+    private PatrolPath mainPatrol;
 
     /**
      * Constructs alien at certain position
@@ -58,13 +62,14 @@ public class Alien extends Sprite {
      * @param x     x coordinate of alien (lower left point)
      * @param y     y coordinate of alien (lower left point)
      */
-    public Alien(float x, float y){
+    public Alien(float x, float y,Queue<Vector2> vertices){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
 
+        this.mainPatrol = new PatrolPath(vertices);
         this.position = new Vector2(x,y);
         this.HP = maxHP;
-        this.path = new Queue<Vector2>();
-        this.setPath();
+        this.path = mainPatrol.getPath();
+        //this.setPath();
         this.bombs = new ArrayList<Bomb>();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -96,8 +101,8 @@ public class Alien extends Sprite {
      * path
      */
     public void move() {
-            if (this.path.size > 0) {
-                Vector2 nextTile = this.getFirstAndAppend();
+        if (this.path.size > 0) {
+                Vector2 nextTile = mainPatrol.getFirstAndAppend();
                 this.position = nextTile;
 
                 if (!this.inCollision) {
@@ -168,63 +173,8 @@ public class Alien extends Sprite {
         return tempVector;
     }
 
-    //Optimised path making inc. different speeds incrementer can be negative
-    public void incrementPathsX(float incrementer){
-        for(float i = incrementer; i<= 1f; i=i+incrementer){
-            this.path.addLast(new Vector2(this.previousTile.x + incrementer, this.previousTile.y));
-        }
-    }
-    public void incrementPathsY(float incrementer){
-        for(float i = incrementer; i<= 1f; i=i+incrementer){
-            this.path.addLast(new Vector2(this.previousTile.x , this.previousTile.y+ incrementer));
-        }
-    }
 
-    //Path making from vertices
-    public void buildPathFromVertex(Queue<Vector2> vertices) {
-        int distance;
-        distance = 0;
-        this.previousTile = null;
-        for (Vector2 vertex : vertices) {
-            if (this.previousTile == null) {
-                this.path.addFirst(vertex);
-            } else {
-                if (this.previousTile.x != vertex.x) {
-                    //increment Y
-                    if (previousTile.y > vertex.y) {
-                        distance = (int) (this.previousTile.y - vertex.y);
-                        for (float i = 1; i <= distance; i++) {
-                            this.path.addLast(new Vector2(vertex.x, (vertex.y + i)));
-                            incrementPathsY(-0.1f);
-                        }
-                    } else {
-                        distance = (int) (vertex.y - this.previousTile.y);
-                        for (float i = 1; i <= distance; i++) {
-                            this.path.addLast(new Vector2(vertex.x, (this.previousTile.y + i)));
-                            incrementPathsY(0.1f);
-                        }
-                    }
-                } else {
-                    //increment X
-                    if (previousTile.x > vertex.x) {
-                        distance = (int) (this.previousTile.x - vertex.x);
-                        for (float i = 1; i <= distance; i++) {
-                            this.path.addLast(new Vector2((vertex.x + i), vertex.y));
-                            incrementPathsX(-0.1f);
-                        }
-                    } else {
-                        distance = (int) (vertex.x - this.previousTile.x);
-                        for (float i = 1; i <= distance; i++) {
-                            this.path.addLast(new Vector2((this.previousTile.x + i), vertex.y));
-                            incrementPathsX(0.1f);
-                        }
-                    }
-                }
-                this.previousTile = vertex;
-            }
-        }
-    }
-
+/**
     public void setPath(){
         this.path.addFirst(new Vector2(13, 5));
         this.path.addLast(new Vector2(13, 4.9f));
@@ -407,4 +357,5 @@ public class Alien extends Sprite {
         this.path.addLast(new Vector2(13.2f, 5));
         this.path.addLast(new Vector2(13.1f, 5));
     }
+ */
 }
