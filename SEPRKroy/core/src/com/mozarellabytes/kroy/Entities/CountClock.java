@@ -1,9 +1,6 @@
 package com.mozarellabytes.kroy.Entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.TimeUtils;
-
-import java.awt.*;
 
 public class CountClock {
     /*
