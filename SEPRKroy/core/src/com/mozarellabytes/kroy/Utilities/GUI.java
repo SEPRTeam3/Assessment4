@@ -185,7 +185,6 @@ public class GUI {
         pauseCamera = new OrthographicCamera();
         pauseCamera.setToOrtho(false, Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
 
-        countClock = new CountClock();
     }
 
     /**
@@ -455,7 +454,12 @@ public class GUI {
     public void renderClock(int state) {
         GlyphLayout layout = new GlyphLayout();
         String time = null;
-        time = countClock.set_clock(state);
+        if(countClock != null){
+            time = countClock.set_clock(state);
+        }
+        else{
+            time = "05 : 00";
+        }
 
 
         layout.setText(game.font26, time);
@@ -466,6 +470,11 @@ public class GUI {
         game.batch.end();
     }
 
+    public void newClock(){
+        countClock = new CountClock();
+    }
+
+    public CountClock getCountClock(){ return countClock; }
 
     public Rectangle getHomeButton() { return this.homeButton; }
 
