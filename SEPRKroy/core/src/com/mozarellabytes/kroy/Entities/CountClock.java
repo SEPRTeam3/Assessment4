@@ -14,7 +14,7 @@ public class CountClock {
     public CountClock() {
         remainTime = 300;
     }
-
+    
     /*
     Set remaining time, with counting down, state 0 means counting and 1 means pause
     */
