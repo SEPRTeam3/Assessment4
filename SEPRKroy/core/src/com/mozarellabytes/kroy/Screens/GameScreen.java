@@ -152,6 +152,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(8,1));
         vertices.addLast(new Vector2(13,1));
         vertices.addLast(new Vector2(13,5));
+        vertices.addLast(new Vector2(8,5));
 
         alien = new Alien(13,5,vertices);
 

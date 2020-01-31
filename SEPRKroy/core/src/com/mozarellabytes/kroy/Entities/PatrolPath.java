@@ -4,6 +4,7 @@ package com.mozarellabytes.kroy.Entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import com.sun.jdi.VMCannotBeModifiedException;
 
 /**
  * An alien is an entity that moves according to predifined patrol paths
@@ -49,17 +50,30 @@ public class PatrolPath {
     }
     //Optimised path making inc. different speeds incrementer can be negative
     public void incrementPathsX(float incrementer){
-        for(float i = incrementer; i< 1.0f; i=i+incrementer){
-            Gdx.app.log("2", ("oopsx"));
-            this.path.addLast(new Vector2(this.previousTile.x + incrementer, this.previousTile.y));
+        if (incrementer < 0f) {
+            //this.path.addLast(new Vector2(previousTile.x + incrementer, this.path.last().y));
+
+            for (float i = (incrementer); i > -1.0f; i = i + incrementer) {
+                this.path.addLast(new Vector2(this.path.last().x + incrementer, this.path.last().y));
+                Gdx.app.log("1", String.valueOf((this.path.last().x + incrementer)));
+            }
+        }else {
+            for (float i = incrementer; i < 1.0f; i = i + incrementer) {
+                this.path.addLast(new Vector2(this.path.last().x + incrementer, this.path.last().y));
+            }
         }
     }
     public void incrementPathsY(float incrementer){
-        if incrementer < 0
-        for(float i = incrementer; i< 1.0f; i=i+incrementer){
+        if (incrementer < 0f) {
+            //this.path.addLast(new Vector2(this.path.last().x, previousTile.y + incrementer));
+            for (float i = (incrementer); i > -1.0f; i = i + incrementer) {
+                this.path.addLast(new Vector2(this.path.last().x, this.path.last().y + incrementer));
+            }
+        }else {
+            for (float i = incrementer; i < 1.0f; i = i + incrementer) {
 
-            Gdx.app.log("2", String.valueOf((incrementer)));
-            this.path.addLast(new Vector2(this.previousTile.x , this.previousTile.y + incrementer));
+                this.path.addLast(new Vector2(this.path.last().x, this.path.last().y + incrementer));
+            }
         }
     }
 
@@ -76,14 +90,15 @@ public class PatrolPath {
                 if (this.previousTile.y != vertex.y) {
                     //increment Y
                     if (previousTile.y > vertex.y) {
-                        distance = (int) (this.previousTile.y - vertex.y);
-                        for (float i = 1; i <= distance; i++) {
-                            this.path.addLast(new Vector2(vertex.x, (vertex.y + i)));
+                        distance = this.previousTile.y - vertex.y;
+                        Gdx.app.log("3", String.valueOf(distance));
+                        for (float i = 0; i < distance; i++) {
+                            this.path.addLast(new Vector2(vertex.x, (this.previousTile.y - i)));
                             incrementPathsY(-0.1f);
                         }
                     } else {
-                        distance = (int) (vertex.y - this.previousTile.y);
-                        for (float i = 1; i <= distance; i++) {
+                        distance = vertex.y - this.previousTile.y;
+                        for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (this.previousTile.y + i)));
                             incrementPathsY(0.1f);
                         }
@@ -93,22 +108,19 @@ public class PatrolPath {
                     //increment X
                     if (previousTile.x > vertex.x) {
                         distance = this.previousTile.x - vertex.x;
-                        for (float i = 1; i <= distance; i++) {
-                            Gdx.app.log("3", String.valueOf(i));
-                            this.path.addLast(new Vector2((vertex.x + i), vertex.y));
+                        for (float i = 0; i < distance; i++) {
+                            this.path.addLast(new Vector2((previousTile.x - i), vertex.y));
                             incrementPathsX(-0.1f);
                         }
                     } else {
-                        distance = (vertex.x - this.previousTile.x);
-                        for (float i = 1; i <= distance; i++) {
+                        distance = vertex.x - this.previousTile.x;
+                        for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2((this.previousTile.x + i), vertex.y));
                             incrementPathsX(0.1f);
                         }
                     }
                 }
             }
-            Gdx.app.log("2", String.valueOf(previousTile));
-            Gdx.app.log("1", String.valueOf(vertex));
             this.previousTile = vertex;
 
             //vertices.removeFirst();
