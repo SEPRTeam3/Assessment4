@@ -207,11 +207,9 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(37,23));
         vertices.addLast(new Vector2(34,23));
         vertices.addLast(new Vector2(34,28));
-        vertices.addLast(new Vector2(34,28));
-        vertices.addLast(new Vector2(26,28));
-        vertices.addLast(new Vector2(26,23));
-        vertices.addLast(new Vector2(30,23));
         vertices.addLast(new Vector2(30,28));
+        vertices.addLast(new Vector2(30,23));
+        vertices.addLast(new Vector2(26,23));
         vertices.addLast(new Vector2(26,28));
         aliens.addLast(new Alien(26,28,vertices));
         vertices.clear();
