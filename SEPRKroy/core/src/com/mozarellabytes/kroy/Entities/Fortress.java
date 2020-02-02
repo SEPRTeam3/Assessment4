@@ -23,15 +23,16 @@ public class Fortress {
     /*** Where the Fortress lies on the map */
     private final Rectangle area;
 
-    /*** List of bombs that are active */
-    private final ArrayList<Bomb> bombs;
-
     /*** Gives Fortress certain stats */
     private final FortressType fortressType;
 
     private long timeSinceLevelUp;//Assessment 3
 
-    private int level;
+    private int level;//Assessment 3
+
+    private EnemyAttackHandler attackHandler;
+
+
 
     /**
      * Constructs Fortress at certain position and
@@ -47,68 +48,9 @@ public class Fortress {
         this.fortressType = type;
         this.position = new Vector2(x, y);
         this.HP = type.getMaxHP();
-        this.bombs = new ArrayList<Bomb>();
         this.area = new Rectangle(this.position.x - (float) this.fortressType.getW()/2, this.position.y - (float) this.fortressType.getH()/2,
                 this.fortressType.getW(), this.fortressType.getH());
-    }
-
-    /**
-     * Checks if the truck's position is within the attack range of the fortress
-     *
-     * @param targetPos the truck position being checked
-     * @return          <code>true</code> if truck within range of fortress
-     *                  <code>false</code> otherwise
-     */
-    public boolean withinRange(Vector2 targetPos) {
-        return targetPos.dst(this.position) <= fortressType.getRange();
-    }
-
-    /**
-     * Generates bombs to attack the FireTruck with
-     * @param target        FireTruck being attacked
-     * @param randomTarget  whether the bomb hits every time or
-     *                      there is a chance it misses
-     */
-    public void attack(FireTruck target, boolean randomTarget) {
-        if (target.getTimeOfLastAttack() + fortressType.getDelay() < System.currentTimeMillis()) {
-            this.bombs.add(new Bomb(this, target, randomTarget));
-            target.setTimeOfLastAttack(System.currentTimeMillis());
-            if (SoundFX.music_enabled) {
-                SoundFX.sfx_fortress_attack.play();
-            }
-        }
-    }
-
-    /**
-     * Updates the position of all the bombs and checks whether
-     * they have hit their target. If they have, it should deal
-     * damage to the truck, remove the bomb and shake the screen
-     * @return  <code>true</code> if bomb hits a truck
-     *          <code>false</code> if bomb does nt hit a true
-     */
-    public boolean updateBombs() {
-        for (int i = 0; i < this.getBombs().size(); i++) {
-            Bomb bomb = this.getBombs().get(i);
-            bomb.updatePosition();
-            if (bomb.checkHit()) {
-                bomb.damageTruck();
-                this.removeBomb(bomb);
-                return true;
-            } else if (bomb.hasReachedTargetTile()) {
-                this.removeBomb(bomb);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Removes Bomb from bomb list. This
-     * occurs when the bomb hits or misses
-     *
-     * @param bomb bomb being removed
-     */
-    private void removeBomb(Bomb bomb) {
-        this.bombs.remove(bomb);
+        attackHandler = new EnemyAttackHandler(this);
     }
 
     /**
@@ -159,8 +101,6 @@ public class Fortress {
         return this.fortressType;
     }
 
-    public ArrayList<Bomb> getBombs() {
-        return this.bombs;
-    }
+    public EnemyAttackHandler getAttackHandler() { return attackHandler; }
 
 }
