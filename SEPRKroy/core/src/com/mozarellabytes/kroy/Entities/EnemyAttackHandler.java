@@ -24,7 +24,12 @@ public class EnemyAttackHandler {
     }
 
     EnemyAttackHandler(Alien entity){
-
+        position = entity.getPosition();
+        attackRange = 3;
+        attackPower = 2;
+        attackLevel = 1;
+        delay = 500;
+        bombs = new ArrayList<Bomb>();
     }
 
     /**
@@ -91,13 +96,15 @@ public class EnemyAttackHandler {
 
     public float getAttackPower() { return attackPower; }
 
-    public void setAttackLevel(int attackLevel) {
-        this.attackLevel = attackLevel;
-    }
-
     public int getAttackLevel() { return attackLevel; }
 
     public ArrayList<Bomb> getBombs() {
         return bombs;
     }
+
+    public void setAttackLevel(int attackLevel) {
+        this.attackLevel = attackLevel;
+    }
+
+    public void setPosition(Vector2 position) { this.position = position;}
 }

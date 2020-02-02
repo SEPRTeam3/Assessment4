@@ -300,6 +300,9 @@ public class GameScreen implements Screen {
         //#Assessment3
         for(Alien alien:aliens) {
             alien.drawStats(shapeMapRenderer);
+            for (Bomb bomb : alien.getAttackHandler().getBombs()) {
+                bomb.drawBomb(shapeMapRenderer);
+            }
         }
         shapeMapRenderer.end();
 
@@ -366,6 +369,17 @@ public class GameScreen implements Screen {
                 }
             }
 
+            //Assessment 3
+            for(Alien alien : this.aliens){
+                alien.getAttackHandler().setPosition(alien.getPosition());
+                if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
+                    alien.getAttackHandler().attack(truck, true);
+                    if (alien.getAttackHandler().updateBombs()) {
+                        camShake.shakeIt(.2f);
+                    }
+                }
+            }
+
             // check if truck is destroyed
             if (truck.getHP() <= 0) {
                 gameState.removeFireTruck();
@@ -394,6 +408,8 @@ public class GameScreen implements Screen {
             }
 
         }
+
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             if (gameState.getTrucksInAttackRange() > 0) {
