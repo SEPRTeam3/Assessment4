@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
+import com.mozarellabytes.kroy.minigame.FireTruck;
 
 import java.sql.Time;
 import java.util.Iterator;
@@ -48,7 +49,8 @@ public class MinigameScreen implements Screen {
     private SpriteBatch batch;
 
     /** Rectangle for controlling the firetruck */
-    private Rectangle fireTruck;
+//    private Rectangle fireTruck;
+    private FireTruck fireTruck;
 
     /** Array to keep track of all aliens */
     private Array<Rectangle> aliens;
@@ -71,9 +73,8 @@ public class MinigameScreen implements Screen {
     public MinigameScreen(Kroy game) {
         this.game = game;
 
-        truckLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
-        truckRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
-        truckImage = truckLeft;
+        fireTruck = new FireTruck();
+        fireTruck.create();
 
         alienImage = new Texture(Gdx.files.internal("sprites/alien/alien.png"));
 
@@ -86,11 +87,11 @@ public class MinigameScreen implements Screen {
 
         batch = new SpriteBatch();
 
-        fireTruck = new Rectangle();
-        fireTruck.x = Constants.GAME_WIDTH - 64/2;
-        fireTruck.y = 20;
-        fireTruck.width = 64;
-        fireTruck.height = 64;
+//        fireTruck = new Rectangle();
+//        fireTruck.x = Constants.GAME_WIDTH - 64/2;
+//        fireTruck.y = 20;
+//        fireTruck.width = 64;
+//        fireTruck.height = 64;
 
         aliens = new Array<Rectangle>();
         spawnAlien();
@@ -111,7 +112,8 @@ public class MinigameScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(truckImage, fireTruck.x, fireTruck.y);
+
+        fireTruck.getSprite().draw(batch);
         for (Rectangle alien: aliens) {
             batch.draw(alienImage, alien.x, alien.y);
         }
@@ -132,31 +134,31 @@ public class MinigameScreen implements Screen {
     public void update(float delta) {
 
 //      Fire truck controls
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            fireTruck.x -= 500 * delta;
-            truckImage = truckLeft;
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            fireTruck.x += 500 * delta;
-            truckImage = truckRight;
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            // Shoot water droplet upwards
-            if (TimeUtils.nanoTime() - lastDropTime > 50000000 || lastDropTime == 0) {
-                shootDroplet();
-            }
-        }
-
-//      Stop fire trucks moving out of bounds
-        if (fireTruck.x < 0) {
-            fireTruck.x = 0;
-        }
-
-        if (fireTruck.x > Constants.GAME_WIDTH  - 64) {
-            fireTruck.x = Constants.GAME_WIDTH - 64;
-        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+//            fireTruck.x -= 500 * delta;
+//            truckImage = truckLeft;
+//        }
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+//            fireTruck.x += 500 * delta;
+//            truckImage = truckRight;
+//        }
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+//            // Shoot water droplet upwards
+//            if (TimeUtils.nanoTime() - lastDropTime > 50000000 || lastDropTime == 0) {
+//                shootDroplet();
+//            }
+//        }
+//
+////      Stop fire trucks moving out of bounds
+//        if (fireTruck.x < 0) {
+//            fireTruck.x = 0;
+//        }
+//
+//        if (fireTruck.x > Constants.GAME_WIDTH  - 64) {
+//            fireTruck.x = Constants.GAME_WIDTH - 64;
+//        }
 
         if (TimeUtils.nanoTime() - lastAlienSpawn > 1000000000) {
             spawnAlien();
@@ -227,15 +229,15 @@ public class MinigameScreen implements Screen {
         lastAlienSpawn = TimeUtils.nanoTime();
     }
 
-    private void shootDroplet() {
-        Rectangle droplet = new Rectangle();
-        droplet.x = fireTruck.x;
-        droplet.y = fireTruck.y + 64;
-        droplet.width = 32;
-        droplet.height = 32;
-        droplets.add(droplet);
-        lastDropTime = TimeUtils.nanoTime();
-    }
+//    private void shootDroplet() {
+//        Rectangle droplet = new Rectangle();
+//        droplet.x = fireTruck.x;
+//        droplet.y = fireTruck.y + 64;
+//        droplet.width = 32;
+//        droplet.height = 32;
+//        droplets.add(droplet);
+//        lastDropTime = TimeUtils.nanoTime();
+//    }
 
     @Override
     public void dispose() {
