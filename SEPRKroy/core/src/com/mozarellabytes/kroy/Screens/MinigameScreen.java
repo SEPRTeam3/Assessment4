@@ -111,12 +111,12 @@ public class MinigameScreen implements Screen {
      * */
     public void update(float delta) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            fireTruck.x -= 200 * Gdx.graphics.getDeltaTime();
+            fireTruck.x -= 500 * Gdx.graphics.getDeltaTime();
             truckImage = truckLeft;
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            fireTruck.x += 200 * Gdx.graphics.getDeltaTime();
+            fireTruck.x += 500 * Gdx.graphics.getDeltaTime();
             truckImage = truckRight;
         }
 
@@ -134,7 +134,7 @@ public class MinigameScreen implements Screen {
 
         for (Iterator<Rectangle> iter = aliens.iterator(); iter.hasNext();) {
             Rectangle alien = iter.next();
-            alien.y -= 200* Gdx.graphics.getDeltaTime();
+            alien.y -= 150 * Gdx.graphics.getDeltaTime();
 
             if (alien.y + 64 < 0) {
                 iter.remove();
