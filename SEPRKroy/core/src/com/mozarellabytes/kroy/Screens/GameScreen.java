@@ -89,8 +89,13 @@ public class GameScreen implements Screen {
     /** Play when the game is being played
      * Pause when the pause button is clicked */
     public enum PlayState {
-        PLAY, PAUSE
+        PLAY, PAUSE, DIALOGUEPAUSE
     }
+
+    /**
+     * Set the stage of dialogue stating what dialogue is being written to the screen
+     */
+    private int dialogueStage = 1;
 
     /*
     Check whether the game is paused,
@@ -147,6 +152,10 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
+        //#Assessment3 Added 3 new fortresses
+        fortresses.add(new Fortress (44.5f, 4.5f, FortressType.TrainStation));
+        fortresses.add(new Fortress (45, 22, FortressType.Minster));
+        fortresses.add(new Fortress (29, 9, FortressType.Shambles));
 
         //#Assessment3
         /**
@@ -347,6 +356,13 @@ public class GameScreen implements Screen {
                 shapeMapRenderer.rect(0, 0, this.camera.viewportWidth, this.camera.viewportHeight);
                 shapeMapRenderer.end();
                 gui.renderPauseScreenText();
+            case DIALOGUEPAUSE:
+                flag = 1;
+                Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+                gui.renderDialogueText(dialogueStage);
+                dialogueStage += 1;
+                for(int waiter = 0; waiter <= 100; waiter += 1){}
+                state = PlayState.PLAY;
         }
         gui.renderButtons();
         gui.renderClock(flag);

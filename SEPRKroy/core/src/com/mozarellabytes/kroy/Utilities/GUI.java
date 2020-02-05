@@ -447,6 +447,10 @@ public class GUI {
         game.batch.end();
     }
 
+    //#Assesment3
+    public void renderDialogueText(int stage){
+
+    }
     /*
     Render the counter down clock
     state 0 means counting down and 1 means pause
