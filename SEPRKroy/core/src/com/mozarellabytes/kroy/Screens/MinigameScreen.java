@@ -96,7 +96,7 @@ public class MinigameScreen implements Screen {
         font = generator.generateFont(parameter);
         scoreLayout = new GlyphLayout();
 
-        updateScoreText(0);
+        updateScoreText();
     }
 
     @Override
@@ -150,7 +150,7 @@ public class MinigameScreen implements Screen {
 //
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             // Shoot water droplet upwards
-            if (TimeUtils.nanoTime() - lastDropTime > 750000000 || lastDropTime == 0) {
+            if (TimeUtils.nanoTime() - lastDropTime > 400000000 || lastDropTime == 0) {
                 shootDroplet();
             }
         }
@@ -185,6 +185,7 @@ public class MinigameScreen implements Screen {
                     droplets.removeIndex(i); // Remove droplet
 
                     this.score += 10;
+                    updateScoreText();
                 }
             }
         }
@@ -199,8 +200,9 @@ public class MinigameScreen implements Screen {
             }
         }
 
-        updateScoreText(this.score);
-
+        if (score == 100) {
+            invokeGameOver(game);
+        }
     }
 
     @Override
@@ -224,7 +226,7 @@ public class MinigameScreen implements Screen {
     }
 
     /**
-     * Method for spawning new aliens.
+     * Method for spawning new aliens at the top of the screen at a random x location.
      * */
     private void spawnAlien() {
         int x = MathUtils.random(0, Constants.GAME_WIDTH - 64);
@@ -243,10 +245,18 @@ public class MinigameScreen implements Screen {
         lastDropTime = TimeUtils.nanoTime();
     }
 
-    private void updateScoreText(int score) {
-        this.score = score;
+    /**
+     * Updates the current score glyph layout.
+     * Invoked whenever an alien is destroyed.
+     */
+    private void updateScoreText() {
         this.scoreText = "Score: " + this.score;
         this.scoreLayout.setText(font, this.scoreText);
+    }
+
+    private void invokeGameOver(Kroy game) {
+        dispose();
+        game.setScreen(new GameScreen(game));
     }
 
     @Override
