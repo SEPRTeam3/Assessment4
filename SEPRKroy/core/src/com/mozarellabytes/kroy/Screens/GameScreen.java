@@ -152,6 +152,10 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
+        //#Assessment3 Added 3 new fortresses
+        fortresses.add(new Fortress (44.5f, 4.5f, FortressType.TrainStation));
+        fortresses.add(new Fortress (45, 22, FortressType.Minster));
+        fortresses.add(new Fortress (29, 9, FortressType.Shambles));
 
         //#Assessment3
         /**
