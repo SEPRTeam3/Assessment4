@@ -436,10 +436,13 @@ public class GameScreen implements Screen {
 
                }
 
-                crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
-                crazyAlien.getAttackHandler().attack(stationTruck, false);
-                if (crazyAlien.getAttackHandler().updateBombs()) {
-                    camShake.shakeIt(.2f);
+               //If crazy alien disappear, stop attacking
+                if(crazyAlien.getPosition().y>=0){
+                    crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
+                    crazyAlien.getAttackHandler().attack(stationTruck, false);
+                    if (crazyAlien.getAttackHandler().updateBombs()) {
+                        camShake.shakeIt(.2f);
+                    }
                 }
             }
             }
