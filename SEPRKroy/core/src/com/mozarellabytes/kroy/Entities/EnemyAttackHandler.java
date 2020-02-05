@@ -73,7 +73,6 @@ public class EnemyAttackHandler {
         boolean hasHit = false;
         ArrayList<Bomb> bombsToRemove = new ArrayList<>();
         for (int i = 0; i < bombs.size(); i++) {
-            System.out.println(i);
             Bomb bomb = bombs.get(i);
             bomb.updatePosition();
             if (bomb.checkHit()) {

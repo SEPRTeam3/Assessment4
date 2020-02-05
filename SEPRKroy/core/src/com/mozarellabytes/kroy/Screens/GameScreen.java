@@ -18,6 +18,8 @@ import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * The Screen that our game is played in.
@@ -76,7 +78,7 @@ public class GameScreen implements Screen {
     /** Where the FireEngines' spawn, refill and repair */
     private final FireStation station;
     private final FireTruck stationTruck;
-    private final Alien crazyAlien;
+    private Alien crazyAlien;
 
     /** Alien patrols to attack fire engines */
     private Queue<Alien> aliens;
@@ -105,6 +107,8 @@ public class GameScreen implements Screen {
     0 represents counting while 1 means pause
      */
     private int flag = 0;
+    private float attackTime = 0;
+    private float totalAttackTime = attackTime();
 
 
     /**
@@ -279,7 +283,7 @@ public class GameScreen implements Screen {
 
 
         vertices.addFirst(new Vector2(3,25));
-        vertices.addLast(new Vector2(3,7));
+        vertices.addLast(new Vector2(3,6));
         crazyAlien = (new Alien(3,30, vertices));
         vertices.clear();
 
@@ -299,6 +303,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+    }
+
+    public float attackTime(){
+        return totalAttackTime = ThreadLocalRandom.current().nextInt(15, 25);
     }
 
     @Override
@@ -325,7 +333,8 @@ public class GameScreen implements Screen {
         for(Alien alien:aliens) {
             alien.drawSprite(mapBatch,1,1);
         }
-        crazyAlien.drawSprite(mapBatch,5,5);
+
+        crazyAlien.drawSprite(mapBatch, 5, 5);
         mapBatch.end();
 
         mapRenderer.render(structureLayersIndices);
@@ -373,13 +382,14 @@ public class GameScreen implements Screen {
                 shapeMapRenderer.rect(0, 0, this.camera.viewportWidth, this.camera.viewportHeight);
                 shapeMapRenderer.end();
                 gui.renderPauseScreenText();
-            case DIALOGUEPAUSE:
+             /*case DIALOGUEPAUSE:
                 flag = 1;
                 Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
                 gui.renderDialogueText(dialogueStage);
                 dialogueStage += 1;
                 for(int waiter = 0; waiter <= 100; waiter += 1){}
                 state = PlayState.PLAY;
+             */
         }
         gui.renderButtons();
         gui.renderClock(flag);
@@ -401,10 +411,33 @@ public class GameScreen implements Screen {
         gameState.setTrucksInAttackRange(0);
 
         if(gui.getCountClock() != null){
-            if(gui.getCountClock().hasEnded()){
-                crazyAlien.move(station.getTrucks());
-                crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3 , crazyAlien.getPosition().y));
-                   crazyAlien.getAttackHandler().attack(stationTruck, false);
+            if(gui.getCountClock().hasEnded()) {
+               if(crazyAlien.getPosition().y > 9){
+                    crazyAlien.move(station.getTrucks());
+                }
+
+               else{
+                   if(attackTime <= totalAttackTime){
+                           Queue<Vector2> vertices;
+                           vertices = new Queue<Vector2>();
+                           vertices.addFirst(new Vector2(3,9));
+                           crazyAlien = (new Alien(3,9, vertices));
+                           vertices.clear();
+                           attackTime += 0.0275;
+                   }
+
+                   else {
+                       Queue<Vector2> vertices;
+                       vertices = new Queue<Vector2>();
+                       vertices.addFirst(new Vector2(3, -10));
+                       crazyAlien = (new Alien(3, -10, vertices));
+                       vertices.clear();
+                   }
+
+               }
+
+                crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
+                crazyAlien.getAttackHandler().attack(stationTruck, false);
                 if (crazyAlien.getAttackHandler().updateBombs()) {
                     camShake.shakeIt(.2f);
                 }
@@ -476,24 +509,24 @@ public class GameScreen implements Screen {
                 }
             }
 
+
+
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                if (gameState.getTrucksInAttackRange() > 0) {
+                    SoundFX.playTruckAttack();
+                }
+                else {
+                    SoundFX.stopTruckAttack();
+                }
+            }
+
+
+            shapeMapRenderer.end();
+            shapeMapRenderer.setColor(Color.WHITE);
+
+            gui.renderSelectedEntity(selectedEntity);
         }
 
-
-
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (gameState.getTrucksInAttackRange() > 0) {
-                SoundFX.playTruckAttack();
-            }
-            else {
-                SoundFX.stopTruckAttack();
-            }
-        }
-
-
-        shapeMapRenderer.end();
-        shapeMapRenderer.setColor(Color.WHITE);
-
-        gui.renderSelectedEntity(selectedEntity);
     }
 
     @Override
