@@ -61,6 +61,7 @@ public class MinigameScreen implements Screen {
 
     /** Background image for the minigame */
     private Texture bgImage = new Texture(Gdx.files.internal("images/minigame-bg.jpg"));
+    private Texture roadImage = new Texture(Gdx.files.internal("images/minigame-road.png"));
 
     private int score = 0;
 
@@ -79,7 +80,7 @@ public class MinigameScreen implements Screen {
 
         batch = new SpriteBatch();
 
-        fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 64);
+        fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 96);
 
         aliens = new Array<Alien>();
         spawnAlien();
@@ -110,6 +111,7 @@ public class MinigameScreen implements Screen {
         batch.begin();
 
         batch.draw(bgImage, 0 ,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        batch.draw(roadImage, 0 ,0, Constants.GAME_WIDTH, 384);
 
         batch.draw(fireTruck.getTexture(), fireTruck.getX(), fireTruck.getY());
         for (Alien alien: aliens) {
@@ -150,7 +152,7 @@ public class MinigameScreen implements Screen {
 //
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             // Shoot water droplet upwards
-            if (TimeUtils.nanoTime() - lastDropTime > 400000000 || lastDropTime == 0) {
+            if (TimeUtils.nanoTime() - lastDropTime > 300000000 || lastDropTime == 0) {
                 shootDroplet();
             }
         }
@@ -174,8 +176,11 @@ public class MinigameScreen implements Screen {
             Alien alien = iter.next();
             alien.moveDown(delta);
 
-            if (alien.getY() + 64 < 0) {
+            // Checking if an alien has reached "road level", removing it if so.
+            // Game ends at this point.
+            if (alien.getY() + 64 < 144) {
                 iter.remove();
+                invokeGameOver(game);
             }
 
             // If a droplet hits an alien, remove both of them and increase the current game score.
@@ -238,8 +243,8 @@ public class MinigameScreen implements Screen {
 
     private void shootDroplet() {
         Droplet droplet = new Droplet(
-                fireTruck.getX(),
-                64
+                fireTruck.getX() + fireTruck.getWidth()/2,
+                128
         );
         droplets.add(droplet);
         lastDropTime = TimeUtils.nanoTime();
