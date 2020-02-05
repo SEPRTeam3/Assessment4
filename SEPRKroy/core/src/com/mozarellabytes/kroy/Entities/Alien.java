@@ -63,7 +63,6 @@ public class Alien extends Sprite {
      */
     public Alien(float x, float y,Queue<Vector2> vertices){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
-
         this.mainPatrol = new PatrolPath(vertices);
         this.position = new Vector2(x,y);
         this.HP = maxHP;
