@@ -1,6 +1,8 @@
 package com.mozarellabytes.kroy.Entities;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mozarellabytes.kroy.Kroy;
+import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 import java.util.ArrayList;
@@ -67,18 +69,24 @@ public class EnemyAttackHandler {
      *          <code>false</code> if bomb does nt hit a true
      */
     public boolean updateBombs() {
+        boolean hasHit = false;
+        ArrayList<Bomb> bombsToRemove = new ArrayList<>();
         for (int i = 0; i < bombs.size(); i++) {
+            System.out.println(i);
             Bomb bomb = bombs.get(i);
             bomb.updatePosition();
             if (bomb.checkHit()) {
                 bomb.damageTruck();
-                this.removeBomb(bomb);
-                return true;
-            } else if (bomb.hasReachedTargetTile()) {
-                this.removeBomb(bomb);
+                bombsToRemove.add(bomb);
+                hasHit = true;
+            }
+
+            else if (bomb.hasReachedTargetTile()) {
+                bombsToRemove.add(bomb);
             }
         }
-        return false;
+        bombs.removeAll(bombsToRemove);
+        return hasHit;
     }
 
     /**

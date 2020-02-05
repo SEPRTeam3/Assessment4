@@ -369,7 +369,7 @@ public class GameScreen implements Screen {
 
         //#Assessment3
         for(Alien alien:aliens){
-            alien.move();
+            alien.move(station.getTrucks());
         }
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
@@ -445,7 +445,6 @@ public class GameScreen implements Screen {
             }
         }
 
-        System.out.println(SoundFX.isPlaying);
 
         shapeMapRenderer.end();
         shapeMapRenderer.setColor(Color.WHITE);

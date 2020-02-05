@@ -54,7 +54,7 @@ public class PatrolPath {
 
             for (float i = (incrementer); i > -1.0f; i = i + incrementer) {
                 this.path.addLast(new Vector2(this.path.last().x + incrementer, this.path.last().y));
-                Gdx.app.log("1", String.valueOf((this.path.last().x + incrementer)));
+
             }
         }else {
             for (float i = incrementer; i < 1.0f; i = i + incrementer) {
@@ -90,7 +90,7 @@ public class PatrolPath {
                     //increment Y
                     if (previousTile.y > vertex.y) {
                         distance = this.previousTile.y - vertex.y;
-                        Gdx.app.log("3", String.valueOf(distance));
+
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (this.previousTile.y - i)));
                             incrementPathsY(-0.1f);
