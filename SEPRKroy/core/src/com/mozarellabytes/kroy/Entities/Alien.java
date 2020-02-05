@@ -34,13 +34,6 @@ public class Alien extends Sprite {
     /** Current PatrolPath path the alien follows*/
     public Queue<Vector2> path;
 
-    /** List of bombs that are active */
-    private final ArrayList<Bomb> bombs;
-
-    /** Whether the truck has an unresolved collision
-     * with another truck */
-    private boolean inCollision;
-
     /** Used to check if the truck's image should be
      * changed to match the direction it is facing */
     private Vector2 previousTile;
@@ -56,6 +49,8 @@ public class Alien extends Sprite {
      */
     private PatrolPath mainPatrol;
 
+    private EnemyAttackHandler attackHandler;
+
     /**
      * Constructs alien at certain position
      *
@@ -64,17 +59,17 @@ public class Alien extends Sprite {
      */
     public Alien(float x, float y,Queue<Vector2> vertices){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
-
         this.mainPatrol = new PatrolPath(vertices);
         this.position = new Vector2(x,y);
         this.HP = maxHP;
         this.path = mainPatrol.getPath();
         //this.setPath();
-        this.bombs = new ArrayList<Bomb>();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/alien/AlienUp.png"));
         this.lookDown = new Texture(Gdx.files.internal("sprites/alien/AlienDown.png"));
+
+        attackHandler = new EnemyAttackHandler(this);
     }
 
     /**
@@ -100,20 +95,34 @@ public class Alien extends Sprite {
      * Called every tick and updates the paths to simulate the truck moving along the
      * path
      */
-    public void move() {
-        if (this.path.size > 0) {
-                Vector2 nextTile = mainPatrol.getFirstAndAppend();
-                this.position = nextTile;
-
-                if (!this.inCollision) {
-                    changeSprite(nextTile);
-                } // add collision case with firetruck or other alien
-
-                previousTile = nextTile;
+    public void move(ArrayList<FireTruck> fireTrucks) {
+        if (this.path.size > 0 && !inCollision(new Vector2(mainPatrol.getPath1First()), fireTrucks)) {
+            Vector2 nextTile = mainPatrol.getFirstAndAppend();
+            this.position = nextTile;
+            changeSprite(nextTile);
+            previousTile = nextTile;
             }
-            if (this.path.isEmpty() && inCollision) {
-                inCollision = false;
+    }
+
+    private boolean inCollision(Vector2 nextTile, ArrayList<FireTruck> fireTrucks){
+        for(FireTruck truck: fireTrucks){
+            if(nextTile.x > position.x)
+                nextTile.x = (int) position.x + 1;
+            else if(nextTile.x < position.x)
+                nextTile.x = (int) position.x - 1;
+
+            if(nextTile.y > position.y)
+                nextTile.y = (int) position.y + 1;
+            else if(nextTile.y < position.y)
+                nextTile.y = (int) position.y - 1;
+
+
+            if(nextTile.x == Math.round(truck.getPosition().x) && nextTile.y == Math.round(truck.getPosition().y)){
+
+                return true;
             }
+        }
+        return false;
     }
 
     /**
@@ -133,8 +142,8 @@ public class Alien extends Sprite {
      * @param mapBatch  Batch that the Alien is being
      *                  drawn to (map dependant)
      */
-    public void drawSprite(Batch mapBatch) {
-        mapBatch.draw(this, this.position.x, this.position.y, 1, 1);
+    public void drawSprite(Batch mapBatch, int width, int height) {
+        mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
 
     /**
@@ -157,9 +166,8 @@ public class Alien extends Sprite {
         return this.path;
     }
 
-    public ArrayList<Bomb> getBombs() {
-        return this.bombs;
-    }
+    public EnemyAttackHandler getAttackHandler() { return attackHandler; }
+
 
     /**
      * saves the first element of the path into a temporary vector

@@ -4,6 +4,7 @@ package com.mozarellabytes.kroy.Entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import java.util.Random;
 
 /**
  * An alien is an entity that moves according to predifined patrol paths
@@ -54,7 +55,7 @@ public class PatrolPath {
 
             for (float i = (incrementer); i > -1.0f; i = i + incrementer) {
                 this.path.addLast(new Vector2(this.path.last().x + incrementer, this.path.last().y));
-                Gdx.app.log("1", String.valueOf((this.path.last().x + incrementer)));
+
             }
         }else {
             for (float i = incrementer; i < 1.0f; i = i + incrementer) {
@@ -77,9 +78,17 @@ public class PatrolPath {
     }
 
     //Path making from vertices
+
+    public static float randFloat(float min , float max) {
+        Random rand = new Random();
+        return rand.nextFloat() * (max - min) + min;
+
+    }
+
     public void buildPathFromVertex(Queue<Vector2> vertices) {
         float distance;
         distance = 0;
+        float speed = randFloat(0.05f , 0.2f);
         this.previousTile = null;
         for (Vector2 vertex : vertices) {
             if (this.previousTile == null) {
@@ -90,16 +99,16 @@ public class PatrolPath {
                     //increment Y
                     if (previousTile.y > vertex.y) {
                         distance = this.previousTile.y - vertex.y;
-                        Gdx.app.log("3", String.valueOf(distance));
+
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (this.previousTile.y - i)));
-                            incrementPathsY(-0.1f);
+                            incrementPathsY(-speed);
                         }
                     } else {
                         distance = vertex.y - this.previousTile.y;
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (this.previousTile.y + i)));
-                            incrementPathsY(0.1f);
+                            incrementPathsY(speed);
                         }
                     }
                 } else {
@@ -109,13 +118,13 @@ public class PatrolPath {
                         distance = this.previousTile.x - vertex.x;
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2((previousTile.x - i), vertex.y));
-                            incrementPathsX(-0.1f);
+                            incrementPathsX(-speed);
                         }
                     } else {
                         distance = vertex.x - this.previousTile.x;
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2((this.previousTile.x + i), vertex.y));
-                            incrementPathsX(0.1f);
+                            incrementPathsX(speed);
                         }
                     }
                 }

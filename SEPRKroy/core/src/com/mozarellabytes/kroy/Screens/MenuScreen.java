@@ -201,6 +201,7 @@ public class MenuScreen implements Screen {
     /** Changes the screen from menu screen to game screen */
     public void toGameScreen() {
         game.setScreen(new GameScreen(game));
+        //game.setScreen(new MinigameScreen(this.game)); //uncomment this to play minigame when clicking the "Start" button.
         this.dispose();
     }
 

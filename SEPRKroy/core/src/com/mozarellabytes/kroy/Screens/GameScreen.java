@@ -75,6 +75,8 @@ public class GameScreen implements Screen {
 
     /** Where the FireEngines' spawn, refill and repair */
     private final FireStation station;
+    private final FireTruck stationTruck;
+    private final Alien crazyAlien;
 
     /** Alien patrols to attack fire engines */
     private Queue<Alien> aliens;
@@ -89,8 +91,13 @@ public class GameScreen implements Screen {
     /** Play when the game is being played
      * Pause when the pause button is clicked */
     public enum PlayState {
-        PLAY, PAUSE
+        PLAY, PAUSE, DIALOGUEPAUSE
     }
+
+    /**
+     * Set the stage of dialogue stating what dialogue is being written to the screen
+     */
+    private int dialogueStage = 1;
 
     /*
     Check whether the game is paused,
@@ -137,6 +144,8 @@ public class GameScreen implements Screen {
                 mapLayers.getIndex("transparentStructures")};
 
         station = new FireStation(3, 8);
+        stationTruck = new FireTruck(this,new Vector2(5,8), FireTruckType.Ocean);
+
 
         spawn(FireTruckType.Ocean);
         spawn(FireTruckType.Speed);
@@ -147,21 +156,32 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
+        //#Assessment3 Added 3 new fortresses
+        fortresses.add(new Fortress (44.5f, 4.5f, FortressType.TrainStation));
+        fortresses.add(new Fortress (45, 22, FortressType.Minster));
+        fortresses.add(new Fortress (29, 9, FortressType.Shambles));
 
         //#Assessment3
         /**
          * Hardcoded alien paths
          */
-        vertices.addFirst(new Vector2(8,5));
-        vertices.addLast(new Vector2(8,1));
-        vertices.addLast(new Vector2(13,1));
-        vertices.addLast(new Vector2(13,7));
+
+        aliens = new Queue<Alien>();
+        vertices.addFirst(new Vector2(13,7));
         vertices.addLast(new Vector2(18,7));
         vertices.addLast(new Vector2(18,11));
         vertices.addLast(new Vector2(13,11));
+        vertices.addLast(new Vector2(13,7));
+        aliens.addLast((new Alien(13,7,vertices)));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(8,5));
         vertices.addLast(new Vector2(13,5));
+        vertices.addLast(new Vector2(13,1));
+        vertices.addLast(new Vector2(4,1));
+        vertices.addLast(new Vector2(4,4));
+        vertices.addLast(new Vector2(8,4));
         vertices.addLast(new Vector2(8,5));
-        aliens = new Queue<Alien>();
         aliens.addLast(new Alien(8,5,vertices));
 
         vertices.clear();
@@ -214,6 +234,55 @@ public class GameScreen implements Screen {
         aliens.addLast(new Alien(26,28,vertices));
         vertices.clear();
 
+        vertices.addFirst(new Vector2(17,28));
+        vertices.addLast(new Vector2(17,21));
+        vertices.addLast(new Vector2(14,21));
+        vertices.addLast(new Vector2(14,16));
+        vertices.addLast(new Vector2(12,16));
+        vertices.addLast(new Vector2(12,22));
+        vertices.addLast(new Vector2(8,22));
+        vertices.addLast(new Vector2(8,28));
+        vertices.addLast(new Vector2(17,28));
+        aliens.addLast(new Alien(10,28,vertices));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(10,18));
+        vertices.addLast(new Vector2(10,16));
+        vertices.addLast(new Vector2(8,16));
+        vertices.addLast(new Vector2(8,14));
+        vertices.addLast(new Vector2(2,14));
+        vertices.addLast(new Vector2(2,17));
+        vertices.addLast(new Vector2(5,17));
+        vertices.addLast(new Vector2(5,18));
+        vertices.addLast(new Vector2(10,18));
+        aliens.addLast(new Alien(10,18,vertices));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(45,18));
+        vertices.addLast(new Vector2(45,15));
+        vertices.addLast(new Vector2(41,15));
+        vertices.addLast(new Vector2(41,18));
+        vertices.addLast(new Vector2(45,18));
+        aliens.addLast(new Alien(45, 18, vertices));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(42,13));
+        vertices.addLast(new Vector2(42,9));
+        vertices.addLast(new Vector2(37,9));
+        vertices.addLast(new Vector2(37,8));
+        vertices.addLast(new Vector2(36,8));
+        vertices.addLast(new Vector2(32,8));
+        vertices.addLast(new Vector2(32,13));
+        vertices.addLast(new Vector2(42,13));
+        aliens.addLast(new Alien(42, 13, vertices));
+        vertices.clear();
+
+
+        vertices.addFirst(new Vector2(3,25));
+        vertices.addLast(new Vector2(3,7));
+        crazyAlien = (new Alien(3,30, vertices));
+        vertices.clear();
+
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
@@ -254,8 +323,9 @@ public class GameScreen implements Screen {
         }
         //#Assessment3
         for(Alien alien:aliens) {
-            alien.drawSprite(mapBatch);
+            alien.drawSprite(mapBatch,1,1);
         }
+        crazyAlien.drawSprite(mapBatch,5,5);
         mapBatch.end();
 
         mapRenderer.render(structureLayersIndices);
@@ -268,7 +338,7 @@ public class GameScreen implements Screen {
 
         for (Fortress fortress : fortresses) {
             fortress.drawStats(shapeMapRenderer);
-            for (Bomb bomb : fortress.getBombs()) {
+            for (Bomb bomb : fortress.getAttackHandler().getBombs()) {
                 bomb.drawBomb(shapeMapRenderer);
             }
         }
@@ -276,7 +346,15 @@ public class GameScreen implements Screen {
         //#Assessment3
         for(Alien alien:aliens) {
             alien.drawStats(shapeMapRenderer);
+            for (Bomb bomb : alien.getAttackHandler().getBombs()) {
+                bomb.drawBomb(shapeMapRenderer);
+            }
         }
+
+        for (Bomb bomb : crazyAlien.getAttackHandler().getBombs()) {
+            bomb.drawBomb(shapeMapRenderer);
+        }
+
         shapeMapRenderer.end();
 
         gui.renderSelectedEntity(selectedEntity);
@@ -295,6 +373,13 @@ public class GameScreen implements Screen {
                 shapeMapRenderer.rect(0, 0, this.camera.viewportWidth, this.camera.viewportHeight);
                 shapeMapRenderer.end();
                 gui.renderPauseScreenText();
+            case DIALOGUEPAUSE:
+                flag = 1;
+                Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+                gui.renderDialogueText(dialogueStage);
+                dialogueStage += 1;
+                for(int waiter = 0; waiter <= 100; waiter += 1){}
+                state = PlayState.PLAY;
         }
         gui.renderButtons();
         gui.renderClock(flag);
@@ -315,9 +400,20 @@ public class GameScreen implements Screen {
         station.checkForCollisions();
         gameState.setTrucksInAttackRange(0);
 
+        if(gui.getCountClock() != null){
+            if(gui.getCountClock().hasEnded()){
+                crazyAlien.move(station.getTrucks());
+                crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3 , crazyAlien.getPosition().y));
+                   crazyAlien.getAttackHandler().attack(stationTruck, false);
+                if (crazyAlien.getAttackHandler().updateBombs()) {
+                    camShake.shakeIt(.2f);
+                }
+            }
+            }
+
         //#Assessment3
         for(Alien alien:aliens){
-            alien.move();
+            alien.move(station.getTrucks());
         }
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
@@ -328,8 +424,9 @@ public class GameScreen implements Screen {
 
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
-                if (fortress.withinRange(truck.getVisualPosition())) {
-                    fortress.attack(truck, true);
+                if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
+                    fortress.getAttackHandler().setAttackLevel(fortress.getLevel());
+                    fortress.getAttackHandler().attack(truck, true);
                 }
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
@@ -338,6 +435,17 @@ public class GameScreen implements Screen {
                         gui.newClock();
                     }
                     break;
+                }
+            }
+
+            //Assessment 3
+            for(Alien alien : this.aliens){
+                alien.getAttackHandler().setPosition(alien.getPosition());
+                if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
+                    alien.getAttackHandler().attack(truck, true);
+                }
+                if (alien.getAttackHandler().updateBombs()) {
+                    camShake.shakeIt(.2f);
                 }
             }
 
@@ -354,7 +462,7 @@ public class GameScreen implements Screen {
         for (int i = 0; i < this.fortresses.size(); i++) {
             Fortress fortress = this.fortresses.get(i);
 
-            boolean hitTruck = fortress.updateBombs();
+            boolean hitTruck = fortress.getAttackHandler().updateBombs();
             if (hitTruck) {
                 camShake.shakeIt(.2f);
             }
@@ -370,6 +478,8 @@ public class GameScreen implements Screen {
 
         }
 
+
+
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             if (gameState.getTrucksInAttackRange() > 0) {
                 SoundFX.playTruckAttack();
@@ -379,7 +489,6 @@ public class GameScreen implements Screen {
             }
         }
 
-        System.out.println(SoundFX.isPlaying);
 
         shapeMapRenderer.end();
         shapeMapRenderer.setColor(Color.WHITE);

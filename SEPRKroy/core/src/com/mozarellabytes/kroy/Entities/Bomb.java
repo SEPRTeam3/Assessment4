@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 
+import java.sql.Time;
 import java.util.Random;
 
 /**
@@ -37,17 +39,18 @@ public class Bomb extends Sprite {
     /**
      * Constructs a bomb with the given source and target
      *
-     * @param fortress  Fortress that the bomb came from
      * @param target    FireTruck being targeted
      * @param isRandom  <code>true</code> bomb heads towards
      *                  the target
      *                  <code>false</code> chance that
      *                  bomb doesnt head towards target
      */
-    public Bomb(Fortress fortress, FireTruck target, boolean isRandom) {
+
+
+    public Bomb(EnemyAttackHandler attacker, FireTruck target, boolean isRandom) {
         this.target = target;
         this.truckPosition = new Vector2(getMiddleOfTile(target.getPosition()));
-        this.startPosition = new Vector2(fortress.getPosition());
+        this.startPosition = new Vector2(attacker.getPosition());
         this.currentPosition = this.startPosition;
         if (isRandom) {
             this.targetPosition = getMiddleOfTile(generateBombTarget());
@@ -55,7 +58,7 @@ public class Bomb extends Sprite {
             this.targetPosition = getMiddleOfTile(this.truckPosition);
 
         }
-        this.damage = fortress.getFortressType().getAP()*(1+fortress.getLevel()*(int)Math.log(fortress.getLevel()/1.5));//Assessment 3
+        this.damage = attacker.getAttackPower()*(1+attacker.getAttackLevel()*(int)Math.log(attacker.getAttackLevel())/1.5f);//Assessment 3
     }
 
     /**

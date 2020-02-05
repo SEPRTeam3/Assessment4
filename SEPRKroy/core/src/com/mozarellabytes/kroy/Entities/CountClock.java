@@ -12,9 +12,9 @@ public class CountClock {
     Constructor
      */
     public CountClock() {
-        remainTime = 900;
+        remainTime = 5;
     }
-
+    
     /*
     Set remaining time, with counting down, state 0 means counting and 1 means pause
     */
@@ -47,6 +47,13 @@ public class CountClock {
         else {
             return "0" + (int) remainTime / 60 + " : " + (int) remainTime % 60;
         }
+    }
+
+    public boolean hasEnded(){
+        if(remainTime<0){
+            return true;
+        }
+        return false;
     }
 }
 
