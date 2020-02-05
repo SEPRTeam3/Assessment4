@@ -7,7 +7,7 @@ public class Droplet extends Entity{
 
     public Droplet(float x, float y) {
         super(
-                new Texture(Gdx.files.internal("sprites/droplet/droplet.png")),
+                new Texture(Gdx.files.internal("sprites/droplet/droplet180.png")),
                 x,
                 y,
                 32,

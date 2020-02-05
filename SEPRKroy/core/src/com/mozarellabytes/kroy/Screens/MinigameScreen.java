@@ -72,12 +72,6 @@ public class MinigameScreen implements Screen {
 
         batch = new SpriteBatch();
 
-//        fireTruck = new Rectangle();
-//        fireTruck.x = Constants.GAME_WIDTH - 64/2;
-//        fireTruck.y = 20;
-//        fireTruck.width = 64;
-//        fireTruck.height = 64;
-
         aliens = new Array<Alien>();
         spawnAlien();
 
@@ -131,11 +125,11 @@ public class MinigameScreen implements Screen {
 //
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             // Shoot water droplet upwards
-            if (TimeUtils.nanoTime() - lastDropTime > 50000000 || lastDropTime == 0) {
+            if (TimeUtils.nanoTime() - lastDropTime > 750000000 || lastDropTime == 0) {
                 shootDroplet();
             }
         }
-//
+
 //      Stop fire trucks moving out of bounds
         if (fireTruck.getX() < 0) {
             fireTruck.setPos(0, fireTruck.getY());
@@ -145,11 +139,12 @@ public class MinigameScreen implements Screen {
             fireTruck.setPos(Constants.GAME_WIDTH - 64, fireTruck.getY());
         }
 
+//      Timer for spawning aliens every second
         if (TimeUtils.nanoTime() - lastAlienSpawn > 1000000000) {
             spawnAlien();
         }
 
-        // Alien movement and logic
+//      Alien movement and logic
         for (Iterator<Alien> iter = aliens.iterator(); iter.hasNext();) {
             Alien alien = iter.next();
             alien.moveDown(delta);
@@ -167,7 +162,7 @@ public class MinigameScreen implements Screen {
             }
         }
 
-        // Droplet movement and logic
+//      Droplet movement and logic
         for (Iterator<Droplet> iter = droplets.iterator(); iter.hasNext();) {
             Droplet droplet = iter.next();
             droplet.moveUp(delta);
