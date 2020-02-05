@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
+import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.ArrayList;
 
@@ -27,10 +28,10 @@ public class EnemyAttackHandler {
 
     EnemyAttackHandler(Alien entity){
         position = entity.getPosition();
-        attackRange = 3;
-        attackPower = 2;
+        attackRange = ThreadLocalRandom.current().nextInt(2, 4);
+        attackPower = ThreadLocalRandom.current().nextInt(1, 3);
         attackLevel = 1;
-        delay = 500;
+        delay = ThreadLocalRandom.current().nextInt(500, 1201);
         bombs = new ArrayList<Bomb>();
     }
 

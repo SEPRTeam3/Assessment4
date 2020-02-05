@@ -415,9 +415,9 @@ public class GameScreen implements Screen {
                 alien.getAttackHandler().setPosition(alien.getPosition());
                 if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
                     alien.getAttackHandler().attack(truck, true);
-                    if (alien.getAttackHandler().updateBombs()) {
-                        camShake.shakeIt(.2f);
-                    }
+                }
+                if (alien.getAttackHandler().updateBombs()) {
+                    camShake.shakeIt(.2f);
                 }
             }
 
