@@ -152,16 +152,23 @@ public class GameScreen implements Screen {
         /**
          * Hardcoded alien paths
          */
-        vertices.addFirst(new Vector2(8,5));
-        vertices.addLast(new Vector2(8,1));
-        vertices.addLast(new Vector2(13,1));
-        vertices.addLast(new Vector2(13,7));
+
+        aliens = new Queue<Alien>();
+        vertices.addFirst(new Vector2(13,7));
         vertices.addLast(new Vector2(18,7));
         vertices.addLast(new Vector2(18,11));
         vertices.addLast(new Vector2(13,11));
+        vertices.addLast(new Vector2(13,7));
+        aliens.addLast((new Alien(13,7,vertices)));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(8,5));
         vertices.addLast(new Vector2(13,5));
+        vertices.addLast(new Vector2(13,1));
+        vertices.addLast(new Vector2(4,1));
+        vertices.addLast(new Vector2(4,4));
+        vertices.addLast(new Vector2(8,4));
         vertices.addLast(new Vector2(8,5));
-        aliens = new Queue<Alien>();
         aliens.addLast(new Alien(8,5,vertices));
 
         vertices.clear();
@@ -238,6 +245,24 @@ public class GameScreen implements Screen {
         aliens.addLast(new Alien(10,18,vertices));
         vertices.clear();
 
+        vertices.addFirst(new Vector2(45,18));
+        vertices.addLast(new Vector2(45,15));
+        vertices.addLast(new Vector2(41,15));
+        vertices.addLast(new Vector2(41,18));
+        vertices.addLast(new Vector2(45,18));
+        aliens.addLast(new Alien(45, 18, vertices));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(42,13));
+        vertices.addLast(new Vector2(42,9));
+        vertices.addLast(new Vector2(37,9));
+        vertices.addLast(new Vector2(37,8));
+        vertices.addLast(new Vector2(36,8));
+        vertices.addLast(new Vector2(32,8));
+        vertices.addLast(new Vector2(32,13));
+        vertices.addLast(new Vector2(42,13));
+        aliens.addLast(new Alien(42, 13, vertices));
+        vertices.clear();
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
