@@ -272,6 +272,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(42,13));
         aliens.addLast(new Alien(42, 13, vertices));
         vertices.clear();
+
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
