@@ -7,8 +7,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -59,18 +62,24 @@ public class MinigameScreen implements Screen {
     /** Background image for the minigame */
     private Texture bgImage = new Texture(Gdx.files.internal("images/minigame-bg.jpg"));
 
+    private int score = 0;
+
+    private BitmapFont font;
+    private String scoreText;
+    private GlyphLayout scoreLayout;
+
     /**
      * Constructor to instantiate all the assets and entities.
      */
     public MinigameScreen(Kroy game) {
         this.game = game;
 
-        fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 64);
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         batch = new SpriteBatch();
+
+        fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 64);
 
         aliens = new Array<Alien>();
         spawnAlien();
@@ -80,6 +89,14 @@ public class MinigameScreen implements Screen {
 
     @Override
     public void show() {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Magero.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.size = 60;
+        font = generator.generateFont(parameter);
+        scoreLayout = new GlyphLayout();
+
+        updateScoreText(0);
     }
 
     @Override
@@ -102,6 +119,14 @@ public class MinigameScreen implements Screen {
         for (Droplet droplet: droplets) {
             batch.draw(droplet.getTexture(), droplet.getX(), droplet.getY());
         }
+
+        font.draw(
+                batch,
+                scoreLayout,
+                Constants.GAME_WIDTH/2 - scoreLayout.width/2,
+                Constants.GAME_HEIGHT - scoreLayout.height
+        );
+
         batch.end();
 
         this.update(delta);
@@ -158,6 +183,8 @@ public class MinigameScreen implements Screen {
                 if (alien.getRect().overlaps(droplets.get(i).getRect())) {
                     iter.remove(); // Remove alien
                     droplets.removeIndex(i); // Remove droplet
+
+                    this.score += 10;
                 }
             }
         }
@@ -171,6 +198,8 @@ public class MinigameScreen implements Screen {
                 iter.remove();
             }
         }
+
+        updateScoreText(this.score);
 
     }
 
@@ -212,6 +241,12 @@ public class MinigameScreen implements Screen {
         );
         droplets.add(droplet);
         lastDropTime = TimeUtils.nanoTime();
+    }
+
+    private void updateScoreText(int score) {
+        this.score = score;
+        this.scoreText = "Score: " + this.score;
+        this.scoreLayout.setText(font, this.scoreText);
     }
 
     @Override
