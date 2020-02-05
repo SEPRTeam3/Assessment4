@@ -12,7 +12,7 @@ public class CountClock {
     Constructor
      */
     public CountClock() {
-        remainTime = 300;
+        remainTime = 5;
     }
     
     /*
@@ -47,6 +47,13 @@ public class CountClock {
         else {
             return "0" + (int) remainTime / 60 + " : " + (int) remainTime % 60;
         }
+    }
+
+    public boolean hasEnded(){
+        if(remainTime<0){
+            return true;
+        }
+        return false;
     }
 }
 

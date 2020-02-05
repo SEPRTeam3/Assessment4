@@ -80,9 +80,7 @@ public class PatrolPath {
     //Path making from vertices
 
     public static float randFloat(float min , float max) {
-
         Random rand = new Random();
-
         return rand.nextFloat() * (max - min) + min;
 
     }

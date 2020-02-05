@@ -19,13 +19,13 @@ public enum FortressType {
      * attack points, width, height and sprite.
      */
     //Changed attack power values for assessment 3
-    Revs ("Revolution", 2500, 7, 100, 4, 5, 3, new Texture(Gdx.files.internal("sprites/fortress/fortress_revs.png"))),
-    Walmgate ("Walmgate Bar", 1500, 8, 200, 6, 5, 5, new Texture(Gdx.files.internal("sprites/fortress/fortress_walmgate.png"))),
-    Clifford ("Clifford's Tower", 500, 4, 150, 8, 4, 3, new Texture(Gdx.files.internal("sprites/fortress/fortress_clifford.png"))),
+    Revs ("Revolution", 2500, 7, 100, 2, 5, 3, new Texture(Gdx.files.internal("sprites/fortress/fortress_revs.png"))),
+    Walmgate ("Walmgate Bar", 1500, 8, 200, 3, 5, 5, new Texture(Gdx.files.internal("sprites/fortress/fortress_walmgate.png"))),
+    Clifford ("Clifford's Tower", 500, 4, 150, 4, 4, 3, new Texture(Gdx.files.internal("sprites/fortress/fortress_clifford.png"))),
     //#Assessment3 Added 3 new fortresses
-    TrainStation ("Train Station", 500, 4, 150, 8, 7, 4, new Texture(Gdx.files.internal("sprites/fortress/train.png"))),
-    Minster ("Minster", 500, 4, 150, 8, 5, 6, new Texture(Gdx.files.internal("sprites/fortress/minster.png"))),
-    Shambles ("Shambles", 500, 4, 150, 8, 6, 4, new Texture(Gdx.files.internal("sprites/fortress/shambles.png")));
+    TrainStation ("Train Station", 500, 4, 150, 4, 7, 4, new Texture(Gdx.files.internal("sprites/fortress/train.png"))),
+    Minster ("Minster", 500, 4, 150, 8, 5, 3, new Texture(Gdx.files.internal("sprites/fortress/minster.png"))),
+    Shambles ("Shambles", 500, 4, 150, 8, 6, 2, new Texture(Gdx.files.internal("sprites/fortress/shambles.png")));
 
     /** The name for the fortress, visible once the fortress has been clicked on */
     private final String name;

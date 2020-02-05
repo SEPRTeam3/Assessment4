@@ -142,8 +142,8 @@ public class Alien extends Sprite {
      * @param mapBatch  Batch that the Alien is being
      *                  drawn to (map dependant)
      */
-    public void drawSprite(Batch mapBatch) {
-        mapBatch.draw(this, this.position.x, this.position.y, 1, 1);
+    public void drawSprite(Batch mapBatch, int width, int height) {
+        mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
 
     /**

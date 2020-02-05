@@ -75,6 +75,8 @@ public class GameScreen implements Screen {
 
     /** Where the FireEngines' spawn, refill and repair */
     private final FireStation station;
+    private final FireTruck stationTruck;
+    private final Alien crazyAlien;
 
     /** Alien patrols to attack fire engines */
     private Queue<Alien> aliens;
@@ -142,6 +144,8 @@ public class GameScreen implements Screen {
                 mapLayers.getIndex("transparentStructures")};
 
         station = new FireStation(3, 8);
+        stationTruck = new FireTruck(this,new Vector2(5,8), FireTruckType.Ocean);
+
 
         spawn(FireTruckType.Ocean);
         spawn(FireTruckType.Speed);
@@ -272,6 +276,13 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(42,13));
         aliens.addLast(new Alien(42, 13, vertices));
         vertices.clear();
+
+
+        vertices.addFirst(new Vector2(3,25));
+        vertices.addLast(new Vector2(3,7));
+        crazyAlien = (new Alien(3,30, vertices));
+        vertices.clear();
+
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
@@ -312,8 +323,9 @@ public class GameScreen implements Screen {
         }
         //#Assessment3
         for(Alien alien:aliens) {
-            alien.drawSprite(mapBatch);
+            alien.drawSprite(mapBatch,1,1);
         }
+        crazyAlien.drawSprite(mapBatch,5,5);
         mapBatch.end();
 
         mapRenderer.render(structureLayersIndices);
@@ -338,6 +350,11 @@ public class GameScreen implements Screen {
                 bomb.drawBomb(shapeMapRenderer);
             }
         }
+
+        for (Bomb bomb : crazyAlien.getAttackHandler().getBombs()) {
+            bomb.drawBomb(shapeMapRenderer);
+        }
+
         shapeMapRenderer.end();
 
         gui.renderSelectedEntity(selectedEntity);
@@ -382,6 +399,17 @@ public class GameScreen implements Screen {
         station.restoreTrucks();
         station.checkForCollisions();
         gameState.setTrucksInAttackRange(0);
+
+        if(gui.getCountClock() != null){
+            if(gui.getCountClock().hasEnded()){
+                crazyAlien.move(station.getTrucks());
+                crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3 , crazyAlien.getPosition().y));
+                   crazyAlien.getAttackHandler().attack(stationTruck, false);
+                if (crazyAlien.getAttackHandler().updateBombs()) {
+                    camShake.shakeIt(.2f);
+                }
+            }
+            }
 
         //#Assessment3
         for(Alien alien:aliens){

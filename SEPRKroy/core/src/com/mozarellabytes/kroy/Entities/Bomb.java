@@ -21,8 +21,6 @@ public class Bomb extends Sprite {
     /** The target FireTruck that the bomb is heading towards */
     private final FireTruck target;
 
-    private final long creationTime;
-
     /** The position of the target at bomb creation */
     private final Vector2 truckPosition;
 
@@ -41,7 +39,6 @@ public class Bomb extends Sprite {
     /**
      * Constructs a bomb with the given source and target
      *
-     * @param fortress  Fortress that the bomb came from
      * @param target    FireTruck being targeted
      * @param isRandom  <code>true</code> bomb heads towards
      *                  the target
@@ -55,14 +52,13 @@ public class Bomb extends Sprite {
         this.truckPosition = new Vector2(getMiddleOfTile(target.getPosition()));
         this.startPosition = new Vector2(attacker.getPosition());
         this.currentPosition = this.startPosition;
-        creationTime = TimeUtils.millis();
         if (isRandom) {
             this.targetPosition = getMiddleOfTile(generateBombTarget());
         } else {
             this.targetPosition = getMiddleOfTile(this.truckPosition);
 
         }
-        this.damage = attacker.getAttackPower()*(1+attacker.getAttackLevel()*(int)Math.log(attacker.getAttackLevel()/1.5));//Assessment 3
+        this.damage = attacker.getAttackPower()*(1+attacker.getAttackLevel()*(int)Math.log(attacker.getAttackLevel())/1.5f);//Assessment 3
     }
 
     /**
@@ -83,7 +79,7 @@ public class Bomb extends Sprite {
      *          <code>false</code> otherwise
      */
     public boolean hasReachedTargetTile() {
-        return (int) this.currentPosition.x == (int) this.targetPosition.x && (int) this.currentPosition.y == (int) this.targetPosition.y || TimeUtils.timeSinceMillis(creationTime) > 400;
+        return (int) this.currentPosition.x == (int) this.targetPosition.x && (int) this.currentPosition.y == (int) this.targetPosition.y;
     }
 
     /**
