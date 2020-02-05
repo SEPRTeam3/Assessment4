@@ -34,10 +34,6 @@ public class Alien extends Sprite {
     /** Current PatrolPath path the alien follows*/
     public Queue<Vector2> path;
 
-    /** Whether the truck has an unresolved collision
-     * with another truck */
-    private boolean inCollision;
-
     /** Used to check if the truck's image should be
      * changed to match the direction it is facing */
     private Vector2 previousTile;
@@ -99,20 +95,34 @@ public class Alien extends Sprite {
      * Called every tick and updates the paths to simulate the truck moving along the
      * path
      */
-    public void move() {
-        if (this.path.size > 0) {
-                Vector2 nextTile = mainPatrol.getFirstAndAppend();
-                this.position = nextTile;
-
-                if (!this.inCollision) {
-                    changeSprite(nextTile);
-                } // add collision case with firetruck or other alien
-
-                previousTile = nextTile;
+    public void move(ArrayList<FireTruck> fireTrucks) {
+        if (this.path.size > 0 && !inCollision(new Vector2(mainPatrol.getPath1First()), fireTrucks)) {
+            Vector2 nextTile = mainPatrol.getFirstAndAppend();
+            this.position = nextTile;
+            changeSprite(nextTile);
+            previousTile = nextTile;
             }
-            if (this.path.isEmpty() && inCollision) {
-                inCollision = false;
+    }
+
+    private boolean inCollision(Vector2 nextTile, ArrayList<FireTruck> fireTrucks){
+        for(FireTruck truck: fireTrucks){
+            if(nextTile.x > position.x)
+                nextTile.x = (int) position.x + 1;
+            else if(nextTile.x < position.x)
+                nextTile.x = (int) position.x - 1;
+
+            if(nextTile.y > position.y)
+                nextTile.y = (int) position.y + 1;
+            else if(nextTile.y < position.y)
+                nextTile.y = (int) position.y - 1;
+
+
+            if(nextTile.x == Math.round(truck.getPosition().x) && nextTile.y == Math.round(truck.getPosition().y)){
+
+                return true;
             }
+        }
+        return false;
     }
 
     /**

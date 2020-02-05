@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 
+import java.sql.Time;
 import java.util.Random;
 
 /**
@@ -18,6 +20,8 @@ public class Bomb extends Sprite {
 
     /** The target FireTruck that the bomb is heading towards */
     private final FireTruck target;
+
+    private final long creationTime;
 
     /** The position of the target at bomb creation */
     private final Vector2 truckPosition;
@@ -44,11 +48,14 @@ public class Bomb extends Sprite {
      *                  <code>false</code> chance that
      *                  bomb doesnt head towards target
      */
+
+
     public Bomb(EnemyAttackHandler attacker, FireTruck target, boolean isRandom) {
         this.target = target;
         this.truckPosition = new Vector2(getMiddleOfTile(target.getPosition()));
         this.startPosition = new Vector2(attacker.getPosition());
         this.currentPosition = this.startPosition;
+        creationTime = TimeUtils.millis();
         if (isRandom) {
             this.targetPosition = getMiddleOfTile(generateBombTarget());
         } else {
@@ -76,7 +83,7 @@ public class Bomb extends Sprite {
      *          <code>false</code> otherwise
      */
     public boolean hasReachedTargetTile() {
-        return (int) this.currentPosition.x == (int) this.targetPosition.x && (int) this.currentPosition.y == (int) this.targetPosition.y;
+        return (int) this.currentPosition.x == (int) this.targetPosition.x && (int) this.currentPosition.y == (int) this.targetPosition.y || TimeUtils.timeSinceMillis(creationTime) > 400;
     }
 
     /**

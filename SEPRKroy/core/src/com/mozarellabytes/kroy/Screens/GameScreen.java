@@ -385,7 +385,7 @@ public class GameScreen implements Screen {
 
         //#Assessment3
         for(Alien alien:aliens){
-            alien.move();
+            alien.move(station.getTrucks());
         }
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
@@ -415,9 +415,9 @@ public class GameScreen implements Screen {
                 alien.getAttackHandler().setPosition(alien.getPosition());
                 if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
                     alien.getAttackHandler().attack(truck, true);
-                    if (alien.getAttackHandler().updateBombs()) {
-                        camShake.shakeIt(.2f);
-                    }
+                }
+                if (alien.getAttackHandler().updateBombs()) {
+                    camShake.shakeIt(.2f);
                 }
             }
 
@@ -461,7 +461,6 @@ public class GameScreen implements Screen {
             }
         }
 
-        System.out.println(SoundFX.isPlaying);
 
         shapeMapRenderer.end();
         shapeMapRenderer.setColor(Color.WHITE);
