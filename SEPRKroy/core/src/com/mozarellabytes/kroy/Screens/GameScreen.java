@@ -89,8 +89,13 @@ public class GameScreen implements Screen {
     /** Play when the game is being played
      * Pause when the pause button is clicked */
     public enum PlayState {
-        PLAY, PAUSE
+        PLAY, PAUSE, DIALOGUEPAUSE
     }
+
+    /**
+     * Set the stage of dialogue stating what dialogue is being written to the screen
+     */
+    private int dialogueStage = 1;
 
     /*
     Check whether the game is paused,
@@ -347,6 +352,13 @@ public class GameScreen implements Screen {
                 shapeMapRenderer.rect(0, 0, this.camera.viewportWidth, this.camera.viewportHeight);
                 shapeMapRenderer.end();
                 gui.renderPauseScreenText();
+            case DIALOGUEPAUSE:
+                flag = 1;
+                Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
+                gui.renderDialogueText(dialogueStage);
+                dialogueStage += 1;
+                for(int waiter = 0; waiter <= 100; waiter += 1){}
+                state = PlayState.PLAY;
         }
         gui.renderButtons();
         gui.renderClock(flag);
