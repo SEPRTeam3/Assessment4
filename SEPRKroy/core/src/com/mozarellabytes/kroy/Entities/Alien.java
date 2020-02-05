@@ -34,9 +34,6 @@ public class Alien extends Sprite {
     /** Current PatrolPath path the alien follows*/
     public Queue<Vector2> path;
 
-    /** List of bombs that are active */
-    private final ArrayList<Bomb> bombs;
-
     /** Whether the truck has an unresolved collision
      * with another truck */
     private boolean inCollision;
@@ -56,6 +53,8 @@ public class Alien extends Sprite {
      */
     private PatrolPath mainPatrol;
 
+    private EnemyAttackHandler attackHandler;
+
     /**
      * Constructs alien at certain position
      *
@@ -70,11 +69,12 @@ public class Alien extends Sprite {
         this.HP = maxHP;
         this.path = mainPatrol.getPath();
         //this.setPath();
-        this.bombs = new ArrayList<Bomb>();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/alien/AlienUp.png"));
         this.lookDown = new Texture(Gdx.files.internal("sprites/alien/AlienDown.png"));
+
+        attackHandler = new EnemyAttackHandler(this);
     }
 
     /**
@@ -157,9 +157,8 @@ public class Alien extends Sprite {
         return this.path;
     }
 
-    public ArrayList<Bomb> getBombs() {
-        return this.bombs;
-    }
+    public EnemyAttackHandler getAttackHandler() { return attackHandler; }
+
 
     /**
      * saves the first element of the path into a temporary vector

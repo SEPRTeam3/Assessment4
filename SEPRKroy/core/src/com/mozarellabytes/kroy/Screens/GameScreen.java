@@ -317,7 +317,7 @@ public class GameScreen implements Screen {
 
         for (Fortress fortress : fortresses) {
             fortress.drawStats(shapeMapRenderer);
-            for (Bomb bomb : fortress.getBombs()) {
+            for (Bomb bomb : fortress.getAttackHandler().getBombs()) {
                 bomb.drawBomb(shapeMapRenderer);
             }
         }
@@ -325,6 +325,9 @@ public class GameScreen implements Screen {
         //#Assessment3
         for(Alien alien:aliens) {
             alien.drawStats(shapeMapRenderer);
+            for (Bomb bomb : alien.getAttackHandler().getBombs()) {
+                bomb.drawBomb(shapeMapRenderer);
+            }
         }
         shapeMapRenderer.end();
 
@@ -377,8 +380,9 @@ public class GameScreen implements Screen {
 
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
-                if (fortress.withinRange(truck.getVisualPosition())) {
-                    fortress.attack(truck, true);
+                if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
+                    fortress.getAttackHandler().setAttackLevel(fortress.getLevel());
+                    fortress.getAttackHandler().attack(truck, true);
                 }
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
@@ -387,6 +391,17 @@ public class GameScreen implements Screen {
                         gui.newClock();
                     }
                     break;
+                }
+            }
+
+            //Assessment 3
+            for(Alien alien : this.aliens){
+                alien.getAttackHandler().setPosition(alien.getPosition());
+                if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
+                    alien.getAttackHandler().attack(truck, true);
+                    if (alien.getAttackHandler().updateBombs()) {
+                        camShake.shakeIt(.2f);
+                    }
                 }
             }
 
@@ -403,7 +418,7 @@ public class GameScreen implements Screen {
         for (int i = 0; i < this.fortresses.size(); i++) {
             Fortress fortress = this.fortresses.get(i);
 
-            boolean hitTruck = fortress.updateBombs();
+            boolean hitTruck = fortress.getAttackHandler().updateBombs();
             if (hitTruck) {
                 camShake.shakeIt(.2f);
             }
@@ -418,6 +433,8 @@ public class GameScreen implements Screen {
             }
 
         }
+
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             if (gameState.getTrucksInAttackRange() > 0) {
