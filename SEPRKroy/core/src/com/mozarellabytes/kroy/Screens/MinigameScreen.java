@@ -15,7 +15,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
+import com.mozarellabytes.kroy.minigame.Alien;
+import com.mozarellabytes.kroy.minigame.Droplet;
 import com.mozarellabytes.kroy.minigame.FireTruck;
+import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 import java.sql.Time;
 import java.util.Iterator;
@@ -31,17 +34,6 @@ public class MinigameScreen implements Screen {
     /** Instance of the game */
     private final Kroy game;
 
-    /** Images for minigame firetruck */
-    private Texture truckImage;
-    private Texture truckLeft;
-    private Texture truckRight;
-
-    /** Image for minigame alien */
-    private Texture alienImage;
-
-    /** Water sound when attacking the aliens */
-    private Sound waterSound;
-
     /** Camera to set the projection for the screen */
     private OrthographicCamera camera;
 
@@ -53,19 +45,19 @@ public class MinigameScreen implements Screen {
     private FireTruck fireTruck;
 
     /** Array to keep track of all aliens */
-    private Array<Rectangle> aliens;
+    private Array<Alien> aliens;
 
     /** Keeping track of the time since the last alien was spawned */
     private long lastAlienSpawn;
 
-    /** Image for water droplet */
-    private Texture dropletImage;
-
     /** Array to keep track of all water droplets */
-    private Array<Rectangle> droplets;
+    private Array<Droplet> droplets;
 
     /** Keeping track of the last time a water droplet was shot */
     private long lastDropTime = 0;
+
+    /** Background image for the minigame */
+    private Texture bgImage = new Texture(Gdx.files.internal("images/minigame-bg.jpg"));
 
     /**
      * Constructor to instantiate all the assets and entities.
@@ -73,14 +65,7 @@ public class MinigameScreen implements Screen {
     public MinigameScreen(Kroy game) {
         this.game = game;
 
-        fireTruck = new FireTruck();
-        fireTruck.create();
-
-        alienImage = new Texture(Gdx.files.internal("sprites/alien/alien.png"));
-
-        dropletImage = new Texture(Gdx.files.internal("sprites/droplet/droplet180.png"));
-
-        waterSound = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/truck_attack.wav"));
+        fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 64);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -93,10 +78,10 @@ public class MinigameScreen implements Screen {
 //        fireTruck.width = 64;
 //        fireTruck.height = 64;
 
-        aliens = new Array<Rectangle>();
+        aliens = new Array<Alien>();
         spawnAlien();
 
-        droplets = new Array<Rectangle>();
+        droplets = new Array<Droplet>();
     }
 
     @Override
@@ -113,13 +98,15 @@ public class MinigameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        fireTruck.getSprite().draw(batch);
-        for (Rectangle alien: aliens) {
-            batch.draw(alienImage, alien.x, alien.y);
+        batch.draw(bgImage, 0 ,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+
+        batch.draw(fireTruck.getTexture(), fireTruck.getX(), fireTruck.getY());
+        for (Alien alien: aliens) {
+            batch.draw(alien.getTexture(), alien.getX(), alien.getY());
         }
 
-        for (Rectangle droplet: droplets) {
-            batch.draw(dropletImage, droplet.x, droplet.y);
+        for (Droplet droplet: droplets) {
+            batch.draw(droplet.getTexture(), droplet.getX(), droplet.getY());
         }
         batch.end();
 
@@ -134,62 +121,58 @@ public class MinigameScreen implements Screen {
     public void update(float delta) {
 
 //      Fire truck controls
-//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-//            fireTruck.x -= 500 * delta;
-//            truckImage = truckLeft;
-//        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            fireTruck.moveLeft(delta);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            fireTruck.moveRight(delta);
+        }
 //
-//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-//            fireTruck.x += 500 * delta;
-//            truckImage = truckRight;
-//        }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            // Shoot water droplet upwards
+            if (TimeUtils.nanoTime() - lastDropTime > 50000000 || lastDropTime == 0) {
+                shootDroplet();
+            }
+        }
 //
-//        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-//            // Shoot water droplet upwards
-//            if (TimeUtils.nanoTime() - lastDropTime > 50000000 || lastDropTime == 0) {
-//                shootDroplet();
-//            }
-//        }
-//
-////      Stop fire trucks moving out of bounds
-//        if (fireTruck.x < 0) {
-//            fireTruck.x = 0;
-//        }
-//
-//        if (fireTruck.x > Constants.GAME_WIDTH  - 64) {
-//            fireTruck.x = Constants.GAME_WIDTH - 64;
-//        }
+//      Stop fire trucks moving out of bounds
+        if (fireTruck.getX() < 0) {
+            fireTruck.setPos(0, fireTruck.getY());
+        }
+
+        if (fireTruck.getX() > Constants.GAME_WIDTH  - 64) {
+            fireTruck.setPos(Constants.GAME_WIDTH - 64, fireTruck.getY());
+        }
 
         if (TimeUtils.nanoTime() - lastAlienSpawn > 1000000000) {
             spawnAlien();
         }
 
         // Alien movement and logic
-        for (Iterator<Rectangle> iter = aliens.iterator(); iter.hasNext();) {
-            Rectangle alien = iter.next();
-            alien.y -= 150 * delta;
+        for (Iterator<Alien> iter = aliens.iterator(); iter.hasNext();) {
+            Alien alien = iter.next();
+            alien.moveDown(delta);
 
-            if (alien.y + 64 < 0) {
+            if (alien.getY() + 64 < 0) {
                 iter.remove();
             }
 
-//            if (alien.overlaps(fireTruck)) {
-//                iter.remove();
-//            }
-
-            for (Rectangle droplet: droplets) {
-                if (alien.overlaps(droplet)) {
-                    iter.remove();
+            // If a droplet hits an alien, remove both of them and increase the current game score.
+            for (int i = 0; i < droplets.size; i++) {
+                if (alien.getRect().overlaps(droplets.get(i).getRect())) {
+                    iter.remove(); // Remove alien
+                    droplets.removeIndex(i); // Remove droplet
                 }
             }
         }
 
         // Droplet movement and logic
-        for (Iterator<Rectangle> iter = droplets.iterator(); iter.hasNext();) {
-            Rectangle droplet = iter.next();
-            droplet.y += 300 * delta;
+        for (Iterator<Droplet> iter = droplets.iterator(); iter.hasNext();) {
+            Droplet droplet = iter.next();
+            droplet.moveUp(delta);
 
-            if (droplet.y > Constants.GAME_HEIGHT) {
+            if (droplet.getY() > Constants.GAME_HEIGHT) {
                 iter.remove();
             }
         }
@@ -220,28 +203,24 @@ public class MinigameScreen implements Screen {
      * Method for spawning new aliens.
      * */
     private void spawnAlien() {
-        Rectangle alien = new Rectangle();
-        alien.x = MathUtils.random(0, Constants.GAME_WIDTH - 64);
-        alien.y = Constants.GAME_HEIGHT;
-        alien.width = 64;
-        alien.height = 64;
+        int x = MathUtils.random(0, Constants.GAME_WIDTH - 64);
+        int y = Constants.GAME_HEIGHT;
+        Alien alien = new Alien(x, y);
         aliens.add(alien);
         lastAlienSpawn = TimeUtils.nanoTime();
     }
 
-//    private void shootDroplet() {
-//        Rectangle droplet = new Rectangle();
-//        droplet.x = fireTruck.x;
-//        droplet.y = fireTruck.y + 64;
-//        droplet.width = 32;
-//        droplet.height = 32;
-//        droplets.add(droplet);
-//        lastDropTime = TimeUtils.nanoTime();
-//    }
+    private void shootDroplet() {
+        Droplet droplet = new Droplet(
+                fireTruck.getX(),
+                64
+        );
+        droplets.add(droplet);
+        lastDropTime = TimeUtils.nanoTime();
+    }
 
     @Override
     public void dispose() {
     }
-
 
 }
