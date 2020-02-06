@@ -165,8 +165,7 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress (45, 22, FortressType.Minster));
         fortresses.add(new Fortress (29, 9, FortressType.Shambles));
 
-        //#Assessment3
-        /**
+        /* #Assessment3
          * Hardcoded alien paths
          */
 
@@ -510,6 +509,10 @@ public class GameScreen implements Screen {
                 if (SoundFX.music_enabled) {
                     SoundFX.sfx_fortress_destroyed.play();
                 }
+
+                // #Assessment3
+                // Switch screen to the minigame
+                toMinigameScreen();
             }
 
 
@@ -530,6 +533,15 @@ public class GameScreen implements Screen {
             gui.renderSelectedEntity(selectedEntity);
         }
 
+    }
+
+    /**
+     * Changes the current screen to the minigame.
+     * Passes in the current <code>game</code> instance so the minigame can return back to the main game.
+     */
+    public void toMinigameScreen() {
+        game.setScreen(new MinigameScreen(game, this));
+//        this.dispose();
     }
 
     @Override

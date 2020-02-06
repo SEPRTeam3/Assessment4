@@ -36,6 +36,11 @@ public class MinigameScreen implements Screen {
     /** Instance of the game */
     private final Kroy game;
 
+    /** Reference to the screen calling minigame.
+     * This means we can easily return to the previous screen without
+     * losing any state data. */
+    private final Screen parent;
+
     /** Camera to set the projection for the screen */
     private OrthographicCamera camera;
 
@@ -71,8 +76,9 @@ public class MinigameScreen implements Screen {
     /**
      * Constructor to instantiate all the assets and entities.
      */
-    public MinigameScreen(Kroy game) {
+    public MinigameScreen(Kroy game, Screen parent) {
         this.game = game;
+        this.parent = parent;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -134,6 +140,7 @@ public class MinigameScreen implements Screen {
     }
 
     /**
+     * #Assessment3
      * Handle controls and minigame logic.
      *
      * @param delta The time in milliseconds since the last render
@@ -230,6 +237,7 @@ public class MinigameScreen implements Screen {
     }
 
     /**
+     * #Assessment3
      * Method for spawning new aliens at the top of the screen at a random x location.
      * */
     private void spawnAlien() {
@@ -250,6 +258,7 @@ public class MinigameScreen implements Screen {
     }
 
     /**
+     * #Assessment3
      * Updates the current score glyph layout.
      * Invoked whenever an alien is destroyed.
      */
@@ -258,11 +267,22 @@ public class MinigameScreen implements Screen {
         this.scoreLayout.setText(font, this.scoreText);
     }
 
+    /**
+     * #Assessment3
+     * Switches the screen back to the main game.
+     * By having the parent screen pass itself as a parameter when creating the new minigame screen, we can
+     * return back to the parent screen with all the "state data" still intact, and don't have to instantiate
+     * a new screen (which would restart the whole game again).
+     * @param game
+     */
     private void invokeGameOver(Kroy game) {
         dispose();
-        game.setScreen(new GameScreen(game));
+        game.setScreen(parent);
     }
 
+    /**
+     *  Dispose of all resources used in the minigame (e.g. textures, sounds etc.)
+     */
     @Override
     public void dispose() {
     }
