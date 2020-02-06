@@ -16,6 +16,8 @@ public class MenuScreen implements Screen {
 
     /** The game */
     private final Kroy game;
+
+    /** Camera for rendering the world */
     public final OrthographicCamera camera;
 
     /** The menu screen image - see ui/menuscreen_blank_2 */
