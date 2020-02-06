@@ -115,7 +115,6 @@ public class GameScreen implements Screen {
      */
     private int flag = 0;
     private float attackTime = 0;
-    private float totalAttackTime = attackTime();
 
 
     /**
@@ -311,19 +310,13 @@ public class GameScreen implements Screen {
     public void show() {
     }
 
-    public float attackTime(){
-        return totalAttackTime = ThreadLocalRandom.current().nextInt(15, 25);
-    }
-
     public static boolean fireStationExist(){
         return stationExist;
     }
 
     @Override
     public void render(float delta) {
-
         camera.update();
-
         mapRenderer.setView(camera);
         mapRenderer.render(backgroundLayerIndex);
 
@@ -357,6 +350,8 @@ public class GameScreen implements Screen {
         for (FireTruck truck : station.getTrucks()) {
             truck.drawStats(shapeMapRenderer);
         }
+
+        stationTruck.drawStats(shapeMapRenderer);
 
         for (Fortress fortress : fortresses) {
             fortress.drawStats(shapeMapRenderer);
@@ -429,35 +424,31 @@ public class GameScreen implements Screen {
                 }
             }
 
-        if(gui.getCountClock() != null){
-            if(gui.getCountClock().hasEnded()) {
-               if(crazyAlien.getPosition().y > 9){
+        if(gui.getCountClock() != null) {
+            if (gui.getCountClock().hasEnded()) {
+                if (crazyAlien.getPosition().y > 9) {
                     crazyAlien.move(station.getTrucks());
+                } else {
+                    if (stationTruck.getHP() > 0) {
+                        Queue<Vector2> vertices;
+                        vertices = new Queue<Vector2>();
+                        vertices.addFirst(new Vector2(3, 9));
+                        crazyAlien = (new Alien(3, 9, vertices));
+                        vertices.clear();
+                        stationExist = true;
+                    } else {
+                        Queue<Vector2> vertices;
+                        vertices = new Queue<Vector2>();
+                        vertices.addFirst(new Vector2(3, -10));
+                        crazyAlien = (new Alien(3, -10, vertices));
+                        vertices.clear();
+                        stationExist = false;
+                    }
+
                 }
 
-               else{
-                   if(stationTruck.getHP() > 0){
-                           Queue<Vector2> vertices;
-                           vertices = new Queue<Vector2>();
-                           vertices.addFirst(new Vector2(3,9));
-                           crazyAlien = (new Alien(3,9, vertices));
-                           vertices.clear();
-                           stationExist = true;
-                   }
-
-                   else {
-                       Queue<Vector2> vertices;
-                       vertices = new Queue<Vector2>();
-                       vertices.addFirst(new Vector2(3, -10));
-                       crazyAlien = (new Alien(3, -10, vertices));
-                       vertices.clear();
-                       stationExist = false;
-                   }
-
-               }
-
-               //If crazy alien disappear, stop attacking
-                if(crazyAlien.getPosition().y>=0){
+                //If crazy alien disappear, stop attacking
+                if (crazyAlien.getPosition().y >= 0) {
                     crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
                     crazyAlien.getAttackHandler().attack(stationTruck, false);
                     if (crazyAlien.getAttackHandler().updateBombs()) {
@@ -465,8 +456,7 @@ public class GameScreen implements Screen {
                     }
                 }
             }
-            }
-
+        }
         //#Assessment3
         for(Alien alien:aliens){
             alien.move(station.getTrucks());
