@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
+
+import com.mozarellabytes.kroy.Kroy;
+import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 /**
@@ -38,6 +41,13 @@ public class FireStation {
     /** List of active fire trucks
      * @link FireTruck */
     private final ArrayList<FireTruck> trucks;
+
+    /*
+    HP of the fire station
+     */
+    private float maxHp = 1000;
+    private float hp;
+
 
     /**
      * Constructs the Firestation with at a given position with locations
@@ -90,7 +100,7 @@ public class FireStation {
      * @param truck truck that is being refilled
      */
     private void refill(FireTruck truck) {
-        if (truck.getReserve() < truck.type.getMaxReserve()) {
+        if (truck.getReserve() < truck.type.getMaxReserve() && GameScreen.fireStationExist() == true) {
             truck.refill(Math.min(0.06f, truck.getType().getMaxReserve() - truck.getReserve()));
         }
     }
@@ -101,7 +111,7 @@ public class FireStation {
      * @param truck truck that is being repaired
      */
     private void repair(FireTruck truck) {
-        if (truck.getHP() < truck.type.getMaxHP()) {
+        if (truck.getHP() < truck.type.getMaxHP() && GameScreen.fireStationExist() == true) {
             truck.repair(Math.min(0.04f, truck.getType().getMaxHP() - truck.getHP()));
         }
     }

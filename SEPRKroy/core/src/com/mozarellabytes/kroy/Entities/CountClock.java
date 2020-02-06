@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 
 public class CountClock {
     /*
-    seconds and millisecond in the countdown Clock
-     */
-    private float remainTime;
+        seconds and millisecond in the countdown Clock
+         */
+    private static float remainTime;
 
     /*
     Constructor
@@ -49,8 +49,8 @@ public class CountClock {
         }
     }
 
-    public boolean hasEnded(){
-        if(remainTime<0){
+    public static boolean hasEnded() {
+        if (remainTime < 0) {
             return true;
         }
         return false;

@@ -129,7 +129,8 @@ public class FireTruck extends Sprite {
                 }
                 previousTile = nextTile;
                 path.removeFirst();
-            } else {
+            }
+            else {
                 moving = false;
             }
             if (this.path.isEmpty() && inCollision) {
@@ -167,9 +168,9 @@ public class FireTruck extends Sprite {
         if (isValidDraw(coordinate)) {
             if (this.path.size > 0) {
                 Vector2 previous = this.path.last();
-                int interpolation = (int) (20/type.getSpeed());
-                for (int i=1; i<interpolation; i++) {
-                    this.path.addLast(new Vector2((((previous.x - coordinate.x)*-1)/interpolation)*i + previous.x, (((previous.y - coordinate.y)*-1)/interpolation)*i + previous.y));
+                int interpolation = (int) (20 / type.getSpeed());
+                for (int i = 1; i < interpolation; i++) {
+                    this.path.addLast(new Vector2((((previous.x - coordinate.x) * -1) / interpolation) * i + previous.x, (((previous.y - coordinate.y) * -1) / interpolation) * i + previous.y));
                 }
             }
             this.trailPath.addLast(new Vector2(((int) coordinate.x), ((int) coordinate.y)));
@@ -325,13 +326,21 @@ public class FireTruck extends Sprite {
      * @param shapeMapRenderer  Renderer that the stats are being drawn to (map  dependant)
      */
     public void drawStats(ShapeRenderer shapeMapRenderer) {
-        shapeMapRenderer.rect(this.getPosition().x + 0.2f, this.getPosition().y + 1.3f, 0.6f, 0.8f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
-        shapeMapRenderer.rect(this.getPosition().x + 0.266f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE);
-        shapeMapRenderer.rect(this.getPosition().x + 0.266f, this.getPosition().y + 1.4f, 0.2f, this.getReserve() / this.type.getMaxReserve() * 0.6f, Color.CYAN, Color.CYAN, Color.CYAN, Color.CYAN);
-        shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
-        shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.type.getMaxHP() * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
-        for (WaterParticle particle : this.getSpray()) {
-            shapeMapRenderer.rect(particle.getPosition().x, particle.getPosition().y, particle.getSize(), particle.getSize(), particle.getColour(), particle.getColour(), particle.getColour(), particle.getColour());
+        if (!this.getVisualPosition().equals(new Vector2(9.5f, 8.5f))) {
+            shapeMapRenderer.rect(this.getPosition().x + 0.2f, this.getPosition().y + 1.3f, 0.6f, 0.8f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
+            shapeMapRenderer.rect(this.getPosition().x + 0.266f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE);
+            shapeMapRenderer.rect(this.getPosition().x + 0.266f, this.getPosition().y + 1.4f, 0.2f, this.getReserve() / this.type.getMaxReserve() * 0.6f, Color.CYAN, Color.CYAN, Color.CYAN, Color.CYAN);
+            shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
+            shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.type.getMaxHP() * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
+            for (WaterParticle particle : this.getSpray()) {
+                shapeMapRenderer.rect(particle.getPosition().x, particle.getPosition().y, particle.getSize(), particle.getSize(), particle.getColour(), particle.getColour(), particle.getColour(), particle.getColour());
+            }
+        } else {
+            if (GameScreen.fireStationExist() == true) {
+                shapeMapRenderer.rect(this.getPosition().x - 5.9f, this.getPosition().y + 0f, 0.7f, 3f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
+                shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
+                shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, this.getHP() / this.type.getMaxHP() * 2.8f, Color.RED, Color.RED, Color.RED, Color.RED);
+            }
         }
     }
 

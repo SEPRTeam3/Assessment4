@@ -1,5 +1,6 @@
 package com.mozarellabytes.kroy.Screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.utils.Queue;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.DoubleToIntFunction;
 
 /**
  * The Screen that our game is played in.
@@ -102,6 +104,11 @@ public class GameScreen implements Screen {
     private int dialogueStage = 1;
 
     /*
+    check weather the station has been destroyed or not
+     */
+    private static boolean stationExist = true;
+
+    /*
     Check whether the game is paused,
     if yes, then pause the clock, otherwise, continue
     0 represents counting while 1 means pause
@@ -148,13 +155,13 @@ public class GameScreen implements Screen {
                 mapLayers.getIndex("transparentStructures")};
 
         station = new FireStation(3, 8);
-        stationTruck = new FireTruck(this,new Vector2(5,8), FireTruckType.Ocean);
-
+        stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);        //Crazy Alien attack position(5,8)
 
         spawn(FireTruckType.Ocean);
         spawn(FireTruckType.Speed);
         spawn(FireTruckType.Tank);
         spawn(FireTruckType.Attack);
+        spawn(FireTruckType.Station);
 
         fortresses = new ArrayList<Fortress>();
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
@@ -309,6 +316,10 @@ public class GameScreen implements Screen {
         return totalAttackTime = ThreadLocalRandom.current().nextInt(15, 25);
     }
 
+    public static boolean fireStationExist(){
+        return stationExist;
+    }
+
     @Override
     public void render(float delta) {
 
@@ -320,11 +331,14 @@ public class GameScreen implements Screen {
         mapBatch.begin();
 
         for (FireTruck truck : station.getTrucks()) {
-            truck.drawPath(mapBatch);
-            truck.drawSprite(mapBatch);
+            if(!truck.getVisualPosition().equals(new Vector2(9.5f,8.5f))) {
+                truck.drawPath(mapBatch);
+                truck.drawSprite(mapBatch);
+            }
         }
-
-        station.draw(mapBatch);
+        if(stationExist == true) {
+            station.draw(mapBatch);
+        }
 
         for (Fortress fortress : this.fortresses) {
             fortress.draw(mapBatch);
@@ -410,6 +424,12 @@ public class GameScreen implements Screen {
         station.checkForCollisions();
         gameState.setTrucksInAttackRange(0);
 
+        if(fireStationExist() == false){
+            if(stationTruck.getHP() <= 0){
+                station.destroyTruck(stationTruck);
+                }
+            }
+
         if(gui.getCountClock() != null){
             if(gui.getCountClock().hasEnded()) {
                if(crazyAlien.getPosition().y > 9){
@@ -417,13 +437,13 @@ public class GameScreen implements Screen {
                 }
 
                else{
-                   if(attackTime <= totalAttackTime){
+                   if(stationTruck.getHP() > 0){
                            Queue<Vector2> vertices;
                            vertices = new Queue<Vector2>();
                            vertices.addFirst(new Vector2(3,9));
                            crazyAlien = (new Alien(3,9, vertices));
                            vertices.clear();
-                           attackTime += 0.0275;
+                           stationExist = true;
                    }
 
                    else {
@@ -432,6 +452,7 @@ public class GameScreen implements Screen {
                        vertices.addFirst(new Vector2(3, -10));
                        crazyAlien = (new Alien(3, -10, vertices));
                        vertices.clear();
+                       stationExist = false;
                    }
 
                }
@@ -454,7 +475,6 @@ public class GameScreen implements Screen {
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
             FireTruck truck = station.getTruck(i);
-
             truck.move();
             truck.updateSpray();
 
@@ -515,7 +535,7 @@ public class GameScreen implements Screen {
 
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                if (gameState.getTrucksInAttackRange() > 0) {
+                if (gameState.getTrucksInAttackRange() > 0 && selectedTruck.getReserve() > 1) {
                     SoundFX.playTruckAttack();
                 }
                 else {
@@ -649,7 +669,12 @@ public class GameScreen implements Screen {
      */
     private void spawn(FireTruckType type) {
         SoundFX.sfx_truck_spawn.play();
-        station.spawn(new FireTruck(this, new Vector2(6,8), type));
+        if(type.equals(FireTruckType.Station)) {
+            station.spawn(new FireTruck(this, new Vector2(9, 8), type));
+        }
+        else{
+            station.spawn(new FireTruck(this, new Vector2(6, 8), type));
+        }
         gameState.addFireTruck();
     }
 
