@@ -81,6 +81,7 @@ public class GameScreen implements Screen {
     private final FireStation station;
     private final FireTruck stationTruck;
     private Alien crazyAlien;
+    private Alien crazyAlienC;
 
     /** Alien patrols to attack fire engines */
     private Queue<Alien> aliens;
@@ -292,6 +293,11 @@ public class GameScreen implements Screen {
         crazyAlien = (new Alien(3,30, vertices));
         vertices.clear();
 
+        vertices.addFirst(new Vector2(3,9));
+        vertices.addLast(new Vector2(3,-10));
+        crazyAlienC = (new Alien(3,9, vertices));
+        vertices.clear();
+
         // sets the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
@@ -338,6 +344,9 @@ public class GameScreen implements Screen {
         //#Assessment3
         for(Alien alien:aliens) {
             alien.drawSprite(mapBatch,1,1);
+        }
+        if(fireStationExist() == false){
+            crazyAlienC.drawSprite(mapBatch,5,5);
         }
 
         crazyAlien.drawSprite(mapBatch, 5, 5);
@@ -419,10 +428,8 @@ public class GameScreen implements Screen {
         gameState.setTrucksInAttackRange(0);
 
         if(fireStationExist() == false){
-            if(stationTruck.getHP() <= 0){
-                station.destroyTruck(stationTruck);
+                stationTruck.setPosition(3,-10);
                 }
-            }
 
         if(gui.getCountClock() != null) {
             if (gui.getCountClock().hasEnded()) {
@@ -439,9 +446,10 @@ public class GameScreen implements Screen {
                     } else {
                         Queue<Vector2> vertices;
                         vertices = new Queue<Vector2>();
-                        vertices.addFirst(new Vector2(3, -10));
                         crazyAlien = (new Alien(3, -10, vertices));
-                        vertices.clear();
+                        if(crazyAlienC.getPosition().y > -5) {      //Only leave one time
+                            crazyAlienC.move(station.getTrucks());      //Important
+                        }
                         stationExist = false;
                     }
 
@@ -528,7 +536,7 @@ public class GameScreen implements Screen {
 
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                if (gameState.getTrucksInAttackRange() > 0 && selectedTruck.getReserve() > 1) {
+                if (gameState.getTrucksInAttackRange() > 0) {
                     SoundFX.playTruckAttack();
                 }
                 else {
