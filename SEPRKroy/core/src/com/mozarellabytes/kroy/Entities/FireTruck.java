@@ -81,6 +81,7 @@ public class FireTruck extends Sprite {
     private final Texture lookRight;
     private final Texture lookUp;
     private final Texture lookDown;
+    private int flag = 0;
 
     /**
      * Constructs a new FireTruck at a position and of a certain type
@@ -337,9 +338,18 @@ public class FireTruck extends Sprite {
             }
         } else {
             if (GameScreen.fireStationExist() == true) {
-                shapeMapRenderer.rect(this.getPosition().x - 5.9f, this.getPosition().y + 0f, 0.7f, 3f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
-                shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
-                shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, this.getHP() / this.type.getMaxHP() * 2.8f, Color.RED, Color.RED, Color.RED, Color.RED);
+                if(CountClock.hasEnded() == false) {
+                    shapeMapRenderer.rect(this.getPosition().x - 5.9f, this.getPosition().y + 0f, 0.7f, 3f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
+                    shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
+                    shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.RED, Color.RED, Color.RED, Color.RED);
+                }
+                else{
+                    shapeMapRenderer.rect(this.getPosition().x - 5.9f, this.getPosition().y + 0f, 0.7f, 3f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
+                    shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
+                    shapeMapRenderer.rect(this.getPosition().x - 5.8f, this.getPosition().y + 0.1f, 0.5f, 2.8f-flag / this.type.getMaxHP() * 0.1f, Color.RED, Color.RED, Color.RED, Color.RED);
+                    flag++;
+                }
+
             }
         }
     }
