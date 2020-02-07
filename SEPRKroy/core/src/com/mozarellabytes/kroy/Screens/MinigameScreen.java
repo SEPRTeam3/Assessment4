@@ -285,6 +285,7 @@ public class MinigameScreen implements Screen {
      */
     @Override
     public void dispose() {
+        batch.dispose();
     }
 
 }

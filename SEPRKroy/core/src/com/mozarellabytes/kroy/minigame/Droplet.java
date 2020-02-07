@@ -18,7 +18,7 @@ public class Droplet extends Entity{
     public void moveUp(float delta) {
         this.updatePos(
                 0,
-                200*delta
+                300*delta
         );
 
         this.updateRect();
