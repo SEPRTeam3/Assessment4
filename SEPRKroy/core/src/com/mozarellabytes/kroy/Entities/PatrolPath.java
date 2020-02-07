@@ -32,6 +32,7 @@ public class PatrolPath {
         if(speed != 0){
             this.speed = speed;
         }
+        this.speed *= 30;
         buildPathFromVertex(vertices);
     }
 
@@ -106,13 +107,13 @@ public class PatrolPath {
 
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (this.previousTile.y - i)));
-                            incrementPathsY(-speed);
+                            incrementPathsY(-speed*Gdx.graphics.getDeltaTime());
                         }
                     } else {
                         distance = vertex.y - this.previousTile.y;
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2(vertex.x, (this.previousTile.y + i)));
-                            incrementPathsY(speed);
+                            incrementPathsY(speed*Gdx.graphics.getDeltaTime());
                         }
                     }
                 } else {
@@ -122,13 +123,13 @@ public class PatrolPath {
                         distance = this.previousTile.x - vertex.x;
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2((previousTile.x - i), vertex.y));
-                            incrementPathsX(-speed);
+                            incrementPathsX(-speed*Gdx.graphics.getDeltaTime());
                         }
                     } else {
                         distance = vertex.x - this.previousTile.x;
                         for (float i = 0; i < distance; i++) {
                             this.path.addLast(new Vector2((this.previousTile.x + i), vertex.y));
-                            incrementPathsX(speed);
+                            incrementPathsX(speed*Gdx.graphics.getDeltaTime());
                         }
                     }
                 }

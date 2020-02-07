@@ -115,7 +115,9 @@ public class EnemyAttackHandler {
     }
 
     public void setCrazy(){
-        delay = 2;
+        delay = 1000;
+        attackPower = 1;
+
     }
 
     public void setPosition(Vector2 position) { this.position = position;}

@@ -292,6 +292,7 @@ public class GameScreen implements Screen {
         vertices.addFirst(new Vector2(3,25));
         vertices.addLast(new Vector2(3,6));
         crazyAlien = (new Alien(3,30, vertices,0.0175f));
+        crazyAlien.getAttackHandler().setCrazy();
         vertices.clear();
 
         vertices.addFirst(new Vector2(3,9));
@@ -675,6 +676,9 @@ public class GameScreen implements Screen {
     /** Exits the main game screen and goes to the menu, called when the home
      * button is clicked */
     public void toHomeScreen() {
+        crazyAlien = null;
+        crazyAlienC = null;
+        stationExist = true;
         game.setScreen(new MenuScreen(game));
         SoundFX.sfx_soundtrack.dispose();
     }
