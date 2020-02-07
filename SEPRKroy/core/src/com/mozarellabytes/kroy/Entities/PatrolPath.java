@@ -24,9 +24,14 @@ public class PatrolPath {
      * the path the slower the truck will go */
     private Queue<Vector2> path;
     private Vector2 previousTile;
+    private float speed;
 
-    public PatrolPath(Queue<Vector2> vertices) {
+    public PatrolPath(Queue<Vector2> vertices, float speed) {
         this.path = new Queue<Vector2>();
+        this.speed = randFloat(0.05f , 0.2f);
+        if(speed != 0){
+            this.speed = speed;
+        }
         buildPathFromVertex(vertices);
     }
 
@@ -88,7 +93,6 @@ public class PatrolPath {
     public void buildPathFromVertex(Queue<Vector2> vertices) {
         float distance;
         distance = 0;
-        float speed = randFloat(0.05f , 0.2f);
         this.previousTile = null;
         for (Vector2 vertex : vertices) {
             if (this.previousTile == null) {

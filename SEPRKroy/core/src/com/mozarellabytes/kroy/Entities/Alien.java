@@ -57,9 +57,9 @@ public class Alien extends Sprite {
      * @param x     x coordinate of alien (lower left point)
      * @param y     y coordinate of alien (lower left point)
      */
-    public Alien(float x, float y,Queue<Vector2> vertices){
+    public Alien(float x, float y,Queue<Vector2> vertices, float speed){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
-        this.mainPatrol = new PatrolPath(vertices);
+        this.mainPatrol = new PatrolPath(vertices, speed);
         this.position = new Vector2(x,y);
         this.HP = maxHP;
         this.path = mainPatrol.getPath();
