@@ -3,6 +3,11 @@ package com.mozarellabytes.kroy.minigame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * #Assessment3
+ *
+ * Droplet class, fired by the firetruck. Spawns at roughly the  coordinates of the firetruck
+ */
 public class Droplet extends Entity{
 
     public Droplet(float x, float y) {
