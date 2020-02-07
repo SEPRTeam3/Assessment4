@@ -26,7 +26,7 @@ public class FireTruck extends Entity {
         this.setTexture(truckLeft);
 
         this.updatePos(
-                -400*delta,
+                -500*delta,
                 0
         );
 
@@ -37,7 +37,7 @@ public class FireTruck extends Entity {
         this.setTexture(truckRight);
 
         this.updatePos(
-                400*delta,
+                500*delta,
                 0
         );
 

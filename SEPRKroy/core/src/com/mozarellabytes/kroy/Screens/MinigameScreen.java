@@ -67,7 +67,7 @@ public class MinigameScreen implements Screen {
     private Texture bgImage = new Texture(Gdx.files.internal("images/minigame-bg.jpg"));
     private Texture roadImage = new Texture(Gdx.files.internal("images/minigame-road.png"));
 
-    private int score = 0;
+    private int score;
 
     private BitmapFont font;
     private String scoreText;
@@ -97,6 +97,8 @@ public class MinigameScreen implements Screen {
     public void show() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Magero.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        score = 0;
 
         parameter.size = 60;
         font = generator.generateFont(parameter);
@@ -273,7 +275,8 @@ public class MinigameScreen implements Screen {
      * By having the parent screen pass itself as a parameter when creating the new minigame screen, we can
      * return back to the parent screen with all the "state data" still intact, and don't have to instantiate
      * a new screen (which would restart the whole game again).
-     * @param game
+     *
+     * @param game Reference to the current instance of the game "controller".
      */
     private void invokeGameOver(Kroy game) {
         dispose();
@@ -285,6 +288,7 @@ public class MinigameScreen implements Screen {
      */
     @Override
     public void dispose() {
+        batch.dispose();
     }
 
 }

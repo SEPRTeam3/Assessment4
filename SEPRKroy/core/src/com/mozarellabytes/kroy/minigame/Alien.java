@@ -3,6 +3,11 @@ package com.mozarellabytes.kroy.minigame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * #Assessment3
+ *
+ * Alien class for the minigame. Spawns at the top of the screen and moves downwards to the bottom.
+ */
 public class Alien extends Entity {
     public Alien(float x, float y) {
         super(
