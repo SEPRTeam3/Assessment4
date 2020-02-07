@@ -258,7 +258,7 @@ public class MinigameScreen implements Screen {
         droplets.add(droplet);
         lastDropTime = TimeUtils.nanoTime();
     }
-
+    
     /**
      * #Assessment3
      * Updates the current score glyph layout.
