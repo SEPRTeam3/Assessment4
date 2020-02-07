@@ -162,6 +162,7 @@ public class GameScreen implements Screen {
         spawn(FireTruckType.Tank);
         spawn(FireTruckType.Attack);
         spawn(FireTruckType.Station);
+        gameState.removeFireTruck();
 
         fortresses = new ArrayList<Fortress>();
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
@@ -451,6 +452,7 @@ public class GameScreen implements Screen {
                             crazyAlienC.move(station.getTrucks());      //Important
                         }
                         stationExist = false;
+
                     }
 
                 }
