@@ -341,6 +341,12 @@ public class GameScreen implements Screen {
         for (Fortress fortress : this.fortresses) {
             fortress.draw(mapBatch);
         }
+
+        mapBatch.end();
+
+        mapRenderer.render(structureLayersIndices);
+
+        mapBatch.begin();
         //#Assessment3
         for(Alien alien:aliens) {
             alien.drawSprite(mapBatch,1,1);
@@ -351,8 +357,6 @@ public class GameScreen implements Screen {
 
         crazyAlien.drawSprite(mapBatch, 5, 5);
         mapBatch.end();
-
-        mapRenderer.render(structureLayersIndices);
 
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
