@@ -289,15 +289,15 @@ public class GameScreen implements Screen {
         vertices.clear();
 
 
-        vertices.addFirst(new Vector2(3,25));
-        vertices.addLast(new Vector2(3,6));
-        crazyAlien = (new Alien(3,30, vertices,0.0175f));
+        vertices.addFirst(new Vector2(2.9f,25));
+        vertices.addLast(new Vector2(2.9f,6));
+        crazyAlien = (new Alien(2.9f,30, vertices,0.0175f));
         crazyAlien.getAttackHandler().setCrazy();
         vertices.clear();
 
-        vertices.addFirst(new Vector2(3,9));
-        vertices.addLast(new Vector2(3,-10));
-        crazyAlienC = (new Alien(3,9, vertices,0.0175f));
+        vertices.addFirst(new Vector2(2.9f,9));
+        vertices.addLast(new Vector2(2.9f,-10));
+        crazyAlienC = (new Alien(2.9f,9, vertices,0.0175f));
         vertices.clear();
 
         // sets the origin point to which all of the polygon's local vertices are relative to.
@@ -324,6 +324,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        for (FireTruck truck : station.getTrucks()) {
+        }
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render(backgroundLayerIndex);
@@ -434,7 +436,7 @@ public class GameScreen implements Screen {
         gameState.setTrucksInAttackRange(0);
 
         if(fireStationExist() == false){
-                stationTruck.setPosition(3,-10);
+                stationTruck.setPosition(2.9f,-10);
                 }
 
         if(gui.getCountClock() != null) {
@@ -445,19 +447,18 @@ public class GameScreen implements Screen {
                     if (stationTruck.getHP() > 0) {
                         Queue<Vector2> vertices;
                         vertices = new Queue<Vector2>();
-                        vertices.addFirst(new Vector2(3, 9));
-                        crazyAlien = (new Alien(3, 9, vertices, 0.0175f));
+                        vertices.addFirst(new Vector2(1, 9));
+                        crazyAlien = (new Alien(2.9f, 9, vertices, 0.0175f));
                         vertices.clear();
                         stationExist = true;
                     } else {
                         Queue<Vector2> vertices;
                         vertices = new Queue<Vector2>();
-                        crazyAlien = (new Alien(3, -10, vertices, 0.0175f));
+                        crazyAlien = (new Alien(2.9f, -10, vertices, 0.0175f));
                         if(crazyAlienC.getPosition().y > -5) {      //Only leave one time
                             crazyAlienC.move(station.getTrucks());      //Important
                         }
                         stationExist = false;
-
                     }
 
                 }
