@@ -63,7 +63,7 @@ public class Alien extends Sprite {
         this.position = new Vector2(x,y);
         this.HP = maxHP;
         this.path = mainPatrol.getPath();
-        //this.setPath();
+
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/alien/AlienUp.png"));
@@ -104,6 +104,15 @@ public class Alien extends Sprite {
             }
     }
 
+    /**
+     * #Assesssment3
+     *
+     * Check if the next tile in an alien's patrol intersects the position of a fireTruck.
+     *
+     * @param nextTile the next tile in the alien's patrol.
+     * @param fireTrucks the array of fireTrucks to iterate through
+     * @return true or false, depending on whether the next tile in an alien's patrol intersects the position of a fireTruck.
+     */
     private boolean inCollision(Vector2 nextTile, ArrayList<FireTruck> fireTrucks){
         for(FireTruck truck: fireTrucks){
             if(nextTile.x > position.x)
@@ -182,7 +191,7 @@ public class Alien extends Sprite {
     }
 
 
-/**
+/** TODO: Remove this?
     public void setPath(){
         this.path.addFirst(new Vector2(13, 5));
         this.path.addLast(new Vector2(13, 4.9f));

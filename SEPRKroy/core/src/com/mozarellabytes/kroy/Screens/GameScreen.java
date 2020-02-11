@@ -1,6 +1,5 @@
 package com.mozarellabytes.kroy.Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Timer;
 import com.mozarellabytes.kroy.Entities.*;
 import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Kroy;
@@ -19,9 +17,6 @@ import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.DoubleToIntFunction;
 
 /**
  * The Screen that our game is played in.
@@ -100,32 +95,30 @@ public class GameScreen implements Screen {
     }
 
     /**
+     * TODO: Remove this.
      * Set the stage of dialogue stating what dialogue is being written to the screen
      */
     private int dialogueStage = 1;
 
-    /*
-    check weather the station has been destroyed or not
+    /**
+     * Check weather the station has been destroyed or not
      */
-    private static boolean stationExist = true;
+    private static boolean stationExists = true;
 
-    /*
-    Check whether the game is paused,
-    if yes, then pause the clock, otherwise, continue
-    0 represents counting while 1 means pause
+    /**
+     * Check whether the game is paused. If yes, then pause the clock, otherwise, continue.
+     * 0 = unpaused, 1 = paused
      */
     private int flag = 0;
-    private float attackTime = 0;
-
 
     /**
      * Constructor which has the game passed in
      *
-     * @param game LibGdx game
+     * @param game LibGdx game instance
      */
     public GameScreen(Kroy game) {
         Queue<Vector2> vertices;
-        vertices = new Queue<Vector2>();
+        vertices = new Queue<>();
         this.game = game;
 
         state = PlayState.PLAY;
@@ -155,7 +148,9 @@ public class GameScreen implements Screen {
                 mapLayers.getIndex("transparentStructures")};
 
         station = new FireStation(3, 8);
-        stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);        //Crazy Alien attack position(5,8)
+
+        // Instantiate a dummy fireTruck at the position (5, 8) for the crazy alien to aim at and attack.
+        stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
 
         spawn(FireTruckType.Ocean);
         spawn(FireTruckType.Speed);
@@ -164,10 +159,11 @@ public class GameScreen implements Screen {
         spawn(FireTruckType.Station);
         gameState.removeFireTruck();
 
-        fortresses = new ArrayList<Fortress>();
+        fortresses = new ArrayList<>();
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
         fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
+
         //#Assessment3 Added 3 new fortresses
         fortresses.add(new Fortress (44.5f, 4.5f, FortressType.TrainStation));
         fortresses.add(new Fortress (45, 22, FortressType.Minster));
@@ -177,7 +173,7 @@ public class GameScreen implements Screen {
          * Hardcoded alien paths
          */
 
-        aliens = new Queue<Alien>();
+        aliens = new Queue<>();
         vertices.addFirst(new Vector2(13,7));
         vertices.addLast(new Vector2(18,7));
         vertices.addLast(new Vector2(18,11));
@@ -300,7 +296,7 @@ public class GameScreen implements Screen {
         crazyAlienC = (new Alien(2.9f,9, vertices,0.0175f));
         vertices.clear();
 
-        // sets the origin point to which all of the polygon's local vertices are relative to.
+        // Set the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
         }
@@ -319,11 +315,12 @@ public class GameScreen implements Screen {
     }
 
     public static boolean fireStationExist(){
-        return stationExist;
+        return stationExists;
     }
 
     @Override
     public void render(float delta) {
+        // TODO: Remove unused loop
         for (FireTruck truck : station.getTrucks()) {
         }
         camera.update();
@@ -338,7 +335,8 @@ public class GameScreen implements Screen {
                 truck.drawSprite(mapBatch);
             }
         }
-        if(stationExist == true) {
+
+        if(stationExists) {
             station.draw(mapBatch);
         }
 
@@ -351,11 +349,12 @@ public class GameScreen implements Screen {
         mapRenderer.render(structureLayersIndices);
 
         mapBatch.begin();
+
         //#Assessment3
         for(Alien alien:aliens) {
             alien.drawSprite(mapBatch,1,1);
         }
-        if(fireStationExist() == false){
+        if(!fireStationExist()){
             crazyAlienC.drawSprite(mapBatch,5,5);
         }
 
@@ -414,6 +413,8 @@ public class GameScreen implements Screen {
                 dialogueStage += 1;
                 for(int waiter = 0; waiter <= 100; waiter += 1){}
                 state = PlayState.PLAY;
+
+                TODO: Remove this?
              */
         }
         gui.renderButtons();
@@ -435,11 +436,11 @@ public class GameScreen implements Screen {
         station.checkForCollisions();
         gameState.setTrucksInAttackRange(0);
 
-        if(fireStationExist() == false){
-                stationTruck.setPosition(2.9f,-10);
-                }
+        if (!stationExists){
+            stationTruck.setPosition(2.9f,-10);
+        }
 
-        if(gui.getCountClock() != null) {
+        if (gui.getCountClock() != null) {
             if (gui.getCountClock().hasEnded()) {
                 if (crazyAlien.getPosition().y > 9) {
                     crazyAlien.move(station.getTrucks());
@@ -450,20 +451,22 @@ public class GameScreen implements Screen {
                         vertices.addFirst(new Vector2(1, 9));
                         crazyAlien = (new Alien(2.9f, 9, vertices, 0.0175f));
                         vertices.clear();
-                        stationExist = true;
+                        stationExists = true;
                     } else {
                         Queue<Vector2> vertices;
                         vertices = new Queue<Vector2>();
                         crazyAlien = (new Alien(2.9f, -10, vertices, 0.0175f));
-                        if(crazyAlienC.getPosition().y > -5) {      //Only leave one time
-                            crazyAlienC.move(station.getTrucks());      //Important
+
+                        // Only let one instance of crazyAlien exist
+                        if(crazyAlienC.getPosition().y > -5) {
+                            crazyAlienC.move(station.getTrucks()); // Move to the fireStation
                         }
-                        stationExist = false;
+                        stationExists = false;
                     }
 
                 }
 
-                //If crazy alien disappear, stop attacking
+                // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
                 if (crazyAlien.getPosition().y >= 0) {
                     crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
                     crazyAlien.getAttackHandler().attack(stationTruck, false);
@@ -473,6 +476,7 @@ public class GameScreen implements Screen {
                 }
             }
         }
+
         //#Assessment3
         for(Alien alien:aliens){
             alien.move(station.getTrucks());
@@ -499,7 +503,7 @@ public class GameScreen implements Screen {
                 }
             }
 
-            //Assessment 3
+            // #Assessment3
             for(Alien alien : this.aliens){
                 alien.getAttackHandler().setPosition(alien.getPosition());
                 if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
@@ -510,7 +514,7 @@ public class GameScreen implements Screen {
                 }
             }
 
-            // check if truck is destroyed
+            // Check if truck is destroyed
             if (truck.getHP() <= 0) {
                 gameState.removeFireTruck();
                 station.destroyTruck(truck);
@@ -528,7 +532,7 @@ public class GameScreen implements Screen {
                 camShake.shakeIt(.2f);
             }
 
-            // check if fortress is destroyed
+            // Check if fortress is destroyed...
             if (fortress.getHP() <= 0) {
                 gameState.addFortress();
                 this.fortresses.remove(fortress);
@@ -537,7 +541,7 @@ public class GameScreen implements Screen {
                 }
 
                 // #Assessment3
-                // Switch screen to the minigame
+                // ...and if so, switch screen to the minigame.
                 toMinigameScreen();
             }
 
@@ -567,7 +571,6 @@ public class GameScreen implements Screen {
      */
     public void toMinigameScreen() {
         game.setScreen(new MinigameScreen(game, this));
-//        this.dispose();
     }
 
     @Override
@@ -679,7 +682,7 @@ public class GameScreen implements Screen {
     public void toHomeScreen() {
         crazyAlien = null;
         crazyAlienC = null;
-        stationExist = true;
+        stationExists = true;
         game.setScreen(new MenuScreen(game));
         SoundFX.sfx_soundtrack.dispose();
     }

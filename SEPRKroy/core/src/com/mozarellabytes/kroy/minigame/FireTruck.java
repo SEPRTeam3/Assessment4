@@ -22,6 +22,10 @@ public class FireTruck extends Entity {
         );
     }
 
+    /**
+     * Updates the truck's position, moving it to the left.
+     * @param delta The amount of time since the last update() function was called.
+     */
     public void moveLeft(float delta) {
         this.setTexture(truckLeft);
 
@@ -33,6 +37,10 @@ public class FireTruck extends Entity {
         this.updateRect();
     }
 
+    /**
+     * Updates the truck's position moving it to the right.
+     * @param delta The amount of time since the last update() function was called.
+     */
     public void moveRight(float delta) {
         this.setTexture(truckRight);
 

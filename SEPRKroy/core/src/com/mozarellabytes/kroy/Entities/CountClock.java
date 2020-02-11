@@ -3,16 +3,16 @@ package com.mozarellabytes.kroy.Entities;
 import com.badlogic.gdx.Gdx;
 
 public class CountClock {
-    /*
-        seconds and millisecond in the countdown Clock
-         */
-    private static float remainTime;
+    /**
+      * Time remaining in the countdown clock
+      */
+    private static float timeRemaining;
 
-    /*
-    Constructor
+    /* TODO: Increase timeRemaining to a larger number.
+    Constructor for the CountClock class, instantiating the time remaining to 5 seconds.
      */
     public CountClock() {
-        remainTime = 5;
+        timeRemaining = 5;
     }
     
     /*
@@ -21,36 +21,39 @@ public class CountClock {
     public String set_clock(int state) {
 
         if (state == 0) {
-            remainTime -= Gdx.graphics.getDeltaTime();
+            timeRemaining -= Gdx.graphics.getDeltaTime();
         }
 
-        if(remainTime / 60 >= 10 && remainTime % 60 < 10 && remainTime >= 0){
-            return (int) remainTime / 60 + " : 0" + (int) remainTime % 60;
+        if(timeRemaining / 60 >= 10 && timeRemaining % 60 < 10 && timeRemaining >= 0){
+            return (int) timeRemaining / 60 + " : 0" + (int) timeRemaining % 60;
         }
 
-        else if(remainTime / 60 >= 10 && remainTime % 60 >= 10 && remainTime >= 0){
-            return (int) remainTime / 60 + " : " + (int) remainTime % 60;
+        else if(timeRemaining / 60 >= 10 && timeRemaining % 60 >= 10 && timeRemaining >= 0){
+            return (int) timeRemaining / 60 + " : " + (int) timeRemaining % 60;
         }
 
-        else if(remainTime / 60 <= 10 && remainTime % 60 >=10 && remainTime >= 0){
-            return "0" + (int) remainTime / 60 + " : " + (int) remainTime % 60;
+        else if(timeRemaining / 60 <= 10 && timeRemaining % 60 >=10 && timeRemaining >= 0){
+            return "0" + (int) timeRemaining / 60 + " : " + (int) timeRemaining % 60;
         }
 
-        else if(remainTime / 60 <= 10 && remainTime % 60 <10 && remainTime >= 0){
-            return "0" + (int) remainTime / 60 + " : 0" + (int) remainTime % 60;
+        else if(timeRemaining / 60 <= 10 && timeRemaining % 60 <10 && timeRemaining >= 0){
+            return "0" + (int) timeRemaining / 60 + " : 0" + (int) timeRemaining % 60;
         }
 
-        else if(remainTime < 0){
+        else if(timeRemaining < 0){
             return "00 : 00";
         }
 
         else {
-            return "0" + (int) remainTime / 60 + " : " + (int) remainTime % 60;
+            return "0" + (int) timeRemaining / 60 + " : " + (int) timeRemaining % 60;
         }
     }
 
+    /**
+     * @return true if the countdown timer has ended, else false.
+     */
     public static boolean hasEnded() {
-        if (remainTime < 0) {
+        if (timeRemaining < 0) {
             return true;
         }
         return false;

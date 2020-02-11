@@ -19,6 +19,10 @@ public class Alien extends Entity {
         );
     }
 
+    /**
+     * Updates the alien's position, moving it downwards.
+     * @param delta The amount of time since the last update() was called.
+     */
     public void moveDown(float delta) {
         this.updatePos(
                 0,

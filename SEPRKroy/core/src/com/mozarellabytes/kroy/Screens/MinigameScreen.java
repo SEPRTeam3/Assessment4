@@ -9,11 +9,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Kroy;
@@ -22,7 +20,6 @@ import com.mozarellabytes.kroy.minigame.Alien;
 import com.mozarellabytes.kroy.minigame.Droplet;
 import com.mozarellabytes.kroy.minigame.FireTruck;
 
-import java.sql.Time;
 import java.util.Iterator;
 
 
@@ -38,7 +35,8 @@ public class MinigameScreen implements Screen {
 
     /** Reference to the screen calling minigame.
      * This means we can easily return to the previous screen without
-     * losing any state data. */
+     * losing any state data.
+     */
     private final Screen parent;
 
     /** Camera to set the projection for the screen */
@@ -48,7 +46,6 @@ public class MinigameScreen implements Screen {
     private SpriteBatch batch;
 
     /** Rectangle for controlling the firetruck */
-//    private Rectangle fireTruck;
     private FireTruck fireTruck;
 
     /** Array to keep track of all aliens */
@@ -67,32 +64,51 @@ public class MinigameScreen implements Screen {
     private Texture bgImage = new Texture(Gdx.files.internal("images/minigame-bg.jpg"));
     private Texture roadImage = new Texture(Gdx.files.internal("images/minigame-road.png"));
 
+    /** Keeping track of the current minigame score. Initilaised to 0 on screen show() */
     private int score;
 
+    /** Stores the font/typeface used for the minigame's UI. */
     private BitmapFont font;
+
+    /** Stores the current text to be rendered. Will be "Score: " + the current score. */
     private String scoreText;
+
+    /** Represents the actual "object" that is rendered by the screen.
+     * Has properties like dimensions and position to allow for easy positioning on the screen.
+     */
     private GlyphLayout scoreLayout;
 
     /**
-     * Constructor to instantiate all the assets and entities.
+     * #Assessment3
+     * Constructor to initialise the MinigameScreen with all necessary classes and attributes.
+     * @param game A reference to the overarching Kroy game controller.
+     * @param parent A reference to the screen that setScreen() to the minigame. Allows for returning back to previous screen without loss of state.
      */
     public MinigameScreen(Kroy game, Screen parent) {
         this.game = game;
         this.parent = parent;
 
+        // Instantiate a camera with width and height of the game window to render and display the content.
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
+        // Sprites are rendered as a batch to improve performance.
         batch = new SpriteBatch();
 
+        // Instantiate a fireTruck in the middle of the screen at the bottom.
         fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 96);
 
-        aliens = new Array<Alien>();
+        aliens = new Array<>();
         spawnAlien();
 
-        droplets = new Array<Droplet>();
+        droplets = new Array<>();
     }
 
+    /**
+     * #Assessment3
+     * Called whenever MinigameScreen is shown (i.e. whenever setScreen(new MinigameScreen) is run.
+     * Initilaises the starting score to 0 and creates the initial GlyphLayout on the screen.
+     */
     @Override
     public void show() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Magero.ttf"));
@@ -107,6 +123,11 @@ public class MinigameScreen implements Screen {
         updateScoreText();
     }
 
+    /**
+     * #Assessment3
+     * Called every `delta` time step to render the new positions/values of entities and objects.
+     * @param delta the increment of time between each render call.
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -145,7 +166,7 @@ public class MinigameScreen implements Screen {
      * #Assessment3
      * Handle controls and minigame logic.
      *
-     * @param delta The time in milliseconds since the last render
+     * @param delta The time in milliseconds since the last render call.
      * */
     public void update(float delta) {
 
@@ -250,6 +271,10 @@ public class MinigameScreen implements Screen {
         lastAlienSpawn = TimeUtils.nanoTime();
     }
 
+    /**
+     * #Assessment3
+     * Spawns a new droplet at the coordinates of fireTruck and adds it to the list of droplets.
+     */
     private void shootDroplet() {
         Droplet droplet = new Droplet(
                 fireTruck.getX() + fireTruck.getWidth()/2,

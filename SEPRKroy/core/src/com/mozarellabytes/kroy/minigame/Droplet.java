@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 /**
  * #Assessment3
  *
- * Droplet class, fired by the firetruck. Spawns at roughly the  coordinates of the firetruck
+ * Droplet class, fired by the firetruck. Spawns at roughly the coordinates of the firetruck
  */
 public class Droplet extends Entity{
 
@@ -20,6 +20,10 @@ public class Droplet extends Entity{
         );
     }
 
+    /**
+     * Updates the drops position, moving it upwards.
+     * @param delta The amount of time since the last update() was called.
+     */
     public void moveUp(float delta) {
         this.updatePos(
                 0,
