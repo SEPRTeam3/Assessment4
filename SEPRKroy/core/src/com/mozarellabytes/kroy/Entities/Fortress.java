@@ -81,6 +81,7 @@ public class Fortress {
         return this.HP;
     }
 
+    //TODO add test
     public int getLevel() {
         if(TimeUtils.timeSinceMillis(timeSinceLevelUp)/5000 >= 1 && level < 5) {
             level = Math.min(level + (int)TimeUtils.timeSinceMillis(timeSinceLevelUp)/5000, 5);

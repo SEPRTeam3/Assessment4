@@ -91,14 +91,9 @@ public class GameScreen implements Screen {
     /** Play when the game is being played
      * Pause when the pause button is clicked */
     public enum PlayState {
-        PLAY, PAUSE, DIALOGUEPAUSE
+        PLAY, PAUSE
     }
 
-    /**
-     * TODO: Remove this.
-     * Set the stage of dialogue stating what dialogue is being written to the screen
-     */
-    private int dialogueStage = 1;
 
     /**
      * Check weather the station has been destroyed or not
@@ -320,9 +315,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // TODO: Remove unused loop
-        for (FireTruck truck : station.getTrucks()) {
-        }
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render(backgroundLayerIndex);
@@ -406,16 +398,6 @@ public class GameScreen implements Screen {
                 shapeMapRenderer.rect(0, 0, this.camera.viewportWidth, this.camera.viewportHeight);
                 shapeMapRenderer.end();
                 gui.renderPauseScreenText();
-             /*case DIALOGUEPAUSE:
-                flag = 1;
-                Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
-                gui.renderDialogueText(dialogueStage);
-                dialogueStage += 1;
-                for(int waiter = 0; waiter <= 100; waiter += 1){}
-                state = PlayState.PLAY;
-
-                TODO: Remove this?
-             */
         }
         gui.renderButtons();
         gui.renderClock(flag);

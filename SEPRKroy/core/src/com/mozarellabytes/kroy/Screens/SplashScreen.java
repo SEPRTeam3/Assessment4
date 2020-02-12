@@ -16,8 +16,10 @@ public class SplashScreen implements Screen {
 
     private final Kroy game;
 
-    /** The image displayed as the splash screen */
-    private final Texture backgroundLogo;
+
+    /** The second image displayed as the splash screen */
+    private final Texture backgroundLogo2;
+
 
     /** The time that the splash screen has been displayed to the screen */
     private long startTime;
@@ -28,8 +30,8 @@ public class SplashScreen implements Screen {
      */
     public SplashScreen(Kroy game) {
         this.game = game;
-        backgroundLogo = new Texture(Gdx.files.internal("images/backgroundLogo.png"), true);
-        backgroundLogo.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+        backgroundLogo2 = new Texture(Gdx.files.internal("images/backgroundLogo.png"), true);
+        backgroundLogo2.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
     }
 
     /** Logs the time that the screen was first rendered */
@@ -47,7 +49,7 @@ public class SplashScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(backgroundLogo, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+        game.batch.draw(backgroundLogo2, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
         game.batch.end();
 
         // #Assessment3
@@ -79,6 +81,6 @@ public class SplashScreen implements Screen {
     /** Called when this screen should release all resources. */
     @Override
     public void dispose() {
-        backgroundLogo.dispose();
+        backgroundLogo2.dispose();
     }
 }
