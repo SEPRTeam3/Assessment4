@@ -7,13 +7,20 @@ public class CountClock {
       * Time remaining in the countdown clock
       */
     private static float timeRemaining;
+    private static float totalTime;
 
     /*
     Constructor for the CountClock class, instantiating the time remaining to 900 seconds.
      */
     public CountClock() {
-        timeRemaining = 600;
+        totalTime = 5;
+        timeRemaining = totalTime;
     }
+
+    public static float getTotalTime(){
+        return totalTime;
+    }
+
     
     /*
     Set remaining time, with counting down, state 0 means counting and 1 means pause
@@ -57,6 +64,10 @@ public class CountClock {
             return true;
         }
         return false;
+    }
+
+    public static float getRemainTime() {
+        return timeRemaining;
     }
 }
 
