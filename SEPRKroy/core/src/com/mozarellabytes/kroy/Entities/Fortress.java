@@ -83,8 +83,8 @@ public class Fortress {
 
     //TODO add test
     public int getLevel() {
-        if(TimeUtils.timeSinceMillis(timeSinceLevelUp)/5000 >= 1 && level < 5) {
-            level = Math.min(level + (int)TimeUtils.timeSinceMillis(timeSinceLevelUp)/5000, 5);
+        if(TimeUtils.timeSinceMillis(timeSinceLevelUp)/120000 >= 1 && level < 5) {
+            level = Math.min(level + (int)TimeUtils.timeSinceMillis(timeSinceLevelUp)/12000, 5);
             timeSinceLevelUp = TimeUtils.millis();
         }
         return level;
