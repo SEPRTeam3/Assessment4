@@ -431,7 +431,8 @@ public class GameScreen implements Screen {
             if (gui.getCountClock().hasEnded()) {
                 if (crazyAlien.getPosition().y > 9) {
                     crazyAlien.move(station.getTrucks());
-                } else {
+                }
+                else {
                     stationExists = false;
                 }
                     /*Queue<Vector2> vertices;
