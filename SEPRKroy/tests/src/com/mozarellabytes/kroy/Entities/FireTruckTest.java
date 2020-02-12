@@ -11,8 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import static com.mozarellabytes.kroy.Entities.FireTruckType.Ocean;
-import static com.mozarellabytes.kroy.Entities.FireTruckType.Speed;
+import static com.mozarellabytes.kroy.Entities.FireTruckType.*;
 import static org.junit.Assert.*;
 
 
@@ -42,6 +41,7 @@ public class FireTruckTest {
         fireTruck.addTileToPath(new Vector2(11,11));
         for (int i=0; i<25; i++) {
             fireTruck.move();
+            System.out.println(fireTruck.getPosition());
         }
         Vector2 expectedPosition = new Vector2(11, 11);
         assertEquals(expectedPosition, fireTruck.getPosition());
@@ -87,14 +87,22 @@ public class FireTruckTest {
 
     @Test
     public void differentMaxVolumeTest() {
-        // TODO: Add Tank and Attack trucks to this
-        assertNotEquals(Ocean.getMaxReserve(), Speed.getMaxReserve());
+        //#Assessment3
+        assertTrue(
+                Ocean.getMaxReserve() != Speed.getMaxReserve() &&
+                Speed.getMaxReserve() != Attack.getMaxReserve() &&
+                Attack.getMaxReserve() != Tank.getMaxReserve()
+        );
     }
 
     @Test
     public void differentAPTest() {
-        // TODO: Add Tank and Attack trucks to this
-        assertNotEquals(Ocean.getAP(), Speed.getAP());
+        //#Assessment3
+        assertTrue(
+        Ocean.getAP() != Speed.getAP() &&
+                Speed.getAP() != Attack.getAP() &&
+                Attack.getAP() != Tank.getAP()
+        );
     }
 
     @Test
@@ -103,37 +111,70 @@ public class FireTruckTest {
 
         FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(9,10), Speed);
         FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10,10), Ocean);
+        FireTruck fireTruck3 = new FireTruck(gameScreenMock, new Vector2(9,10), Attack);
+        FireTruck fireTruck4 = new FireTruck(gameScreenMock, new Vector2(10,10), Tank);
+
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireStation fireStation = new FireStation(8, 10);
+
         fireStation.spawn(fireTruck1);
         fireStation.spawn(fireTruck2);
+        fireStation.spawn(fireTruck3);
+        fireStation.spawn(fireTruck4);
+
         fireTruck1.setAttacking(true);
         fireTruck2.setAttacking(true);
+        fireTruck3.setAttacking(true);
+        fireTruck4.setAttacking(true);
+
         for (int i=0; i<2000; i++) {
             fireTruck1.attack(fortress);
             fireTruck1.updateSpray();
             fireTruck2.attack(fortress);
             fireTruck2.updateSpray();
+            fireTruck3.attack(fortress);
+            fireTruck3.updateSpray();
+            fireTruck4.attack(fortress);
+            fireTruck4.updateSpray();
         }
+
         float fireTruck1ReserveEmpty = fireTruck1.getReserve();
         float fireTruck2ReserveEmpty = fireTruck2.getReserve();
+        //#Assessment3
+        float fireTruck3ReserveEmpty = fireTruck3.getReserve();
+        float fireTruck4ReserveEmpty = fireTruck4.getReserve();
 
         for (int i=0; i<2000; i++) {
             fireStation.restoreTrucks();
         }
 
-        boolean checkEmptyReservesAreSame = fireTruck1ReserveEmpty == fireTruck2ReserveEmpty;
+        boolean checkEmptyReservesAreSame = (fireTruck1ReserveEmpty == fireTruck2ReserveEmpty) && (fireTruck2ReserveEmpty == fireTruck3ReserveEmpty) && (fireTruck3ReserveEmpty == fireTruck4ReserveEmpty);
         boolean checkSpeedTruckIsFull = fireTruck1.getReserve() == Speed.getMaxReserve();
         boolean checkOceanTruckIsNotFull = fireTruck2.getReserve() !=  Ocean.getMaxReserve();
+        boolean checkAttackTruckIsFull = fireTruck3.getReserve() == Attack.getMaxReserve();
+        boolean checkTankTruckIsNotFull = fireTruck4.getReserve() != Tank.getMaxReserve();
 
-        assertTrue(checkEmptyReservesAreSame && checkSpeedTruckIsFull && checkOceanTruckIsNotFull);
+        System.out.println(fireTruck1.getReserve());
+        System.out.println(fireTruck2.getReserve());
+        System.out.println(fireTruck3.getReserve());
+        System.out.println(fireTruck4.getReserve());
 
+        assertTrue(checkEmptyReservesAreSame
+                && checkSpeedTruckIsFull
+                && checkOceanTruckIsNotFull
+                && checkAttackTruckIsFull
+                && checkTankTruckIsNotFull
+        );
     }
 
     @Test
     public void differentMaxHPTest() {
-        // TODO: Add Tank and Attack trucks to this
-        assertNotEquals(Ocean.getMaxHP(), Speed.getMaxHP());
+        //#Assessment3
+        assertTrue(
+        Ocean.getMaxHP() != Speed.getMaxHP() &&
+                Speed.getMaxHP() != Attack.getMaxHP() &&
+                Attack.getMaxHP() != Tank.getMaxHP()
+        );
     }
 
     @Test
@@ -141,24 +182,45 @@ public class FireTruckTest {
         // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(9,10), Speed);
         FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10,10), Ocean);
+        FireTruck fireTruck3 = new FireTruck(gameScreenMock, new Vector2(9,10), Attack);
+        FireTruck fireTruck4 = new FireTruck(gameScreenMock, new Vector2(10,10), Tank);
         FireStation fireStation = new FireStation(8, 10);
+
         fireStation.spawn(fireTruck1);
         fireStation.spawn(fireTruck2);
+        //#Assessment3
+        fireStation.spawn(fireTruck3);
+        fireStation.spawn(fireTruck4);
+
         fireTruck1.repair(Speed.getMaxHP()*-1);
         fireTruck2.repair(Ocean.getMaxHP()*-1);
+        //#Assessment3
+        fireTruck3.repair(Attack.getMaxHP()*-1);
+        fireTruck4.repair(Tank.getMaxHP()*-1);
+
         float fireTruck1Health0 = fireTruck1.getHP();
         float fireTruck2Health0 = fireTruck2.getHP();
+        //#Assessment3
+        float fireTruck3Health0 = fireTruck3.getHP();
+        float fireTruck4Health0 = fireTruck4.getHP();
 
         for (int i=0; i<3000; i++) {
             fireStation.restoreTrucks();
         }
 
-        boolean checkHealth0IsSame = fireTruck1Health0 == fireTruck2Health0;
-        boolean checkOceanTruckIsFullyRepaired = fireTruck2.getHP() == Ocean.getMaxHP();
+        //#Assessent3
+        boolean checkHealth0IsSame = (fireTruck1Health0 == fireTruck2Health0) && (fireTruck2Health0 == fireTruck3Health0) && (fireTruck3Health0 == fireTruck4Health0);
         boolean checkSpeedTruckIsNotFullyRepaired = fireTruck1.getHP() !=  Speed.getMaxHP();
+        boolean checkOceanTruckIsFullyRepaired = fireTruck2.getHP() == Ocean.getMaxHP();
+        boolean checkAttackTruckIsFullyRepaired = fireTruck3.getHP() == Attack.getMaxHP();
+        boolean checkTankTruckIsNotFullyRepaired = fireTruck4.getHP() != Tank.getMaxHP();
 
-        assertTrue(checkHealth0IsSame && checkOceanTruckIsFullyRepaired && checkSpeedTruckIsNotFullyRepaired);
-
+        assertTrue(checkHealth0IsSame
+                && checkSpeedTruckIsNotFullyRepaired
+                && checkOceanTruckIsFullyRepaired
+                && checkAttackTruckIsFullyRepaired
+                && checkTankTruckIsNotFullyRepaired
+        );
     }
 
     @Test
