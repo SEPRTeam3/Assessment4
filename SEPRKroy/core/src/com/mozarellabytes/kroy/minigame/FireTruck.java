@@ -11,6 +11,7 @@ public class FireTruck extends Entity {
 
     Texture truckLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
     Texture truckRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
+    Texture truckUp = new Texture(Gdx.files.internal("sprites/firetruck/up.png"));
 
     public FireTruck(float x, float y) {
         super(
@@ -48,7 +49,15 @@ public class FireTruck extends Entity {
                 500*delta,
                 0
         );
+        this.updateRect();
+    }
 
+    public void stay(){
+        this.setTexture(truckUp);
+        this.updatePos(
+                0,
+                0
+        );
         this.updateRect();
     }
 }

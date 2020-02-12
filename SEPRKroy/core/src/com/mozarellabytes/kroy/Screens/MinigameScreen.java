@@ -179,6 +179,7 @@ public class MinigameScreen implements Screen {
         }
 //
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            fireTruck.stay();
             // Shoot water droplet upwards
             if (TimeUtils.nanoTime() - lastDropTime > 300000000 || lastDropTime == 0) {
                 shootDroplet();
@@ -276,7 +277,7 @@ public class MinigameScreen implements Screen {
      */
     private void shootDroplet() {
         Droplet droplet = new Droplet(
-                fireTruck.getX() + fireTruck.getWidth()/2,
+                fireTruck.getX() + fireTruck.getWidth()/3.7f,
                 128
         );
         droplets.add(droplet);
