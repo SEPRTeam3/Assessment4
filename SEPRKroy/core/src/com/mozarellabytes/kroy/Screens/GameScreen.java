@@ -472,6 +472,7 @@ public class GameScreen implements Screen {
             alien.move(station.getTrucks());
         }
 
+        //Iterate To check that when nuke explosion, any trucks in the station.
        for (int i = 0; i < station.getTrucks().size(); i++) {
             if (crazyAlien.getPosition().y < 9.05 && fireEngineBlowUp > 0) {
                     FireTruck truck = station.getTruck(i);
