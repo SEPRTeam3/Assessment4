@@ -2,11 +2,10 @@ package com.mozarellabytes.kroy.minigame;
 
 
 import com.mozarellabytes.kroy.GdxTestRunner;
-import com.mozarellabytes.kroy.Screens.MinigameScreen;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;
-import org.mockito.Mock;
 
 @RunWith(GdxTestRunner.class)
 public class EntityTest {
@@ -24,15 +23,15 @@ public class EntityTest {
         FireTruck fireTruck = new FireTruck(0, 0);
 
         fireTruck.moveRight(0.01f);
-        Assert.assertEquals(fireTruck.getX(), -5, 0.0);
+        Assert.assertEquals(fireTruck.getX(), 5, 0.0);
     }
 
     @Test
     public void FireTruckPositionMovedToLeft() {
         FireTruck fireTruck = new FireTruck(0, 0);
 
-        fireTruck.moveRight(0.01f);
-        Assert.assertEquals(fireTruck.getX(), 5, 0.0);
+        fireTruck.moveLeft(0.01f);
+        Assert.assertEquals(fireTruck.getX(), -5, 0.0);
     }
 
     @Test
