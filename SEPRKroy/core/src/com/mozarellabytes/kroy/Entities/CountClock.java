@@ -8,11 +8,11 @@ public class CountClock {
       */
     private static float timeRemaining;
 
-    /* TODO: Increase timeRemaining to a larger number.
-    Constructor for the CountClock class, instantiating the time remaining to 5 seconds.
+    /*
+    Constructor for the CountClock class, instantiating the time remaining to 900 seconds.
      */
     public CountClock() {
-        timeRemaining = 5;
+        timeRemaining = 600;
     }
     
     /*
