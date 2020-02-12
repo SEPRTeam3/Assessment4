@@ -81,18 +81,26 @@ public class FireTruckTest {
         assertEquals(expectedPosition, fireTruck.getPosition());
     }
 
+    /*
+    TODO: Movement tests for Attack and Tank trucks (like above)
+     */
+
     @Test
     public void differentMaxVolumeTest() {
+        // TODO: Add Tank and Attack trucks to this
         assertNotEquals(Ocean.getMaxReserve(), Speed.getMaxReserve());
     }
 
     @Test
     public void differentAPTest() {
+        // TODO: Add Tank and Attack trucks to this
         assertNotEquals(Ocean.getAP(), Speed.getAP());
     }
 
     @Test
     public void checkTrucksFillToDifferentLevels() {
+        // TODO: Add Tank and Attack trucks to this
+
         FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(9,10), Speed);
         FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10,10), Ocean);
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
@@ -124,11 +132,13 @@ public class FireTruckTest {
 
     @Test
     public void differentMaxHPTest() {
+        // TODO: Add Tank and Attack trucks to this
         assertNotEquals(Ocean.getMaxHP(), Speed.getMaxHP());
     }
 
     @Test
     public void checkTrucksRepairToDifferentLevels() {
+        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(9,10), Speed);
         FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10,10), Ocean);
         FireStation fireStation = new FireStation(8, 10);
@@ -153,11 +163,13 @@ public class FireTruckTest {
 
     @Test
     public void differentRangeTest() {
+        // TODO: Add Tank and Attack trucks to this
         assertNotEquals(Ocean.getRange(), Speed.getRange());
     }
 
     @Test
     public void checkDifferentRangeTest() {
+        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(10, 15), Speed);
         FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10, 15), Ocean);
         Fortress fortress = new Fortress(10, 10, FortressType.Clifford);
@@ -167,6 +179,7 @@ public class FireTruckTest {
 
     @Test
     public void truckShouldDecreaseHealthOfFortress() {
+        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         fireTruck.setAttacking(true);
@@ -181,6 +194,7 @@ public class FireTruckTest {
 
     @Test
     public void truckShouldDecreaseReserveWhenAttackingFortress() {
+        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         fireTruck.setAttacking(true);
@@ -195,6 +209,7 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithSpeedByDamageTest() {
+        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         fireTruck.setAttacking(true);
@@ -208,6 +223,7 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithSpeedByReserveTest() {
+        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         fireTruck.setAttacking(true);
@@ -221,6 +237,7 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithOceanByDamageTest() {
+        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Ocean);
         fireTruck.setAttacking(true);
@@ -234,6 +251,7 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithOceanByReserveTest() {
+        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Ocean);
         fireTruck.setAttacking(true);
@@ -247,6 +265,7 @@ public class FireTruckTest {
 
     @Test
     public void moveTest() {
+        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10,10), Speed);
         Mockito.doReturn(true).when(gameScreenMock).isRoad(10,10);
         Mockito.doReturn(true).when(gameScreenMock).isRoad(10,11);
