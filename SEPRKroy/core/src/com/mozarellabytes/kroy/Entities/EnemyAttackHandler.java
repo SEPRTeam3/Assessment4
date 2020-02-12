@@ -115,7 +115,7 @@ public class EnemyAttackHandler {
     }
 
     public void setCrazy(){
-        delay = 1000;
+        delay = 3000;
         attackPower = 1;
 
     }

@@ -58,7 +58,7 @@ public class Bomb extends Sprite {
             this.targetPosition = getMiddleOfTile(this.truckPosition);
 
         }
-        this.damage = attacker.getAttackPower()*(1+attacker.getAttackLevel()*(int)Math.log(attacker.getAttackLevel())/1.5f);//Assessment 3
+        this.damage = attacker.getAttackPower()*(3+attacker.getAttackLevel()*(int)Math.log(attacker.getAttackLevel())/1.5f);//Assessment 3
     }
 
     /**

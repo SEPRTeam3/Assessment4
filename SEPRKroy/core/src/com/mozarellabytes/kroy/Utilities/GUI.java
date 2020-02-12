@@ -462,7 +462,7 @@ public class GUI {
             time = countClock.set_clock(state);
         }
         else{
-            time = "15 : 00";
+            time = "10 : 00";
         }
 
 
