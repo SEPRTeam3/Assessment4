@@ -43,6 +43,7 @@ public class Alien extends Sprite {
     /** Used to check if the truck's image should be
      * changed to match the direction it is facing */
     private Vector2 previousTile;
+    private int happyTime = 0;
 
     /** Texture for each direction the
      * alien is facing */
@@ -237,8 +238,11 @@ public class Alien extends Sprite {
                     shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
             }
         }
-        else{
+        else if(happyTime < 1000){
             shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.LIME, Color.LIME, Color.LIME, Color.LIME);
+        }
+        else{
+            shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
         }
     }
 
@@ -261,8 +265,13 @@ public class Alien extends Sprite {
                 mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
             }
         }
-        else{
+        else if(happyTime < 1000){
             mapBatch.draw(happyDestroy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            happyTime++;
+            System.out.println(happyTime);
+        }
+        else{
+            mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         }
         mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
@@ -277,7 +286,6 @@ public class Alien extends Sprite {
             mapBatch.draw(nuke4, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
             }
         if(fireStationBoomTimes > 0 && this.getPosition().y < 9.1){
-                System.out.println(this.getPosition().y);
                 fireStationBoomTimes--;
                 mapBatch.draw(fireStationBoom1, 2, 8, 8, 8);
                 mapBatch.draw(fireStationBoom2, 2, 8, 8, 8);

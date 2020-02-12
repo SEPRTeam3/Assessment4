@@ -76,7 +76,7 @@ public class GameScreen implements Screen {
     private final FireStation station;
     private final FireTruck stationTruck;
     private Alien crazyAlien;
-    private Alien crazyAlienC;
+    //private Alien crazyAlienC;
 
     /** Alien patrols to attack fire engines */
     private Queue<Alien> aliens;
@@ -287,10 +287,10 @@ public class GameScreen implements Screen {
         crazyAlien.getAttackHandler().setCrazy();
         vertices.clear();
 
-        vertices.addFirst(new Vector2(2.9f,9));
+        /*vertices.addFirst(new Vector2(2.9f,9));
         vertices.addLast(new Vector2(2.9f,-10));
         crazyAlienC = (new Alien(2.9f,9, vertices,0.0175f));
-        vertices.clear();
+        vertices.clear();*/
 
         // Set the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
@@ -316,9 +316,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        for (FireTruck truck : station.getTrucks()){
-            System.out.println(truck.getPosition());
-        }
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render(backgroundLayerIndex);
@@ -477,7 +474,6 @@ public class GameScreen implements Screen {
        for (int i = 0; i < station.getTrucks().size(); i++) {
             if (crazyAlien.getPosition().y < 9.05 && fireEngineBlowUp > 0) {
                     FireTruck truck = station.getTruck(i);
-                    System.out.println(fireEngineBlowUp);
                     fireEngineBlowUp--;
                     if ((truck.getPosition().x == 4 && truck.getPosition().y == 8) || (truck.getPosition().x == 5 && truck.getPosition().y == 8) || (truck.getPosition().x == 6 && truck.getPosition().y == 8)) {
                         gameState.removeFireTruck();
@@ -688,7 +684,7 @@ public class GameScreen implements Screen {
      * button is clicked */
     public void toHomeScreen() {
         crazyAlien = null;
-        crazyAlienC = null;
+        //crazyAlienC = null;
         stationExists = true;
         game.setScreen(new MenuScreen(game));
         SoundFX.sfx_soundtrack.dispose();
