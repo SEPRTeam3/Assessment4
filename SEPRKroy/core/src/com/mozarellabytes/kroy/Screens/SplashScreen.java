@@ -2,6 +2,7 @@ package com.mozarellabytes.kroy.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Kroy;
@@ -16,7 +17,8 @@ public class SplashScreen implements Screen {
 
     private final Kroy game;
 
-
+    /** The first image displayed as the splash screen */
+    private final Texture backGroundLogo1;
     /** The second image displayed as the splash screen */
     private final Texture backgroundLogo2;
 
@@ -24,14 +26,18 @@ public class SplashScreen implements Screen {
     /** The time that the splash screen has been displayed to the screen */
     private long startTime;
 
+    private float spriteBatchTransparency;
+
     /** Constructor for the splash screen
      *
      * @param game LibGDX game
      */
     public SplashScreen(Kroy game) {
         this.game = game;
+        backGroundLogo1 = new Texture(Gdx.files.internal("images/SEPRet Studios Logo. Splashpng.png"));
         backgroundLogo2 = new Texture(Gdx.files.internal("images/backgroundLogo.png"), true);
         backgroundLogo2.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+        spriteBatchTransparency = 1;
     }
 
     /** Logs the time that the screen was first rendered */
@@ -49,11 +55,17 @@ public class SplashScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
+        game.batch.setColor(1,1,1,1);
         game.batch.draw(backgroundLogo2, 0, 0, Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
+        game.batch.setColor(1,1,1,spriteBatchTransparency);
+        game.batch.draw(backGroundLogo1,0,0,Gdx.app.getGraphics().getWidth(), Gdx.app.getGraphics().getHeight());
         game.batch.end();
 
+        if(TimeUtils.timeSinceMillis(startTime) > 1000) {
+            spriteBatchTransparency -= Gdx.graphics.getDeltaTime() * 1f;
+        }
         // #Assessment3
-        if(TimeUtils.timeSinceMillis(startTime) > 1000){
+        if(TimeUtils.timeSinceMillis(startTime) > 3000){
             game.setScreen(new ControlsScreen(game, new MenuScreen(game), "menu"));
         }
     }
