@@ -478,6 +478,9 @@ public class GameScreen implements Screen {
                     if ((truck.getPosition().x == 4 && truck.getPosition().y == 8) || (truck.getPosition().x == 5 && truck.getPosition().y == 8) || (truck.getPosition().x == 6 && truck.getPosition().y == 8)) {
                         gameState.removeFireTruck();
                         station.destroyTruck(truck);
+                        if (SoundFX.music_enabled) {
+                            SoundFX.sfx_fortress_destroyed.play();
+                        }
                 }
             }
         }
