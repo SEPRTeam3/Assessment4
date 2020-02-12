@@ -54,6 +54,7 @@ public class Alien extends Sprite {
     private final Texture notHappy;
     private final Texture littleAngry;
     private final Texture angry;
+    private final Texture happyDestroy;
     private final Texture crazyAlien;
     private final Texture fireStationBoom1;
     private final Texture fireStationBoom2;
@@ -107,6 +108,7 @@ public class Alien extends Sprite {
         this.notHappy = new Texture(Gdx.files.internal("sprites/alien/notHappy.png"));
         this.littleAngry = new Texture(Gdx.files.internal("sprites/alien/littleAngry.png"));
         this.angry = new Texture(Gdx.files.internal("sprites/alien/Angry.png"));
+        this.happyDestroy = new Texture(Gdx.files.internal("sprites/alien/happyDestroy.png"));
         this.fireStationBoom1 = new Texture(Gdx.files.internal("sprites/alien/fe1.png"));
         this.fireStationBoom2 = new Texture(Gdx.files.internal("sprites/alien/fe2.png"));
         this.fireStationBoom3 = new Texture(Gdx.files.internal("sprites/alien/fe3.png"));
@@ -202,11 +204,11 @@ public class Alien extends Sprite {
     public void drawStats(ShapeRenderer shapeMapRenderer) {
         shapeMapRenderer.rect(this.getPosition().x + 0.2f, this.getPosition().y + 1.3f, 0.3f, 0.8f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
         shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
-        if (CountClock.getTotalTime() - CountClock.getRemainTime() <= CountClock.getTotalTime()) {
+        if (CountClock.getTotalTime() - CountClock.getRemainTime() <= CountClock.getTotalTime() && GameScreen.fireStationExist() == true) {
             shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, (CountClock.getTotalTime() - CountClock.getRemainTime()) / CountClock.getTotalTime() * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
         }
-        else {
-            switch(ThreadLocalRandom.current().nextInt(1,9)){
+        else if (GameScreen.fireStationExist() == true && CountClock.getRemainTime() <= 0) {
+            switch (ThreadLocalRandom.current().nextInt(1, 9)) {
                 case 1:
                     shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
                     break;
@@ -234,7 +236,10 @@ public class Alien extends Sprite {
                 default:
                     shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
             }
-    }
+        }
+        else{
+            shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.LIME, Color.LIME, Color.LIME, Color.LIME);
+        }
     }
 
 
@@ -245,19 +250,21 @@ public class Alien extends Sprite {
      *                  drawn to (map dependant)
      */
     public void drawSprite(Batch mapBatch, int width, int height) {
-        mapBatch.draw(this, this.position.x, this.position.y, width, height);
-        if ((CountClock.getRemainTime() / CountClock.getTotalTime() > 0.75f) || CountClock.getRemainTime() == CountClock.getTotalTime()) {
-            mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-        }
-        else if(CountClock.getRemainTime() / CountClock.getTotalTime() < 0.75f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.5f){
-            mapBatch.draw(notHappy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-        }
-        else if(CountClock.getRemainTime() / CountClock.getTotalTime() < 0.5f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.25f){
-            mapBatch.draw(littleAngry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        if(GameScreen.fireStationExist() == true) {
+            if ((CountClock.getRemainTime() / CountClock.getTotalTime() > 0.75f) || CountClock.getRemainTime() == CountClock.getTotalTime()) {
+                mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            } else if (CountClock.getRemainTime() / CountClock.getTotalTime() < 0.75f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.5f) {
+                mapBatch.draw(notHappy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            } else if (CountClock.getRemainTime() / CountClock.getTotalTime() < 0.5f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.25f) {
+                mapBatch.draw(littleAngry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            } else {
+                mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            }
         }
         else{
-            mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            mapBatch.draw(happyDestroy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         }
+        mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
 
 
