@@ -105,6 +105,7 @@ public class GameScreen implements Screen {
      * 0 = unpaused, 1 = paused
      */
     private int flag = 0;
+    private int MiniGameTime = 2;
 
     /**
      * Constructor which has the game passed in
@@ -524,7 +525,10 @@ public class GameScreen implements Screen {
 
                 // #Assessment3
                 // ...and if so, switch screen to the minigame.
-                toMinigameScreen();
+                MiniGameTime--;
+                if(MiniGameTime == 0) {
+                    toMinigameScreen();
+                }
             }
 
 
