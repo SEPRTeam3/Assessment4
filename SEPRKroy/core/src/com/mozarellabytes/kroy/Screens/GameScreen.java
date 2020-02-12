@@ -479,7 +479,7 @@ public class GameScreen implements Screen {
                         gameState.removeFireTruck();
                         station.destroyTruck(truck);
                         if (SoundFX.music_enabled) {
-                            SoundFX.sfx_fortress_destroyed.play();
+                            SoundFX.sfx_station_destroyed.play();
                         }
                 }
             }
