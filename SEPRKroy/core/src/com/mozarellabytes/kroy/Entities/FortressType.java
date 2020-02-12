@@ -25,8 +25,8 @@ public enum FortressType {
 
     //#Assessment3 Added 3 new fortresses
     TrainStation ("Train Station", 3000, 5, 50, 5, 7, 4, new Texture(Gdx.files.internal("sprites/fortress/train.png"))),
-    Minster ("Minster", 2000, 4, 100, 7, 5, 6, new Texture(Gdx.files.internal("sprites/fortress/minster.png"))),
-    Shambles ("Shambles", 1000, 7, 25, 6, 6, 4, new Texture(Gdx.files.internal("sprites/fortress/shambles.png")));
+    Minster ("Minster", 2000, 6, 100, 7, 5, 6, new Texture(Gdx.files.internal("sprites/fortress/minster.png"))),
+    Shambles ("Shambles", 1000, 9, 25, 6, 6, 4, new Texture(Gdx.files.internal("sprites/fortress/shambles.png")));
 
     /** The name for the fortress, visible once the fortress has been clicked on */
     private final String name;
