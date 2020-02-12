@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import com.mozarellabytes.kroy.Screens.GameScreen;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,6 +29,7 @@ public class Alien extends Sprite {
 
     /** cursory max HP value for alien */
     private final float maxHP = 10;
+    private int fireStationBoomTimes = 300;
 
     /** Health points */
     private float HP;
@@ -46,6 +50,34 @@ public class Alien extends Sprite {
     private final Texture lookRight;
     private final Texture lookUp;
     private final Texture lookDown;
+    private final Texture happy;
+    private final Texture notHappy;
+    private final Texture littleAngry;
+    private final Texture angry;
+    private final Texture crazyAlien;
+    private final Texture fireStationBoom1;
+    private final Texture fireStationBoom2;
+    private final Texture fireStationBoom3;
+    private final Texture fireStationBoom4;
+    private final Texture fireStationBoom5;
+    private final Texture fireStationBoom6;
+    private final Texture fireStationBoom7;
+    private final Texture fireStationBoom8;
+    private final Texture fireStationBoom9;
+    private final Texture fireStationBoom10;
+    private final Texture fireStationBoom11;
+    private final Texture fireStationBoom12;
+    private final Texture fireStationBoom13;
+    private final Texture fireStationBoom14;
+    private final Texture fireStationBoom15;
+    private final Texture fireStationBoom16;
+    private final Texture nuke1;
+    private final Texture nuke2;
+    private final Texture nuke3;
+    private final Texture nuke4;
+
+
+
 
     /** PatrolPath initialised for each alien
      */
@@ -70,6 +102,32 @@ public class Alien extends Sprite {
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/alien/AlienUp.png"));
         this.lookDown = new Texture(Gdx.files.internal("sprites/alien/AlienDown.png"));
+        this.crazyAlien = new Texture(Gdx.files.internal("sprites/alien/crazyAlien.png"));
+        this.happy = new Texture(Gdx.files.internal("sprites/alien/happyFace.png"));
+        this.notHappy = new Texture(Gdx.files.internal("sprites/alien/notHappy.png"));
+        this.littleAngry = new Texture(Gdx.files.internal("sprites/alien/littleAngry.png"));
+        this.angry = new Texture(Gdx.files.internal("sprites/alien/Angry.png"));
+        this.fireStationBoom1 = new Texture(Gdx.files.internal("sprites/alien/fe1.png"));
+        this.fireStationBoom2 = new Texture(Gdx.files.internal("sprites/alien/fe2.png"));
+        this.fireStationBoom3 = new Texture(Gdx.files.internal("sprites/alien/fe3.png"));
+        this.fireStationBoom4 = new Texture(Gdx.files.internal("sprites/alien/fe4.png"));
+        this.fireStationBoom5 = new Texture(Gdx.files.internal("sprites/alien/fe5.png"));
+        this.fireStationBoom6 = new Texture(Gdx.files.internal("sprites/alien/fe6.png"));
+        this.fireStationBoom7 = new Texture(Gdx.files.internal("sprites/alien/fe7.png"));
+        this.fireStationBoom8 = new Texture(Gdx.files.internal("sprites/alien/fe8.png"));
+        this.fireStationBoom9 = new Texture(Gdx.files.internal("sprites/alien/fe9.png"));
+        this.fireStationBoom10 = new Texture(Gdx.files.internal("sprites/alien/fe10.png"));
+        this.fireStationBoom11 = new Texture(Gdx.files.internal("sprites/alien/fe11.png"));
+        this.fireStationBoom12 = new Texture(Gdx.files.internal("sprites/alien/fe12.png"));
+        this.fireStationBoom13 = new Texture(Gdx.files.internal("sprites/alien/fe13.png"));
+        this.fireStationBoom14 = new Texture(Gdx.files.internal("sprites/alien/fe14.png"));
+        this.fireStationBoom15 = new Texture(Gdx.files.internal("sprites/alien/fe15.png"));
+        this.fireStationBoom16 = new Texture(Gdx.files.internal("sprites/alien/fe16.png"));
+        this.nuke1 = new Texture(Gdx.files.internal("sprites/alien/nuke1.png"));
+        this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
+        this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
+        this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
+
 
         attackHandler = new EnemyAttackHandler(this);
     }
@@ -174,7 +232,7 @@ public class Alien extends Sprite {
                     shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.PURPLE, Color.PURPLE, Color.PURPLE, Color.PURPLE);
                     break;
                 default:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
+                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
             }
     }
     }
@@ -188,6 +246,49 @@ public class Alien extends Sprite {
      */
     public void drawSprite(Batch mapBatch, int width, int height) {
         mapBatch.draw(this, this.position.x, this.position.y, width, height);
+        if ((CountClock.getRemainTime() / CountClock.getTotalTime() > 0.75f) || CountClock.getRemainTime() == CountClock.getTotalTime()) {
+            mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        }
+        else if(CountClock.getRemainTime() / CountClock.getTotalTime() < 0.75f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.5f){
+            mapBatch.draw(notHappy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        }
+        else if(CountClock.getRemainTime() / CountClock.getTotalTime() < 0.5f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.25f){
+            mapBatch.draw(littleAngry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        }
+        else{
+            mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        }
+    }
+
+
+    public void drawSpriteCrazyAlien(Batch mapBatch, int width, int height){
+        if (GameScreen.fireStationExist() == true) {
+            mapBatch.draw(crazyAlien, this.position.x, this.position.y, width, height);
+            mapBatch.draw(nuke1, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+            mapBatch.draw(nuke2, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+            mapBatch.draw(nuke3, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+            mapBatch.draw(nuke4, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+            }
+        if(fireStationBoomTimes > 0 && this.getPosition().y < 9.1){
+                System.out.println(this.getPosition().y);
+                fireStationBoomTimes--;
+                mapBatch.draw(fireStationBoom1, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom2, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom3, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom4, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom5, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom6, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom7, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom8, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom9, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom10, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom11, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom12, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom13, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom14, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom15, 2, 8, 8, 8);
+                mapBatch.draw(fireStationBoom16, 2, 8,8, 8);
+        }
     }
 
     /**

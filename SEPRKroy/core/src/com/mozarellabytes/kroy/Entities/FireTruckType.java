@@ -22,7 +22,7 @@ public enum FireTruckType {
     Tank(150, 1, Color.GREEN, "Tank Truck", 7, 0.4f, 250),
     Attack(50,2,Color.YELLOW, "Attack Truck",6,0.6f,50),
     Ocean(250, 1, Color.CYAN, "Ocean Truck", 6, 0.3f, 100),
-    Station(0, 0, Color.CYAN, "stationTruck", 0, 0, 30);
+    Station(0, 0, Color.CYAN, "stationTruck", 0, 0, 75);
 
 
     /** The maximum amount of water this type of truck can have,

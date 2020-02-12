@@ -106,7 +106,7 @@ public class GameScreen implements Screen {
      */
     private int flag = 0;
     private int MiniGameTime = 2;
-
+    private int fireEngineBlowUp = 6;
     /**
      * Constructor which has the game passed in
      *
@@ -316,6 +316,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        for (FireTruck truck : station.getTrucks()){
+            System.out.println(truck.getPosition());
+        }
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render(backgroundLayerIndex);
@@ -347,11 +350,12 @@ public class GameScreen implements Screen {
         for(Alien alien:aliens) {
             alien.drawSprite(mapBatch,1,1);
         }
-        if(!fireStationExist()){
-            crazyAlienC.drawSprite(mapBatch,5,5);
+        /*if(!fireStationExist()){
+            crazyAlienC.drawSpriteCrazyAlien(mapBatch,5,5);
+        }*/
+        if(fireStationExist()) {
+            crazyAlien.drawSpriteCrazyAlien(mapBatch, 5, 5);
         }
-
-        crazyAlien.drawSprite(mapBatch, 5, 5);
         mapBatch.end();
 
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -428,6 +432,12 @@ public class GameScreen implements Screen {
                 if (crazyAlien.getPosition().y > 9) {
                     crazyAlien.move(station.getTrucks());
                 } else {
+                    stationExists = false;
+                }
+                    /*Queue<Vector2> vertices;
+                    vertices = new Queue<Vector2>();
+                    crazyAlien = (new Alien(2.9f, -10, vertices, 0.0175f));*/
+                    /*
                     if (stationTruck.getHP() > 0) {
                         Queue<Vector2> vertices;
                         vertices = new Queue<Vector2>();
@@ -439,23 +449,20 @@ public class GameScreen implements Screen {
                         Queue<Vector2> vertices;
                         vertices = new Queue<Vector2>();
                         crazyAlien = (new Alien(2.9f, -10, vertices, 0.0175f));
-
                         // Only let one instance of crazyAlien exist
                         if(crazyAlienC.getPosition().y > -5) {
                             crazyAlienC.move(station.getTrucks()); // Move to the fireStation
                         }
                         stationExists = false;
-                    }
+                    }*/
+            }
 
-                }
-
-                // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
-                if (crazyAlien.getPosition().y >= 0) {
-                    crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
-                    crazyAlien.getAttackHandler().attack(stationTruck, false);
-                    if (crazyAlien.getAttackHandler().updateBombs()) {
-                        camShake.shakeIt(.2f);
-                    }
+            // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
+            if (crazyAlien.getPosition().y >= 9.1f && crazyAlien.getPosition().y < 30) {
+                crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
+                crazyAlien.getAttackHandler().attack(stationTruck, false);
+                if (crazyAlien.getAttackHandler().updateBombs()) {
+                    camShake.shakeIt(.2f);
                 }
             }
         }
@@ -463,6 +470,18 @@ public class GameScreen implements Screen {
         //#Assessment3
         for(Alien alien:aliens){
             alien.move(station.getTrucks());
+        }
+
+       for (int i = 0; i < station.getTrucks().size(); i++) {
+            if (crazyAlien.getPosition().y < 9.05 && fireEngineBlowUp > 0) {
+                    FireTruck truck = station.getTruck(i);
+                    System.out.println(fireEngineBlowUp);
+                    fireEngineBlowUp--;
+                    if ((truck.getPosition().x == 4 && truck.getPosition().y == 8) || (truck.getPosition().x == 5 && truck.getPosition().y == 8) || (truck.getPosition().x == 6 && truck.getPosition().y == 8)) {
+                        gameState.removeFireTruck();
+                        station.destroyTruck(truck);
+                }
+            }
         }
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
