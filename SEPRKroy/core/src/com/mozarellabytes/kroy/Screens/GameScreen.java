@@ -117,6 +117,9 @@ public class GameScreen implements Screen {
         vertices = new Queue<>();
         this.game = game;
 
+        crazyAlien = null;
+        stationExists = true;
+
         state = PlayState.PLAY;
 
         camera = new OrthographicCamera();
@@ -703,9 +706,6 @@ public class GameScreen implements Screen {
     /** Exits the main game screen and goes to the menu, called when the home
      * button is clicked */
     public void toHomeScreen() {
-        crazyAlien = null;
-        //crazyAlienC = null;
-        stationExists = true;
         game.setScreen(new MenuScreen(game));
         SoundFX.sfx_soundtrack.dispose();
     }
