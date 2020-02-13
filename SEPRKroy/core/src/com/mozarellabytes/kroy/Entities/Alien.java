@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import com.mozarellabytes.kroy.Screens.GameScreen;
+import com.mozarellabytes.kroy.Utilities.SoundFX;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class Alien extends Sprite {
      * changed to match the direction it is facing */
     private Vector2 previousTile;
     private int happyTime = 0;
+    private float accelerate = 0;
+    private boolean dropbomb = true;
 
     /** Texture for each direction the
      * alien is facing */
@@ -279,12 +282,27 @@ public class Alien extends Sprite {
 
     public void drawSpriteCrazyAlien(Batch mapBatch, int width, int height){
         if (GameScreen.fireStationExist() == true) {
-            mapBatch.draw(crazyAlien, this.position.x, this.position.y, width, height);
-            mapBatch.draw(nuke1, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
-            mapBatch.draw(nuke2, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
-            mapBatch.draw(nuke3, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
-            mapBatch.draw(nuke4, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+            if (this.getPosition().y > 9.1) {
+                mapBatch.draw(crazyAlien, this.position.x, this.position.y, width, height);
+                if(this.getPosition().y >10) {
+                    mapBatch.draw(nuke1, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+                    mapBatch.draw(nuke2, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+                    mapBatch.draw(nuke3, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+                    mapBatch.draw(nuke4, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
+                }
+                else{
+                    if (SoundFX.music_enabled && dropbomb == true) {
+                        dropbomb = false;
+                        SoundFX.sfx_crazy_alien_drop_bomb.play();
+                    }
+                    accelerate += 0.02;
+                    mapBatch.draw(nuke1, this.position.x + 1.9f + accelerate/2 , this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
+                    mapBatch.draw(nuke2, this.position.x + 1.9f + accelerate/2, this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
+                    mapBatch.draw(nuke3, this.position.x + 1.9f + accelerate/2, this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
+                    mapBatch.draw(nuke4, this.position.x + 1.9f + accelerate/2, this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
+                }
             }
+        }
         if(fireStationBoomTimes > 0 && this.getPosition().y < 9.1){
                 fireStationBoomTimes--;
                 mapBatch.draw(fireStationBoom1, 2, 8, 8, 8);
