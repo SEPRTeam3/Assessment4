@@ -159,7 +159,7 @@ public class FortressTest {
      */
 
     @Test
-    public void differentRangeTest2() {
+    public void allFortressesDifferentRangeTest() {
         assertTrue(
                 Clifford.getRange() != Revs.getRange() &&
                          Revs.getRange() != Walmgate.getRange() &&
@@ -170,7 +170,7 @@ public class FortressTest {
     }
 
     @Test
-    public void differentMaxHPTest2() {
+    public void allFortressesDifferentMaxHPTest() {
         assertTrue(
                 Clifford.getMaxHP() != Revs.getMaxHP() &&
                          Revs.getMaxHP() != Walmgate.getMaxHP() &&
@@ -181,7 +181,7 @@ public class FortressTest {
     }
 
     @Test
-    public void differentFireRateTest2() {
+    public void allFortressesDifferentFireRateTest() {
         assertTrue(
                 Clifford.getDelay() != Revs.getDelay() &&
                          Revs.getDelay() != Walmgate.getDelay() &&
@@ -192,7 +192,7 @@ public class FortressTest {
     }
 
     @Test
-    public void differentAPTest2() {
+    public void allFortressesDifferentAPTest() {
         assertTrue(
                 Clifford.getAP() != Revs.getAP() &&
                         Revs.getAP() != Walmgate.getAP() &&
@@ -317,5 +317,10 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
+    }
+
+    @Test void fortressLevelsUpAfterOneMinuteTest() {
+        assertTrue(false);
+        // TODO: Finish writing this test.
     }
 }
