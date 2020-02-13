@@ -473,14 +473,14 @@ public class GameScreen implements Screen {
         //Iterate To check that when nuke explosion, any trucks in the station.
        for (int i = 0; i < station.getTrucks().size(); i++) {
             if (crazyAlien.getPosition().y < 9.05 && fireEngineBlowUp > 0) {
-                    FireTruck truck = station.getTruck(i);
-                    fireEngineBlowUp--;
-                    if ((truck.getPosition().x == 4 && truck.getPosition().y == 8) || (truck.getPosition().x == 5 && truck.getPosition().y == 8) || (truck.getPosition().x == 6 && truck.getPosition().y == 8)) {
-                        gameState.removeFireTruck();
-                        station.destroyTruck(truck);
-                        if (SoundFX.music_enabled) {
-                            SoundFX.sfx_station_destroyed.play();
-                        }
+                FireTruck truck = station.getTruck(i);
+                fireEngineBlowUp--;
+                if ((truck.getPosition().x == 4 && truck.getPosition().y == 8) || (truck.getPosition().x == 5 && truck.getPosition().y == 8) || (truck.getPosition().x == 6 && truck.getPosition().y == 8)) {
+                    gameState.removeFireTruck();
+                    station.destroyTruck(truck);
+                }
+                if (SoundFX.music_enabled) {
+                    SoundFX.sfx_station_destroyed.play();
                 }
             }
         }
