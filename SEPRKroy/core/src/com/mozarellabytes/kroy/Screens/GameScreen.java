@@ -513,7 +513,12 @@ public class GameScreen implements Screen {
                     alien.getAttackHandler().alienAttack(truck, true);
                 }
                 if (alien.getAttackHandler().updateBombs()) {
-                    camShake.shakeIt(.2f);
+                    if (SoundFX.music_enabled) {
+                        SoundFX.sfx_alien_hit_fire_engine_sound.play();
+                    }
+                    else{
+                        camShake.shakeIt(.2f);
+                    }
                 }
             }
 
@@ -545,6 +550,9 @@ public class GameScreen implements Screen {
             if (fortress.getHP() <= 0) {
                 gameState.addFortress();
                 this.fortresses.remove(fortress);
+                mapBatch.begin();
+                fortress.drawDestroy(mapBatch,10,10);
+                mapBatch.end();
                 if (SoundFX.music_enabled) {
                     SoundFX.sfx_fortress_destroyed.play();
                 }
@@ -561,7 +569,9 @@ public class GameScreen implements Screen {
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 if (gameState.getTrucksInAttackRange() > 0) {
-                    SoundFX.playTruckAttack();
+                    if (SoundFX.music_enabled) {
+                        SoundFX.playTruckAttack();
+                    }
                 }
                 else {
                     SoundFX.stopTruckAttack();

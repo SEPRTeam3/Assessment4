@@ -148,22 +148,22 @@ public class FireTruck extends Sprite {
     }
 
     public void drawDestroy(Batch mapBatch, int width, int height) {
-            mapBatch.draw(fireStationBoom1, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom2, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom3, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom4, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom5, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom6, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom7, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom8, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom9, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom10, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom11, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom12, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom13, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom14, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom15, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
-            mapBatch.draw(fireStationBoom16, this.getPosition().x - 1, this.getPosition().y - 1, 3, 3);
+            mapBatch.draw(fireStationBoom1, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom2, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom3, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom4, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom5, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom6, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom7, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom8, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom9, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom10, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom11, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom12, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom13, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom14, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom15, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
+            mapBatch.draw(fireStationBoom16, this.getPosition().x - 1, this.getPosition().y - 1, width, height);
     }
 
     /**

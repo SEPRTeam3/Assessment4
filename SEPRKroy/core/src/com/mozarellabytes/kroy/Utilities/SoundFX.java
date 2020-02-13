@@ -29,6 +29,7 @@ public class SoundFX {
     public static final Sound sfx_alien_attack = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/alienFire.mp3"));
     public static final Sound sfx_crazy_alien_attack = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/crazyAlienAttackEffects.mp3"));
     public static final Sound sfx_crazy_alien_drop_bomb = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/crazyAliendropBomb.mp3"));
+    public static final Sound sfx_alien_hit_fire_engine_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/alienHitFireEngineSound.mp3"));
     public static final Sound sfx_fortress_attack = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/fortress_attack.wav"));
     public static final Sound sfx_pause = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/pause.wav"));
     public static final Sound sfx_unpause = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/unpause.wav"));
