@@ -29,9 +29,9 @@ public class EnemyAttackHandler {
     EnemyAttackHandler(Alien entity){
         position = entity.getPosition();
         attackRange = ThreadLocalRandom.current().nextInt(2, 4);
-        attackPower = ThreadLocalRandom.current().nextInt(1, 3);
+        attackPower = 0.13f;
         attackLevel = 1;
-        delay = ThreadLocalRandom.current().nextInt(500, 1201);
+        delay = 100;
         bombs = new ArrayList<Bomb>();
     }
 
@@ -52,12 +52,32 @@ public class EnemyAttackHandler {
      * @param randomTarget  whether the bomb hits every time or
      *                      there is a chance it misses
      */
-    public void attack(FireTruck target, boolean randomTarget) {
+    public void fortressAttack(FireTruck target, boolean randomTarget) {
         if (target.getTimeOfLastAttack() + delay < System.currentTimeMillis()) {
             this.bombs.add(new Bomb(this, target, randomTarget));
             target.setTimeOfLastAttack(System.currentTimeMillis());
             if (SoundFX.music_enabled) {
                 SoundFX.sfx_fortress_attack.play();
+            }
+        }
+    }
+
+    public void alienAttack(FireTruck target, boolean randomTarget) {
+        if (target.getTimeOfLastAttack() + delay < System.currentTimeMillis()) {
+            this.bombs.add(new Bomb(this, target, randomTarget));
+            target.setTimeOfLastAttack(System.currentTimeMillis());
+            if (SoundFX.music_enabled) {
+                SoundFX.sfx_alien_attack.play();
+            }
+        }
+    }
+
+    public void crazyAlienAttack(FireTruck target, boolean randomTarget) {
+        if (target.getTimeOfLastAttack() + delay < System.currentTimeMillis()) {
+            this.bombs.add(new Bomb(this, target, randomTarget));
+            target.setTimeOfLastAttack(System.currentTimeMillis());
+            if (SoundFX.music_enabled) {
+                SoundFX.sfx_crazy_alien_attack.play();
             }
         }
     }
@@ -115,8 +135,8 @@ public class EnemyAttackHandler {
     }
 
     public void setCrazy(){
-        delay = 3000;
-        attackPower = 1;
+        delay = 1500;
+        attackPower = 0.8f;
 
     }
 

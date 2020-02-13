@@ -135,6 +135,19 @@ public class Bomb extends Sprite {
         shapeMapRenderer.circle(this.currentPosition.x, this.currentPosition.y, 0.2f, 40);
         shapeMapRenderer.setColor(Color.WHITE);
     }
+
+    public void alienDrawBomb(ShapeRenderer shapeMapRenderer) {
+        shapeMapRenderer.setColor(Color.YELLOW);
+        shapeMapRenderer.rectLine(this.currentPosition.x - 0.2f, this.currentPosition.y - 0.05f, truckPosition.x - 0.2f, truckPosition.y, 0.05f);
+        shapeMapRenderer.rectLine(this.currentPosition.x + 0.2f, this.currentPosition.y - 0.05f, truckPosition.x + 0.2f, truckPosition.y, 0.05f);
+        shapeMapRenderer.setColor(Color.WHITE);
+    }
+
+    public void crazyAlienDrawBomb(ShapeRenderer shapeMapRenderer) {
+        shapeMapRenderer.setColor(Color.CYAN);
+        shapeMapRenderer.rectLine(this.currentPosition.x - 0.2f, this.currentPosition.y + 1.5f, truckPosition.x, truckPosition.y + 0.5f, 1.5f);
+        shapeMapRenderer.setColor(Color.WHITE);
+    }
 }
 
 

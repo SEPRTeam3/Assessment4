@@ -374,12 +374,12 @@ public class GameScreen implements Screen {
         for(Alien alien:aliens) {
             alien.drawStats(shapeMapRenderer);
             for (Bomb bomb : alien.getAttackHandler().getBombs()) {
-                bomb.drawBomb(shapeMapRenderer);
+                bomb.alienDrawBomb(shapeMapRenderer);
             }
         }
 
         for (Bomb bomb : crazyAlien.getAttackHandler().getBombs()) {
-            bomb.drawBomb(shapeMapRenderer);
+            bomb.crazyAlienDrawBomb(shapeMapRenderer);
         }
 
         shapeMapRenderer.end();
@@ -458,7 +458,7 @@ public class GameScreen implements Screen {
             // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
             if (crazyAlien.getPosition().y >= 9.1f && crazyAlien.getPosition().y < 30) {
                 crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
-                crazyAlien.getAttackHandler().attack(stationTruck, false);
+                crazyAlien.getAttackHandler().crazyAlienAttack(stationTruck, false);
                 if (crazyAlien.getAttackHandler().updateBombs()) {
                     camShake.shakeIt(.2f);
                 }
@@ -494,7 +494,7 @@ public class GameScreen implements Screen {
             for (Fortress fortress : this.fortresses) {
                 if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
                     fortress.getAttackHandler().setAttackLevel(fortress.getLevel());
-                    fortress.getAttackHandler().attack(truck, true);
+                    fortress.getAttackHandler().fortressAttack(truck, true);
                 }
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
@@ -510,7 +510,7 @@ public class GameScreen implements Screen {
             for(Alien alien : this.aliens){
                 alien.getAttackHandler().setPosition(alien.getPosition());
                 if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
-                    alien.getAttackHandler().attack(truck, true);
+                    alien.getAttackHandler().alienAttack(truck, true);
                 }
                 if (alien.getAttackHandler().updateBombs()) {
                     camShake.shakeIt(.2f);
