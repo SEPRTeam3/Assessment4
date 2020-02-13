@@ -358,7 +358,7 @@ public class GameScreen implements Screen {
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (FireTruck truck : station.getTrucks()) {
-            truck.drawStats(shapeMapRenderer);
+                truck.drawStats(shapeMapRenderer);
         }
 
         stationTruck.drawStats(shapeMapRenderer);
@@ -458,9 +458,10 @@ public class GameScreen implements Screen {
             // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
             if (crazyAlien.getPosition().y >= 9.1f && crazyAlien.getPosition().y < 30) {
                 crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
+                //System.out.print(stationTruck.getPosition());
                 crazyAlien.getAttackHandler().crazyAlienAttack(stationTruck, false);
                 if (crazyAlien.getAttackHandler().updateBombs()) {
-                    camShake.shakeIt(.2f);
+                    camShake.shakeIt(.4f);
                 }
             }
         }
