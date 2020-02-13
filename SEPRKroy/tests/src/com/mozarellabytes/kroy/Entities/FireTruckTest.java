@@ -24,13 +24,36 @@ public class FireTruckTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
-    @Test
-    public void differentSpeedTest() {
-        assertNotEquals(Ocean.getSpeed(), Speed.getSpeed());
+    /**
+     * Compares all the values passed in and checks that they are all unique
+     * @param values
+     * @return whether every value is different
+     */
+    public boolean allNotEqual(float ...values) {
+        for (int i = 0; i < values.length-1; i++) {
+            for (int j = i + 1; j < values.length; j++) {
+                if (values[i] == values[j]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     @Test
-    public void speedTruckShouldMove3TilesIn25FramesTest() {
+    public void differentSpeedTest() {
+        // Assert that the speeds of all tank types are different to each other.
+        assertTrue(allNotEqual(
+                Ocean.getSpeed(),
+                Speed.getSpeed(),
+                Tank.getSpeed(),
+                Attack.getSpeed()
+        ));
+    }
+
+    @Test
+    public void speedTruckShouldMove3TilesIn15FramesTest() {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10,10), Speed);
         Mockito.doReturn(true).when(gameScreenMock).isRoad(10,10);
         Mockito.doReturn(true).when(gameScreenMock).isRoad(10,11);
@@ -39,9 +62,8 @@ public class FireTruckTest {
         fireTruck.addTileToPath(new Vector2(10,10));
         fireTruck.addTileToPath(new Vector2(10,11));
         fireTruck.addTileToPath(new Vector2(11,11));
-        for (int i=0; i<25; i++) {
+        for (int i=0; i<15; i++) {
             fireTruck.move();
-            System.out.println(fireTruck.getPosition());
         }
         Vector2 expectedPosition = new Vector2(11, 11);
         assertEquals(expectedPosition, fireTruck.getPosition());
@@ -81,34 +103,64 @@ public class FireTruckTest {
         assertEquals(expectedPosition, fireTruck.getPosition());
     }
 
-    /*
-    TODO: Movement tests for Attack and Tank trucks (like above)
-     */
+    @Test
+    public void tankTruckShouldMove3TilesIn50FramesTest() {
+        FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10,10), Tank);
+        Mockito.doReturn(true).when(gameScreenMock).isRoad(10,10);
+        Mockito.doReturn(true).when(gameScreenMock).isRoad(10,11);
+        Mockito.doReturn(true).when(gameScreenMock).isRoad(11,11);
+        fireTruck.setMoving(true);
+        fireTruck.addTileToPath(new Vector2(10,10));
+        fireTruck.addTileToPath(new Vector2(10,11));
+        fireTruck.addTileToPath(new Vector2(11,11));
+        for (int i=0; i<50; i++) {
+            fireTruck.move();
+        }
+        Vector2 expectedPosition = new Vector2(11, 11);
+        assertEquals(expectedPosition, fireTruck.getPosition());
+    }
+
+    @Test
+    public void attackTruckShouldMove3TilesIn25FramesTest() {
+        FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10,10), Attack);
+        Mockito.doReturn(true).when(gameScreenMock).isRoad(10,10);
+        Mockito.doReturn(true).when(gameScreenMock).isRoad(10,11);
+        Mockito.doReturn(true).when(gameScreenMock).isRoad(11,11);
+        fireTruck.setMoving(true);
+        fireTruck.addTileToPath(new Vector2(10,10));
+        fireTruck.addTileToPath(new Vector2(10,11));
+        fireTruck.addTileToPath(new Vector2(11,11));
+        for (int i=0; i<50; i++) {
+            fireTruck.move();
+        }
+        Vector2 expectedPosition = new Vector2(11, 11);
+        assertEquals(expectedPosition, fireTruck.getPosition());
+    }
 
     @Test
     public void differentMaxVolumeTest() {
         //#Assessment3
-        assertTrue(
-                Ocean.getMaxReserve() != Speed.getMaxReserve() &&
-                Speed.getMaxReserve() != Attack.getMaxReserve() &&
-                Attack.getMaxReserve() != Tank.getMaxReserve()
-        );
+        assertTrue(allNotEqual(
+                Ocean.getMaxReserve(),
+                Speed.getMaxReserve(),
+                Tank.getMaxReserve(),
+                Attack.getMaxReserve()
+        ));
     }
 
     @Test
     public void differentAPTest() {
         //#Assessment3
-        assertTrue(
-        Ocean.getAP() != Speed.getAP() &&
-                Speed.getAP() != Attack.getAP() &&
-                Attack.getAP() != Tank.getAP()
-        );
+        assertTrue(allNotEqual(
+                Ocean.getAP(),
+                Speed.getAP(),
+                Tank.getAP(),
+                Attack.getAP()
+        ));
     }
 
     @Test
     public void checkTrucksFillToDifferentLevels() {
-        // TODO: Add Tank and Attack trucks to this
-
         FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(9,10), Speed);
         FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10,10), Ocean);
         FireTruck fireTruck3 = new FireTruck(gameScreenMock, new Vector2(9,10), Attack);
@@ -170,16 +222,16 @@ public class FireTruckTest {
     @Test
     public void differentMaxHPTest() {
         //#Assessment3
-        assertTrue(
-        Ocean.getMaxHP() != Speed.getMaxHP() &&
-                Speed.getMaxHP() != Attack.getMaxHP() &&
-                Attack.getMaxHP() != Tank.getMaxHP()
-        );
+        assertTrue(allNotEqual(
+                Ocean.getMaxHP(),
+                Speed.getMaxHP(),
+                Tank.getMaxHP(),
+                Attack.getMaxHP()
+        ));
     }
 
     @Test
     public void checkTrucksRepairToDifferentLevels() {
-        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(9,10), Speed);
         FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10,10), Ocean);
         FireTruck fireTruck3 = new FireTruck(gameScreenMock, new Vector2(9,10), Attack);
@@ -225,23 +277,36 @@ public class FireTruckTest {
 
     @Test
     public void differentRangeTest() {
-        // TODO: Add Tank and Attack trucks to this
-        assertNotEquals(Ocean.getRange(), Speed.getRange());
+        //#Assessment3
+        assertTrue(allNotEqual(
+                Ocean.getRange(),
+                Speed.getRange(),
+                Tank.getRange(),
+                Attack.getRange()
+        ));
     }
 
     @Test
     public void checkDifferentRangeTest() {
-        // TODO: Add Tank and Attack trucks to this
-        FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(10, 15), Speed);
-        FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10, 15), Ocean);
+        FireTruck fireTruck1 = new FireTruck(gameScreenMock, new Vector2(10, 15), Speed); // Range = 5
+        FireTruck fireTruck2 = new FireTruck(gameScreenMock, new Vector2(10, 15), Ocean); // Range = 6
+        FireTruck fireTruck3 = new FireTruck(gameScreenMock, new Vector2(10, 15), Tank); // Range = 7
+        FireTruck fireTruck4 = new FireTruck(gameScreenMock, new Vector2(10, 15), Attack); // Range = 4
+
         Fortress fortress = new Fortress(10, 10, FortressType.Clifford);
-        fireTruck1.fortressInRange(fortress.getPosition());
-        assertNotEquals(fireTruck1.fortressInRange(fortress.getPosition()), fireTruck2.fortressInRange(fortress.getPosition()));
+        System.out.println(fireTruck1.fortressInRange(fortress.getPosition()));
+        System.out.println(fireTruck2.fortressInRange(fortress.getPosition()));
+        System.out.println(fireTruck3.fortressInRange(fortress.getPosition()));
+        System.out.println(fireTruck4.fortressInRange(fortress.getPosition()));
+
+        assertTrue(
+                fireTruck1.fortressInRange(fortress.getPosition()) != fireTruck2.fortressInRange(fortress.getPosition()) &&
+                fireTruck3.fortressInRange(fortress.getPosition()) != fireTruck4.fortressInRange(fortress.getPosition())
+        );
     }
 
     @Test
     public void truckShouldDecreaseHealthOfFortress() {
-        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         fireTruck.setAttacking(true);
@@ -256,7 +321,6 @@ public class FireTruckTest {
 
     @Test
     public void truckShouldDecreaseReserveWhenAttackingFortress() {
-        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         fireTruck.setAttacking(true);
@@ -271,7 +335,6 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithSpeedByDamageTest() {
-        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         fireTruck.setAttacking(true);
@@ -285,7 +348,6 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithSpeedByReserveTest() {
-        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         fireTruck.setAttacking(true);
@@ -299,7 +361,6 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithOceanByDamageTest() {
-        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Ocean);
         fireTruck.setAttacking(true);
@@ -313,7 +374,6 @@ public class FireTruckTest {
 
     @Test
     public void damageFortressWithOceanByReserveTest() {
-        // TODO: Add Tank and Attack trucks to this
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Ocean);
         fireTruck.setAttacking(true);
@@ -326,8 +386,59 @@ public class FireTruckTest {
     }
 
     @Test
+    public void damageFortressWithTankByDamageTest() {
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Tank);
+        fireTruck.setAttacking(true);
+        fireTruck.attack(fortress);
+        for (int i=0; i<200; i++) {
+            fireTruck.updateSpray();
+        }
+        float fortressHealthAfter = fortress.getHP();
+        assertEquals(FortressType.Walmgate.getMaxHP() - Tank.getAP(), fortressHealthAfter, 0.0);
+    }
+
+    @Test
+    public void damageFortressWithTankByReserveTest() {
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Tank);
+        fireTruck.setAttacking(true);
+        fireTruck.attack(fortress);
+        for (int i=0; i<100; i++) {
+            fireTruck.updateSpray();
+        }
+        float fireTruckReserveAfter = fireTruck.getReserve();
+        assertEquals(Tank.getMaxReserve() - Tank.getAP(), fireTruckReserveAfter, 0.0);
+    }
+
+    @Test
+    public void damageFortressWithAttackByDamageTest() {
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Attack);
+        fireTruck.setAttacking(true);
+        fireTruck.attack(fortress);
+        for (int i=0; i<200; i++) {
+            fireTruck.updateSpray();
+        }
+        float fortressHealthAfter = fortress.getHP();
+        assertEquals(FortressType.Walmgate.getMaxHP() - Attack.getAP(), fortressHealthAfter, 0.0);
+    }
+
+    @Test
+    public void damageFortressWithAttackByReserveTest() {
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Attack);
+        fireTruck.setAttacking(true);
+        fireTruck.attack(fortress);
+        for (int i=0; i<100; i++) {
+            fireTruck.updateSpray();
+        }
+        float fireTruckReserveAfter = fireTruck.getReserve();
+        assertEquals(Attack.getMaxReserve() - Attack.getAP(), fireTruckReserveAfter, 0.0);
+    }
+
+    @Test
     public void moveTest() {
-        // TODO: Add Tank and Attack trucks to this
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10,10), Speed);
         Mockito.doReturn(true).when(gameScreenMock).isRoad(10,10);
         Mockito.doReturn(true).when(gameScreenMock).isRoad(10,11);
@@ -340,5 +451,4 @@ public class FireTruckTest {
         Vector2 expectedPosition = new Vector2(10, 11);
         assertEquals(expectedPosition, fireTruck.getPosition());
     }
-
 }
