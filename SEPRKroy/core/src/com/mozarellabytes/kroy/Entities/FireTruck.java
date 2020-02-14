@@ -327,17 +327,13 @@ public class FireTruck extends Sprite {
      */
     public void drawStats(ShapeRenderer shapeMapRenderer) {
 
-        if((this.getPosition().x == 5 || this.getPosition().x ==9) && this.getPosition().y == 8){
-            if(this.getPosition().x == 9){}
-            else {
-                    if (GameScreen.fireStationExist() == true) {
-                    shapeMapRenderer.rect(this.getPosition().x - 2f, this.getPosition().y, 0.7f, 3f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
-                    shapeMapRenderer.rect(this.getPosition().x - 1.9f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
-                    shapeMapRenderer.rect(this.getPosition().x - 1.9f, this.getPosition().y + 0.1f, 0.5f, this.getHP() / this.type.getMaxHP() * 2.8f, Color.RED, Color.RED, Color.RED, Color.RED);
-                }
+        if((this.getType() == FireTruckType.Station)){
+            if(this.getPosition().x != 9 && GameScreen.fireStationExist() == true){
+                shapeMapRenderer.rect(this.getPosition().x - 2f, this.getPosition().y, 0.7f, 3f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
+                shapeMapRenderer.rect(this.getPosition().x - 1.9f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
+                shapeMapRenderer.rect(this.getPosition().x - 1.9f, this.getPosition().y + 0.1f, 0.5f, this.getHP() / this.type.getMaxHP() * 2.8f, Color.RED, Color.RED, Color.RED, Color.RED);
             }
         }
-
         else{
             shapeMapRenderer.rect(this.getPosition().x + 0.2f, this.getPosition().y + 1.3f, 0.6f, 0.8f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
             shapeMapRenderer.rect(this.getPosition().x + 0.266f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE);
