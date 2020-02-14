@@ -99,10 +99,10 @@ public class ControlsScreen implements Screen {
         count = 0;
 
         exitButton = new Rectangle();
-        exitButton.x = 1185;
-        exitButton.y = (int) (camera.viewportHeight - 90);
-        exitButton.width = (int)(screenWidth / 1.08f);
-        exitButton.height = (int)(screenHeight / 1.126f);
+        exitButton.x = (int) (screenWidth / 1.08f);
+        exitButton.y = (int) (screenHeight / 1.126f);
+        exitButton.width = 30;
+        exitButton.height = 30;
     }
 
     @Override
@@ -129,8 +129,8 @@ public class ControlsScreen implements Screen {
         game.batch.begin();
 
         game.font50.draw(game.batch, "Control screen", screenWidth / 2.8f, screenHeight / 1.1678f);
-        game.font25.draw(game.batch, "Flood the fortresses before the fortresses destroy your fire trucks to win", (screenWidth / 2) - (36 * 15),screenHeight / 1.29f);
-        game.font33.draw(game.batch, "Moving the Fire Trucks", screenWidth / 8.33f, screenHeight * 0.6875f);
+        game.font25.draw(game.batch, "Flood the fortresses before the fortresses destroy your fire trucks to win", screenWidth / 4.1f,screenHeight / 1.29f);
+        game.font33.draw(game.batch, "Moving the Fire Trucks", screenWidth / 7.692f, screenHeight * 0.6875f);
         game.font25.draw(game.batch, "Click on a truck and drag it", screenWidth / 7.692f,screenHeight * 0.6125f);
         game.font25.draw(game.batch, "This gives the truck a path:", screenWidth / 7.692f,screenHeight * 0.56875f);
         game.font25.draw(game.batch, "Unclick and the truck will", screenWidth / 7.692f,screenHeight * 0.3815f);
@@ -151,21 +151,26 @@ public class ControlsScreen implements Screen {
         game.font25.draw(game.batch, "Or click and drag from the", screenWidth / 7.76f,screenHeight / 3.81f);
         game.font25.draw(game.batch, "end of the trucks path", screenWidth / 7.76f,screenHeight / 4.57f);
 
-        game.batch.draw(trailImage, screenWidth / 3.37f, screenHeight / 8.89f);
+        /*game.batch.draw(trailImage, screenWidth / 3.37f, screenHeight / 8.89f);
         game.batch.draw(trailEndImage, screenWidth / 3.37f, screenHeight / 8.89f);
 
         game.batch.setColor(Color.RED);
         game.batch.draw(trailImage, screenWidth / 4.74f, screenHeight / 8.89f);
-        game.batch.draw(trailEndImage, screenWidth / 4.74f, screenHeight / 8.89f);
+        game.batch.draw(trailEndImage, screenWidth / 4.74f, screenHeight / 8.89f);*/
 
-        game.font33.draw(game.batch, "Attacking the fortresses", screenWidth / 1.88f, screenHeight * 0.6875f);
-        game.font25.draw(game.batch, "When a firetruck is within range ", screenWidth / 1.87f,screenHeight * 0.6125f);
-        game.font25.draw(game.batch, "of a fortress press A to attack", screenWidth / 1.87f,screenHeight * 0.56875f);
+        game.font33.draw(game.batch, "Attacking the fortresses", screenWidth / 2.88f, screenHeight * 0.6875f);
+        game.font25.draw(game.batch, "When a firetruck is within range ", screenWidth / 2.88f,screenHeight * 0.6125f);
+        game.font25.draw(game.batch, "of a fortress press A to attack", screenWidth / 2.88f,screenHeight * 0.56875f);
+
+        game.font33.draw(game.batch, "Minigame controls", screenWidth / 1.7f, screenHeight * 0.6875f);
+        game.font25.draw(game.batch, "Use the arrow keys to move the truck ", screenWidth / 1.7f,screenHeight * 0.6125f);
+        game.font25.draw(game.batch, "Use the space bar to fire water", screenWidth / 1.7f,screenHeight * 0.5375f);
+        game.font25.draw(game.batch, "at the ETs coming from space", screenWidth / 1.7f,screenHeight * 0.49375f);
 
         game.batch.setColor(Color.WHITE);
         game.batch.draw(truckRight, screenWidth / 7.44f, screenHeight / 2.33f);
-        game.batch.draw(fortress,screenWidth / 1.62f, screenHeight / 6.15f);
-        game.batch.draw(truckLeft,screenWidth / 1.23f, screenHeight / 4.21f);
+        game.batch.draw(fortress,screenWidth / 2.7f, screenHeight / 3.5f);
+        game.batch.draw(truckLeft,screenWidth / 2.1f, screenHeight / 3.5f);
 
         game.batch.end();
 
@@ -249,9 +254,9 @@ public class ControlsScreen implements Screen {
     private void drawFortressHealthBar(){
 
         game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        game.shapeRenderer.rect(screenWidth / 1.4713f,  screenHeight / 2.58f, 35, 60);
-        game.shapeRenderer.rect(screenWidth / 1.4629f, screenHeight / 2.5297f, 24, 50, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
-        game.shapeRenderer.rect(screenWidth / 1.4629f, screenHeight / 2.5297f, 24,  HP / 4f, Color.RED, Color.RED, Color.RED, Color.RED);
+        game.shapeRenderer.rect(screenWidth / 2.48f,  screenHeight / 2.2f, 35, 60);
+        game.shapeRenderer.rect(screenWidth / 2.466f, screenHeight / 2.18f, 24, 50, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
+        game.shapeRenderer.rect(screenWidth / 2.466f, screenHeight / 2.18f, 24,  HP / 4f, Color.RED, Color.RED, Color.RED, Color.RED);
         game.shapeRenderer.end();
 
         if (count <= 30) {
@@ -265,7 +270,7 @@ public class ControlsScreen implements Screen {
     /** This draws the 'A' above the fire truck */
     private void drawFireTruckAttacking(){
         game.batch.begin();
-        game.font33.draw(game.batch, "A", screenWidth / 1.205f, screenHeight /2.81f);
+        game.font33.draw(game.batch, "A", screenWidth / 2.05f, screenHeight / 2.8f);
         game.batch.end();
     }
 
@@ -278,7 +283,7 @@ public class ControlsScreen implements Screen {
         game.shapeRenderer.end();
 
         game.batch.begin();
-        game.font33Red.draw(game.batch, "X", screenWidth / 1.074f, screenHeight / 1.09f);
+        game.font33Red.draw(game.batch, "X", screenWidth / 1.075f, screenHeight / 1.103f);
         game.batch.end();
     }
 
