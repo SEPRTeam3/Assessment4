@@ -31,6 +31,10 @@ public class Alien extends Sprite {
 
     /** cursory max HP value for alien */
     private final float maxHP = 10;
+
+    /**
+     * Control fire station boom rendering duration
+     */
     private int fireStationBoomTimes = 300;
 
     /** Health points */
@@ -45,8 +49,20 @@ public class Alien extends Sprite {
     /** Used to check if the truck's image should be
      * changed to match the direction it is facing */
     private Vector2 previousTile;
+
+    /**
+     * Control the small alien happy time after the fire station destroyed
+     */
     private int happyTime = 0;
+
+    /**
+     * Control the size change of the nuke, simulate gravity
+     */
     private float accelerate = 0;
+
+    /**
+    To control the crazyAlien only drop nuke once and check whether the crazy dropped the nuke.
+     */
     private boolean dropbomb = true;
 
     /** Texture for each direction the
@@ -55,12 +71,23 @@ public class Alien extends Sprite {
     private final Texture lookRight;
     private final Texture lookUp;
     private final Texture lookDown;
+    /**
+     * Small aliens facial expression
+     */
     private final Texture happy;
     private final Texture notHappy;
     private final Texture littleAngry;
     private final Texture angry;
     private final Texture happyDestroy;
+
+    /**
+     * crazyAlien appearance
+     */
     private final Texture crazyAlien;
+
+    /**
+     * Fire Station boom effect
+     */
     private final Texture fireStationBoom1;
     private final Texture fireStationBoom2;
     private final Texture fireStationBoom3;
@@ -77,6 +104,10 @@ public class Alien extends Sprite {
     private final Texture fireStationBoom14;
     private final Texture fireStationBoom15;
     private final Texture fireStationBoom16;
+
+    /**
+     * Nuke images
+     */
     private final Texture nuke1;
     private final Texture nuke2;
     private final Texture nuke3;
@@ -272,7 +303,6 @@ public class Alien extends Sprite {
         else if(happyTime < 1000 && CountClock.getRemainTime() < CountClock.getTotalTime()){
             mapBatch.draw(happyDestroy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
             happyTime++;
-            System.out.println(happyTime);
         }
         else if(CountClock.getRemainTime() < CountClock.getTotalTime()){
             mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);

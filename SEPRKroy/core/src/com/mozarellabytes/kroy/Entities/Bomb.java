@@ -136,6 +136,10 @@ public class Bomb extends Sprite {
         shapeMapRenderer.setColor(Color.WHITE);
     }
 
+    /**
+     * Alien machine gun shooting
+     * @param shapeMapRenderer
+     */
     public void alienDrawBomb(ShapeRenderer shapeMapRenderer) {
         shapeMapRenderer.setColor(Color.YELLOW);
         shapeMapRenderer.rectLine(this.currentPosition.x - 0.2f, this.currentPosition.y - 0.05f, truckPosition.x - 0.2f, truckPosition.y, 0.05f);
@@ -143,10 +147,13 @@ public class Bomb extends Sprite {
         shapeMapRenderer.setColor(Color.WHITE);
     }
 
+    /**
+     * crazyAlien laser gun shooting
+     * @param shapeMapRenderer
+     */
     public void crazyAlienDrawBomb(ShapeRenderer shapeMapRenderer) {
         shapeMapRenderer.setColor(Color.CYAN);
         shapeMapRenderer.rectLine(this.currentPosition.x - 0.2f, this.currentPosition.y + 1.5f, truckPosition.x, truckPosition.y + 0.5f, 1.5f);
-        //System.out.println(truckPosition);
         shapeMapRenderer.setColor(Color.WHITE);
     }
 }

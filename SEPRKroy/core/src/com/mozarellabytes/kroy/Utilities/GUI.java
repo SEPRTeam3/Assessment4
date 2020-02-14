@@ -126,7 +126,7 @@ public class GUI {
      */
     private final OrthographicCamera pauseCamera;
 
-    private int flag = 0;
+    /**Creat a clock*/
     CountClock countClock;
 
     /**

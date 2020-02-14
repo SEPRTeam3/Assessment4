@@ -19,14 +19,14 @@ public enum FortressType {
      * attack points, width, height and sprite.
      */
     //#Asessment3 Changed attack power values for assessment 3
-    Revs ("Revolution", 2500, 7, 50, 4, 5, 3, new Texture(Gdx.files.internal("sprites/fortress/fortress_revs.png"))),
+    Revs ("Revolution", 2500, 7, 60, 4, 5, 3, new Texture(Gdx.files.internal("sprites/fortress/fortress_revs.png"))),
     Walmgate ("Walmgate Bar", 1500, 8, 100, 6, 5, 5, new Texture(Gdx.files.internal("sprites/fortress/fortress_walmgate.png"))),
     Clifford ("Clifford's Tower", 500, 4, 75, 8, 4, 3, new Texture(Gdx.files.internal("sprites/fortress/fortress_clifford.png"))),
 
     //#Assessment3 Added 3 new fortresses
-    TrainStation ("Train Station", 3000, 5, 50, 5, 7, 4, new Texture(Gdx.files.internal("sprites/fortress/train.png"))),
+    TrainStation ("Train Station", 3000, 5, 60, 5, 7, 4, new Texture(Gdx.files.internal("sprites/fortress/train.png"))),
     Minster ("Minster", 2000, 6, 100, 7, 5, 6, new Texture(Gdx.files.internal("sprites/fortress/minster.png"))),
-    Shambles ("Shambles", 1000, 9, 25, 6, 6, 4, new Texture(Gdx.files.internal("sprites/fortress/shambles.png")));
+    Shambles ("Shambles", 1000, 9, 40, 6, 6, 4, new Texture(Gdx.files.internal("sprites/fortress/shambles.png")));
 
     /** The name for the fortress, visible once the fortress has been clicked on */
     private final String name;

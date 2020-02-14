@@ -82,6 +82,9 @@ public class FireTruck extends Sprite {
     private final Texture lookUp;
     private final Texture lookDown;
 
+    /**
+     * fire station explosion effects
+     */
     private final Texture fireStationBoom1;
     private final Texture fireStationBoom2;
     private final Texture fireStationBoom3;
@@ -98,7 +101,6 @@ public class FireTruck extends Sprite {
     private final Texture fireStationBoom14;
     private final Texture fireStationBoom15;
     private final Texture fireStationBoom16;
-    private int i = 0;
 
     /**
      * Constructs a new FireTruck at a position and of a certain type
