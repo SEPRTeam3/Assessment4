@@ -23,7 +23,7 @@ public class CountClock {
 
     /**
      * Direct set the remain time
-     * @param set_time
+     * @param set_time the time to set the clock to
      */
     public static void set_remain_Time(float set_time){
         timeRemaining = set_time;
@@ -31,16 +31,17 @@ public class CountClock {
 
     /**
      * Get the total time of the count clock
-     * @return
+     * @return the current time of the clock
      */
     public static float getTotalTime(){
         return totalTime;
     }
 
-    
     /**
-    Set remaining time, with counting down, state 0 means counting and 1 means pause
-    */
+     * Calculates (and formats) the remaining time on the clock.
+     * @param state 0 = counting down, 1 = paused
+     * @return the clock's formatted time
+     */
     public String set_clock(int state) {
 
         if (state == 0) {
