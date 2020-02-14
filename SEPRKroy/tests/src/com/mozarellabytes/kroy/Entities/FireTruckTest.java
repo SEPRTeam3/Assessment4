@@ -343,7 +343,7 @@ public class FireTruckTest {
             fireTruck.updateSpray();
         }
         float fortressHealthAfter = fortress.getHP();
-        assertEquals(FortressType.Walmgate.getMaxHP() - Speed.getAP(), fortressHealthAfter, 0.0);
+        assertEquals(FortressType.Walmgate.getMaxHP() - Speed.getAP(), fortressHealthAfter, 1.0);
     }
 
     @Test
@@ -369,7 +369,7 @@ public class FireTruckTest {
             fireTruck.updateSpray();
         }
         float fortressHealthAfter = fortress.getHP();
-        assertEquals(FortressType.Walmgate.getMaxHP() - Ocean.getAP(), fortressHealthAfter, 0.0);
+        assertEquals(FortressType.Walmgate.getMaxHP() - Ocean.getAP(), fortressHealthAfter, 1.0);
     }
 
     @Test
@@ -395,7 +395,7 @@ public class FireTruckTest {
             fireTruck.updateSpray();
         }
         float fortressHealthAfter = fortress.getHP();
-        assertEquals(FortressType.Walmgate.getMaxHP() - Tank.getAP(), fortressHealthAfter, 0.0);
+        assertEquals(FortressType.Walmgate.getMaxHP() - Tank.getAP(), fortressHealthAfter, 1.0);
     }
 
     @Test
@@ -408,7 +408,7 @@ public class FireTruckTest {
             fireTruck.updateSpray();
         }
         float fireTruckReserveAfter = fireTruck.getReserve();
-        assertEquals(Tank.getMaxReserve() - Tank.getAP(), fireTruckReserveAfter, 0.0);
+        assertEquals(Tank.getMaxReserve() - Tank.getAP(), fireTruckReserveAfter, 1.0);
     }
 
     @Test
@@ -421,7 +421,7 @@ public class FireTruckTest {
             fireTruck.updateSpray();
         }
         float fortressHealthAfter = fortress.getHP();
-        assertEquals(FortressType.Walmgate.getMaxHP() - Attack.getAP(), fortressHealthAfter, 0.0);
+        assertEquals(FortressType.Walmgate.getMaxHP() - Attack.getAP(), fortressHealthAfter, 1.0);
     }
 
     @Test
@@ -434,7 +434,7 @@ public class FireTruckTest {
             fireTruck.updateSpray();
         }
         float fireTruckReserveAfter = fireTruck.getReserve();
-        assertEquals(Attack.getMaxReserve() - Attack.getAP(), fireTruckReserveAfter, 0.0);
+        assertEquals(Attack.getMaxReserve() - Attack.getAP(), fireTruckReserveAfter, 1.0);
     }
 
     @Test
