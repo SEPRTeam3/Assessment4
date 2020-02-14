@@ -76,6 +76,7 @@ public class GameScreen implements Screen {
     private final FireStation station;
     private final FireTruck stationTruck;
     private Alien crazyAlien;
+    private int ini_shake = 0;
     //private Alien crazyAlienC;
 
     /** Alien patrols to attack fire engines */
@@ -319,6 +320,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (ini_shake < 5) {
+            ini_shake ++;
+            CameraShake.update(delta, camera, new Vector2(camera.viewportWidth / 2f, camera.viewportHeight / 2f));
+            camShake.shakeIt(.01f);
+        }
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render(backgroundLayerIndex);
