@@ -3,6 +3,7 @@ package com.mozarellabytes.kroy.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -111,7 +112,7 @@ public class MinigameScreen implements Screen {
      */
     @Override
     public void show() {
-        SoundFX.sfx_soundtrack.setVolume(.5f);
+        //SoundFX.sfx_soundtrack.setVolume(.5f);
         SoundFX.sfx_minigamebgm.play();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Magero.ttf"));
@@ -178,14 +179,18 @@ public class MinigameScreen implements Screen {
             fireTruck.moveLeft(delta);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             fireTruck.moveRight(delta);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        else{
             fireTruck.stay();
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             // Shoot water droplet upwards
             if (TimeUtils.nanoTime() - lastDropTime > 300000000 || lastDropTime == 0) {
+                SoundFX.sfx_truck_attack.play();
                 shootDroplet();
             }
         }
@@ -213,8 +218,9 @@ public class MinigameScreen implements Screen {
             // Game ends at this point.
             if (alien.getY() + 64 < 144) {
                 iter.remove();
-                SoundFX.sfx_minigamebgm.pause();
+                SoundFX.sfx_minigamebgm.stop();
                 invokeGameOver(game);
+                SoundFX.music_enabled = true;
             }
 
             // If a droplet hits an alien, remove both of them and increase the current game score.
@@ -240,8 +246,9 @@ public class MinigameScreen implements Screen {
         }
 
         if (score == 100) {
-            SoundFX.sfx_minigamebgm.pause();
+            SoundFX.sfx_minigamebgm.stop();
             invokeGameOver(game);
+            SoundFX.music_enabled = true;
         }
     }
 

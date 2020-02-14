@@ -134,6 +134,7 @@ public class GameScreen implements Screen {
      * @param game LibGdx game instance
      */
     public GameScreen(Kroy game) {
+        SoundFX.stopMusic();
         Queue<Vector2> vertices;
         vertices = new Queue<>();
         this.game = game;
@@ -354,7 +355,9 @@ public class GameScreen implements Screen {
             }
         }
         if(MiniGameTime == 0){
-            SoundFX.playGameMusic();
+            if(SoundFX.music_enabled) {
+                SoundFX.playGameMusic();
+            }
         }
         camera.update();
         mapRenderer.setView(camera);
@@ -588,13 +591,10 @@ public class GameScreen implements Screen {
                 // ...and if so, switch screen to the minigame.
                 MiniGameTime--;
                 if(MiniGameTime == 0) {
-                    SoundFX.sfx_soundtrack.pause();
-                    SoundFX.sfx_minigamebgm.play();
+                    SoundFX.stopMusic();
                     toMinigameScreen();
-                    //SoundFX.sfx_minigamebgm.pause();
-                    //SoundFX.sfx_soundtrack.play();
                 }
-            }
+        }
 
 
 
