@@ -1,5 +1,6 @@
 package com.mozarellabytes.kroy.Entities;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 import java.util.concurrent.ThreadLocalRandom;
@@ -79,10 +80,12 @@ public class EnemyAttackHandler {
      * @param target        FireTruck being attacked
      * @param randomTarget  whether the bomb hits every time or
      *                      there is a chance it misses
+     * @param attackSound The sound to be played when an attack is made
      */
-    public void attack(FireTruck target, boolean randomTarget) {
+    public void attack(FireTruck target, boolean randomTarget, Sound attackSound) {
         if (timeOfLastAttack + delay < System.currentTimeMillis()) {
             this.bombs.add(new Bomb(this, target, randomTarget));
+            attackSound.play();
             timeOfLastAttack = System.currentTimeMillis();
         }
     }
