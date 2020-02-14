@@ -11,6 +11,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static com.mozarellabytes.kroy.Entities.FireTruckType.Ocean;
 import static com.mozarellabytes.kroy.Entities.FireTruckType.Speed;
 import static org.junit.Assert.*;

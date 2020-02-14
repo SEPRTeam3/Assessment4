@@ -5,17 +5,17 @@ import com.mozarellabytes.kroy.GdxTestRunner;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
-public class EntityTest {
+public class MinigameTest {
 
     @Test
     public void EntityPositionEqualsRectanglePosition() {
         FireTruck fireTruck = new FireTruck(0, 0);
 
-        Assert.assertEquals(fireTruck.getX(), fireTruck.getRect().x, 0.0);
-        Assert.assertEquals(fireTruck.getY(), fireTruck.getRect().y, 0.0);
+        assertEquals(fireTruck.getX(), fireTruck.getRect().x, 0.0);
+        assertEquals(fireTruck.getY(), fireTruck.getRect().y, 0.0);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class EntityTest {
         FireTruck fireTruck = new FireTruck(0, 0);
 
         fireTruck.moveRight(0.01f);
-        Assert.assertEquals(fireTruck.getX(), 5, 0.0);
+        assertEquals(fireTruck.getX(), 5, 0.0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class EntityTest {
         FireTruck fireTruck = new FireTruck(0, 0);
 
         fireTruck.moveLeft(0.01f);
-        Assert.assertEquals(fireTruck.getX(), -5, 0.0);
+        assertEquals(fireTruck.getX(), -5, 0.0);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class EntityTest {
         Alien alien = new Alien(0,0);
 
         alien.moveDown(0.01f);
-        Assert.assertEquals(alien.getY(), -1.5, 0.0);
+        assertEquals(alien.getY(), -1.5, 0.0);
     }
 
     @Test
@@ -47,6 +47,6 @@ public class EntityTest {
         Droplet droplet = new Droplet(0, 0);
 
         droplet.moveUp(0.01f);
-        Assert.assertEquals(droplet.getY(), 3, 0.0);
+        assertEquals(droplet.getY(), 3, 0.0);
     }
 }
