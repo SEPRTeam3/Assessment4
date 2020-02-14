@@ -1,8 +1,6 @@
 package com.mozarellabytes.kroy.Entities;
 
 import com.badlogic.gdx.math.Vector2;
-import com.mozarellabytes.kroy.Kroy;
-import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,14 +8,39 @@ import java.util.ArrayList;
 
 public class EnemyAttackHandler {
 
+    /**
+     * The attack range of the attack handler's parent
+     */
     private float attackRange;
+    /**
+     * The attack power of the attack handler's parent
+     */
     private float attackPower;
+    /**
+     * The attack level of the attack handler parent
+     */
     private int attackLevel;
+    /**
+     * The amount of time after an attack that the attack handler has to wait before making another
+     */
     private long delay;
-    private long timeSinceLastAttack;
+    /**
+     * The time at which the attack handler last performed an attack
+     */
+    private long timeOfLastAttack;
+    /**
+     * The position of the attack handler's parent
+     */
     private Vector2 position;
+    /**
+     * An array list of all active bombs that have been created by the attack handler
+     */
     private ArrayList<Bomb> bombs;
 
+    /**
+     * The constructor called when an instantiated attack handler has a fortress parent
+     * @param entity The fortress to which the attack handler is a child
+     */
     EnemyAttackHandler(Fortress entity){
         position = entity.getPosition();
         attackRange = entity.getFortressType().getRange();
@@ -27,6 +50,10 @@ public class EnemyAttackHandler {
         bombs = new ArrayList<Bomb>();
     }
 
+    /**
+     * The constructor called when an instantiated attack handler has an alien parent
+     * @param entity The alien to which the attack handler is a child
+     */
     EnemyAttackHandler(Alien entity){
         position = entity.getPosition();
         attackRange = ThreadLocalRandom.current().nextInt(2, 4);
@@ -53,33 +80,10 @@ public class EnemyAttackHandler {
      * @param randomTarget  whether the bomb hits every time or
      *                      there is a chance it misses
      */
-    public void fortressAttack(FireTruck target, boolean randomTarget) {
-        if (timeSinceLastAttack + delay < System.currentTimeMillis()) {
+    public void attack(FireTruck target, boolean randomTarget) {
+        if (timeOfLastAttack + delay < System.currentTimeMillis()) {
             this.bombs.add(new Bomb(this, target, randomTarget));
-            timeSinceLastAttack = System.currentTimeMillis();
-            if (SoundFX.music_enabled) {
-                SoundFX.sfx_fortress_attack.play();
-            }
-        }
-    }
-
-    public void alienAttack(FireTruck target, boolean randomTarget) {
-        if (timeSinceLastAttack + delay < System.currentTimeMillis()) {
-            this.bombs.add(new Bomb(this, target, randomTarget));
-            timeSinceLastAttack = System.currentTimeMillis();
-            if (SoundFX.music_enabled) {
-                SoundFX.sfx_alien_attack.play();
-            }
-        }
-    }
-
-    public void crazyAlienAttack(FireTruck target, boolean randomTarget) {
-        if (timeSinceLastAttack + delay < System.currentTimeMillis()) {
-            this.bombs.add(new Bomb(this, target, randomTarget));
-            timeSinceLastAttack = System.currentTimeMillis();
-            if (SoundFX.music_enabled) {
-                SoundFX.sfx_crazy_alien_attack.play();
-            }
+            timeOfLastAttack = System.currentTimeMillis();
         }
     }
 
@@ -110,16 +114,6 @@ public class EnemyAttackHandler {
         return hasHit;
     }
 
-    /**
-     * Removes Bomb from bomb list. This
-     * occurs when the bomb hits or misses
-     *
-     * @param bomb bomb being removed
-     */
-    private void removeBomb(Bomb bomb) {
-        bombs.remove(bomb);
-    }
-
 
     public Vector2 getPosition(){ return position; }
 
@@ -135,6 +129,9 @@ public class EnemyAttackHandler {
         this.attackLevel = attackLevel;
     }
 
+    /**
+     * Set's the delay of the attack handler to 1500 and its attack power to 0.8
+     */
     public void setCrazy(){
         delay = 1500;
         attackPower = 0.8f;

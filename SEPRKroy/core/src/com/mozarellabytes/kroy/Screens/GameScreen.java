@@ -455,7 +455,9 @@ public class GameScreen implements Screen {
             // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
             if (crazyAlien.getPosition().y >= 9.1f && crazyAlien.getPosition().y < 30) {
                 crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
-                crazyAlien.getAttackHandler().crazyAlienAttack(stationTruck, false);
+                SoundFX.sfx_crazy_alien_attack.play();
+                if (SoundFX.music_enabled)
+                    crazyAlien.getAttackHandler().attack(stationTruck, false);
                 if (crazyAlien.getAttackHandler().updateBombs()) {
                     camShake.shakeIt(.4f);
                 }
@@ -491,7 +493,9 @@ public class GameScreen implements Screen {
             for (Fortress fortress : this.fortresses) {
                 if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
                     fortress.getAttackHandler().setAttackLevel(fortress.getLevel());
-                    fortress.getAttackHandler().fortressAttack(truck, true);
+                    if (SoundFX.music_enabled)
+                        SoundFX.sfx_fortress_attack.play();
+                    fortress.getAttackHandler().attack(truck, true);
                 }
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
@@ -507,7 +511,9 @@ public class GameScreen implements Screen {
             for(Alien alien : this.aliens){
                 alien.getAttackHandler().setPosition(alien.getPosition());
                 if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
-                    alien.getAttackHandler().alienAttack(truck, true);
+                    if (SoundFX.music_enabled)
+                        SoundFX.sfx_alien_attack.play();
+                    alien.getAttackHandler().attack(truck, true);
                 }
                 if (alien.getAttackHandler().updateBombs()) {
                     if (SoundFX.music_enabled) {
