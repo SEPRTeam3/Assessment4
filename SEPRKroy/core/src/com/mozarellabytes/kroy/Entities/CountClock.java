@@ -17,7 +17,7 @@ public class CountClock {
     Constructor for the CountClock class, instantiating the time remaining to 900 seconds.
      */
     public CountClock() {
-        totalTime = 10;
+        totalTime = 900;
         timeRemaining = totalTime;
     }
 
