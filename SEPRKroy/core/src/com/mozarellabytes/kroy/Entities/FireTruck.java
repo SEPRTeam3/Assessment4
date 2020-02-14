@@ -425,24 +425,12 @@ public class FireTruck extends Sprite {
         return new Vector2(this.position.x + 0.5f, this.position.y + 0.5f);
     }
 
-    /**
-     * Sets time of last attack to unix timestamp provided
-     * @param timestamp  timestamp set as time of last attack
-     */
-    public void setTimeOfLastAttack(long timestamp) {
-        this.timeOfLastAttack = timestamp;
-    }
-
     public void setAttacking(boolean b) {
         this.attacking = b;
     }
 
     public void setMoving(boolean t) {
         this.moving = t;
-    }
-
-    public long getTimeOfLastAttack() {
-        return timeOfLastAttack;
     }
 
     public float getHP() {

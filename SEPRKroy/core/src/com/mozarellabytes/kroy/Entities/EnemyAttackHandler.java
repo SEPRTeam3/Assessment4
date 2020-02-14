@@ -14,6 +14,7 @@ public class EnemyAttackHandler {
     private float attackPower;
     private int attackLevel;
     private long delay;
+    private long timeSinceLastAttack;
     private Vector2 position;
     private ArrayList<Bomb> bombs;
 
@@ -53,9 +54,9 @@ public class EnemyAttackHandler {
      *                      there is a chance it misses
      */
     public void fortressAttack(FireTruck target, boolean randomTarget) {
-        if (target.getTimeOfLastAttack() + delay < System.currentTimeMillis()) {
+        if (timeSinceLastAttack + delay < System.currentTimeMillis()) {
             this.bombs.add(new Bomb(this, target, randomTarget));
-            target.setTimeOfLastAttack(System.currentTimeMillis());
+            timeSinceLastAttack = System.currentTimeMillis();
             if (SoundFX.music_enabled) {
                 SoundFX.sfx_fortress_attack.play();
             }
@@ -63,9 +64,9 @@ public class EnemyAttackHandler {
     }
 
     public void alienAttack(FireTruck target, boolean randomTarget) {
-        if (target.getTimeOfLastAttack() + delay < System.currentTimeMillis()) {
+        if (timeSinceLastAttack + delay < System.currentTimeMillis()) {
             this.bombs.add(new Bomb(this, target, randomTarget));
-            target.setTimeOfLastAttack(System.currentTimeMillis());
+            timeSinceLastAttack = System.currentTimeMillis();
             if (SoundFX.music_enabled) {
                 SoundFX.sfx_alien_attack.play();
             }
@@ -73,9 +74,9 @@ public class EnemyAttackHandler {
     }
 
     public void crazyAlienAttack(FireTruck target, boolean randomTarget) {
-        if (target.getTimeOfLastAttack() + delay < System.currentTimeMillis()) {
+        if (timeSinceLastAttack + delay < System.currentTimeMillis()) {
             this.bombs.add(new Bomb(this, target, randomTarget));
-            target.setTimeOfLastAttack(System.currentTimeMillis());
+            timeSinceLastAttack = System.currentTimeMillis();
             if (SoundFX.music_enabled) {
                 SoundFX.sfx_crazy_alien_attack.play();
             }
