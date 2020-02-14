@@ -44,7 +44,7 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
         fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.attack(fireTruck, false);
+        handler.fortressAttack(fireTruck, false);
         handler.updateBombs();
         assertEquals(144, fireTruck.getHP(), 0.0);
     }
@@ -56,7 +56,7 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
         fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.attack(fireTruck, false);
+        handler.fortressAttack(fireTruck, false);
         handler.updateBombs();
         assertEquals(142.0, fireTruck.getHP(), 0.0);
     }
@@ -68,7 +68,7 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
         fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.attack(fireTruck, false);
+        handler.fortressAttack(fireTruck, false);
         handler.updateBombs();
         assertEquals(146.0, fireTruck.getHP(), 0.0);
     }
@@ -209,7 +209,7 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
         fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.attack(fireTruck, false);
+        handler.fortressAttack(fireTruck, false);
         handler.updateBombs();
         assertEquals(145, fireTruck.getHP(), 0.0);
     }
@@ -221,7 +221,7 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
         fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.attack(fireTruck, false);
+        handler.fortressAttack(fireTruck, false);
         handler.updateBombs();
         assertEquals(143, fireTruck.getHP(), 0.0);
     }
@@ -233,7 +233,7 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
         fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.attack(fireTruck, false);
+        handler.fortressAttack(fireTruck, false);
         handler.updateBombs();
         assertEquals(144, fireTruck.getHP(), 0.0);
     }
