@@ -90,9 +90,19 @@ public class GameScreen implements Screen {
     /** The FireTruck that the user is currently drawing a path for */
     public FireTruck selectedTruck;
 
+    /**
+     * The list of all active explosions
+     */
+    private ArrayList<Explosion> explosions;
+    /**
+     * The list of all explosions to be removed
+     */
+    private ArrayList<Explosion> explosionsToRemove;
+
     /** The entity that the user has clicked on to show
      * the large stats in the top left corner */
     public Object selectedEntity;
+
 
     /** Play when the game is being played
      * Pause when the pause button is clicked */
@@ -177,6 +187,10 @@ public class GameScreen implements Screen {
         fortresses.add(new Fortress (44.5f, 4.5f, FortressType.TrainStation));
         fortresses.add(new Fortress (45, 22, FortressType.Minster));
         fortresses.add(new Fortress (29, 9, FortressType.Shambles));
+
+        //#Assesment3 Added explosion effects
+        explosions = new ArrayList<>();
+        explosionsToRemove = new ArrayList<>();
 
         /* #Assessment3
          * Hardcoded alien paths
@@ -298,6 +312,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(2.9f,6));
         crazyAlien = (new Alien(2.9f,30, vertices,0.0175f));
         crazyAlien.getAttackHandler().setCrazy();
+
         vertices.clear();
 
         // Set the origin point to which all of the polygon's local vertices are relative to.
@@ -370,8 +385,16 @@ public class GameScreen implements Screen {
         }
 
         if(fireStationExist()) {
-            crazyAlien.drawSpriteCrazyAlien(mapBatch, 5, 5);
+            crazyAlien.drawSpriteCrazyAlien(mapBatch, 5, 5,explosions);
         }
+
+        for(Explosion explosion:explosions){
+            if(explosion.drawExplosion(mapBatch)){
+                explosionsToRemove.add(explosion);
+            }
+        }
+        explosions.removeAll(explosionsToRemove);
+
         mapBatch.end();
 
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -448,7 +471,10 @@ public class GameScreen implements Screen {
                 if (crazyAlien.getPosition().y > 9) {
                     crazyAlien.move(station.getTrucks());
                 } else {
-                    stationExists = false;
+                    if(stationExists) {
+                        stationExists = false;
+                        explosions.add(new Explosion(8,8,2,7,0.1f));
+                    }
                 }
             }
 
@@ -525,7 +551,7 @@ public class GameScreen implements Screen {
                     SoundFX.sfx_fire_engine_destroyed.play();
                 }
                 mapBatch.begin();
-                truck.drawDestroy(mapBatch, 3, 3);
+                explosions.add(new Explosion(3,3,(int)truck.getPosition().x-1,(int)truck.getPosition().y-1,0.025f));
                 mapBatch.end();
                 gameState.removeFireTruck();
                 station.destroyTruck(truck);
@@ -548,7 +574,7 @@ public class GameScreen implements Screen {
                 gameState.addFortress();
                 this.fortresses.remove(fortress);
                 mapBatch.begin();
-                fortress.drawDestroy(mapBatch,10,10);
+                explosions.add(new Explosion(10,10,(int)fortress.getPosition().x-5,(int)fortress.getPosition().y-5,0.05f));
                 mapBatch.end();
                 if (SoundFX.music_enabled) {
                     SoundFX.sfx_fortress_destroyed.play();

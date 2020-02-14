@@ -86,26 +86,6 @@ public class Alien extends Sprite {
     private final Texture crazyAlien;
 
     /**
-     * Fire Station boom effect
-     */
-    private final Texture fireStationBoom1;
-    private final Texture fireStationBoom2;
-    private final Texture fireStationBoom3;
-    private final Texture fireStationBoom4;
-    private final Texture fireStationBoom5;
-    private final Texture fireStationBoom6;
-    private final Texture fireStationBoom7;
-    private final Texture fireStationBoom8;
-    private final Texture fireStationBoom9;
-    private final Texture fireStationBoom10;
-    private final Texture fireStationBoom11;
-    private final Texture fireStationBoom12;
-    private final Texture fireStationBoom13;
-    private final Texture fireStationBoom14;
-    private final Texture fireStationBoom15;
-    private final Texture fireStationBoom16;
-
-    /**
      * Nuke images
      */
     private final Texture nuke1;
@@ -145,22 +125,6 @@ public class Alien extends Sprite {
         this.littleAngry = new Texture(Gdx.files.internal("sprites/alien/littleAngry.png"));
         this.angry = new Texture(Gdx.files.internal("sprites/alien/Angry.png"));
         this.happyDestroy = new Texture(Gdx.files.internal("sprites/alien/happyDestroy.png"));
-        this.fireStationBoom1 = new Texture(Gdx.files.internal("sprites/alien/fe1.png"));
-        this.fireStationBoom2 = new Texture(Gdx.files.internal("sprites/alien/fe2.png"));
-        this.fireStationBoom3 = new Texture(Gdx.files.internal("sprites/alien/fe3.png"));
-        this.fireStationBoom4 = new Texture(Gdx.files.internal("sprites/alien/fe4.png"));
-        this.fireStationBoom5 = new Texture(Gdx.files.internal("sprites/alien/fe5.png"));
-        this.fireStationBoom6 = new Texture(Gdx.files.internal("sprites/alien/fe6.png"));
-        this.fireStationBoom7 = new Texture(Gdx.files.internal("sprites/alien/fe7.png"));
-        this.fireStationBoom8 = new Texture(Gdx.files.internal("sprites/alien/fe8.png"));
-        this.fireStationBoom9 = new Texture(Gdx.files.internal("sprites/alien/fe9.png"));
-        this.fireStationBoom10 = new Texture(Gdx.files.internal("sprites/alien/fe10.png"));
-        this.fireStationBoom11 = new Texture(Gdx.files.internal("sprites/alien/fe11.png"));
-        this.fireStationBoom12 = new Texture(Gdx.files.internal("sprites/alien/fe12.png"));
-        this.fireStationBoom13 = new Texture(Gdx.files.internal("sprites/alien/fe13.png"));
-        this.fireStationBoom14 = new Texture(Gdx.files.internal("sprites/alien/fe14.png"));
-        this.fireStationBoom15 = new Texture(Gdx.files.internal("sprites/alien/fe15.png"));
-        this.fireStationBoom16 = new Texture(Gdx.files.internal("sprites/alien/fe16.png"));
         this.nuke1 = new Texture(Gdx.files.internal("sprites/alien/nuke1.png"));
         this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
         this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
@@ -311,7 +275,7 @@ public class Alien extends Sprite {
     }
 
 
-    public void drawSpriteCrazyAlien(Batch mapBatch, int width, int height){
+    public void drawSpriteCrazyAlien(Batch mapBatch, int width, int height, ArrayList explosions){
         if (GameScreen.fireStationExist() == true) {
             if (this.getPosition().y > 9.1) {
                 mapBatch.draw(crazyAlien, this.position.x, this.position.y, width, height);
@@ -333,25 +297,6 @@ public class Alien extends Sprite {
                     mapBatch.draw(nuke4, this.position.x + 1.9f + accelerate/2, this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
                 }
             }
-        }
-        if(fireStationBoomTimes > 0 && this.getPosition().y < 9.1){
-                fireStationBoomTimes--;
-                mapBatch.draw(fireStationBoom1, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom2, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom3, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom4, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom5, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom6, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom7, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom8, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom9, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom10, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom11, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom12, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom13, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom14, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom15, 2, 8, 8, 8);
-                mapBatch.draw(fireStationBoom16, 2, 8,8, 8);
         }
     }
 

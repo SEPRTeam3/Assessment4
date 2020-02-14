@@ -3,7 +3,10 @@ package com.mozarellabytes.kroy.Entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -34,24 +37,6 @@ public class Fortress {
 
     private EnemyAttackHandler attackHandler;
 
-    private final Texture fireStationBoom1;
-    private final Texture fireStationBoom2;
-    private final Texture fireStationBoom3;
-    private final Texture fireStationBoom4;
-    private final Texture fireStationBoom5;
-    private final Texture fireStationBoom6;
-    private final Texture fireStationBoom7;
-    private final Texture fireStationBoom8;
-    private final Texture fireStationBoom9;
-    private final Texture fireStationBoom10;
-    private final Texture fireStationBoom11;
-    private final Texture fireStationBoom12;
-    private final Texture fireStationBoom13;
-    private final Texture fireStationBoom14;
-    private final Texture fireStationBoom15;
-    private final Texture fireStationBoom16;
-
-
 
     /**
      * Constructs Fortress at certain position and
@@ -70,23 +55,6 @@ public class Fortress {
         this.area = new Rectangle(this.position.x - (float) this.fortressType.getW()/2, this.position.y - (float) this.fortressType.getH()/2,
                 this.fortressType.getW(), this.fortressType.getH());
         attackHandler = new EnemyAttackHandler(this);
-
-        this.fireStationBoom1 = new Texture(Gdx.files.internal("sprites/alien/fe1.png"));
-        this.fireStationBoom2 = new Texture(Gdx.files.internal("sprites/alien/fe2.png"));
-        this.fireStationBoom3 = new Texture(Gdx.files.internal("sprites/alien/fe3.png"));
-        this.fireStationBoom4 = new Texture(Gdx.files.internal("sprites/alien/fe4.png"));
-        this.fireStationBoom5 = new Texture(Gdx.files.internal("sprites/alien/fe5.png"));
-        this.fireStationBoom6 = new Texture(Gdx.files.internal("sprites/alien/fe6.png"));
-        this.fireStationBoom7 = new Texture(Gdx.files.internal("sprites/alien/fe7.png"));
-        this.fireStationBoom8 = new Texture(Gdx.files.internal("sprites/alien/fe8.png"));
-        this.fireStationBoom9 = new Texture(Gdx.files.internal("sprites/alien/fe9.png"));
-        this.fireStationBoom10 = new Texture(Gdx.files.internal("sprites/alien/fe10.png"));
-        this.fireStationBoom11 = new Texture(Gdx.files.internal("sprites/alien/fe11.png"));
-        this.fireStationBoom12 = new Texture(Gdx.files.internal("sprites/alien/fe12.png"));
-        this.fireStationBoom13 = new Texture(Gdx.files.internal("sprites/alien/fe13.png"));
-        this.fireStationBoom14 = new Texture(Gdx.files.internal("sprites/alien/fe14.png"));
-        this.fireStationBoom15 = new Texture(Gdx.files.internal("sprites/alien/fe15.png"));
-        this.fireStationBoom16 = new Texture(Gdx.files.internal("sprites/alien/fe16.png"));
     }
 
     /**
@@ -124,25 +92,6 @@ public class Fortress {
             timeSinceLevelUp = TimeUtils.millis();
         }
         return level;
-    }
-
-    public void drawDestroy(Batch mapBatch, int width, int height) {
-        mapBatch.draw(fireStationBoom1, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom2, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom3, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom4, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom5, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom6, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom7, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom8, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom9, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom10, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom11, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom12, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom13, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom14, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom15, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
-        mapBatch.draw(fireStationBoom16, this.getPosition().x - 5, this.getPosition().y - 5, width, height);
     }
 
     public void damage(float HP){
