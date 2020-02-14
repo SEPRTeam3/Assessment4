@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
+import com.mozarellabytes.kroy.Utilities.SoundFX;
 import com.mozarellabytes.kroy.minigame.Alien;
 import com.mozarellabytes.kroy.minigame.Droplet;
 import com.mozarellabytes.kroy.minigame.FireTruck;
@@ -110,6 +111,9 @@ public class MinigameScreen implements Screen {
      */
     @Override
     public void show() {
+        SoundFX.sfx_soundtrack.setVolume(.5f);
+        SoundFX.sfx_soundtrack.play();
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Magero.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
@@ -177,7 +181,7 @@ public class MinigameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             fireTruck.moveRight(delta);
         }
-//
+
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             fireTruck.stay();
             // Shoot water droplet upwards
@@ -256,7 +260,7 @@ public class MinigameScreen implements Screen {
 
     @Override
     public void hide() {
-
+        SoundFX.stopMusic();
     }
 
     /**

@@ -82,7 +82,7 @@ public class ControlsScreen implements Screen {
         if (screen.equals("menu")) {
             backgroundImage = new Texture(Gdx.files.internal("menuscreen_blank_2.png"), true);
         } else if (screen.equals("game")) {
-            backgroundImage = new Texture(Gdx.files.internal("images/YorkMapEdit.png"), true);
+            backgroundImage = new Texture(Gdx.files.internal("images/YorkMapEdit2.png"), true);
         }
 
         backgroundImage.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
