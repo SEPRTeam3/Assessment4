@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Vector2;
 import com.mozarellabytes.kroy.GdxTestRunner;
 import com.mozarellabytes.kroy.Screens.GameScreen;
+import com.mozarellabytes.kroy.Utilities.SoundFX;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -43,10 +44,9 @@ public class FortressTest {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
-        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.fortressAttack(fireTruck, false);
+        handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(144.0, fireTruck.getHP(), 0.0);
+        assertEquals(132.0, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -55,10 +55,9 @@ public class FortressTest {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
-        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.fortressAttack(fireTruck, false);
+        handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(142.0, fireTruck.getHP(), 0.0);
+        assertEquals(126.0, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -67,10 +66,9 @@ public class FortressTest {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
-        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.fortressAttack(fireTruck, false);
+        handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(146.0, fireTruck.getHP(), 0.0);
+        assertEquals(138.0, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -208,22 +206,22 @@ public class FortressTest {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
-        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.fortressAttack(fireTruck, false);
+//        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
+        handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(145, fireTruck.getHP(), 0.0);
+        assertEquals(135, fireTruck.getHP(), 0.0);
     }
 
     @Test
     public void attackTruckFromMinsterDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Minster);
+        Fortress fortress = new Fortress(10, 10, Minster);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
-        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.fortressAttack(fireTruck, false);
+//        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
+        handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(143, fireTruck.getHP(), 0.0);
+        assertEquals(129, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -232,10 +230,9 @@ public class FortressTest {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
-        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
-        handler.fortressAttack(fireTruck, false);
+        handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(144, fireTruck.getHP(), 0.0);
+        assertEquals(132, fireTruck.getHP(), 0.0);
     }
 
     @Test
