@@ -46,7 +46,7 @@ public class FortressTest {
         fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
         handler.fortressAttack(fireTruck, false);
         handler.updateBombs();
-        assertEquals(144, fireTruck.getHP(), 0.0);
+        assertEquals(144.0, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -317,10 +317,5 @@ public class FortressTest {
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
-    }
-
-    @Test void fortressLevelsUpAfterOneMinuteTest() {
-        assertTrue(false);
-        // TODO: Finish writing this test.
     }
 }

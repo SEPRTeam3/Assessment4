@@ -312,6 +312,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        if (SoundFX.music_enabled) {
+            SoundFX.sfx_soundtrack.setVolume(.5f);
+            SoundFX.sfx_soundtrack.play();
+        }
     }
 
     public static boolean fireStationExist(){
@@ -623,7 +627,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-
     }
 
     @Override
