@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 import org.w3c.dom.Text;
@@ -257,7 +258,7 @@ public class Alien extends Sprite {
      *                  drawn to (map dependant)
      */
     public void drawSprite(Batch mapBatch, int width, int height) {
-        if(GameScreen.fireStationExist() == true) {
+        if(GameScreen.fireStationExist() == true && CountClock.getRemainTime() <= CountClock.getTotalTime()) {
             if ((CountClock.getRemainTime() / CountClock.getTotalTime() > 0.75f) || CountClock.getRemainTime() == CountClock.getTotalTime()) {
                 mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
             } else if (CountClock.getRemainTime() / CountClock.getTotalTime() < 0.75f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.5f) {
@@ -268,12 +269,12 @@ public class Alien extends Sprite {
                 mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
             }
         }
-        else if(happyTime < 1000){
+        else if(happyTime < 1000 && CountClock.getRemainTime() < CountClock.getTotalTime()){
             mapBatch.draw(happyDestroy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
             happyTime++;
             System.out.println(happyTime);
         }
-        else{
+        else if(CountClock.getRemainTime() < CountClock.getTotalTime()){
             mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         }
         mapBatch.draw(this, this.position.x, this.position.y, width, height);

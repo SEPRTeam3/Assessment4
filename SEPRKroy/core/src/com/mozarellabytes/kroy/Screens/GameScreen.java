@@ -324,6 +324,7 @@ public class GameScreen implements Screen {
             ini_shake ++;
             CameraShake.update(delta, camera, new Vector2(camera.viewportWidth / 2f, camera.viewportHeight / 2f));
             camShake.shakeIt(.01f);
+            CountClock.set_remain_Time(CountClock.getTotalTime());
         }
         camera.update();
         mapRenderer.setView(camera);
