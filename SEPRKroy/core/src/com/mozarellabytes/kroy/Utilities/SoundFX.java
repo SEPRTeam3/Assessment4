@@ -17,9 +17,13 @@ public class SoundFX {
     /** All sounds can be played when this is true, else no sound will play */
     public static boolean music_enabled = true;
 
+    /** Menu sound track*/
     public static final Music sfx_menu = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu.mp3"));
     public static final Music sfx_soundtrack = Gdx.audio.newMusic(Gdx.files.internal("sounds/soundtrack.mp3"));
 
+    /**
+     * Game sounds
+      */
     public static final Sound sfx_truck_attack = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/truck_attack.wav"));
     public static final Sound sfx_truck_damage = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/truck_damage.wav"));
     public static final Sound sfx_truck_spawn = Gdx.audio.newSound(Gdx.files.internal("sounds/sfx/truck_spawn.wav"));

@@ -42,15 +42,6 @@ public class FireStation {
      * @link FireTruck */
     private final ArrayList<FireTruck> trucks;
 
-    /*
-    HP of the fire station
-     */
-    private float maxHp = 1000;
-    private float hp;
-
-    private final Texture fireStationBoom6;
-
-
     /**
      * Constructs the Firestation with at a given position with locations
      * for the repair and refill tiles and the spawn tiles.
@@ -66,8 +57,6 @@ public class FireStation {
         this.bayTile2 = new Vector2(x+2, y);
         this.texture = new Texture(Gdx.files.internal("sprites/station/station.png"));
         this.trucks = new ArrayList<FireTruck>();
-
-        this.fireStationBoom6 = new Texture(Gdx.files.internal("sprites/alien/fe6.png"));
     }
 
     /**

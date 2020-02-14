@@ -72,12 +72,17 @@ public class GameScreen implements Screen {
     /** List of Fortresses currently active on the map */
     private final ArrayList<Fortress> fortresses;
 
-    /** Where the FireEngines' spawn, refill and repair */
+    /** creat the fire station */
     private final FireStation station;
+
+    /** creat the truck which stay in the station */
     private final FireTruck stationTruck;
+
+    /**Creat the crazy Alien*/
     private Alien crazyAlien;
+
+    /**Control the start screen shake time, reset the screen position*/
     private int ini_shake = 0;
-    //private Alien crazyAlienC;
 
     /** Alien patrols to attack fire engines */
     private Queue<Alien> aliens;
@@ -106,7 +111,11 @@ public class GameScreen implements Screen {
      * 0 = unpaused, 1 = paused
      */
     private int flag = 0;
+
+    /**Set go to minigame when destroyed the second fortress*/
     private int MiniGameTime = 2;
+
+    /**Set the max fire truck in the station to be destroyed after nuke attacked*/
     private int fireEngineBlowUp = 6;
     /**
      * Constructor which has the game passed in
@@ -291,11 +300,6 @@ public class GameScreen implements Screen {
         crazyAlien.getAttackHandler().setCrazy();
         vertices.clear();
 
-        /*vertices.addFirst(new Vector2(2.9f,9));
-        vertices.addLast(new Vector2(2.9f,-10));
-        crazyAlienC = (new Alien(2.9f,9, vertices,0.0175f));
-        vertices.clear();*/
-
         // Set the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
             truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
@@ -364,9 +368,7 @@ public class GameScreen implements Screen {
         for(Alien alien:aliens) {
             alien.drawSprite(mapBatch,1,1);
         }
-        /*if(!fireStationExist()){
-            crazyAlienC.drawSpriteCrazyAlien(mapBatch,5,5);
-        }*/
+
         if(fireStationExist()) {
             crazyAlien.drawSpriteCrazyAlien(mapBatch, 5, 5);
         }
@@ -445,38 +447,17 @@ public class GameScreen implements Screen {
             if (gui.getCountClock().hasEnded()) {
                 if (crazyAlien.getPosition().y > 9) {
                     crazyAlien.move(station.getTrucks());
-                }
-                else {
+                } else {
                     stationExists = false;
                 }
-                    /*Queue<Vector2> vertices;
-                    vertices = new Queue<Vector2>();
-                    crazyAlien = (new Alien(2.9f, -10, vertices, 0.0175f));*/
-                    /*
-                    if (stationTruck.getHP() > 0) {
-                        Queue<Vector2> vertices;
-                        vertices = new Queue<Vector2>();
-                        vertices.addFirst(new Vector2(1, 9));
-                        crazyAlien = (new Alien(2.9f, 9, vertices, 0.0175f));
-                        vertices.clear();
-                        stationExists = true;
-                    } else {
-                        Queue<Vector2> vertices;
-                        vertices = new Queue<Vector2>();
-                        crazyAlien = (new Alien(2.9f, -10, vertices, 0.0175f));
-                        // Only let one instance of crazyAlien exist
-                        if(crazyAlienC.getPosition().y > -5) {
-                            crazyAlienC.move(station.getTrucks()); // Move to the fireStation
-                        }
-                        stationExists = false;
-                    }*/
             }
 
             // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
             if (crazyAlien.getPosition().y >= 9.1f && crazyAlien.getPosition().y < 30) {
                 crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
-                //System.out.print(stationTruck.getPosition());
-                crazyAlien.getAttackHandler().crazyAlienAttack(stationTruck, false);
+                SoundFX.sfx_crazy_alien_attack.play();
+                if (SoundFX.music_enabled)
+                    crazyAlien.getAttackHandler().attack(stationTruck, false);
                 if (crazyAlien.getAttackHandler().updateBombs()) {
                     camShake.shakeIt(.4f);
                 }
@@ -512,7 +493,9 @@ public class GameScreen implements Screen {
             for (Fortress fortress : this.fortresses) {
                 if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
                     fortress.getAttackHandler().setAttackLevel(fortress.getLevel());
-                    fortress.getAttackHandler().fortressAttack(truck, true);
+                    if (SoundFX.music_enabled)
+                        SoundFX.sfx_fortress_attack.play();
+                    fortress.getAttackHandler().attack(truck, true);
                 }
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
@@ -528,7 +511,9 @@ public class GameScreen implements Screen {
             for(Alien alien : this.aliens){
                 alien.getAttackHandler().setPosition(alien.getPosition());
                 if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
-                    alien.getAttackHandler().alienAttack(truck, true);
+                    if (SoundFX.music_enabled)
+                        SoundFX.sfx_alien_attack.play();
+                    alien.getAttackHandler().attack(truck, true);
                 }
                 if (alien.getAttackHandler().updateBombs()) {
                     if (SoundFX.music_enabled) {
