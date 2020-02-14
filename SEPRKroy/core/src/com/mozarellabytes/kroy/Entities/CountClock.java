@@ -13,8 +13,12 @@ public class CountClock {
     Constructor for the CountClock class, instantiating the time remaining to 900 seconds.
      */
     public CountClock() {
-        totalTime = 5;
+        totalTime = 10;
         timeRemaining = totalTime;
+    }
+
+    public static void set_remain_Time(float set_time){
+        timeRemaining = set_time;
     }
 
     public static float getTotalTime(){

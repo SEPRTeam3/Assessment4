@@ -312,6 +312,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        if (SoundFX.music_enabled) {
+            SoundFX.sfx_soundtrack.setVolume(.5f);
+            SoundFX.sfx_soundtrack.play();
+        }
     }
 
     public static boolean fireStationExist(){
@@ -324,6 +328,10 @@ public class GameScreen implements Screen {
             ini_shake ++;
             CameraShake.update(delta, camera, new Vector2(camera.viewportWidth / 2f, camera.viewportHeight / 2f));
             camShake.shakeIt(.01f);
+            CountClock.set_remain_Time(CountClock.getTotalTime());
+            if(ini_shake == 1){
+                SoundFX.playGameMusic();
+            }
         }
         camera.update();
         mapRenderer.setView(camera);
@@ -622,7 +630,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-
     }
 
     @Override

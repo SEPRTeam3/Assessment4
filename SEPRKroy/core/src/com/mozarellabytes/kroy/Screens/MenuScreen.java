@@ -67,6 +67,7 @@ public class MenuScreen implements Screen {
     /** Texture of the sound off button when it has been clicked */
     private final Texture soundOffClickedTexture;
     private Texture currentSoundTexture;
+    private int start_music = 0;
 
     /** Constructs the MenuScreen
      *
@@ -146,6 +147,10 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        if(start_music == 0){
+            SoundFX.playMenuMusic();
+            start_music++;
+        }
         Gdx.gl.glClearColor(51/255f, 34/255f, 99/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
