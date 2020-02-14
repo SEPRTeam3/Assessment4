@@ -3,6 +3,7 @@ package com.mozarellabytes.kroy.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -352,6 +353,9 @@ public class GameScreen implements Screen {
                 SoundFX.playGameMusic();
             }
         }
+        if(MiniGameTime == 0){
+            SoundFX.playGameMusic();
+        }
         camera.update();
         mapRenderer.setView(camera);
         mapRenderer.render(backgroundLayerIndex);
@@ -584,7 +588,11 @@ public class GameScreen implements Screen {
                 // ...and if so, switch screen to the minigame.
                 MiniGameTime--;
                 if(MiniGameTime == 0) {
+                    SoundFX.sfx_soundtrack.pause();
+                    SoundFX.sfx_minigamebgm.play();
                     toMinigameScreen();
+                    //SoundFX.sfx_minigamebgm.pause();
+                    //SoundFX.sfx_soundtrack.play();
                 }
             }
 

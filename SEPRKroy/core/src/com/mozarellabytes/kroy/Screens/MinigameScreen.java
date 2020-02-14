@@ -112,7 +112,7 @@ public class MinigameScreen implements Screen {
     @Override
     public void show() {
         SoundFX.sfx_soundtrack.setVolume(.5f);
-        SoundFX.sfx_soundtrack.play();
+        SoundFX.sfx_minigamebgm.play();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Magero.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -213,6 +213,7 @@ public class MinigameScreen implements Screen {
             // Game ends at this point.
             if (alien.getY() + 64 < 144) {
                 iter.remove();
+                SoundFX.sfx_minigamebgm.pause();
                 invokeGameOver(game);
             }
 
@@ -239,6 +240,7 @@ public class MinigameScreen implements Screen {
         }
 
         if (score == 100) {
+            SoundFX.sfx_minigamebgm.pause();
             invokeGameOver(game);
         }
     }
