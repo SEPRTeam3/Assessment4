@@ -20,6 +20,9 @@ public class SoundFX {
     /** Menu sound track*/
     public static final Music sfx_menu = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu.mp3"));
     public static final Music sfx_soundtrack = Gdx.audio.newMusic(Gdx.files.internal("sounds/soundtrack.mp3"));
+    public static final Music sfx_minigamebgm = Gdx.audio.newMusic(Gdx.files.internal("sounds/MiniGameBGM.mp3"));
+    public static final Music sfx_gamewon = Gdx.audio.newMusic(Gdx.files.internal("sounds/game_won.mp3"));
+    public static final Music sfx_gamelose = Gdx.audio.newMusic(Gdx.files.internal("sounds/game_lost.mp3"));
 
     /**
      * Game sounds

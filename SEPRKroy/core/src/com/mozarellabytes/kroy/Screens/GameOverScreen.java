@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.GameOverInputHandler;
+import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 /** This screen is shown after the game has ended.
  * It tells the player if they have won or lost.
@@ -47,8 +48,12 @@ public class GameOverScreen implements Screen {
 
         layout = new GlyphLayout();
         if (won) {
+            SoundFX.stopMusic();
+            SoundFX.sfx_gamewon.play();
             this.text = "We did it! Good job little guy.";
         } else {
+            SoundFX.stopMusic();
+            SoundFX.sfx_gamelose.play();
             this.text = "Mission Failed. We'll get 'em next time.";
         }
         this.text = this.text + "\n" + "   Click to return to the main menu...";

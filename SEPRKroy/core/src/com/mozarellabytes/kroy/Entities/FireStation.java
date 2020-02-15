@@ -129,7 +129,7 @@ public class FireStation {
         for (FireTruck truck : trucks) {
             for (FireTruck truck2 : trucks) {
                 if (!(truck.equals(truck2))) {
-                    if (!truck.trailPath.isEmpty() && !truck.getPosition().equals(spawnTile)) {
+                    if (!truck.trailPath.isEmpty() && !truck.getPosition().equals(truck2.getPosition())) {
                         Vector2 truck2tile = new Vector2(Math.round(truck2.getPosition().x), Math.round(truck2.getPosition().y));
                         Vector2 truckstile = new Vector2((float)Math.floor(truck2.getPosition().x),(float) Math.floor(truck2.getPosition().y));
                         if (!truck2.trailPath.isEmpty() && truck.trailPath.first().equals(truck2.trailPath.first())) {

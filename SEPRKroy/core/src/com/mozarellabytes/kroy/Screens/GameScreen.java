@@ -3,6 +3,7 @@ package com.mozarellabytes.kroy.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -133,6 +134,7 @@ public class GameScreen implements Screen {
      * @param game LibGdx game instance
      */
     public GameScreen(Kroy game) {
+        SoundFX.stopMusic();
         Queue<Vector2> vertices;
         vertices = new Queue<>();
         this.game = game;
@@ -349,6 +351,11 @@ public class GameScreen implements Screen {
             camShake.shakeIt(.01f);
             CountClock.set_remain_Time(CountClock.getTotalTime());
             if(ini_shake == 1){
+                SoundFX.playGameMusic();
+            }
+        }
+        if(MiniGameTime == 0){
+            if(SoundFX.music_enabled) {
                 SoundFX.playGameMusic();
             }
         }
@@ -584,9 +591,10 @@ public class GameScreen implements Screen {
                 // ...and if so, switch screen to the minigame.
                 MiniGameTime--;
                 if(MiniGameTime == 0) {
+                    SoundFX.stopMusic();
                     toMinigameScreen();
                 }
-            }
+        }
 
 
 

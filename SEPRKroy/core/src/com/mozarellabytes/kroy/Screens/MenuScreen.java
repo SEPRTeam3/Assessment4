@@ -74,6 +74,8 @@ public class MenuScreen implements Screen {
      * @param game  LibGdx game
      */
     public MenuScreen(final Kroy game) {
+        SoundFX.sfx_gamewon.stop();
+        SoundFX.sfx_gamelose.stop();
         this.game = game;
 
         camera = new OrthographicCamera();
