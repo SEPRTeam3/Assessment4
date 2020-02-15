@@ -107,6 +107,8 @@ public class Alien extends Sprite {
      *
      * @param x     x coordinate of alien (lower left point)
      * @param y     y coordinate of alien (lower left point)
+     * @param vertices  A queue of Vector2 types, indicating the next location to move in the patrol path
+     * @param speed Determines the speed that the alien follows patrols. Unless set to 0, will be replaced with a random value between 0.05 and 0.2 in PatrolPath.java
      */
     public Alien(float x, float y,Queue<Vector2> vertices, float speed){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
@@ -163,7 +165,7 @@ public class Alien extends Sprite {
             this.position = nextTile;
             changeSprite(nextTile);
             previousTile = nextTile;
-            }
+        }
     }
 
     /**
@@ -237,7 +239,7 @@ public class Alien extends Sprite {
                     shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
             }
         }
-        else if(happyTime < 1000){
+        else if (happyTime < 1000){
             shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.LIME, Color.LIME, Color.LIME, Color.LIME);
         }
         else{
