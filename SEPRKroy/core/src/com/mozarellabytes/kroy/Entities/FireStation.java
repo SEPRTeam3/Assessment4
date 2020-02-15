@@ -129,7 +129,7 @@ public class FireStation {
         for (FireTruck truck : trucks) {
             for (FireTruck truck2 : trucks) {
                 if (!(truck.equals(truck2))) {
-                    if (!truck.trailPath.isEmpty() && !truck.getPosition().equals(spawnTile)) {
+                    if (!truck.trailPath.isEmpty()) {
                         Vector2 truck2tile = new Vector2(Math.round(truck2.getPosition().x), Math.round(truck2.getPosition().y));
                         Vector2 truckstile = new Vector2((float)Math.floor(truck2.getPosition().x),(float) Math.floor(truck2.getPosition().y));
                         if (!truck2.trailPath.isEmpty() && truck.trailPath.first().equals(truck2.trailPath.first())) {
@@ -158,8 +158,11 @@ public class FireStation {
      * @param truck2 the second truck involved in the collision
      */
     private void resetTruck(FireTruck truck, FireTruck truck2) {
-        if (SoundFX.music_enabled) {
-            SoundFX.sfx_horn.play();
+        if(truck.getPosition().x == 6 && truck.getPosition().y == 8 && truck2.getPosition().x == 6 && truck2.getPosition().y == 8) {}
+        else{
+            if (SoundFX.music_enabled) {
+                SoundFX.sfx_horn.play();
+            }
         }
 
         Vector2 hold = truck.trailPath.first();
