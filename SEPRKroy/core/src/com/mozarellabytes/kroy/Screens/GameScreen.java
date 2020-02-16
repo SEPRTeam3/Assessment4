@@ -469,10 +469,6 @@ public class GameScreen implements Screen {
         station.checkForCollisions();
         gameState.setTrucksInAttackRange(0);
 
-        if (!stationExists){
-            stationTruck.setPosition(2.9f,-10);
-        }
-
         if (gui.getCountClock() != null) {
             if (gui.getCountClock().hasEnded()) {
                 if (crazyAlien.getPosition().y > 9) {
