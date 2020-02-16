@@ -7,6 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.ArrayList;
 
+//#Assessment 3
+
+/**
+ * Class that handles hostile attacks
+ */
 public class EnemyAttackHandler {
 
     /**
@@ -100,6 +105,7 @@ public class EnemyAttackHandler {
     public boolean updateBombs() {
         boolean hasHit = false;
         ArrayList<Bomb> bombsToRemove = new ArrayList<>();
+        //Checks if any bombs have hit their target and removes them if they have
         for (int i = 0; i < bombs.size(); i++) {
             Bomb bomb = bombs.get(i);
             bomb.updatePosition();
