@@ -20,7 +20,7 @@ public enum FireTruckType {
     //Assessment 3 added more trucks and changed values
     Speed(100, 4, Color.RED, "Speed Truck", 5, 0.2f, 150),
     Tank(150, 2, Color.GREEN, "Tank Truck", 7, 0.4f, 250),
-    Attack(50,3,Color.YELLOW, "Attack Truck",4,0.6f,50),
+    Attack(80,3,Color.YELLOW, "Attack Truck",4,0.6f,100),
     Ocean(250, 1, Color.CYAN, "Ocean Truck", 6, 0.3f, 100),
     Station(0, 0, Color.CYAN, "stationTruck", 0, 0, 75);
 
