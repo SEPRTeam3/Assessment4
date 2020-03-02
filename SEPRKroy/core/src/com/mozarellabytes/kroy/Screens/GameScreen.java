@@ -17,6 +17,7 @@ import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -328,7 +329,14 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.setVolume(.5f);
             SoundFX.sfx_soundtrack.play();
         }
-
+        try {
+            Save s = new Save();
+            s.saveName = "Test Save";
+            SaveManager.newSave(s);
+            SaveManager.loadSave();
+        } catch (IOException e) {
+            System.out.println("Sorry, couldn't write, your loss.");
+        }
     }
 
     @Override
