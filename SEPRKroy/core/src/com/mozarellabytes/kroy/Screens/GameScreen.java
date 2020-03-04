@@ -125,7 +125,7 @@ public class GameScreen implements Screen {
     private int flag = 0;
 
     /**Set go to minigame when destroyed the second fortress*/
-    private int MiniGameTime = 2;
+    private int MiniGameTime = 1;
 
     /**Set the max fire truck in the station to be destroyed after nuke attacked*/
     private int fireEngineBlowUp = 6;
@@ -538,6 +538,14 @@ public class GameScreen implements Screen {
                     }
                     break;
                 }
+                // Check if fortress is destroyed...
+                if (fortress.getHP() <= 0) {
+                    // #Assessment3
+                    // ...and if so, switch screen to the minigame.
+                    MiniGameTime = 0;
+                    SoundFX.stopMusic();
+                    toMinigameScreen(truck);
+                }
             }
 
             // #Assessment3
@@ -579,27 +587,17 @@ public class GameScreen implements Screen {
             if (hitTruck) {
                 camShake.shakeIt(.2f);
             }
-
-            // Check if fortress is destroyed...
             if (fortress.getHP() <= 0) {
                 gameState.addFortress();
                 this.fortresses.remove(fortress);
                 mapBatch.begin();
-                explosions.add(new Explosion(10,10,(int)fortress.getPosition().x-5,(int)fortress.getPosition().y-5,0.05f));
+                explosions.add(new Explosion(10, 10, (int) fortress.getPosition().x - 5, (int) fortress.getPosition().y - 5, 0.05f));
                 mapBatch.end();
                 if (SoundFX.music_enabled) {
                     SoundFX.sfx_fortress_destroyed.play();
                 }
-
-                // #Assessment3
-                // ...and if so, switch screen to the minigame.
-                MiniGameTime--;
-                if(MiniGameTime == 0) {
-                    SoundFX.stopMusic();
-                    toMinigameScreen();
-                }
+            }
         }
-
 
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -620,14 +618,14 @@ public class GameScreen implements Screen {
             gui.renderSelectedEntity(selectedEntity);
         }
 
-    }
+
 
     /**
      * Changes the current screen to the minigame.
      * Passes in the current <code>game</code> instance so the minigame can return back to the main game.
      */
-    public void toMinigameScreen() {
-        game.setScreen(new MinigameScreen(game, this));
+    public void toMinigameScreen(FireTruck truck) {
+        game.setScreen(new MinigameScreen(game, this,truck));
     }
 
     @Override

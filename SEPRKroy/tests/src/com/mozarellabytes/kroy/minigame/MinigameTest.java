@@ -12,26 +12,26 @@ public class MinigameTest {
 
     @Test
     public void EntityPositionEqualsRectanglePosition() {
-        FireTruck fireTruck = new FireTruck(0, 0);
+        MinigameTruck minigameTruck = new MinigameTruck(0, 0);
 
-        assertEquals(fireTruck.getX(), fireTruck.getRect().x, 0.0);
-        assertEquals(fireTruck.getY(), fireTruck.getRect().y, 0.0);
+        assertEquals(minigameTruck.getX(), minigameTruck.getRect().x, 0.0);
+        assertEquals(minigameTruck.getY(), minigameTruck.getRect().y, 0.0);
     }
 
     @Test
     public void FireTruckPositionMovedToRight() {
-        FireTruck fireTruck = new FireTruck(0, 0);
+        MinigameTruck minigameTruck = new MinigameTruck(0, 0);
 
-        fireTruck.moveRight(0.01f);
-        assertEquals(fireTruck.getX(), 5, 0.0);
+        minigameTruck.moveRight(0.01f);
+        assertEquals(minigameTruck.getX(), 5, 0.0);
     }
 
     @Test
     public void FireTruckPositionMovedToLeft() {
-        FireTruck fireTruck = new FireTruck(0, 0);
+        MinigameTruck minigameTruck = new MinigameTruck(0, 0);
 
-        fireTruck.moveLeft(0.01f);
-        assertEquals(fireTruck.getX(), -5, 0.0);
+        minigameTruck.moveLeft(0.01f);
+        assertEquals(minigameTruck.getX(), -5, 0.0);
     }
 
     @Test

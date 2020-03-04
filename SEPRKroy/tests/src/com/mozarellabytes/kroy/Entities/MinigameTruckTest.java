@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 
 @RunWith(GdxTestRunner.class)
-public class FireTruckTest {
+public class MinigameTruckTest {
 
     @Mock
     GameScreen gameScreenMock;

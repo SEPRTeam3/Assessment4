@@ -3,7 +3,6 @@ package com.mozarellabytes.kroy.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,15 +10,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mozarellabytes.kroy.Entities.FireTruck;
+import com.mozarellabytes.kroy.Entities.FireTruckType;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 import com.mozarellabytes.kroy.minigame.Alien;
 import com.mozarellabytes.kroy.minigame.Droplet;
-import com.mozarellabytes.kroy.minigame.FireTruck;
+import com.mozarellabytes.kroy.minigame.MinigameTruck;
 
 import java.util.Iterator;
 
@@ -47,13 +49,17 @@ public class MinigameScreen implements Screen {
     private SpriteBatch batch;
 
     /** Rectangle for controlling the firetruck */
-    private FireTruck fireTruck;
+    private MinigameTruck minigameTruck;
 
     /** Array to keep track of all aliens */
     private Array<Alien> aliens;
 
     /** Keeping track of the time since the last alien was spawned */
     private long lastAlienSpawn;
+
+    /** Renders shapes such as the health/reserve
+     * stat bars above entities */
+    private final ShapeRenderer shapeMapRenderer;
 
     /** Array to keep track of all water droplets */
     private Array<Droplet> droplets;
@@ -84,8 +90,9 @@ public class MinigameScreen implements Screen {
      * Constructor to initialise the MinigameScreen with all necessary classes and attributes.
      * @param game A reference to the overarching Kroy game controller.
      * @param parent A reference to the screen that setScreen() to the minigame. Allows for returning back to previous screen without loss of state.
+     * @param truck
      */
-    public MinigameScreen(Kroy game, Screen parent) {
+    public MinigameScreen(Kroy game, Screen parent, FireTruck truck) {
         this.game = game;
         this.parent = parent;
 
@@ -97,12 +104,15 @@ public class MinigameScreen implements Screen {
         batch = new SpriteBatch();
 
         // Instantiate a fireTruck in the middle of the screen at the bottom.
-        fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 96);
+        minigameTruck = new MinigameTruck(Constants.GAME_WIDTH/2 - 64/2, 96, truck.getHP(), truck.getReserve(), truck.getType());
 
         aliens = new Array<>();
         spawnAlien();
 
         droplets = new Array<>();
+
+        shapeMapRenderer = new ShapeRenderer();
+        shapeMapRenderer.setProjectionMatrix(camera.combined);
     }
 
     /**
@@ -145,7 +155,10 @@ public class MinigameScreen implements Screen {
         batch.draw(bgImage, 0 ,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         batch.draw(roadImage, 0 ,0, Constants.GAME_WIDTH, 384);
 
-        batch.draw(fireTruck.getTexture(), fireTruck.getX(), fireTruck.getY());
+        batch.draw(minigameTruck.getTexture(), minigameTruck.getX(), minigameTruck.getY());
+        shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        minigameTruck.drawStats(shapeMapRenderer);
+        shapeMapRenderer.end();
         for (Alien alien: aliens) {
             batch.draw(alien.getTexture(), alien.getX(), alien.getY());
         }
@@ -153,6 +166,8 @@ public class MinigameScreen implements Screen {
         for (Droplet droplet: droplets) {
             batch.draw(droplet.getTexture(), droplet.getX(), droplet.getY());
         }
+
+
 
         font.draw(
                 batch,
@@ -176,15 +191,15 @@ public class MinigameScreen implements Screen {
 
 //      Fire truck controls
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            fireTruck.moveLeft(delta);
+            minigameTruck.moveLeft(delta);
         }
 
         else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            fireTruck.moveRight(delta);
+            minigameTruck.moveRight(delta);
         }
 
         else{
-            fireTruck.stay();
+            minigameTruck.stay();
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -196,12 +211,12 @@ public class MinigameScreen implements Screen {
         }
 
 //      Stop fire trucks moving out of bounds
-        if (fireTruck.getX() < 0) {
-            fireTruck.setPos(0, fireTruck.getY());
+        if (minigameTruck.getX() < 0) {
+            minigameTruck.setPos(0, minigameTruck.getY());
         }
 
-        if (fireTruck.getX() > Constants.GAME_WIDTH  - 64) {
-            fireTruck.setPos(Constants.GAME_WIDTH - 64, fireTruck.getY());
+        if (minigameTruck.getX() > Constants.GAME_WIDTH  - 64) {
+            minigameTruck.setPos(Constants.GAME_WIDTH - 64, minigameTruck.getY());
         }
 
 //      Timer for spawning aliens every second
@@ -290,7 +305,7 @@ public class MinigameScreen implements Screen {
      */
     private void shootDroplet() {
         Droplet droplet = new Droplet(
-                fireTruck.getX() + fireTruck.getWidth()/3.7f,
+                minigameTruck.getX() + minigameTruck.getWidth()/3.7f,
                 128
         );
         droplets.add(droplet);
