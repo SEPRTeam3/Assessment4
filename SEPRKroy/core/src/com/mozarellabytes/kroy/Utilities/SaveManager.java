@@ -39,8 +39,8 @@ public class SaveManager {
     public static Save saveFromGame(GameScreen g) {
         Save s = new Save();
         s.gameState = g.gameState;
-        s.fortresses = g.getFortresses();
-        s.aliens = g.getAliens();
+        //s.fortresses = g.getFortresses();
+        //s.aliens = g.getAliens();
         return s;
     }
 }

@@ -7,7 +7,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.MenuInputHandler;
+import com.mozarellabytes.kroy.Utilities.Save;
+import com.mozarellabytes.kroy.Utilities.SaveManager;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
+
+import java.io.IOException;
 
 /** This screen is shown after the splash screen and is
  * where the player can choose to start the game or view
@@ -212,6 +216,13 @@ public class MenuScreen implements Screen {
         game.setScreen(new GameScreen(game));
         //game.setScreen(new MinigameScreen(this.game)); //uncomment this to play minigame when clicking the "Start" button.
         this.dispose();
+    }
+
+    public void toLoadedGame() {
+        try {
+            Save s = SaveManager.loadSave();
+            game.setScreen(new GameScreen(game, s));
+        } catch(IOException e) {}
     }
 
     /** Changes the texture of the start button when it has been clicked on */

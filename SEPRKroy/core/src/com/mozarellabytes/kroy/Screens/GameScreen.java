@@ -331,6 +331,204 @@ public class GameScreen implements Screen {
         }
     }
 
+    // Alternate constructor from savegame
+    public GameScreen(Kroy game, Save save) {
+        SoundFX.stopMusic();
+        Queue<Vector2> vertices;
+        vertices = new Queue<>();
+        this.game = game;
+
+        crazyAlien = null;
+        stationExists = true;
+
+        state = PlayState.PLAY;
+
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
+
+        TiledMap map = new TmxMapLoader().load("maps/YorkMap.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / Constants.TILE_WxH);
+        mapRenderer.setView(camera);
+
+        shapeMapRenderer = new ShapeRenderer();
+        shapeMapRenderer.setProjectionMatrix(camera.combined);
+
+        gui = new GUI(game, this);
+
+        Gdx.input.setInputProcessor(new GameInputHandler(this, gui));
+
+        gameState = save.gameState;
+        camShake = new CameraShake();
+
+        //Orders renderer to start rendering the background, then the player layer, then structures
+        mapLayers = map.getLayers();
+        backgroundLayerIndex = new int[]{mapLayers.getIndex("background")};
+
+        structureLayersIndices = new int[]{mapLayers.getIndex("structures"),
+                mapLayers.getIndex("transparentStructures")};
+
+        station = new FireStation(3, 8);
+
+        // Instantiate a dummy fireTruck at the position (5, 8) for the crazy alien to aim at and attack.
+        stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
+
+        spawn(FireTruckType.Ocean);
+        spawn(FireTruckType.Speed);
+        spawn(FireTruckType.Tank);
+        spawn(FireTruckType.Attack);
+        spawn(FireTruckType.Station);
+        gameState.removeFireTruck();
+
+        fortresses = new ArrayList<>();
+        fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
+        fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
+        fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford));
+
+        //#Assessment3 Added 3 new fortresses
+        fortresses.add(new Fortress (44.5f, 4.5f, FortressType.TrainStation));
+        fortresses.add(new Fortress (45, 22, FortressType.Minster));
+        fortresses.add(new Fortress (29, 9, FortressType.Shambles));
+
+        //#Assesment3 Added explosion effects
+        explosions = new ArrayList<>();
+        explosionsToRemove = new ArrayList<>();
+
+        /* #Assessment3
+         * Hardcoded alien paths
+         */
+
+        aliens = new Queue<>();
+        vertices.addFirst(new Vector2(13,7));
+        vertices.addLast(new Vector2(18,7));
+        vertices.addLast(new Vector2(18,11));
+        vertices.addLast(new Vector2(13,11));
+        vertices.addLast(new Vector2(13,7));
+        aliens.addLast((new Alien(13,7,vertices,0)));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(8,5));
+        vertices.addLast(new Vector2(13,5));
+        vertices.addLast(new Vector2(13,1));
+        vertices.addLast(new Vector2(4,1));
+        vertices.addLast(new Vector2(4,4));
+        vertices.addLast(new Vector2(8,4));
+        vertices.addLast(new Vector2(8,5));
+        aliens.addLast(new Alien(8,5,vertices,0));
+
+        vertices.clear();
+        vertices.addFirst(new Vector2(28,5));
+        vertices.addLast(new Vector2(31,5));
+        vertices.addLast(new Vector2(31,6));
+        vertices.addLast(new Vector2(35,6));
+        vertices.addLast(new Vector2(35,4));
+        vertices.addLast(new Vector2(40,4));
+        vertices.addLast(new Vector2(40,6));
+        vertices.addLast(new Vector2(48,6));
+        vertices.addLast(new Vector2(48,1));
+        vertices.addLast(new Vector2(40,1));
+        vertices.addLast(new Vector2(35,1));
+        vertices.addLast(new Vector2(32,1));
+        vertices.addLast(new Vector2(32,2));
+        vertices.addLast(new Vector2(32,2));
+        vertices.addLast(new Vector2(31,2));
+        vertices.addLast(new Vector2(28,2));
+        vertices.addLast(new Vector2(28,5));
+        aliens.addLast(new Alien(28,5,vertices,0));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(48,28));
+        vertices.addLast(new Vector2(44,28));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(47,26));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(44,24));
+        vertices.addLast(new Vector2(41,24));
+        vertices.addLast(new Vector2(48,24));
+        vertices.addLast(new Vector2(44,24));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(47,26));
+        vertices.addLast(new Vector2(44,26));
+        vertices.addLast(new Vector2(44,28));
+        vertices.addLast(new Vector2(48,28));
+        aliens.addLast(new Alien(48,28,vertices,0));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(26,28));
+        vertices.addLast(new Vector2(37,28));
+        vertices.addLast(new Vector2(37,23));
+        vertices.addLast(new Vector2(34,23));
+        vertices.addLast(new Vector2(34,28));
+        vertices.addLast(new Vector2(30,28));
+        vertices.addLast(new Vector2(30,23));
+        vertices.addLast(new Vector2(26,23));
+        vertices.addLast(new Vector2(26,28));
+        aliens.addLast(new Alien(26,28,vertices,0));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(17,28));
+        vertices.addLast(new Vector2(17,21));
+        vertices.addLast(new Vector2(14,21));
+        vertices.addLast(new Vector2(14,16));
+        vertices.addLast(new Vector2(12,16));
+        vertices.addLast(new Vector2(12,22));
+        vertices.addLast(new Vector2(8,22));
+        vertices.addLast(new Vector2(8,28));
+        vertices.addLast(new Vector2(17,28));
+        aliens.addLast(new Alien(10,28,vertices,0));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(10,18));
+        vertices.addLast(new Vector2(10,16));
+        vertices.addLast(new Vector2(8,16));
+        vertices.addLast(new Vector2(8,14));
+        vertices.addLast(new Vector2(2,14));
+        vertices.addLast(new Vector2(2,17));
+        vertices.addLast(new Vector2(5,17));
+        vertices.addLast(new Vector2(5,18));
+        vertices.addLast(new Vector2(10,18));
+        aliens.addLast(new Alien(10,18,vertices,0));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(45,18));
+        vertices.addLast(new Vector2(45,15));
+        vertices.addLast(new Vector2(41,15));
+        vertices.addLast(new Vector2(41,18));
+        vertices.addLast(new Vector2(45,18));
+        aliens.addLast(new Alien(45, 18, vertices,0));
+        vertices.clear();
+
+        vertices.addFirst(new Vector2(42,13));
+        vertices.addLast(new Vector2(42,9));
+        vertices.addLast(new Vector2(37,9));
+        vertices.addLast(new Vector2(37,8));
+        vertices.addLast(new Vector2(36,8));
+        vertices.addLast(new Vector2(32,8));
+        vertices.addLast(new Vector2(32,13));
+        vertices.addLast(new Vector2(42,13));
+        aliens.addLast(new Alien(42, 13, vertices,0));
+        vertices.clear();
+
+
+        vertices.addFirst(new Vector2(2.9f,25));
+        vertices.addLast(new Vector2(2.9f,6));
+        crazyAlien = (new Alien(2.9f,30, vertices,0.0175f));
+        crazyAlien.getAttackHandler().setCrazy();
+
+        vertices.clear();
+
+        // Set the origin point to which all of the polygon's local vertices are relative to.
+        for (FireTruck truck : station.getTrucks()) {
+            truck.setOrigin(Constants.TILE_WxH / 2, Constants.TILE_WxH / 2);
+        }
+
+        mapBatch = mapRenderer.getBatch();
+
+        if (SoundFX.music_enabled) {
+            SoundFX.sfx_soundtrack.setVolume(.5f);
+            SoundFX.sfx_soundtrack.play();
+        }
+    }
+
     @Override
     public void show() {
         if (SoundFX.music_enabled) {

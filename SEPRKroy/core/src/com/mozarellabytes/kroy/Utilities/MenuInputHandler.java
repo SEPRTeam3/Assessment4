@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mozarellabytes.kroy.Screens.MenuScreen;
 
+import java.io.IOException;
+
 public class MenuInputHandler implements InputProcessor {
 
     private final MenuScreen menu;
@@ -38,6 +40,9 @@ public class MenuInputHandler implements InputProcessor {
             case Input.Keys.S:
                 menu.clickedSoundButton();
                 menu.changeSound();
+            case Input.Keys.L:
+                // DEBUG for loading file
+                menu.toLoadedGame();
         }
         return true;
     }
