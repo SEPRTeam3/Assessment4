@@ -61,6 +61,9 @@ public class GameInputHandler implements InputProcessor {
             case Input.Keys.P:
                 gui.clickedPauseButton();
                 gameScreen.changeState();
+            case Input.Keys.K:
+                // DEBUG CODE FOR SAVING
+                gameScreen.saveState();
         }
         return true;
     }

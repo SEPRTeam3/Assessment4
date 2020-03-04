@@ -35,4 +35,12 @@ public class SaveManager {
         System.out.println("Read" + s.saveName);
         return s;
     }
+
+    public static Save saveFromGame(GameScreen g) {
+        Save s = new Save();
+        s.gameState = g.gameState;
+        s.fortresses = g.getFortresses();
+        s.aliens = g.getAliens();
+        return s;
+    }
 }

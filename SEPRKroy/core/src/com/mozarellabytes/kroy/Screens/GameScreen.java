@@ -329,14 +329,6 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.setVolume(.5f);
             SoundFX.sfx_soundtrack.play();
         }
-        try {
-            Save s = new Save();
-            s.saveName = "Test Save";
-            SaveManager.newSave(s);
-            SaveManager.loadSave();
-        } catch (IOException e) {
-            System.out.println("Sorry, couldn't write, your loss.");
-        }
     }
 
     @Override
@@ -780,5 +772,14 @@ public class GameScreen implements Screen {
         return this.state;
     }
 
+    public Queue<Alien> getAliens() { return this.aliens; }
+
+    public void saveState() {
+        try {
+            SaveManager.newSave(SaveManager.saveFromGame(this));
+        } catch(IOException e) {
+            System.out.println("Couldn't save");
+        }
+    }
 }
 
