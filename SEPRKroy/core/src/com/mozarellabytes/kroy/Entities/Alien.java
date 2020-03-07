@@ -137,7 +137,7 @@ public class Alien extends Sprite {
     }
 
     /**
-     * Changes the direction of the truck depending on the previous tile and the next tile
+     * Changes the direction of the truck (alien) depending on the previous tile and the next tile
      *
      * @param nextTile  first tile in the queue (next to be followed)
      */
