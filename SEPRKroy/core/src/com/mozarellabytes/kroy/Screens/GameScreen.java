@@ -523,7 +523,7 @@ public class GameScreen implements Screen {
             FireTruck truck = station.getTruck(i);
             truck.move();
             truck.updateSpray();
-
+            System.out.print((truck.getType()));
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
                 if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
@@ -533,23 +533,27 @@ public class GameScreen implements Screen {
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
                     truck.attack(fortress);
-                    if(truck.getAttacking() && gui.getCountClock() == null){
+
+                    if (fortress.getHP() <= 0) {
+                        // #Assessment3
+                        // ...and if so, switch screen to the minigame.
+                        MiniGameTime = 0;
+                        SoundFX.stopMusic();
+                        toMinigameScreen(truck);
+                    }
+
+                    if(truck.getAttacking() && gui.getCountClock() == null) {
                         gui.newClock();
                     }
                     break;
                 }
+
                 // Check if fortress is destroyed...
-                if (fortress.getHP() <= 0) {
-                    // #Assessment3
-                    // ...and if so, switch screen to the minigame.
-                    MiniGameTime = 0;
-                    SoundFX.stopMusic();
-                    toMinigameScreen(truck);
-                }
+
             }
 
             // #Assessment3
-            for(Alien alien : this.aliens){
+            for(Alien alien : this.aliens) {
                 alien.getAttackHandler().setPosition(alien.getPosition());
                 if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
                     alien.getAttackHandler().attack(truck, true, SoundFX.sfx_alien_attack);
@@ -625,7 +629,7 @@ public class GameScreen implements Screen {
      * Passes in the current <code>game</code> instance so the minigame can return back to the main game.
      */
     public void toMinigameScreen(FireTruck truck) {
-        game.setScreen(new MinigameScreen(game, this,truck));
+        game.setScreen(new MinigameScreen(game, this, truck));
     }
 
     @Override

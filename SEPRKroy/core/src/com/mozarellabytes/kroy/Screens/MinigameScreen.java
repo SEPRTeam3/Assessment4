@@ -20,6 +20,8 @@ import com.mozarellabytes.kroy.Entities.FireTruck;
 import com.mozarellabytes.kroy.Entities.FireTruckType;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
+import com.mozarellabytes.kroy.Utilities.GUI;
+import com.mozarellabytes.kroy.Utilities.GameInputHandler;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 import com.mozarellabytes.kroy.minigame.Alien;
 import com.mozarellabytes.kroy.minigame.Droplet;
@@ -246,6 +248,7 @@ public class MinigameScreen implements Screen {
                     SoundFX.sfx_minigamebgm.stop();
                     invokeGameOver(game);
                     SoundFX.music_enabled = true;
+                    break;
                 }
             }
 
@@ -349,9 +352,11 @@ public class MinigameScreen implements Screen {
      * @param game Reference to the current instance of the game "controller".
      */
     private void invokeGameOver(Kroy game) {
+
         this.truck.setHP(minigameTruck.getHP());
         dispose();
         game.setScreen(parent);
+
     }
 
     /**
