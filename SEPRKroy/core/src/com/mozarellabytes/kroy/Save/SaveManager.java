@@ -50,6 +50,7 @@ public class SaveManager {
             SaveFiretruck saveF = new SaveFiretruck();
             saveF.x = f.getPosition().x;
             saveF.y = f.getPosition().y;
+            saveF.HP = f.getHP();
             saveF.type = f.type;
             s.station.trucks.add(saveF);
         }
@@ -63,7 +64,8 @@ public class SaveManager {
             saveA.y = a.getPosition().y;
             saveA.HP = a.getHP();
             saveA.speed = a.getSpeed();
-            saveA.path = a.getPath();
+            //saveA.path = a.getPath();
+            saveA.path = a.mainPatrol.getPath();
             s.aliens.add(saveA);
         }
 
@@ -72,7 +74,7 @@ public class SaveManager {
         saveC.x = g.getCrazyAlien().getPosition().x;
         saveC.y = g.getCrazyAlien().getPosition().y;
         saveC.HP = g.getCrazyAlien().getHP();
-        saveC.path = new Queue<Vector2>();
+        saveC.path = new Queue<>();
         saveC.path.addLast(g.getCrazyAlien().path.first());
         s.crazyAlien = saveC;
 

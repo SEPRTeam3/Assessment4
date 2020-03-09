@@ -401,6 +401,7 @@ public class GameScreen implements Screen {
         aliens = new Queue();
         for (SaveAlien a : save.aliens) {
             aliens.addLast(new Alien(a));
+
         }
 
         crazyAlien = (new Alien(save.crazyAlien.x,save.crazyAlien.y, save.crazyAlien.path,save.crazyAlien.speed));

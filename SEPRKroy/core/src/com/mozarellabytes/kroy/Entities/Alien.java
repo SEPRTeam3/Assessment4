@@ -102,7 +102,7 @@ public class Alien extends Sprite {
 
     /** PatrolPath initialised for each alien
      */
-    private PatrolPath mainPatrol;
+    public PatrolPath mainPatrol;
 
     private EnemyAttackHandler attackHandler;
 
@@ -114,7 +114,7 @@ public class Alien extends Sprite {
      * @param vertices  A queue of Vector2 types, indicating the next location to move in the patrol path
      * @param speed Determines the speed that the alien follows patrols. Unless set to 0, will be replaced with a random value between 0.05 and 0.2 in PatrolPath.java
      */
-    public Alien(float x, float y,Queue<Vector2> vertices, float speed){
+    public Alien(float x, float y , Queue<Vector2> vertices, float speed){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = speed;
         this.mainPatrol = new PatrolPath(vertices, speed);
@@ -147,10 +147,13 @@ public class Alien extends Sprite {
     public Alien(SaveAlien s) {
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = s.speed;
-        this.mainPatrol = new PatrolPath(s.path, s.speed);
+        this.mainPatrol = new PatrolPath(s.path);
+        this.path = mainPatrol.getPath();
+        //this.path = s.path;
+
         this.position = new Vector2(s.x, s.y);
         this.HP = s.HP;
-        this.path = mainPatrol.getPath();
+
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -198,6 +201,8 @@ public class Alien extends Sprite {
             this.position = nextTile;
             changeSprite(nextTile);
             previousTile = nextTile;
+        } else {
+            System.out.print(" don't anna move hey hey hey hooo          \n \n ");
         }
     }
 

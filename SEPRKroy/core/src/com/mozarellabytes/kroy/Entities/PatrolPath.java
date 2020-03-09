@@ -35,6 +35,10 @@ public class PatrolPath {
         this.speed *= 30;
         buildPathFromVertex(vertices);
     }
+    public PatrolPath(Queue<Vector2> path) {
+        this.path = path;
+    }
+
 
     public void addToPatrolPath1(Vector2 coordinate) {
         this.path.addLast(coordinate);
