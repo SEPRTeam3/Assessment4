@@ -3,6 +3,7 @@ package com.mozarellabytes.kroy.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mozarellabytes.kroy.Entities.Explosion;
 import com.mozarellabytes.kroy.Entities.FireTruck;
 import com.mozarellabytes.kroy.Entities.FireTruckType;
 import com.mozarellabytes.kroy.Kroy;
@@ -51,6 +53,7 @@ public class MinigameScreen implements Screen {
     /** Rectangle for controlling the firetruck */
     private MinigameTruck minigameTruck;
 
+    private FireTruck truck;
     /** Array to keep track of all aliens */
     private Array<Alien> aliens;
 
@@ -59,7 +62,7 @@ public class MinigameScreen implements Screen {
 
     /** Renders shapes such as the health/reserve
      * stat bars above entities */
-    private final ShapeRenderer shapeMapRenderer;
+    public ShapeRenderer shapeRenderer;
 
     /** Array to keep track of all water droplets */
     private Array<Droplet> droplets;
@@ -95,7 +98,7 @@ public class MinigameScreen implements Screen {
     public MinigameScreen(Kroy game, Screen parent, FireTruck truck) {
         this.game = game;
         this.parent = parent;
-
+        this.truck = truck;
         // Instantiate a camera with width and height of the game window to render and display the content.
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -111,8 +114,7 @@ public class MinigameScreen implements Screen {
 
         droplets = new Array<>();
 
-        shapeMapRenderer = new ShapeRenderer();
-        shapeMapRenderer.setProjectionMatrix(camera.combined);
+        shapeRenderer = new ShapeRenderer();
     }
 
     /**
@@ -149,6 +151,8 @@ public class MinigameScreen implements Screen {
 
         camera.update();
 
+
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
@@ -156,9 +160,8 @@ public class MinigameScreen implements Screen {
         batch.draw(roadImage, 0 ,0, Constants.GAME_WIDTH, 384);
 
         batch.draw(minigameTruck.getTexture(), minigameTruck.getX(), minigameTruck.getY());
-        shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        minigameTruck.drawStats(shapeMapRenderer);
-        shapeMapRenderer.end();
+
+
         for (Alien alien: aliens) {
             batch.draw(alien.getTexture(), alien.getX(), alien.getY());
         }
@@ -177,6 +180,11 @@ public class MinigameScreen implements Screen {
         );
 
         batch.end();
+
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        game.shapeRenderer.setProjectionMatrix(camera.combined);
+        drawHealthbar(camera.viewportWidth/2, 0, minigameTruck.getHP()/minigameTruck.getType().getMaxHP());
+        game.shapeRenderer.end();
 
         this.update(delta);
     }
@@ -232,10 +240,13 @@ public class MinigameScreen implements Screen {
             // Checking if an alien has reached "road level", removing it if so.
             // Game ends at this point.
             if (alien.getY() + 64 < 144) {
+                minigameTruck.setHP(20);
                 iter.remove();
-                SoundFX.sfx_minigamebgm.stop();
-                invokeGameOver(game);
-                SoundFX.music_enabled = true;
+                if(minigameTruck.getHP() <= 0){
+                    SoundFX.sfx_minigamebgm.stop();
+                    invokeGameOver(game);
+                    SoundFX.music_enabled = true;
+                }
             }
 
             // If a droplet hits an alien, remove both of them and increase the current game score.
@@ -265,6 +276,12 @@ public class MinigameScreen implements Screen {
             invokeGameOver(game);
             SoundFX.music_enabled = true;
         }
+
+        /*if(minigameTruck.getHP()==0){
+            SoundFX.sfx_minigamebgm.stop();
+            invokeGameOver(game);
+            SoundFX.music_enabled = true;
+        }*/
     }
 
     @Override
@@ -332,6 +349,7 @@ public class MinigameScreen implements Screen {
      * @param game Reference to the current instance of the game "controller".
      */
     private void invokeGameOver(Kroy game) {
+        this.truck.setHP(minigameTruck.getHP());
         dispose();
         game.setScreen(parent);
     }
@@ -344,4 +362,11 @@ public class MinigameScreen implements Screen {
         batch.dispose();
     }
 
+    private void drawHealthbar(float x, float y, float percentage) {
+        int width = 1000;
+        int height = 50;
+        float offset = height * .2f;
+        game.shapeRenderer.rect(x-width/2, y, width, height, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
+        game.shapeRenderer.rect(x-width/2 + offset, y + offset, (width - 2*offset) * percentage, height - 2*offset, Color.RED, Color.RED, Color.RED, Color.RED);
+    }
 }

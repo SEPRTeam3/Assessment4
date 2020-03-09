@@ -87,6 +87,10 @@ public class MinigameTruck extends Entity {
         return this.HP;
     }
 
+    public void setHP(float damage){
+        this.HP=this.HP-damage;
+    }
+
     public float getReserve() {
         return this.reserve;
     }
