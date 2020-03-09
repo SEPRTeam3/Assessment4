@@ -1,4 +1,4 @@
-package com.mozarellabytes.kroy.Utilities;
+package com.mozarellabytes.kroy.Save;
 
 import com.badlogic.gdx.utils.Queue;
 import com.mozarellabytes.kroy.Entities.Alien;
@@ -14,7 +14,5 @@ public class Save {
 
     public String saveName;
     public GameState gameState;
-    public ArrayList<Fortress> fortresses;
-    public FireStation station;
-    public Queue<Alien> aliens;
+    public SaveStation station;
 }

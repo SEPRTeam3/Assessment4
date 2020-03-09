@@ -1,20 +1,13 @@
-package com.mozarellabytes.kroy.Utilities;
+package com.mozarellabytes.kroy.Save;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
+import com.mozarellabytes.kroy.Entities.FireTruck;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.stream.Stream;
-
-import static com.badlogic.gdx.utils.JsonWriter.OutputType.json;
+import java.util.ArrayList;
 
 public class SaveManager {
 
@@ -38,9 +31,21 @@ public class SaveManager {
 
     public static Save saveFromGame(GameScreen g) {
         Save s = new Save();
-        s.gameState = g.gameState;
-        //s.fortresses = g.getFortresses();
-        //s.aliens = g.getAliens();
+
+        // Add station
+        s.station = new SaveStation();
+        s.station.x = g.STATION_X;
+        s.station.y = g.STATION_Y;
+        s.station.trucks = new ArrayList();
+
+        // Add firetrucks to station
+        for (FireTruck f : g.getStation().getTrucks()) {
+            SaveFiretruck saveF = new SaveFiretruck();
+            saveF.x = f.getPosition().x;
+            saveF.y = f.getPosition().y;
+
+            s.station.trucks.add(saveF);
+        }
         return s;
     }
 }

@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.MenuInputHandler;
-import com.mozarellabytes.kroy.Utilities.Save;
-import com.mozarellabytes.kroy.Utilities.SaveManager;
+import com.mozarellabytes.kroy.Save.Save;
+import com.mozarellabytes.kroy.Save.SaveManager;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 import java.io.IOException;

@@ -3,7 +3,6 @@ package com.mozarellabytes.kroy.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -14,6 +13,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.mozarellabytes.kroy.Entities.*;
 import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Kroy;
+import com.mozarellabytes.kroy.Save.Save;
+import com.mozarellabytes.kroy.Save.SaveManager;
 import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
 
@@ -134,6 +135,10 @@ public class GameScreen implements Screen {
      *
      * @param game LibGdx game instance
      */
+
+    public static final int STATION_X = 3;
+    public static final int STATION_Y = 8;
+
     public GameScreen(Kroy game) {
         SoundFX.stopMusic();
         Queue<Vector2> vertices;
@@ -169,7 +174,7 @@ public class GameScreen implements Screen {
         structureLayersIndices = new int[]{mapLayers.getIndex("structures"),
                 mapLayers.getIndex("transparentStructures")};
 
-        station = new FireStation(3, 8);
+        station = new FireStation(STATION_X, STATION_Y);
 
         // Instantiate a dummy fireTruck at the position (5, 8) for the crazy alien to aim at and attack.
         stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
