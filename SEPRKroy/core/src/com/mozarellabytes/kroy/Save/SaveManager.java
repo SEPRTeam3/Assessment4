@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.mozarellabytes.kroy.Entities.FireTruck;
+import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 
 import java.io.IOException;
@@ -32,6 +33,10 @@ public class SaveManager {
     public static Save saveFromGame(GameScreen g) {
         Save s = new Save();
 
+        // Add GameState
+
+        s.gameState = g.gameState;
+
         // Add station
         s.station = new SaveStation();
         s.station.x = g.STATION_X;
@@ -43,7 +48,7 @@ public class SaveManager {
             SaveFiretruck saveF = new SaveFiretruck();
             saveF.x = f.getPosition().x;
             saveF.y = f.getPosition().y;
-
+            saveF.type = f.type;
             s.station.trucks.add(saveF);
         }
         return s;

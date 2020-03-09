@@ -346,7 +346,7 @@ public class GameScreen implements Screen {
         crazyAlien = null;
         stationExists = true;
 
-        state = PlayState.PLAY;
+        state = PlayState.PAUSE;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
@@ -372,17 +372,12 @@ public class GameScreen implements Screen {
         structureLayersIndices = new int[]{mapLayers.getIndex("structures"),
                 mapLayers.getIndex("transparentStructures")};
 
-        station = new FireStation(3, 8);
+        station = new FireStation(this, save.station);
 
         // Instantiate a dummy fireTruck at the position (5, 8) for the crazy alien to aim at and attack.
         stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
 
-        spawn(FireTruckType.Ocean);
-        spawn(FireTruckType.Speed);
-        spawn(FireTruckType.Tank);
-        spawn(FireTruckType.Attack);
-        spawn(FireTruckType.Station);
-        gameState.removeFireTruck();
+
 
         fortresses = new ArrayList<>();
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));

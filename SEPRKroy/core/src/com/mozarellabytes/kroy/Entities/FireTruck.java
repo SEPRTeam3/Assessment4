@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mozarellabytes.kroy.Save.SaveFiretruck;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
@@ -98,12 +99,36 @@ public class FireTruck extends Sprite {
         this.HP = type.getMaxHP();
         this.reserve = type.getMaxReserve();
         this.position = position;
-        this.path = new Queue<Vector2>();
-        this.trailPath = new Queue<Vector2>();
+        this.path = new Queue();
+        this.trailPath = new Queue();
         this.moving = false;
         this.attacking = false;
         this.inCollision = false;
-        this.spray = new ArrayList<WaterParticle>();
+        this.spray = new ArrayList();
+        this.timeOfLastAttack = System.currentTimeMillis();
+        this.lookLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
+        this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
+        this.lookUp = new Texture(Gdx.files.internal("sprites/firetruck/up.png"));
+        this.lookDown = new Texture(Gdx.files.internal("sprites/firetruck/down.png"));
+    }
+
+    /**
+     * Overloaded variant for creating firetrucks from savedata
+     */
+    public FireTruck(GameScreen gameScreen, SaveFiretruck s) {
+        super(new Texture(Gdx.files.internal("sprites/firetruck/down.png")));
+
+        this.gameScreen = gameScreen;
+        this.type = s.type;
+        this.HP = type.getMaxHP();
+        this.reserve = type.getMaxReserve();
+        this.position = new Vector2(s.x, s.y);
+        this.path = new Queue();
+        this.trailPath = new Queue();
+        this.moving = false;
+        this.attacking = false;
+        this.inCollision = false;
+        this.spray = new ArrayList();
         this.timeOfLastAttack = System.currentTimeMillis();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));

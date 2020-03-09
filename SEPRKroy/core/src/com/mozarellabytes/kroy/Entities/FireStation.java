@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 
 import com.mozarellabytes.kroy.Kroy;
+import com.mozarellabytes.kroy.Save.SaveFiretruck;
+import com.mozarellabytes.kroy.Save.SaveStation;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
@@ -57,6 +59,20 @@ public class FireStation {
         this.bayTile2 = new Vector2(x+2, y);
         this.texture = new Texture(Gdx.files.internal("sprites/station/station.png"));
         this.trucks = new ArrayList<FireTruck>();
+    }
+
+    public FireStation(GameScreen g, SaveStation s) {
+        this.x = s.x;
+        this.y = s.y;
+        this.spawnTile = new Vector2(x+3, y);
+        this.bayTile1 = new Vector2(x+1, y);
+        this.bayTile2 = new Vector2(x+2, y);
+        this.texture = new Texture(Gdx.files.internal("sprites/station/station.png"));
+        this.trucks = new ArrayList<FireTruck>();
+
+        for (SaveFiretruck f : s.trucks) {
+            this.trucks.add(new FireTruck(g, f));
+        }
     }
 
     /**
