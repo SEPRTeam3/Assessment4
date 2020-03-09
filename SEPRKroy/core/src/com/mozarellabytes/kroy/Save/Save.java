@@ -15,4 +15,6 @@ public class Save {
     public String saveName;
     public GameState gameState;
     public SaveStation station;
+    public ArrayList<SaveAlien> aliens;
+    public SaveAlien crazyAlien;
 }

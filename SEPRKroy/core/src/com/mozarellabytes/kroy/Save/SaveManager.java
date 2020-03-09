@@ -2,7 +2,10 @@ package com.mozarellabytes.kroy.Save;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Queue;
+import com.mozarellabytes.kroy.Entities.Alien;
 import com.mozarellabytes.kroy.Entities.FireTruck;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Screens.GameScreen;
@@ -34,7 +37,6 @@ public class SaveManager {
         Save s = new Save();
 
         // Add GameState
-
         s.gameState = g.gameState;
 
         // Add station
@@ -51,6 +53,29 @@ public class SaveManager {
             saveF.type = f.type;
             s.station.trucks.add(saveF);
         }
+
+        s.aliens = new ArrayList();
+
+        // Add aliens
+        for (Alien a : g.getAliens()) {
+            SaveAlien saveA = new SaveAlien();
+            saveA.x = a.getPosition().x;
+            saveA.y = a.getPosition().y;
+            saveA.HP = a.getHP();
+            saveA.speed = a.getSpeed();
+            saveA.path = a.getPath();
+            s.aliens.add(saveA);
+        }
+
+        // Add crazy alien
+        SaveAlien saveC = new SaveAlien();
+        saveC.x = g.getCrazyAlien().getPosition().x;
+        saveC.y = g.getCrazyAlien().getPosition().y;
+        saveC.HP = g.getCrazyAlien().getHP();
+        saveC.path = new Queue<Vector2>();
+        saveC.path.addLast(g.getCrazyAlien().path.first());
+        s.crazyAlien = saveC;
+
         return s;
     }
 }

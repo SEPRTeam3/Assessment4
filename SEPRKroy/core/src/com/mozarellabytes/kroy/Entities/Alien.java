@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import com.mozarellabytes.kroy.GameState;
+import com.mozarellabytes.kroy.Save.SaveAlien;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 import org.w3c.dom.Text;
@@ -39,6 +40,9 @@ public class Alien extends Sprite {
 
     /** Health points */
     private float HP;
+
+    /** Speed of Alien */
+    private float speed;
 
     /** Position of Alien in tiles */
     private Vector2 position;
@@ -112,6 +116,7 @@ public class Alien extends Sprite {
      */
     public Alien(float x, float y,Queue<Vector2> vertices, float speed){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
+        this.speed = speed;
         this.mainPatrol = new PatrolPath(vertices, speed);
         this.position = new Vector2(x,y);
         this.HP = maxHP;
@@ -133,6 +138,34 @@ public class Alien extends Sprite {
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
 
 
+        attackHandler = new EnemyAttackHandler(this);
+    }
+
+    /**
+     * Overloaded version of the alien constructor for loading from a save
+     */
+    public Alien(SaveAlien s) {
+        super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
+        this.speed = s.speed;
+        this.mainPatrol = new PatrolPath(s.path, s.speed);
+        this.position = new Vector2(s.x, s.y);
+        this.HP = s.HP;
+        this.path = mainPatrol.getPath();
+
+        this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
+        this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
+        this.lookUp = new Texture(Gdx.files.internal("sprites/alien/AlienUp.png"));
+        this.lookDown = new Texture(Gdx.files.internal("sprites/alien/AlienDown.png"));
+        this.crazyAlien = new Texture(Gdx.files.internal("sprites/alien/crazyAlien.png"));
+        this.happy = new Texture(Gdx.files.internal("sprites/alien/happyFace.png"));
+        this.notHappy = new Texture(Gdx.files.internal("sprites/alien/notHappy.png"));
+        this.littleAngry = new Texture(Gdx.files.internal("sprites/alien/littleAngry.png"));
+        this.angry = new Texture(Gdx.files.internal("sprites/alien/Angry.png"));
+        this.happyDestroy = new Texture(Gdx.files.internal("sprites/alien/happyDestroy.png"));
+        this.nuke1 = new Texture(Gdx.files.internal("sprites/alien/nuke1.png"));
+        this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
+        this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
+        this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
         attackHandler = new EnemyAttackHandler(this);
     }
 
@@ -335,5 +368,9 @@ public class Alien extends Sprite {
         this.path.addLast(tempVector);
         this.path.removeFirst();
         return tempVector;
+    }
+
+    public float getSpeed() {
+        return speed;
     }
 }

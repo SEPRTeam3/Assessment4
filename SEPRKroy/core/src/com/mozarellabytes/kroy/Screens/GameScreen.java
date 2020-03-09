@@ -14,6 +14,7 @@ import com.mozarellabytes.kroy.Entities.*;
 import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Save.Save;
+import com.mozarellabytes.kroy.Save.SaveAlien;
 import com.mozarellabytes.kroy.Save.SaveManager;
 import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
@@ -397,124 +398,14 @@ public class GameScreen implements Screen {
          * Hardcoded alien paths
          */
 
-        aliens = new Queue<>();
-        vertices.addFirst(new Vector2(13,7));
-        vertices.addLast(new Vector2(18,7));
-        vertices.addLast(new Vector2(18,11));
-        vertices.addLast(new Vector2(13,11));
-        vertices.addLast(new Vector2(13,7));
-        aliens.addLast((new Alien(13,7,vertices,0)));
-        vertices.clear();
+        aliens = new Queue();
+        for (SaveAlien a : save.aliens) {
+            aliens.addLast(new Alien(a));
+        }
 
-        vertices.addFirst(new Vector2(8,5));
-        vertices.addLast(new Vector2(13,5));
-        vertices.addLast(new Vector2(13,1));
-        vertices.addLast(new Vector2(4,1));
-        vertices.addLast(new Vector2(4,4));
-        vertices.addLast(new Vector2(8,4));
-        vertices.addLast(new Vector2(8,5));
-        aliens.addLast(new Alien(8,5,vertices,0));
-
-        vertices.clear();
-        vertices.addFirst(new Vector2(28,5));
-        vertices.addLast(new Vector2(31,5));
-        vertices.addLast(new Vector2(31,6));
-        vertices.addLast(new Vector2(35,6));
-        vertices.addLast(new Vector2(35,4));
-        vertices.addLast(new Vector2(40,4));
-        vertices.addLast(new Vector2(40,6));
-        vertices.addLast(new Vector2(48,6));
-        vertices.addLast(new Vector2(48,1));
-        vertices.addLast(new Vector2(40,1));
-        vertices.addLast(new Vector2(35,1));
-        vertices.addLast(new Vector2(32,1));
-        vertices.addLast(new Vector2(32,2));
-        vertices.addLast(new Vector2(32,2));
-        vertices.addLast(new Vector2(31,2));
-        vertices.addLast(new Vector2(28,2));
-        vertices.addLast(new Vector2(28,5));
-        aliens.addLast(new Alien(28,5,vertices,0));
-        vertices.clear();
-
-        vertices.addFirst(new Vector2(48,28));
-        vertices.addLast(new Vector2(44,28));
-        vertices.addLast(new Vector2(44,26));
-        vertices.addLast(new Vector2(47,26));
-        vertices.addLast(new Vector2(44,26));
-        vertices.addLast(new Vector2(44,24));
-        vertices.addLast(new Vector2(41,24));
-        vertices.addLast(new Vector2(48,24));
-        vertices.addLast(new Vector2(44,24));
-        vertices.addLast(new Vector2(44,26));
-        vertices.addLast(new Vector2(47,26));
-        vertices.addLast(new Vector2(44,26));
-        vertices.addLast(new Vector2(44,28));
-        vertices.addLast(new Vector2(48,28));
-        aliens.addLast(new Alien(48,28,vertices,0));
-        vertices.clear();
-
-        vertices.addFirst(new Vector2(26,28));
-        vertices.addLast(new Vector2(37,28));
-        vertices.addLast(new Vector2(37,23));
-        vertices.addLast(new Vector2(34,23));
-        vertices.addLast(new Vector2(34,28));
-        vertices.addLast(new Vector2(30,28));
-        vertices.addLast(new Vector2(30,23));
-        vertices.addLast(new Vector2(26,23));
-        vertices.addLast(new Vector2(26,28));
-        aliens.addLast(new Alien(26,28,vertices,0));
-        vertices.clear();
-
-        vertices.addFirst(new Vector2(17,28));
-        vertices.addLast(new Vector2(17,21));
-        vertices.addLast(new Vector2(14,21));
-        vertices.addLast(new Vector2(14,16));
-        vertices.addLast(new Vector2(12,16));
-        vertices.addLast(new Vector2(12,22));
-        vertices.addLast(new Vector2(8,22));
-        vertices.addLast(new Vector2(8,28));
-        vertices.addLast(new Vector2(17,28));
-        aliens.addLast(new Alien(10,28,vertices,0));
-        vertices.clear();
-
-        vertices.addFirst(new Vector2(10,18));
-        vertices.addLast(new Vector2(10,16));
-        vertices.addLast(new Vector2(8,16));
-        vertices.addLast(new Vector2(8,14));
-        vertices.addLast(new Vector2(2,14));
-        vertices.addLast(new Vector2(2,17));
-        vertices.addLast(new Vector2(5,17));
-        vertices.addLast(new Vector2(5,18));
-        vertices.addLast(new Vector2(10,18));
-        aliens.addLast(new Alien(10,18,vertices,0));
-        vertices.clear();
-
-        vertices.addFirst(new Vector2(45,18));
-        vertices.addLast(new Vector2(45,15));
-        vertices.addLast(new Vector2(41,15));
-        vertices.addLast(new Vector2(41,18));
-        vertices.addLast(new Vector2(45,18));
-        aliens.addLast(new Alien(45, 18, vertices,0));
-        vertices.clear();
-
-        vertices.addFirst(new Vector2(42,13));
-        vertices.addLast(new Vector2(42,9));
-        vertices.addLast(new Vector2(37,9));
-        vertices.addLast(new Vector2(37,8));
-        vertices.addLast(new Vector2(36,8));
-        vertices.addLast(new Vector2(32,8));
-        vertices.addLast(new Vector2(32,13));
-        vertices.addLast(new Vector2(42,13));
-        aliens.addLast(new Alien(42, 13, vertices,0));
-        vertices.clear();
-
-
-        vertices.addFirst(new Vector2(2.9f,25));
-        vertices.addLast(new Vector2(2.9f,6));
-        crazyAlien = (new Alien(2.9f,30, vertices,0.0175f));
+        crazyAlien = (new Alien(save.crazyAlien.x,save.crazyAlien.y, save.crazyAlien.path,save.crazyAlien.speed));
         crazyAlien.getAttackHandler().setCrazy();
 
-        vertices.clear();
 
         // Set the origin point to which all of the polygon's local vertices are relative to.
         for (FireTruck truck : station.getTrucks()) {
@@ -979,5 +870,7 @@ public class GameScreen implements Screen {
             System.out.println("Couldn't save");
         }
     }
+
+    public Alien getCrazyAlien() { return this.crazyAlien; }
 }
 
