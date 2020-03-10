@@ -866,7 +866,7 @@ public class GameScreen implements Screen {
 
     public void saveState() {
         try {
-            SaveManager.newSave(SaveManager.saveFromGame(this));
+            SaveManager.newSave(SaveManager.saveFromGame(this, "TESTING"));
         } catch(IOException e) {
             System.out.println("Couldn't save");
         }

@@ -40,9 +40,6 @@ public class MenuInputHandler implements InputProcessor {
             case Input.Keys.S:
                 menu.clickedSoundButton();
                 menu.changeSound();
-            case Input.Keys.L:
-                // DEBUG for loading file
-                menu.toLoadedGame();
         }
         return true;
     }
@@ -78,6 +75,8 @@ public class MenuInputHandler implements InputProcessor {
             menu.clickedControlsButton();
         } else if (menu.getSoundButton().contains(position.x, position.y)) {
             menu.clickedSoundButton();
+        } else if (menu.getSaveButton().contains(position.x, position.y)) {
+            menu.clickedSaveButton();
         }
         return true;
     }
@@ -98,12 +97,15 @@ public class MenuInputHandler implements InputProcessor {
             menu.toGameScreen();
         } else if (menu.getControlsButton().contains(position.x, position.y)) {
             menu.toControlScreen();
-        } else if (menu.getSoundButton().contains(position.x, position.y)){
+        } else if (menu.getSoundButton().contains(position.x, position.y)) {
             menu.changeSound();
+        } else if (menu.getSaveButton().contains(position.x, position.y)) {
+            menu.toLoadScreen();
         } else {
             menu.idleStartButton();
             menu.idleControlsButton();
             menu.idleSoundButton();
+            menu.idleSaveButton();
         }
         return true;
     }

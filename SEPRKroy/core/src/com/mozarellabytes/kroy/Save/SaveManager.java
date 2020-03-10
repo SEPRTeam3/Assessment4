@@ -24,17 +24,19 @@ public class SaveManager {
         file.writeString(json.toJson(s), false);
     }
 
-    public static Save loadSave() throws IOException{
+    public static Save loadSave(FileHandle file) throws IOException{
 //        FileReader fileReader = new FileReader("saves/testSave.json");
         Json json = new Json();
-        FileHandle file = Gdx.files.local("saves/testSave.json");
         Save s = json.fromJson(Save.class, file.readString());
         System.out.println("Read" + s.saveName);
         return s;
     }
 
-    public static Save saveFromGame(GameScreen g) {
+    public static Save saveFromGame(GameScreen g, String name) {
         Save s = new Save();
+
+        // Add name
+        s.saveName = name;
 
         // Add GameState
         s.gameState = g.gameState;
@@ -79,5 +81,17 @@ public class SaveManager {
         s.crazyAlien = saveC;
 
         return s;
+    }
+
+    public static ArrayList<Save> getSaves() {
+        ArrayList<Save> out = new ArrayList();
+        for (FileHandle file : Gdx.files.local("saves").list()) {
+            try {
+            out.add(loadSave(file));
+            } catch(IOException e) {
+                System.out.println("Couldn't be read.");
+            }
+        };
+        return out;
     }
 }

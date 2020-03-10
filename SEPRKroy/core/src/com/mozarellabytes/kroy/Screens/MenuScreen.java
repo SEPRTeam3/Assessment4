@@ -68,9 +68,19 @@ public class MenuScreen implements Screen {
     /** Texture of the sound on button when it has been clicked */
     private final Texture soundOnClickedTexture;
 
+    /** Rectangle containing the position of the save button */
+    private final Rectangle saveButton;
+
+    /** Texture of the save button when it has not been clicked */
+    private final Texture saveOffClicked;
+
+    /** Texture of theh save button when it has been clicked */
+    private final Texture saveOnClicked;
+
     /** Texture of the sound off button when it has been clicked */
     private final Texture soundOffClickedTexture;
     private Texture currentSoundTexture;
+    private Texture currentSaveTexture;
     private int start_music = 0;
 
     /** Constructs the MenuScreen
@@ -107,6 +117,9 @@ public class MenuScreen implements Screen {
         soundOffClickedTexture = new Texture(Gdx.files.internal("ui/sound_off_clicked.png"), true);
         soundOffClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
 
+        saveOffClicked = new Texture(Gdx.files.internal("ui/save_idle.png"));
+        saveOnClicked = new Texture(Gdx.files.internal("ui/save_clicked.png"));
+
         MenuInputHandler ih = new MenuInputHandler(this);
 
         if (SoundFX.music_enabled) {
@@ -119,6 +132,7 @@ public class MenuScreen implements Screen {
 
         currentStartTexture = startIdleTexture;
         currentControlsTexture = controlsIdleTexture;
+        currentSaveTexture = saveOffClicked;
 
         startButton = new Rectangle();
         startButton.width = (float) (currentStartTexture.getWidth()*0.75);
@@ -137,6 +151,12 @@ public class MenuScreen implements Screen {
         soundButton.height = 50;
         soundButton.x = camera.viewportWidth - soundButton.getWidth() - 5;
         soundButton.y = camera.viewportHeight - soundButton.getHeight() - 5;
+
+        saveButton = new Rectangle();
+        saveButton.width = startButton.height;
+        saveButton.height = startButton.height;
+        saveButton.x = (int) camera.viewportWidth/2 + startButton.width/2 + 20;
+        saveButton.y = startButton.y;
 
         Gdx.input.setInputProcessor(ih);
 
@@ -169,6 +189,7 @@ public class MenuScreen implements Screen {
         game.batch.draw(currentStartTexture, startButton.x, startButton.y, startButton.width, startButton.height);
         game.batch.draw(currentControlsTexture, controlsButton.x, controlsButton.y, controlsButton.width, controlsButton.height);
         game.batch.draw(currentSoundTexture, soundButton.x, soundButton.y, soundButton.width, soundButton.height);
+        game.batch.draw(currentSaveTexture, saveButton.x, saveButton.y, saveButton.width, saveButton.height);
         game.batch.end();
 
     }
@@ -218,13 +239,6 @@ public class MenuScreen implements Screen {
         this.dispose();
     }
 
-    public void toLoadedGame() {
-        try {
-            Save s = SaveManager.loadSave();
-            game.setScreen(new GameScreen(game, s));
-        } catch(IOException e) {}
-    }
-
     /** Changes the texture of the start button when it has been clicked on */
     public void clickedStartButton() {
         if (SoundFX.music_enabled){
@@ -248,6 +262,11 @@ public class MenuScreen implements Screen {
         } else {
             currentSoundTexture = soundOnClickedTexture;
         }
+    }
+
+    /** Changes the texture of the save button when it has been clicked on */
+    public void clickedSaveButton() {
+        currentSaveTexture = saveOnClicked;
     }
 
     /** Turns the sound on and off and changes the sound icon accordingly,
@@ -282,12 +301,20 @@ public class MenuScreen implements Screen {
         }
     }
 
+    public void idleSaveButton() {
+        currentSaveTexture = saveOffClicked;
+    }
+
     /** Changes the screen from the menu screen to the control screen */
     public void toControlScreen(){ game.setScreen(new ControlsScreen(game, this, "menu")); }
+
+    public void toLoadScreen() { game.setScreen(new LoadScreen(game)); }
 
     public Rectangle getStartButton() { return startButton; }
 
     public Rectangle getControlsButton() { return controlsButton; }
 
-    public Rectangle getSoundButton() {return soundButton; }
+    public Rectangle getSoundButton() { return soundButton; }
+
+    public Rectangle getSaveButton() { return saveButton; }
 }
