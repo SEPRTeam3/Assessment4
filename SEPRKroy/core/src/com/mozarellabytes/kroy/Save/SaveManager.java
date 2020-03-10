@@ -20,7 +20,7 @@ public class SaveManager {
     public static void newSave(Save s) throws IOException {
         Json json = new Json();
         System.out.println(json.toJson(s));
-        FileHandle file = Gdx.files.local("saves/testSave.json");
+        FileHandle file = Gdx.files.local("saves/" + s.saveName + ".json");
         file.writeString(json.toJson(s), false);
     }
 

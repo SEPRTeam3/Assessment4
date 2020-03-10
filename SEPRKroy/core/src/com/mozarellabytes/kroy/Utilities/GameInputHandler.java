@@ -219,6 +219,8 @@ public class GameInputHandler implements InputProcessor {
             gui.clickedSoundButton();
         } else if (gui.getInfoButton().contains(position2d)) {
             gui.clickedInfoButton();
+        } else if (gui.getSaveButton().contains(position2d)) {
+            gui.clickedSaveButton();
         }
     }
 

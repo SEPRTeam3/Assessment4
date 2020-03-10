@@ -121,6 +121,11 @@ public class GUI {
      */
     private Texture currentSoundTexture;
 
+    private final Texture saveIdleTexture;
+    private final Texture saveClickedTexture;
+    private Texture currentSaveTexture;
+    private final Rectangle saveButton;
+
     /**
      * Camera to set the projection for the screen
      */
@@ -167,9 +172,15 @@ public class GUI {
         soundOffClickedTexture = new Texture(Gdx.files.internal("ui/sound_off_clicked.png"), true);
         soundOffClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
 
+        saveClickedTexture = new Texture(Gdx.files.internal("ui/save_clicked.png"), true);
+        saveClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+        saveIdleTexture = new Texture(Gdx.files.internal("ui/save_idle.png"), true);
+        saveIdleTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+
         currentHomeTexture = homeButtonIdle;
         currentPauseTexture = pauseButtonIdle;
         currentInfoTexture = infoButtonIdle;
+        currentSaveTexture = saveIdleTexture;
 
         if (SoundFX.music_enabled) {
             currentSoundTexture = soundOffIdleTexture;
@@ -181,6 +192,7 @@ public class GUI {
         soundButton = new Rectangle(Gdx.graphics.getWidth() - 70, Gdx.graphics.getHeight() - 33, 30, 30);
         pauseButton = new Rectangle(Gdx.graphics.getWidth() - 107, Gdx.graphics.getHeight() - 33, 30, 30);
         infoButton = new Rectangle(Gdx.graphics.getWidth() - 144, Gdx.graphics.getHeight() - 33, 30, 30);
+        saveButton = new Rectangle(Gdx.graphics.getWidth() - 181, Gdx.graphics.getHeight() - 33, 30, 30);
 
         pauseCamera = new OrthographicCamera();
         pauseCamera.setToOrtho(false, Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
@@ -330,6 +342,7 @@ public class GUI {
         game.batch.draw(currentHomeTexture, homeButton.x, homeButton.y, homeButton.width, homeButton.height);
         game.batch.draw(currentPauseTexture, pauseButton.x, pauseButton.y, pauseButton.width, pauseButton.height);
         game.batch.draw(currentInfoTexture, infoButton.x, infoButton.y, infoButton.width, infoButton.height);
+        game.batch.draw(currentSaveTexture, saveButton.x, saveButton.y, saveButton.width, saveButton.height);
         game.batch.end();
     }
 
@@ -385,6 +398,10 @@ public class GUI {
                 SoundFX.sfx_unpause.play();
             }
         }
+    }
+
+    public void clickedSaveButton() {
+        gameScreen.saveState();
     }
 
     /**
@@ -487,5 +504,7 @@ public class GUI {
     public Rectangle getPauseButton() { return this.pauseButton; }
 
     public Rectangle getInfoButton() { return this.infoButton; }
+
+    public Rectangle getSaveButton() { return this.saveButton; }
 
 }

@@ -1,5 +1,6 @@
 package com.mozarellabytes.kroy.Utilities;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
 import com.mozarellabytes.kroy.Screens.LoadScreen;
@@ -16,7 +17,14 @@ public class LoadInputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if (keycode == Input.Keys.DOWN) {
+            loadScreen.scrollDown();
+        } else if (keycode == Input.Keys.UP) {
+            loadScreen.scrollUp();
+        } else if (keycode == Input.Keys.ESCAPE) {
+            loadScreen.toMenuScreen();
+        }
+        return true;
     }
 
     @Override
@@ -49,6 +57,9 @@ public class LoadInputHandler implements InputProcessor {
             }
         }
         loadScreen.resetClick();
+        if (!loadScreen.getMenuArea().contains(screenX, screenY)) {
+            loadScreen.toMenuScreen();
+        }
         return true;
     }
 

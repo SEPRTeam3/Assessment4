@@ -20,7 +20,9 @@ import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * The Screen that our game is played in.
@@ -866,7 +868,8 @@ public class GameScreen implements Screen {
 
     public void saveState() {
         try {
-            SaveManager.newSave(SaveManager.saveFromGame(this, "TESTING"));
+            String timeStamp = new SimpleDateFormat("dd-MM-yy_HH-mm-ss").format(Calendar.getInstance().getTime());
+            SaveManager.newSave(SaveManager.saveFromGame(this, timeStamp));
         } catch(IOException e) {
             System.out.println("Couldn't save");
         }
