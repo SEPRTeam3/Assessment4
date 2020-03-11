@@ -213,7 +213,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(18,11));
         vertices.addLast(new Vector2(13,11));
         vertices.addLast(new Vector2(13,7));
-        aliens.addLast((new Alien(13,7,vertices,0)));
+        aliens.addLast((new Alien(13,7,vertices,0, fortresses.get(0))));
         vertices.clear();
 
         vertices.addFirst(new Vector2(8,5));
@@ -223,7 +223,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(4,4));
         vertices.addLast(new Vector2(8,4));
         vertices.addLast(new Vector2(8,5));
-        aliens.addLast(new Alien(8,5,vertices,0));
+        aliens.addLast(new Alien(8,5,vertices,0, fortresses.get(0)));
 
         vertices.clear();
         vertices.addFirst(new Vector2(28,5));
@@ -243,7 +243,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(31,2));
         vertices.addLast(new Vector2(28,2));
         vertices.addLast(new Vector2(28,5));
-        aliens.addLast(new Alien(28,5,vertices,0));
+        aliens.addLast(new Alien(28,5,vertices,0, fortresses.get(0)));
         vertices.clear();
 
         vertices.addFirst(new Vector2(48,28));
@@ -260,7 +260,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(44,26));
         vertices.addLast(new Vector2(44,28));
         vertices.addLast(new Vector2(48,28));
-        aliens.addLast(new Alien(48,28,vertices,0));
+        aliens.addLast(new Alien(48,28,vertices,0, fortresses.get(0)));
         vertices.clear();
 
         vertices.addFirst(new Vector2(26,28));
@@ -272,7 +272,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(30,23));
         vertices.addLast(new Vector2(26,23));
         vertices.addLast(new Vector2(26,28));
-        aliens.addLast(new Alien(26,28,vertices,0));
+        aliens.addLast(new Alien(26,28,vertices,0, fortresses.get(0)));
         vertices.clear();
 
         vertices.addFirst(new Vector2(17,28));
@@ -284,7 +284,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(8,22));
         vertices.addLast(new Vector2(8,28));
         vertices.addLast(new Vector2(17,28));
-        aliens.addLast(new Alien(10,28,vertices,0));
+        aliens.addLast(new Alien(10,28,vertices,0, fortresses.get(0)));
         vertices.clear();
 
         vertices.addFirst(new Vector2(10,18));
@@ -296,7 +296,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(5,17));
         vertices.addLast(new Vector2(5,18));
         vertices.addLast(new Vector2(10,18));
-        aliens.addLast(new Alien(10,18,vertices,0));
+        aliens.addLast(new Alien(10,18,vertices,0, fortresses.get(0)));
         vertices.clear();
 
         vertices.addFirst(new Vector2(45,18));
@@ -304,7 +304,7 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(41,15));
         vertices.addLast(new Vector2(41,18));
         vertices.addLast(new Vector2(45,18));
-        aliens.addLast(new Alien(45, 18, vertices,0));
+        aliens.addLast(new Alien(45, 18, vertices,0, fortresses.get(0)));
         vertices.clear();
 
         vertices.addFirst(new Vector2(42,13));
@@ -315,13 +315,13 @@ public class GameScreen implements Screen {
         vertices.addLast(new Vector2(32,8));
         vertices.addLast(new Vector2(32,13));
         vertices.addLast(new Vector2(42,13));
-        aliens.addLast(new Alien(42, 13, vertices,0));
+        aliens.addLast(new Alien(42, 13, vertices,0, fortresses.get(0)));
         vertices.clear();
 
 
         vertices.addFirst(new Vector2(2.9f,25));
         vertices.addLast(new Vector2(2.9f,6));
-        crazyAlien = (new Alien(2.9f,30, vertices,0.0175f));
+        crazyAlien = (new Alien(2.9f,30, vertices,0.0175f, fortresses.get(0)));
         crazyAlien.getAttackHandler().setCrazy();
 
         vertices.clear();
@@ -406,7 +406,7 @@ public class GameScreen implements Screen {
 
         }
 
-        crazyAlien = (new Alien(save.crazyAlien.x,save.crazyAlien.y, save.crazyAlien.path,save.crazyAlien.speed));
+        crazyAlien = (new Alien(save.crazyAlien.x,save.crazyAlien.y, save.crazyAlien.path,save.crazyAlien.speed, fortresses.get(0)));
         crazyAlien.getAttackHandler().setCrazy();
 
 

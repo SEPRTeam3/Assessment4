@@ -97,10 +97,13 @@ public class Alien extends Sprite {
     private final Texture nuke3;
     private final Texture nuke4;
 
+    /**
+     * The fortress that this et is associated with
+     */
+    private Fortress masterFortress;
 
-
-
-    /** PatrolPath initialised for each alien
+    /**
+     * PatrolPath initialised for each alien
      */
     public PatrolPath mainPatrol;
 
@@ -114,7 +117,7 @@ public class Alien extends Sprite {
      * @param vertices  A queue of Vector2 types, indicating the next location to move in the patrol path
      * @param speed Determines the speed that the alien follows patrols. Unless set to 0, will be replaced with a random value between 0.05 and 0.2 in PatrolPath.java
      */
-    public Alien(float x, float y , Queue<Vector2> vertices, float speed){
+    public Alien(float x, float y , Queue<Vector2> vertices, float speed, Fortress masterFortress){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = speed;
         this.mainPatrol = new PatrolPath(vertices, speed);
@@ -137,6 +140,7 @@ public class Alien extends Sprite {
         this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
 
+        this.masterFortress = masterFortress;
 
         attackHandler = new EnemyAttackHandler(this);
     }
