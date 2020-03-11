@@ -26,7 +26,7 @@ public class Alien extends Entity {
     public void moveDown(float delta) {
         this.updatePos(
                 0,
-                -150*delta
+                -90*delta
         );
 
         this.updateRect();

@@ -403,6 +403,10 @@ public class FireTruck extends Sprite {
         return this.HP;
     }
 
+    public void setHP(float HP) {
+        this.HP=HP;
+    }
+
     public float getReserve() {
         return this.reserve;
     }

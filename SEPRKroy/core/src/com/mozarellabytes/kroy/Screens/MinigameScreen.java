@@ -3,7 +3,7 @@ package com.mozarellabytes.kroy.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,15 +11,21 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mozarellabytes.kroy.Entities.Explosion;
+import com.mozarellabytes.kroy.Entities.FireTruck;
+import com.mozarellabytes.kroy.Entities.FireTruckType;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
+import com.mozarellabytes.kroy.Utilities.GUI;
+import com.mozarellabytes.kroy.Utilities.GameInputHandler;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 import com.mozarellabytes.kroy.minigame.Alien;
 import com.mozarellabytes.kroy.minigame.Droplet;
-import com.mozarellabytes.kroy.minigame.FireTruck;
+import com.mozarellabytes.kroy.minigame.MinigameTruck;
 
 import java.util.Iterator;
 
@@ -47,13 +53,18 @@ public class MinigameScreen implements Screen {
     private SpriteBatch batch;
 
     /** Rectangle for controlling the firetruck */
-    private FireTruck fireTruck;
+    private MinigameTruck minigameTruck;
 
+    private FireTruck truck;
     /** Array to keep track of all aliens */
     private Array<Alien> aliens;
 
     /** Keeping track of the time since the last alien was spawned */
     private long lastAlienSpawn;
+
+    /** Renders shapes such as the health/reserve
+     * stat bars above entities */
+    public ShapeRenderer shapeRenderer;
 
     /** Array to keep track of all water droplets */
     private Array<Droplet> droplets;
@@ -84,11 +95,12 @@ public class MinigameScreen implements Screen {
      * Constructor to initialise the MinigameScreen with all necessary classes and attributes.
      * @param game A reference to the overarching Kroy game controller.
      * @param parent A reference to the screen that setScreen() to the minigame. Allows for returning back to previous screen without loss of state.
+     * @param truck
      */
-    public MinigameScreen(Kroy game, Screen parent) {
+    public MinigameScreen(Kroy game, Screen parent, FireTruck truck) {
         this.game = game;
         this.parent = parent;
-
+        this.truck = truck;
         // Instantiate a camera with width and height of the game window to render and display the content.
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -97,12 +109,14 @@ public class MinigameScreen implements Screen {
         batch = new SpriteBatch();
 
         // Instantiate a fireTruck in the middle of the screen at the bottom.
-        fireTruck = new FireTruck(Constants.GAME_WIDTH/2 - 64/2, 96);
+        minigameTruck = new MinigameTruck(Constants.GAME_WIDTH/2 - 64/2, 96, truck.getHP(), truck.getReserve(), truck.getType());
 
         aliens = new Array<>();
         spawnAlien();
 
         droplets = new Array<>();
+
+        shapeRenderer = new ShapeRenderer();
     }
 
     /**
@@ -139,13 +153,17 @@ public class MinigameScreen implements Screen {
 
         camera.update();
 
+
+
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
         batch.draw(bgImage, 0 ,0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         batch.draw(roadImage, 0 ,0, Constants.GAME_WIDTH, 384);
 
-        batch.draw(fireTruck.getTexture(), fireTruck.getX(), fireTruck.getY());
+        batch.draw(minigameTruck.getTexture(), minigameTruck.getX(), minigameTruck.getY());
+
+
         for (Alien alien: aliens) {
             batch.draw(alien.getTexture(), alien.getX(), alien.getY());
         }
@@ -153,6 +171,8 @@ public class MinigameScreen implements Screen {
         for (Droplet droplet: droplets) {
             batch.draw(droplet.getTexture(), droplet.getX(), droplet.getY());
         }
+
+
 
         font.draw(
                 batch,
@@ -162,6 +182,11 @@ public class MinigameScreen implements Screen {
         );
 
         batch.end();
+
+        game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        game.shapeRenderer.setProjectionMatrix(camera.combined);
+        drawHealthbar(camera.viewportWidth/2, 0, minigameTruck.getHP()/minigameTruck.getType().getMaxHP());
+        game.shapeRenderer.end();
 
         this.update(delta);
     }
@@ -176,15 +201,15 @@ public class MinigameScreen implements Screen {
 
 //      Fire truck controls
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            fireTruck.moveLeft(delta);
+            minigameTruck.moveLeft(delta);
         }
 
         else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            fireTruck.moveRight(delta);
+            minigameTruck.moveRight(delta);
         }
 
         else{
-            fireTruck.stay();
+            minigameTruck.stay();
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -196,12 +221,12 @@ public class MinigameScreen implements Screen {
         }
 
 //      Stop fire trucks moving out of bounds
-        if (fireTruck.getX() < 0) {
-            fireTruck.setPos(0, fireTruck.getY());
+        if (minigameTruck.getX() < 0) {
+            minigameTruck.setPos(0, minigameTruck.getY());
         }
 
-        if (fireTruck.getX() > Constants.GAME_WIDTH  - 64) {
-            fireTruck.setPos(Constants.GAME_WIDTH - 64, fireTruck.getY());
+        if (minigameTruck.getX() > Constants.GAME_WIDTH  - 64) {
+            minigameTruck.setPos(Constants.GAME_WIDTH - 64, minigameTruck.getY());
         }
 
 //      Timer for spawning aliens every second
@@ -217,10 +242,14 @@ public class MinigameScreen implements Screen {
             // Checking if an alien has reached "road level", removing it if so.
             // Game ends at this point.
             if (alien.getY() + 64 < 144) {
+                minigameTruck.setHP(20);
                 iter.remove();
-                SoundFX.sfx_minigamebgm.stop();
-                invokeGameOver(game);
-                SoundFX.music_enabled = true;
+                if(minigameTruck.getHP() <= 0){
+                    SoundFX.sfx_minigamebgm.stop();
+                    invokeGameOver(game);
+                    SoundFX.music_enabled = true;
+                    break;
+                }
             }
 
             // If a droplet hits an alien, remove both of them and increase the current game score.
@@ -250,6 +279,12 @@ public class MinigameScreen implements Screen {
             invokeGameOver(game);
             SoundFX.music_enabled = true;
         }
+
+        /*if(minigameTruck.getHP()==0){
+            SoundFX.sfx_minigamebgm.stop();
+            invokeGameOver(game);
+            SoundFX.music_enabled = true;
+        }*/
     }
 
     @Override
@@ -290,7 +325,7 @@ public class MinigameScreen implements Screen {
      */
     private void shootDroplet() {
         Droplet droplet = new Droplet(
-                fireTruck.getX() + fireTruck.getWidth()/3.7f,
+                minigameTruck.getX() + minigameTruck.getWidth()/3.7f,
                 128
         );
         droplets.add(droplet);
@@ -317,8 +352,11 @@ public class MinigameScreen implements Screen {
      * @param game Reference to the current instance of the game "controller".
      */
     private void invokeGameOver(Kroy game) {
+
+        this.truck.setHP(minigameTruck.getHP());
         dispose();
         game.setScreen(parent);
+
     }
 
     /**
@@ -329,4 +367,11 @@ public class MinigameScreen implements Screen {
         batch.dispose();
     }
 
+    private void drawHealthbar(float x, float y, float percentage) {
+        int width = 1000;
+        int height = 50;
+        float offset = height * .2f;
+        game.shapeRenderer.rect(x-width/2, y, width, height, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
+        game.shapeRenderer.rect(x-width/2 + offset, y + offset, (width - 2*offset) * percentage, height - 2*offset, Color.RED, Color.RED, Color.RED, Color.RED);
+    }
 }
