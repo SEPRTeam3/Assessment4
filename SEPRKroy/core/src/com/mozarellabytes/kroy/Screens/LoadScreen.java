@@ -67,7 +67,7 @@ public class LoadScreen implements Screen {
         game.font50.draw(game.batch, "Load Save", camera.viewportWidth * (.5f - POPUP_WIDTH/2), camera.viewportHeight * (.5f + POPUP_HEIGHT/2), camera.viewportWidth * POPUP_WIDTH, Align.center, false);
         game.batch.end();
         //        game.batch.setColor(0f, 0f, 0f, 1f);
-        for (int i = offset, j = 0; i < 6; i++, j++) {
+        for (int i = offset, j = 0; j < 6; i++, j++) {
             if (i < saveList.size() && i >= 0) {
                 Save s = saveList.get(i);
     //            System.out.println(s.saveName);

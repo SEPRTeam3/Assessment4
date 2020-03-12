@@ -16,6 +16,7 @@ import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fortress {
 
@@ -37,6 +38,7 @@ public class Fortress {
 
     private EnemyAttackHandler attackHandler;
 
+    private List<FireTruck> seenTrucks;
 
     /**
      * Constructs Fortress at certain position and
@@ -108,4 +110,9 @@ public class Fortress {
 
     public EnemyAttackHandler getAttackHandler() { return attackHandler; }
 
+    public void removeTruckFromSeen(FireTruck f) {
+        this.seenTrucks.remove(f);
+    }
+
+    public List<FireTruck> getSeenTrucks() { return this.seenTrucks; }
 }
