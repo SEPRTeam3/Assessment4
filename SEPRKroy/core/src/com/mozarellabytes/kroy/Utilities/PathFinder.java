@@ -2,6 +2,7 @@ package com.mozarellabytes.kroy.Utilities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import com.mozarellabytes.kroy.Screens.GameScreen;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,42 +17,15 @@ public class PathFinder {
     final int[] directionY = {0, 0, 1, -1};
 
     boolean[][] vistited;
-
     public Queue<Vector2> allRoutes;
-
     private Vector2[] newPath;
-
 
     boolean reachedEnd = false;
 
-    private Vector2 previousTile;
-
-    private int reRouteCounter = 0;
-
-    private Vector2 coordinate;
-    private Queue<Vector2> currentPath;
-
-    public PathFinder(Vector2 coordinate, Queue<Vector2> currentPath) {
-        this.coordinate = coordinate;
-        this.currentPath = currentPath;
-    }
-
-    public boolean isDragOffMap() {
-        if (coordinate.y < 28) {
-            if ((int) Math.abs(currentPath.last().x - coordinate.x) + (int) Math.abs(currentPath.last().y - coordinate.y) >= 2) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return  false;
-        }
-
-    }
-    private Vector2[] findPath(Vector2 goal, Vector2 start) {
+    private GameScreen gameScreen;
+    public Vector2[] findPath(GameScreen gameScreen, Vector2 goal, Vector2 start) {
+        this.gameScreen = gameScreen;
         allRoutes= new Queue<>();
-
-
         vistited = new boolean[48][29];
         newPath = new Vector2[1392];
 
@@ -89,8 +63,8 @@ public class PathFinder {
                 continue;
             }
 
-            //boolean isRoad = gameScreen.isRoad(Math.round(newPos.x), Math.round(newPos.y));
-            //if(!isRoad) { continue; }
+            boolean isRoad = gameScreen.isRoad(Math.round(newPos.x), Math.round(newPos.y));
+            if(!isRoad) { continue; }
 
             if(vistited[(int)newPos.x][(int)newPos.y]) {
                 continue;
@@ -115,13 +89,12 @@ public class PathFinder {
     private Vector2[] shortestPath(Vector2 endPos, Vector2 startPos) {
         reconstructedPath = new LinkedList<>();
         for(Vector2 at = endPos; at != null; at = newPath[convertVector2ToIntPositionInMap(at)]) {
-            if(at == startPos) {
+            //if(at == startPos) {
                 //if(!this.trailPath.isEmpty())
                 //continue;
-            }
+            //}
             reconstructedPath.add(at);
         }
-
         Object[] objectAarray = reconstructedPath.toArray();
         Vector2[] path = new Vector2[objectAarray.length];
         for(int i=0;i<objectAarray.length;i++) {
@@ -130,6 +103,8 @@ public class PathFinder {
         reverse(path);
         return  path;
     }
+
+
 
 
 

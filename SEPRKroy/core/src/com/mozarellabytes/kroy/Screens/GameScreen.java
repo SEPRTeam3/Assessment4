@@ -141,8 +141,10 @@ public class GameScreen implements Screen {
 
     public static final int STATION_X = 3;
     public static final int STATION_Y = 8;
-
+    private PathFinder findPath;
     public GameScreen(Kroy game) {
+        findPath = new PathFinder();
+
         SoundFX.stopMusic();
         Queue<Vector2> vertices;
         vertices = new Queue<>();
