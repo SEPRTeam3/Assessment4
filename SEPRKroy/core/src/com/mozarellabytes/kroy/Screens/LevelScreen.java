@@ -4,7 +4,11 @@
 //import com.badlogic.gdx.graphics.OrthographicCamera;
 //import com.badlogic.gdx.graphics.Texture;
 //import com.mozarellabytes.kroy.Kroy;
+//import com.mozarellabytes.kroy.Utilities.GUI;
+//import com.mozarellabytes.kroy.Utilities.GameInputHandler;
 //import com.mozarellabytes.kroy.Utilities.LevelScreenInputHandler;
+//import com.mozarellabytes.kroy.Utilities.MenuInputHandler;
+//
 //import java.awt.*;
 //
 //public class LevelScreen implements Screen {
@@ -19,26 +23,48 @@
 //    private final Rectangle hardButton;
 //
 //    private final Texture easyButtonTexture;
+//    private final Texture easyButtonClickedTexture;
 //
 //    private final Texture mediumButtonTexture;
+//    private final Texture mediumButtonClickedTexture;
 //
 //    private final Texture hardButtonTexture;
+//    private final Texture hardButtonClickedTexture;
+//
+//    private final float screenWidth;
+//    private final float screenHeight;
+//    private final Screen parent;
+//    private final String screen;
 //
 //    public final OrthographicCamera camera;
 //
-//    public LevelScreen(final Kroy game) {
+//    public LevelScreen(final Kroy game, Screen parent, String screen) {
+//        this.parent = parent;
+//        this.screen = screen;
 //        camera = new OrthographicCamera();
 //        camera.setToOrtho(false, Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
+//
+//        screenWidth = camera.viewportWidth;
+//        screenHeight = camera.viewportHeight;
 //
 //        this.game = game;
 //        backgroundImage = new Texture(Gdx.files.internal("menuscreen_blank_2.png"), true);
 //        backgroundImage.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+//
 //        easyButtonTexture = new Texture(Gdx.files.internal("easyButton.png"),true);
 //        easyButtonTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+//        easyButtonClickedTexture = new Texture(Gdx.files.internal("ui/easyButton_clicked.png"),true);
+//        easyButtonClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+//
 //        mediumButtonTexture = new Texture(Gdx.files.internal("mediumButton.png"), true);
 //        mediumButtonTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+//        mediumButtonClickedTexture = new Texture(Gdx.files.internal("ui/mediumButton_clicked.png"),true);
+//        mediumButtonClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+//
 //        hardButtonTexture = new Texture(Gdx.files.internal("hardButton.png"), true);
 //        hardButtonTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
+//        hardButtonClickedTexture = new Texture(Gdx.files.internal("ui/hardButton_clicked.png"),true);
+//        hardButtonClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
 //
 //        easyButton = new Rectangle();
 //        easyButton.width = (int) (easyButtonTexture.getWidth()*0.75);
@@ -69,6 +95,20 @@
 //
 //    @Override
 //    public void render(float delta) {
+//        camera.update();
+//        game.batch.setProjectionMatrix(camera.combined);
+//
+//        drawBackgroundImage();
+//
+//        game.batch.begin();
+//        game.batch.draw(backgroundImage,0,0,camera.viewportWidth,camera.viewportHeight);
+//        game.font50.draw(game.batch,"Select a level", screenWidth / 2.8f, screenHeight / 1.1678f);
+//
+//        game.batch.draw(easyButtonTexture,easyButton.x,easyButton.y,easyButton.width,easyButton.height);
+//        game.batch.draw(mediumButtonTexture,mediumButton.x,mediumButton.y,mediumButton.width,mediumButton.height);
+//        game.batch.draw(hardButtonTexture,hardButton.x,hardButton.y,hardButton.width,hardButton.height);
+//
+//        game.batch.end();
 //
 //    }
 //
@@ -94,8 +134,47 @@
 //
 //    @Override
 //    public void dispose() {
+//        backgroundImage.dispose();
+//        easyButtonTexture.dispose();
+//        easyButtonClickedTexture.dispose();
+//        mediumButtonTexture.dispose();
+//        mediumButtonClickedTexture.dispose();
+//        hardButtonTexture.dispose();
+//        hardButtonClickedTexture.dispose();
 //
 //    }
+//
+//    private void drawBackgroundImage(){
+//        game.batch.begin();
+//        game.batch.draw(backgroundImage, 0 , 0, camera.viewportWidth, camera.viewportHeight);
+//        game.batch.end();
+//    }
+//    public void changeScreen() {
+//        if (this.screen.equals("game")) {
+//            GUI gui = new GUI(game, (GameScreen) parent);
+//            Gdx.input.setInputProcessor(new GameInputHandler((GameScreen) parent, gui));
+//            gui.idleInfoButton();
+//            this.game.setScreen(parent);
+//        } else if (this.screen.equals("menu")){
+//            Gdx.input.setInputProcessor(new MenuInputHandler((MenuScreen)parent));
+//            this.game.setScreen(parent);
+//        }
+//    }
+//
+//
+//    public void clickedEasyButton() {
+//
+//    }
+//
+//    public void clickedMediumButton() {
+//
+//    }
+//
+//    public void clickedHardButton() {}
+//
+//    public void toEasyLevelGameScreen() {}
+//    public void toMediumLevelGameScreen() {}
+//    public void toHardLevelGameScreen() {}
 //
 //
 //
