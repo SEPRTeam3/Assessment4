@@ -12,6 +12,8 @@ import com.mozarellabytes.kroy.Screens.GameScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SaveManager {
 
@@ -85,11 +87,12 @@ public class SaveManager {
         return s;
     }
 
-    public static ArrayList<Save> getSaves() {
-        ArrayList<Save> out = new ArrayList();
+    public static Map<String, Save> getSaves() {
+        HashMap<String, Save> out = new HashMap<>();
         for (FileHandle file : Gdx.files.local("saves").list()) {
             try {
-            out.add(loadSave(file));
+            Save s = loadSave(file);
+            out.put(s.saveName, s);
             } catch(IOException e) {
                 System.out.println("Couldn't be read.");
             }

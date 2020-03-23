@@ -64,6 +64,7 @@ public class GameScreen implements Screen {
     /** Stores whether the game is running or is paused */
     private PlayState state;
 
+
     /**
      * Deals with all the user interface on the screen
      * that does not want to be inline with the map
@@ -165,8 +166,8 @@ public class GameScreen implements Screen {
         TiledMap map = new TmxMapLoader().load("maps/YorkMap.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / Constants.TILE_WxH);
         mapRenderer.setView(camera);
-        ShaderProgram.pedantic = false;
-        shader = new ShaderProgram(Gdx.files.internal("shaders/dark.vsh"), Gdx.files.internal("shaders/dark.fsh"));
+//        ShaderProgram.pedantic = false;
+//        shader = new ShaderProgram(Gdx.files.internal("shaders/dark.vsh"), Gdx.files.internal("shaders/dark.fsh"));
 
         shapeMapRenderer = new ShapeRenderer();
         shapeMapRenderer.setProjectionMatrix(camera.combined);
@@ -512,7 +513,7 @@ public class GameScreen implements Screen {
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (FireTruck truck : station.getTrucks()) {
-                truck.drawStats(shapeMapRenderer);
+            truck.drawStats(shapeMapRenderer);
         }
 
         stationTruck.drawStats(shapeMapRenderer);
@@ -602,7 +603,7 @@ public class GameScreen implements Screen {
         }
 
         //Iterate To check that when nuke explosion, any trucks in the station.
-       for (int i = 0; i < station.getTrucks().size(); i++) {
+        for (int i = 0; i < station.getTrucks().size(); i++) {
             if (crazyAlien.getPosition().y < 9.1 && fireEngineBlowUp > 0) {
                 FireTruck truck = station.getTruck(i);
                 fireEngineBlowUp--;
@@ -701,23 +702,23 @@ public class GameScreen implements Screen {
         }
 
 
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                if (gameState.getTrucksInAttackRange() > 0) {
-                    if (SoundFX.music_enabled) {
-                        SoundFX.playTruckAttack();
-                    }
-                }
-                else {
-                    SoundFX.stopTruckAttack();
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            if (gameState.getTrucksInAttackRange() > 0) {
+                if (SoundFX.music_enabled) {
+                    SoundFX.playTruckAttack();
                 }
             }
-
-
-            shapeMapRenderer.end();
-            shapeMapRenderer.setColor(Color.WHITE);
-
-            gui.renderSelectedEntity(selectedEntity);
+            else {
+                SoundFX.stopTruckAttack();
+            }
         }
+
+
+        shapeMapRenderer.end();
+        shapeMapRenderer.setColor(Color.WHITE);
+
+        gui.renderSelectedEntity(selectedEntity);
+    }
 
 
 
@@ -863,6 +864,10 @@ public class GameScreen implements Screen {
         }
     }
 
+    public GUI getGui() {
+        return gui;
+    }
+
     public FireStation getStation() {
         return this.station;
     }
@@ -882,12 +887,7 @@ public class GameScreen implements Screen {
     public Queue<Alien> getAliens() { return this.aliens; }
 
     public void saveState() {
-        try {
-            String timeStamp = new SimpleDateFormat("dd-MM-yy_HH-mm-ss").format(Calendar.getInstance().getTime());
-            SaveManager.newSave(SaveManager.saveFromGame(this, timeStamp));
-        } catch(IOException e) {
-            System.out.println("Couldn't save");
-        }
+        game.setScreen(new SaveScreen(game, this));
     }
 
     public Alien getCrazyAlien() { return this.crazyAlien; }
