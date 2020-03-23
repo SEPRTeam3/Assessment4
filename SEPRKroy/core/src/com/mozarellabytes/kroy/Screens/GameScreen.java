@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.*;
@@ -44,6 +46,8 @@ public class GameScreen implements Screen {
     /** Renders shapes such as the health/reserve
      * stat bars above entities */
     private final ShapeRenderer shapeMapRenderer;
+
+    private ShaderProgram shader;
 
     /** Stores the layers of our tiled map */
     private final MapLayers mapLayers;
@@ -161,6 +165,8 @@ public class GameScreen implements Screen {
         TiledMap map = new TmxMapLoader().load("maps/YorkMap.tmx");
         mapRenderer = new OrthogonalTiledMapRenderer(map, 1 / Constants.TILE_WxH);
         mapRenderer.setView(camera);
+        ShaderProgram.pedantic = false;
+        shader = new ShaderProgram(Gdx.files.internal("shaders/dark.vsh"), Gdx.files.internal("shaders/dark.fsh"));
 
         shapeMapRenderer = new ShapeRenderer();
         shapeMapRenderer.setProjectionMatrix(camera.combined);
@@ -439,6 +445,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+
+        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         if (ini_shake < 5) {
             ini_shake ++;
             CameraShake.update(delta, camera, new Vector2(camera.viewportWidth / 2f, camera.viewportHeight / 2f));
@@ -458,6 +468,7 @@ public class GameScreen implements Screen {
         mapRenderer.render(backgroundLayerIndex);
 
         mapBatch.begin();
+        mapBatch.setShader(shader);
 
         for (FireTruck truck : station.getTrucks()) {
             if(!truck.getVisualPosition().equals(new Vector2(9.5f,8.5f))) {
@@ -475,10 +486,10 @@ public class GameScreen implements Screen {
         }
 
         mapBatch.end();
-
         mapRenderer.render(structureLayersIndices);
 
         mapBatch.begin();
+        mapBatch.setShader(shader);
 
         //#Assessment3
         for(Alien alien:aliens) {

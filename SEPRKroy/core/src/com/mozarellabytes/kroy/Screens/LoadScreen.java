@@ -2,8 +2,6 @@ package com.mozarellabytes.kroy.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,7 +10,6 @@ import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Save.Save;
 import com.mozarellabytes.kroy.Save.SaveManager;
 import com.mozarellabytes.kroy.Utilities.LoadInputHandler;
-import com.mozarellabytes.kroy.Utilities.MenuInputHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,8 @@ public class LoadScreen implements Screen {
 
     private OrthographicCamera camera;
 
-    private List<Save> saveList;
+    private Save[] saves;
+    private final int SAVE_NUMBER = 3;
 
     public List<Rectangle> buttonRects;
 
@@ -44,9 +42,11 @@ public class LoadScreen implements Screen {
         this.game = game;
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height);
-        saveList = SaveManager.getSaves();
-        buttonRects = new ArrayList();
-        for (int i = 0; i < saveList.size(); i++) {
+        saves = new Save[SAVE_NUMBER];
+        List<Save> importedSaves = SaveManager.getSaves();
+        buttonRects = new ArrayList<Rectangle>();
+        for (int i = 0; i < SAVE_NUMBER; i++) {
+            saves[i] = importedSaves.get(i);
             buttonRects.add(new Rectangle(camera.viewportWidth * (.5f - BUTTON_WIDTH/2), camera.viewportHeight * (BUTTON_START + ((i-.5f) * TEXT_GAP)), camera.viewportWidth * BUTTON_WIDTH, camera.viewportHeight * BUTTON_HEIGHT));
         }
         Gdx.input.setInputProcessor(new LoadInputHandler(this));
@@ -66,24 +66,19 @@ public class LoadScreen implements Screen {
         game.batch.begin();
         game.font50.draw(game.batch, "Load Save", camera.viewportWidth * (.5f - POPUP_WIDTH/2), camera.viewportHeight * (.5f + POPUP_HEIGHT/2), camera.viewportWidth * POPUP_WIDTH, Align.center, false);
         game.batch.end();
-        //        game.batch.setColor(0f, 0f, 0f, 1f);
-        for (int i = offset, j = 0; j < 6; i++, j++) {
-            if (i < saveList.size() && i >= 0) {
-                Save s = saveList.get(i);
-    //            System.out.println(s.saveName);
-                game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-                if (pressed == i) {
-                    game.shapeRenderer.setColor(195/255f, 55/255f, 197/255f, 1f);
-                } else {
-                    game.shapeRenderer.setColor(255f/255f, 60f/255f, 122f/255f, 1f);
-                }
-    //            game.shapeRenderer.rect(100, 100 + 10 * i, BUTTON_WIDTH, BUTTON_HEIGHT);
-                game.shapeRenderer.rect(camera.viewportWidth * (.5f - BUTTON_WIDTH/2), camera.viewportHeight * (1f - BUTTON_START - (j * TEXT_GAP)), camera.viewportWidth * BUTTON_WIDTH, camera.viewportHeight * BUTTON_HEIGHT);
-                game.shapeRenderer.end();
-                game.batch.begin();
-                game.font33.draw(game.batch, s.saveName, camera.viewportWidth * (.5f - POPUP_WIDTH/2), camera.viewportHeight * (1f - TEXT_START - (j * TEXT_GAP)), camera.viewportWidth * POPUP_WIDTH, Align.center, false);
-                game.batch.end();
+        for (int i = 0; i < SAVE_NUMBER; i++) {
+            Save s = saves[i];
+            game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            if (pressed == i) {
+                game.shapeRenderer.setColor(195/255f, 55/255f, 197/255f, 1f);
+            } else {
+                game.shapeRenderer.setColor(255f/255f, 60f/255f, 122f/255f, 1f);
             }
+            game.shapeRenderer.rect(camera.viewportWidth * (.5f - BUTTON_WIDTH/2), camera.viewportHeight * (1f - BUTTON_START - (i * TEXT_GAP)), camera.viewportWidth * BUTTON_WIDTH, camera.viewportHeight * BUTTON_HEIGHT);
+            game.shapeRenderer.end();
+            game.batch.begin();
+            game.font33.draw(game.batch, s.saveName, camera.viewportWidth * (.5f - POPUP_WIDTH/2), camera.viewportHeight * (1f - TEXT_START - (i * TEXT_GAP)), camera.viewportWidth * POPUP_WIDTH, Align.center, false);
+            game.batch.end();
         }
     }
 
@@ -113,13 +108,13 @@ public class LoadScreen implements Screen {
     }
 
     public int getNumberOfSaves() {
-        return this.saveList.size();
+        return this.SAVE_NUMBER;
     }
 
     public void buttonClickedUp(int i) {
-        System.out.println(saveList.get(i+offset).saveName + " pressed");
+        System.out.println(saves[i].saveName + " pressed");
         pressed = -1;
-        game.setScreen(new GameScreen(game, saveList.get(i+offset)));
+        game.setScreen(new GameScreen(game, saves[i]));
     }
 
     public void buttonClickedDown(int i) {
@@ -129,10 +124,6 @@ public class LoadScreen implements Screen {
     public Rectangle getMenuArea() { return popupButton; }
 
     public void resetClick() { pressed = -1; }
-
-    public void scrollDown() { if (offset < saveList.size()-1) {offset++;} }
-
-    public void scrollUp() { if (offset >= 1 ) {offset--;} }
 
     public void toMenuScreen() { game.setScreen(new MenuScreen(game)); }
 }

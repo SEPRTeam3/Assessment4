@@ -38,10 +38,7 @@ public class GameInputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
-            case Input.Keys.ESCAPE:
-                Gdx.app.exit();
-                System.exit(1);
-                break;
+            // Assessment 4 : Removed quit on ESC
             case Input.Keys.A:
                 if (SoundFX.music_enabled && gameScreen.gameState.getTrucksInAttackRange() > 0) {
                     SoundFX.playTruckAttack();

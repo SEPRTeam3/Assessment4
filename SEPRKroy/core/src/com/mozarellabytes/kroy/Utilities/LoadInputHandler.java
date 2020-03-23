@@ -17,11 +17,7 @@ public class LoadInputHandler implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.DOWN) {
-            loadScreen.scrollDown();
-        } else if (keycode == Input.Keys.UP) {
-            loadScreen.scrollUp();
-        } else if (keycode == Input.Keys.ESCAPE) {
+        if (keycode == Input.Keys.ESCAPE) {
             loadScreen.toMenuScreen();
         }
         return true;
