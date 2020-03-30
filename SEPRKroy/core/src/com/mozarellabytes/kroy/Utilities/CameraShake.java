@@ -60,22 +60,22 @@ public class CameraShake {
             internalTimer -= amount;
         }
 
-        if (shakeDuration > 0){
-            shakeDuration -= delta;
-            float shakeTime = (internalTimer * frequency);
-            int first = (int)shakeTime;
-            int second = (first + 1)%sampleCount;
-            int third = (first + 2)%sampleCount;
-            float deltaT = shakeTime - (int)shakeTime;
-            float deltaX = samples[first] * deltaT + samples[second] * ( 1f - deltaT);
-            float deltaY = samples[second] * deltaT + samples[third] * ( 1f - deltaT);
-
-            boolean falloff = true;
-            float amplitude = 2;
-            camera.position.x = center.x + deltaX * amplitude * (falloff ? Math.min(shakeDuration, 1f) : 1f);
-            camera.position.y = center.y + deltaY * amplitude * (falloff ? Math.min(shakeDuration, 1f) : 1f);
-            camera.update();
-        }
+//        if (shakeDuration > 0){
+//            shakeDuration -= delta;
+//            float shakeTime = (internalTimer * frequency);
+//            int first = (int)shakeTime;
+//            int second = (first + 1)%sampleCount;
+//            int third = (first + 2)%sampleCount;
+//            float deltaT = shakeTime - (int)shakeTime;
+//            float deltaX = samples[first] * deltaT + samples[second] * ( 1f - deltaT);
+//            float deltaY = samples[second] * deltaT + samples[third] * ( 1f - deltaT);
+//
+//            boolean falloff = true;
+//            float amplitude = 2;
+//            camera.position.x = center.x + deltaX * amplitude * (falloff ? Math.min(shakeDuration, 1f) : 1f);
+//            camera.position.y = center.y + deltaY * amplitude * (falloff ? Math.min(shakeDuration, 1f) : 1f);
+//            camera.update();
+//        }
     }
 
     /**

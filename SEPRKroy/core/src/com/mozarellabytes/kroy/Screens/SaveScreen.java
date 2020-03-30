@@ -51,7 +51,6 @@ public class SaveScreen implements Screen {
         Map<String, Save> importedSaves = SaveManager.getSaves();
         buttonRects = new ArrayList<Rectangle>();
         for (int i = 0; i < SAVE_NUMBER; i++) {
-            // TODO: Add something to make them display 'empty' when there is no savedata in the selected slot
             if ( importedSaves.containsKey(("save " + (char)('a' + i)))) {
                 saves[i] = importedSaves.get("save " + (char)('a' + i));
             }

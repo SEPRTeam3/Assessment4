@@ -9,15 +9,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
-import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Save.SaveAlien;
 import com.mozarellabytes.kroy.Screens.GameScreen;
+import com.mozarellabytes.kroy.Utilities.PathFinder;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
 
 public class Alien extends Sprite {
 
@@ -44,8 +43,14 @@ public class Alien extends Sprite {
     /** Speed of Alien */
     private float speed;
 
-    /** Position of Alien in tiles */
+    /** Position of Alien */
     private Vector2 position;
+
+    /** Position on the grid the alien is coming from */
+    private Vector2 fromPosition;
+
+    /** Position on the grid the alien is heading to */
+    private Vector2 toPosition;
 
     /** Current PatrolPath path the alien follows*/
     public Queue<Vector2> path;
@@ -102,28 +107,40 @@ public class Alien extends Sprite {
      */
     private Fortress masterFortress;
 
-    /**
-     * PatrolPath initialised for each alien
-     */
-    public PatrolPath mainPatrol;
+    private List<Vector2> waypoints;
+    private int waypointIndex;
+
+    /** The distance the alien is between this waypoint and the next one on a scale of 0 to 1 */
+    private float waypointPeriod = 0f;
 
     private EnemyAttackHandler attackHandler;
+
+    private PathFinder pathfinder;
+
+    /** Where the alien is heading towards */
+    private Vector2 goal;
 
     /**
      * Constructs alien at certain position
      *
      * @param x     x coordinate of alien (lower left point)
      * @param y     y coordinate of alien (lower left point)
-     * @param vertices  A queue of Vector2 types, indicating the next location to move in the patrol path
+     * @param waypoints a list of Vectors that form the patrol path that the alien will take
      * @param speed Determines the speed that the alien follows patrols. Unless set to 0, will be replaced with a random value between 0.05 and 0.2 in PatrolPath.java
      */
-    public Alien(float x, float y , Queue<Vector2> vertices, float speed, Fortress masterFortress){
+    public Alien(float x, float y , List<Vector2> waypoints, float speed, Fortress masterFortress, PathFinder pathfinder){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = speed;
-        this.mainPatrol = new PatrolPath(vertices, speed);
         this.position = new Vector2(x,y);
+        this.fromPosition = position.cpy();
         this.HP = maxHP;
-        this.path = mainPatrol.getPath();
+
+        this.waypoints = new ArrayList<Vector2>(waypoints);
+        waypointIndex = 0;
+        this.pathfinder = pathfinder;
+        this.goal = waypoints.get(0);
+        this.fromPosition = position.cpy();
+        this.toPosition = position.cpy();
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -151,8 +168,6 @@ public class Alien extends Sprite {
     public Alien(SaveAlien s) {
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = s.speed;
-        this.mainPatrol = new PatrolPath(s.path);
-        this.path = mainPatrol.getPath();
         //this.path = s.path;
 
         this.position = new Vector2(s.x, s.y);
@@ -196,17 +211,66 @@ public class Alien extends Sprite {
     }
 
     /**
-     * Called every tick and updates the paths to simulate the truck moving along the
+     * Called every tick and updates the paths to simulate the alien moving along the
      * path
      */
-    public void move(ArrayList<FireTruck> fireTrucks) {
-        if (this.path.size > 0 && !inCollision(new Vector2(mainPatrol.getPath1First()), fireTrucks)) {
-            Vector2 nextTile = mainPatrol.getFirstAndAppend();
-            this.position = nextTile;
-            changeSprite(nextTile);
-            previousTile = nextTile;
+    public void move(float delta, ArrayList<FireTruck> fireTrucks) {
+////        System.out.println(this.position + " going to " + this.waypoints.get(currentWaypoint));
+//        // If a waypoint has been reached go to the next waypoint
+//        if (fromPosition.equals(waypoints.get(currentWaypoint)) || (toPosition.equals(waypoints.get(currentWaypoint)) && waypointPeriod >= 0f)) {
+//            waypointPeriod = 0f;
+//            currentWaypoint = (currentWaypoint + 1) % waypoints.size();
+//            this.fromPosition = new Vector2((float) Math.ceil(this.position.x), (float) Math.ceil(this.position.y));
+//            this.toPosition = pathfinder.findPath(waypoints.get(currentWaypoint), this.fromPosition)[1];
+//            System.out.println("Going from " + fromPosition + " to " + toPosition);
+//            System.out.println("Waypoing: " + waypoints.get(currentWaypoint));
+//        }
+//
+//        // If moment has lerped to the next point
+//        if (waypointPeriod >= 1f ) {
+//            waypointPeriod = 0f;
+//            this.fromPosition = this.toPosition.cpy();
+//            this.toPosition = pathfinder.findPath(waypoints.get(currentWaypoint), this.fromPosition)[1];
+//            System.out.println("Jumping from " + position + " to " + toPosition);
+//        }
+//
+//        /** The amount to add to the move timer every tick */
+//        float moveConstant = 1f;
+//        waypointPeriod += delta * moveConstant;
+//        this.position = this.fromPosition.lerp(this.toPosition,  waypointPeriod);
+
+        // If we're at the current waypoint the new target is the next one
+       if (this.position.equals(waypoints.get(waypointIndex))) {
+           waypointIndex = (waypointIndex + 1) % waypoints.size();
+           // Set new goal
+           setNewGoal(waypoints.get(waypointIndex));
+       }
+
+
+        // Move towards goal
+        moveTowardGoal(delta, goal);
+    }
+
+    private void moveTowardGoal(float delta, Vector2 goal) {
+        if (goal.equals(position)) {
+            return;
         } else {
-            System.out.print(" don't anna move hey hey hey hooo          \n \n ");
+            if (waypointPeriod <= 1f) {
+                waypointPeriod += delta;
+                this.position = this.fromPosition.lerp(this.toPosition, waypointPeriod);
+            } else {
+                waypointPeriod = 0f;
+                this.fromPosition = this.toPosition;
+                this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+            }
+        }
+
+    }
+
+    private void setNewGoal(Vector2 goal) {
+        this.goal = goal;
+        if (!goal.equals(position)) {
+            this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
         }
     }
 
@@ -251,7 +315,7 @@ public class Alien extends Sprite {
         if (CountClock.getTotalTime() - CountClock.getRemainTime() <= CountClock.getTotalTime() && GameScreen.fireStationExist() == true) {
             shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, (CountClock.getTotalTime() - CountClock.getRemainTime()) / CountClock.getTotalTime() * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
         }
-        else if (GameScreen.fireStationExist() == true && CountClock.getRemainTime() <= 0) {
+        else if (GameScreen.fireStationExist() && CountClock.getRemainTime() <= 0) {
             switch (ThreadLocalRandom.current().nextInt(1, 9)) {
                 case 1:
                     shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
