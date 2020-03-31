@@ -120,6 +120,8 @@ public class Alien extends Sprite {
     /** Where the alien is heading towards */
     private Vector2 goal;
 
+    private AlienState state;
+
     /**
      * Constructs alien at certain position
      *
@@ -135,12 +137,16 @@ public class Alien extends Sprite {
         this.fromPosition = position.cpy();
         this.HP = maxHP;
 
-        this.waypoints = new ArrayList<Vector2>(waypoints);
+        //#Assessment4
+        this.waypoints = new ArrayList<>(waypoints);
         waypointIndex = 0;
         this.pathfinder = pathfinder;
         this.goal = waypoints.get(0);
         this.fromPosition = position.cpy();
         this.toPosition = position.cpy();
+        this.state = AlienState.PURSUING;
+        this.masterFortress = masterFortress;
+        this.masterFortress.addFortressAlien(this);
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -210,47 +216,43 @@ public class Alien extends Sprite {
         }
     }
 
+    //#Assessment4
     /**
      * Called every tick and updates the paths to simulate the alien moving along the
      * path
      */
     public void move(float delta, ArrayList<FireTruck> fireTrucks) {
-////        System.out.println(this.position + " going to " + this.waypoints.get(currentWaypoint));
-//        // If a waypoint has been reached go to the next waypoint
-//        if (fromPosition.equals(waypoints.get(currentWaypoint)) || (toPosition.equals(waypoints.get(currentWaypoint)) && waypointPeriod >= 0f)) {
-//            waypointPeriod = 0f;
-//            currentWaypoint = (currentWaypoint + 1) % waypoints.size();
-//            this.fromPosition = new Vector2((float) Math.ceil(this.position.x), (float) Math.ceil(this.position.y));
-//            this.toPosition = pathfinder.findPath(waypoints.get(currentWaypoint), this.fromPosition)[1];
-//            System.out.println("Going from " + fromPosition + " to " + toPosition);
-//            System.out.println("Waypoing: " + waypoints.get(currentWaypoint));
-//        }
-//
-//        // If moment has lerped to the next point
-//        if (waypointPeriod >= 1f ) {
-//            waypointPeriod = 0f;
-//            this.fromPosition = this.toPosition.cpy();
-//            this.toPosition = pathfinder.findPath(waypoints.get(currentWaypoint), this.fromPosition)[1];
-//            System.out.println("Jumping from " + position + " to " + toPosition);
-//        }
-//
-//        /** The amount to add to the move timer every tick */
-//        float moveConstant = 1f;
-//        waypointPeriod += delta * moveConstant;
-//        this.position = this.fromPosition.lerp(this.toPosition,  waypointPeriod);
 
-        // If we're at the current waypoint the new target is the next one
-       if (this.position.equals(waypoints.get(waypointIndex))) {
-           waypointIndex = (waypointIndex + 1) % waypoints.size();
-           // Set new goal
-           setNewGoal(waypoints.get(waypointIndex));
-       }
+        switch(this.state) {
+            case PURSUING:
+                // Chase the closest firetruck on the list
+                List<FireTruck> seenTrucks = new ArrayList<>(masterFortress.getSeenTrucks());
+                if (seenTrucks.size() >= 1) {
+                    FireTruck chasedTruck = seenTrucks.get(0);
+                    if (chasedTruck != null) {
+                        goal = new Vector2(Math.round(chasedTruck.getPosition().x), Math.round(chasedTruck.getPosition().y));
+                    }
+                }
+                break;
+            case PATROLING:
+                // If we're at the current waypoint the new target is the next one
+                if (this.position.equals(waypoints.get(waypointIndex))) {
+                    waypointIndex = (waypointIndex + 1) % waypoints.size();
+                    // Set new goal
+                    setNewGoal(waypoints.get(waypointIndex));
+                }
+                break;
+        }
 
 
         // Move towards goal
         moveTowardGoal(delta, goal);
+
+       // Report any seen trucks
+        reportSeenTrucks(fireTrucks);
     }
 
+    //#Assessment4
     private void moveTowardGoal(float delta, Vector2 goal) {
         if (goal.equals(position)) {
             return;
@@ -275,6 +277,7 @@ public class Alien extends Sprite {
 
     }
 
+    //#Assessment4
     private void setNewGoal(Vector2 goal) {
         this.goal = goal;
         if (!goal.equals(position)) {
@@ -283,6 +286,18 @@ public class Alien extends Sprite {
                 this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
             }
         }
+    }
+
+    /**
+     * Notifies the fortress of any firetrucks that are within its vision radius
+     * @param fireTrucks
+     * @return whether a truck is within its vision radius
+     */
+    private boolean reportSeenTrucks(ArrayList<FireTruck> fireTrucks) {
+        for (FireTruck f : fireTrucks) {
+            masterFortress.addTruckToSeen(f);
+        }
+       return true;
     }
 
     /**

@@ -32,13 +32,15 @@ public class Fortress {
     /*** Gives Fortress certain stats */
     private final FortressType fortressType;
 
-    private long timeSinceLevelUp;//Assessment 3
+    private long timeSinceLevelUp; //Assessment 3
 
-    private int level;//Assessment 3
+    private int level; //Assessment 3
 
     private EnemyAttackHandler attackHandler;
 
     private List<FireTruck> seenTrucks;
+
+    private List<Alien> fortressAliens;
 
     /**
      * Constructs Fortress at certain position and
@@ -49,14 +51,16 @@ public class Fortress {
      * @param type  Type of Fortress to give certain stats
      */
     public Fortress(float x, float y, FortressType type) {
-        timeSinceLevelUp = TimeUtils.millis(); //Assessment 3
-        level = 1;//Assessment 3
+        timeSinceLevelUp = TimeUtils.millis(); //#Assessment3
+        level = 1; //#Assessment3
         this.fortressType = type;
         this.position = new Vector2(x, y);
         this.HP = type.getMaxHP();
         this.area = new Rectangle(this.position.x - (float) this.fortressType.getW()/2, this.position.y - (float) this.fortressType.getH()/2,
                 this.fortressType.getW(), this.fortressType.getH());
         attackHandler = new EnemyAttackHandler(this);
+        this.fortressAliens = new ArrayList<>(); //#Assessment4
+        this.seenTrucks = new ArrayList<>();
     }
 
     /**
@@ -110,9 +114,22 @@ public class Fortress {
 
     public EnemyAttackHandler getAttackHandler() { return attackHandler; }
 
+    //#Assessment4
     public void removeTruckFromSeen(FireTruck f) {
         this.seenTrucks.remove(f);
     }
 
+    //#Assessment4
     public List<FireTruck> getSeenTrucks() { return this.seenTrucks; }
+
+    //#Assessment4
+    public void addTruckToSeen(FireTruck f) {
+        //Adds a firetruck to the seen list and then lets its aliens know about it.
+        this.seenTrucks.add(f);
+    }
+
+    //#Assessment 4
+    public void addFortressAlien(Alien a) {
+        this.fortressAliens.add(a);
+    }
 }
