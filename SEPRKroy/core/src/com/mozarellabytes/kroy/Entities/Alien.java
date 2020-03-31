@@ -257,11 +257,19 @@ public class Alien extends Sprite {
         } else {
             if (waypointPeriod <= 1f) {
                 waypointPeriod += delta;
-                this.position = this.fromPosition.lerp(this.toPosition, waypointPeriod);
+                Vector2 middlePosition = fromPosition.cpy();
+                this.position = middlePosition.lerp(this.toPosition, waypointPeriod);
             } else {
                 waypointPeriod = 0f;
                 this.fromPosition = this.toPosition;
-                this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+                System.out.println(
+                        Arrays.toString(pathfinder.findPath(goal, this.fromPosition))
+                );
+                if (goal.equals(fromPosition)) {
+                    this.toPosition = goal;
+                } else {
+                    this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+                }
             }
         }
 
@@ -270,7 +278,10 @@ public class Alien extends Sprite {
     private void setNewGoal(Vector2 goal) {
         this.goal = goal;
         if (!goal.equals(position)) {
-            this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+            Vector2[] pathToGoal = pathfinder.findPath(goal, this.fromPosition);
+            if (pathToGoal.length > 1) {
+                this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+            }
         }
     }
 
