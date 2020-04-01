@@ -120,12 +120,21 @@ public class Fortress {
     }
 
     //#Assessment4
-    public List<FireTruck> getSeenTrucks() { return this.seenTrucks; }
+    public List<FireTruck> getSeenTrucks() {
+        for (int i = 0; i < seenTrucks.size(); i++) {
+            FireTruck deadTruck = seenTrucks.get(i);
+            if (deadTruck.getHP() <= 0) {
+                seenTrucks.remove(deadTruck);
+            }
+        }
+        return this.seenTrucks; }
 
     //#Assessment4
     public void addTruckToSeen(FireTruck f) {
         //Adds a firetruck to the seen list and then lets its aliens know about it.
-        this.seenTrucks.add(f);
+        if (!seenTrucks.contains(f) && f.getHP() > 0) {
+            this.seenTrucks.add(f);
+        }
     }
 
     //#Assessment 4

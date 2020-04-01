@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import com.mozarellabytes.kroy.Save.SaveAlien;
@@ -24,10 +25,11 @@ public class Alien extends Sprite {
      *Alien is a class for the alien patrols
      * Contains texture of alien
      * contains attack and been attacked methods
-     * movement methods similar to FireTruck as they simply handle queues of vector2's
+     * movement methods similar to FireTruck as they simply handle queues of vector2s
      * contains methods to choose paths from path type class
      * contains display methods and HUD information displaying methods
     **/
+    public final static float VIEW_DISTANCE = 4f;
 
     /** cursory max HP value for alien */
     private final float maxHP = 10;
@@ -144,7 +146,7 @@ public class Alien extends Sprite {
         this.goal = waypoints.get(0);
         this.fromPosition = position.cpy();
         this.toPosition = position.cpy();
-        this.state = AlienState.PURSUING;
+        this.state = AlienState.PATROLING;
         this.masterFortress = masterFortress;
         this.masterFortress.addFortressAlien(this);
 
@@ -232,14 +234,19 @@ public class Alien extends Sprite {
                     if (chasedTruck != null) {
                         goal = new Vector2(Math.round(chasedTruck.getPosition().x), Math.round(chasedTruck.getPosition().y));
                     }
+                } else {
+                    this.state = AlienState.PATROLING;
                 }
                 break;
             case PATROLING:
                 // If we're at the current waypoint the new target is the next one
                 if (this.position.equals(waypoints.get(waypointIndex))) {
                     waypointIndex = (waypointIndex + 1) % waypoints.size();
+                }
                     // Set new goal
-                    setNewGoal(waypoints.get(waypointIndex));
+                setNewGoal(waypoints.get(waypointIndex));
+                if (masterFortress.getSeenTrucks().size() >= 1) {
+                    this.state = AlienState.PURSUING;
                 }
                 break;
         }
@@ -250,6 +257,7 @@ public class Alien extends Sprite {
 
        // Report any seen trucks
         reportSeenTrucks(fireTrucks);
+        System.out.println(masterFortress.getSeenTrucks());
     }
 
     //#Assessment4
@@ -264,9 +272,6 @@ public class Alien extends Sprite {
             } else {
                 waypointPeriod = 0f;
                 this.fromPosition = this.toPosition;
-                System.out.println(
-                        Arrays.toString(pathfinder.findPath(goal, this.fromPosition))
-                );
                 if (goal.equals(fromPosition)) {
                     this.toPosition = goal;
                 } else {
@@ -289,13 +294,26 @@ public class Alien extends Sprite {
     }
 
     /**
+     * #Assessment4
      * Notifies the fortress of any firetrucks that are within its vision radius
      * @param fireTrucks
      * @return whether a truck is within its vision radius
      */
     private boolean reportSeenTrucks(ArrayList<FireTruck> fireTrucks) {
         for (FireTruck f : fireTrucks) {
-            masterFortress.addTruckToSeen(f);
+            Rectangle viewVolume = null;
+            if (this.getTexture() == this.lookUp) {
+               viewVolume = new Rectangle(position.x-.5f, position.y-.5f, 1f, VIEW_DISTANCE); 
+            } else if (this.getTexture() == this.lookDown) {
+               viewVolume = new Rectangle(position.x-.5f, position.y+.5f-VIEW_DISTANCE, 1f, VIEW_DISTANCE);
+            } else if (this.getTexture() == this.lookLeft) {
+               viewVolume = new Rectangle(position.x+.5f-VIEW_DISTANCE, position.y-.5f, VIEW_DISTANCE, 1f); 
+            } else {
+               viewVolume = new Rectangle(position.x-.5f, position.y-.5f, VIEW_DISTANCE, 1f); 
+            }
+            if (viewVolume.contains(f.getPosition())) {
+                masterFortress.addTruckToSeen(f);
+            }
         }
        return true;
     }
