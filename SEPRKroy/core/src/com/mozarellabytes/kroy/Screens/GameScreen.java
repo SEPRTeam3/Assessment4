@@ -146,9 +146,10 @@ public class GameScreen implements Screen {
 
     public static final int STATION_X = 3;
     public static final int STATION_Y = 8;
-    private PathFinder findPath;
+
+    public PowerUps powerUps;
     public GameScreen(Kroy game) {
-        findPath = new PathFinder();
+
 
         SoundFX.stopMusic();
         Queue<Vector2> vertices;
@@ -346,6 +347,9 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.setVolume(.5f);
             SoundFX.sfx_soundtrack.play();
         }
+
+        powerUps = new PowerUps(mapBatch);
+
     }
 
     // Alternate constructor from savegame
@@ -471,7 +475,13 @@ public class GameScreen implements Screen {
         mapBatch.begin();
         mapBatch.setShader(shader);
 
+
+
+
+
         for (FireTruck truck : station.getTrucks()) {
+            powerUps.OnPowerUpTile(truck);
+
             if(!truck.getVisualPosition().equals(new Vector2(9.5f,8.5f))) {
                 truck.drawPath(mapBatch);
                 truck.drawSprite(mapBatch);
@@ -508,12 +518,16 @@ public class GameScreen implements Screen {
         }
         explosions.removeAll(explosionsToRemove);
 
+        powerUps.spawnPowerUps();
+        powerUps.ItemBoxUpdate();
+
         mapBatch.end();
 
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         for (FireTruck truck : station.getTrucks()) {
             truck.drawStats(shapeMapRenderer);
+
         }
 
         stationTruck.drawStats(shapeMapRenderer);
@@ -587,6 +601,7 @@ public class GameScreen implements Screen {
                 }
             }
 
+
             // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
             if (crazyAlien.getPosition().y >= 9.1f && crazyAlien.getPosition().y < 30) {
                 crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
@@ -599,6 +614,7 @@ public class GameScreen implements Screen {
 
         //#Assessment3
         for(Alien alien:aliens){
+
             alien.move(station.getTrucks());
         }
 
@@ -619,14 +635,17 @@ public class GameScreen implements Screen {
 
         for (int i = 0; i < station.getTrucks().size(); i++) {
             FireTruck truck = station.getTruck(i);
+
             truck.move();
             truck.updateSpray();
             System.out.print((truck.getType()));
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
-                if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
-                    fortress.getAttackHandler().setAttackLevel(fortress.getLevel());
-                    fortress.getAttackHandler().attack(truck, true, SoundFX.sfx_fortress_attack);
+                if(!truck.isInvisible()) {
+                    if (fortress.getAttackHandler().withinRange(truck.getVisualPosition())) {
+                        fortress.getAttackHandler().setAttackLevel(fortress.getLevel());
+                        fortress.getAttackHandler().attack(truck, true, SoundFX.sfx_fortress_attack);
+                    }
                 }
                 if (truck.fortressInRange(fortress.getPosition())) {
                     gameState.incrementTrucksInAttackRange();
@@ -653,16 +672,18 @@ public class GameScreen implements Screen {
             // #Assessment3
             for(Alien alien : this.aliens) {
                 alien.getAttackHandler().setPosition(alien.getPosition());
-                if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
-                    alien.getAttackHandler().attack(truck, true, SoundFX.sfx_alien_attack);
-                }
-                if (alien.getAttackHandler().updateBombs()) {
-                    if (SoundFX.music_enabled) {
-                        SoundFX.sfx_alien_hit_fire_engine_sound.play();
+                if (!truck.isInvisible()) {
+                    if (alien.getAttackHandler().withinRange(truck.getVisualPosition())) {
+                        alien.getAttackHandler().attack(truck, true, SoundFX.sfx_alien_attack);
                     }
-                    else{
-                        camShake.shakeIt(.2f);
+                    if (alien.getAttackHandler().updateBombs()) {
+                        if (SoundFX.music_enabled) {
+                            SoundFX.sfx_alien_hit_fire_engine_sound.play();
+                        } else {
+                            camShake.shakeIt(.2f);
+                        }
                     }
+
                 }
             }
 

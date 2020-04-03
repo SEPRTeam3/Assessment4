@@ -50,6 +50,22 @@ public class GameInputHandler implements InputProcessor {
             case Input.Keys.C:
                 gameScreen.toControlScreen();
                 break;
+            case Input.Keys.W:
+                //Left item box
+                for (FireTruck truck : gameScreen.getStation().getTrucks()) {
+                    if (truck.equals(gameScreen.selectedTruck)) {
+                        gameScreen.powerUps.usePowerUp('W', truck);
+                    }
+                }
+                break;
+            case Input.Keys.E:
+                //Right item box
+                for (FireTruck truck : gameScreen.getStation().getTrucks()) {
+                    if (truck.equals(gameScreen.selectedTruck)) {
+                        gameScreen.powerUps.usePowerUp('E', truck);
+                    }
+                }
+                break;
             case Input.Keys.S:
                 gui.clickedSoundButton();
                 gui.changeSound();

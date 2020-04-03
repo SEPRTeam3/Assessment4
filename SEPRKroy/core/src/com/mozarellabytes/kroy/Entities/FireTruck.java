@@ -83,6 +83,8 @@ public class FireTruck extends Sprite {
     private final Texture lookUp;
     private final Texture lookDown;
 
+    private boolean isInvisible;
+    private boolean hasResurrection;
     /**
      * Constructs a new FireTruck at a position and of a certain type
      * which have been passed in
@@ -110,6 +112,7 @@ public class FireTruck extends Sprite {
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/firetruck/up.png"));
         this.lookDown = new Texture(Gdx.files.internal("sprites/firetruck/down.png"));
+
     }
 
     /**
@@ -403,6 +406,7 @@ public class FireTruck extends Sprite {
         return this.HP;
     }
 
+
     public void setHP(float HP) {
         this.HP=HP;
     }
@@ -440,5 +444,22 @@ public class FireTruck extends Sprite {
     }
 
     public boolean getAttacking() { return this.attacking;}
+
+    public boolean isInvisible() {
+        return isInvisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        isInvisible = invisible;
+    }
+
+    public boolean hasResurrection() {
+        return hasResurrection;
+    }
+
+    public void setResurrection(boolean hasResurrection) {
+        this.hasResurrection = hasResurrection;
+    }
+
 }
 

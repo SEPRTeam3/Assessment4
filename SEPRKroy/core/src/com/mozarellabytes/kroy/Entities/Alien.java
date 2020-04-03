@@ -109,6 +109,8 @@ public class Alien extends Sprite {
 
     private EnemyAttackHandler attackHandler;
 
+
+
     /**
      * Constructs alien at certain position
      *
@@ -206,7 +208,7 @@ public class Alien extends Sprite {
             changeSprite(nextTile);
             previousTile = nextTile;
         } else {
-            System.out.print(" don't anna move hey hey hey hooo          \n \n ");
+
         }
     }
 
@@ -220,7 +222,7 @@ public class Alien extends Sprite {
      * @return true or false, depending on whether the next tile in an alien's patrol intersects the position of a fireTruck.
      */
     private boolean inCollision(Vector2 nextTile, ArrayList<FireTruck> fireTrucks){
-        for(FireTruck truck: fireTrucks){
+        for(FireTruck truck: fireTrucks) {
             if(nextTile.x > position.x)
                 nextTile.x = (int) position.x + 1;
             else if(nextTile.x < position.x)
@@ -233,8 +235,11 @@ public class Alien extends Sprite {
 
 
             if(nextTile.x == Math.round(truck.getPosition().x) && nextTile.y == Math.round(truck.getPosition().y)){
-
+                if(truck.path.size < 1) {
+                    truck.setInvisible(false);
+                }
                 return true;
+
             }
         }
         return false;
@@ -297,6 +302,7 @@ public class Alien extends Sprite {
      *                  drawn to (map dependant)
      */
     public void drawSprite(Batch mapBatch, int width, int height) {
+
         if(GameScreen.fireStationExist() == true && CountClock.getRemainTime() <= CountClock.getTotalTime()) {
             if ((CountClock.getRemainTime() / CountClock.getTotalTime() > 0.75f) || CountClock.getRemainTime() == CountClock.getTotalTime()) {
                 mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);

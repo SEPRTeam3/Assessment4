@@ -211,9 +211,12 @@ public class GUI {
             Gdx.graphics.getGL20().glEnable(GL20.GL_BLEND);
             Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
             game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
             renderSelectedEntityBackground();
+
             game.shapeRenderer.end();
             game.shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
             if (entity instanceof FireTruck) {
                 FireTruck truck = (FireTruck) entity;
                 renderSelectedTruck(truck);
@@ -233,6 +236,9 @@ public class GUI {
         game.shapeRenderer.rect(selectedX, selectedY, selectedW, selectedH);
     }
 
+    private void renderSelectedTruckItemBox() {
+
+    }
     /**
      * Calls the methods which render the attributes and
      * health/reserve bars of a truck in the stats area
