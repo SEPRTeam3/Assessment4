@@ -23,8 +23,15 @@ public class PathFinder {
     boolean reachedEnd = false;
 
     private GameScreen gameScreen;
-    public Vector2[] findPath(GameScreen gameScreen, Vector2 goal, Vector2 start) {
+
+    public PathFinder(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
+    }
+
+    public Vector2[] findPath(Vector2 goal, Vector2 start) {
+        if (goal.equals(start)) {
+            return new Vector2[]{goal};
+        }
         allRoutes= new Queue<>();
         vistited = new boolean[48][29];
         newPath = new Vector2[1392];
@@ -35,7 +42,7 @@ public class PathFinder {
             }
         }
         allRoutes.addLast(start);
-        vistited[(int) start.x][(int) start.y] = true;
+        if (start.x < 48 && start.y < 29) vistited[(int) start.x][(int) start.y] = true;
 
         while (!allRoutes.isEmpty()) {
             currentPos = allRoutes.removeLast();

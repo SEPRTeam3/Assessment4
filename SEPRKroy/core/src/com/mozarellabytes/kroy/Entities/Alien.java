@@ -7,17 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
-import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Save.SaveAlien;
 import com.mozarellabytes.kroy.Screens.GameScreen;
+import com.mozarellabytes.kroy.Utilities.PathFinder;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
-import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
 
 public class Alien extends Sprite {
 
@@ -25,10 +25,11 @@ public class Alien extends Sprite {
      *Alien is a class for the alien patrols
      * Contains texture of alien
      * contains attack and been attacked methods
-     * movement methods similar to FireTruck as they simply handle queues of vector2's
+     * movement methods similar to FireTruck as they simply handle queues of vector2s
      * contains methods to choose paths from path type class
      * contains display methods and HUD information displaying methods
     **/
+    public final static float VIEW_DISTANCE = 4f;
 
     /** cursory max HP value for alien */
     private final float maxHP = 10;
@@ -44,8 +45,14 @@ public class Alien extends Sprite {
     /** Speed of Alien */
     private float speed;
 
-    /** Position of Alien in tiles */
+    /** Position of Alien */
     private Vector2 position;
+
+    /** Position on the grid the alien is coming from */
+    private Vector2 fromPosition;
+
+    /** Position on the grid the alien is heading to */
+    private Vector2 toPosition;
 
     /** Current PatrolPath path the alien follows*/
     public Queue<Vector2> path;
@@ -102,30 +109,46 @@ public class Alien extends Sprite {
      */
     private Fortress masterFortress;
 
-    /**
-     * PatrolPath initialised for each alien
-     */
-    public PatrolPath mainPatrol;
+    private List<Vector2> waypoints;
+    private int waypointIndex;
+
+    /** The distance the alien is between this waypoint and the next one on a scale of 0 to 1 */
+    private float waypointPeriod = 0f;
 
     private EnemyAttackHandler attackHandler;
 
+    private PathFinder pathfinder;
 
+    /** Where the alien is heading towards */
+    private Vector2 goal;
+
+    private AlienState state;
 
     /**
      * Constructs alien at certain position
      *
      * @param x     x coordinate of alien (lower left point)
      * @param y     y coordinate of alien (lower left point)
-     * @param vertices  A queue of Vector2 types, indicating the next location to move in the patrol path
+     * @param waypoints a list of Vectors that form the patrol path that the alien will take
      * @param speed Determines the speed that the alien follows patrols. Unless set to 0, will be replaced with a random value between 0.05 and 0.2 in PatrolPath.java
      */
-    public Alien(float x, float y , Queue<Vector2> vertices, float speed, Fortress masterFortress){
+    public Alien(float x, float y , List<Vector2> waypoints, float speed, Fortress masterFortress, PathFinder pathfinder){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = speed;
-        this.mainPatrol = new PatrolPath(vertices, speed);
         this.position = new Vector2(x,y);
+        this.fromPosition = position.cpy();
         this.HP = maxHP;
-        this.path = mainPatrol.getPath();
+
+        //#Assessment4
+        this.waypoints = new ArrayList<>(waypoints);
+        waypointIndex = 0;
+        this.pathfinder = pathfinder;
+        this.goal = waypoints.get(0);
+        this.fromPosition = position.cpy();
+        this.toPosition = position.cpy();
+        this.state = AlienState.PATROLING;
+        this.masterFortress = masterFortress;
+        this.masterFortress.addFortressAlien(this);
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -153,8 +176,6 @@ public class Alien extends Sprite {
     public Alien(SaveAlien s) {
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = s.speed;
-        this.mainPatrol = new PatrolPath(s.path);
-        this.path = mainPatrol.getPath();
         //this.path = s.path;
 
         this.position = new Vector2(s.x, s.y);
@@ -197,19 +218,104 @@ public class Alien extends Sprite {
         }
     }
 
+    //#Assessment4
     /**
-     * Called every tick and updates the paths to simulate the truck moving along the
+     * Called every tick and updates the paths to simulate the alien moving along the
      * path
      */
-    public void move(ArrayList<FireTruck> fireTrucks) {
-        if (this.path.size > 0 && !inCollision(new Vector2(mainPatrol.getPath1First()), fireTrucks)) {
-            Vector2 nextTile = mainPatrol.getFirstAndAppend();
-            this.position = nextTile;
-            changeSprite(nextTile);
-            previousTile = nextTile;
-        } else {
+    public void move(float delta, ArrayList<FireTruck> fireTrucks) {
 
+        switch(this.state) {
+            case PURSUING:
+                // Chase the closest firetruck on the list
+                List<FireTruck> seenTrucks = new ArrayList<>(masterFortress.getSeenTrucks());
+                if (seenTrucks.size() >= 1) {
+                    FireTruck chasedTruck = seenTrucks.get(0);
+                    if (chasedTruck != null) {
+                        goal = new Vector2(Math.round(chasedTruck.getPosition().x), Math.round(chasedTruck.getPosition().y));
+                    }
+                } else {
+                    this.state = AlienState.PATROLING;
+                }
+                break;
+            case PATROLING:
+                // If we're at the current waypoint the new target is the next one
+                if (this.position.equals(waypoints.get(waypointIndex))) {
+                    waypointIndex = (waypointIndex + 1) % waypoints.size();
+                }
+                    // Set new goal
+                setNewGoal(waypoints.get(waypointIndex));
+                if (masterFortress.getSeenTrucks().size() >= 1) {
+                    this.state = AlienState.PURSUING;
+                }
+                break;
         }
+
+
+        // Move towards goal
+        moveTowardGoal(delta, goal);
+
+       // Report any seen trucks
+        reportSeenTrucks(fireTrucks);
+        System.out.println(masterFortress.getSeenTrucks());
+    }
+
+    //#Assessment4
+    private void moveTowardGoal(float delta, Vector2 goal) {
+        if (goal.equals(position)) {
+            return;
+        } else {
+            if (waypointPeriod <= 1f) {
+                waypointPeriod += delta;
+                Vector2 middlePosition = fromPosition.cpy();
+                this.position = middlePosition.lerp(this.toPosition, waypointPeriod);
+            } else {
+                waypointPeriod = 0f;
+                this.fromPosition = this.toPosition;
+                if (goal.equals(fromPosition)) {
+                    this.toPosition = goal;
+                } else {
+                    this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+                }
+            }
+        }
+
+    }
+
+    //#Assessment4
+    private void setNewGoal(Vector2 goal) {
+        this.goal = goal;
+        if (!goal.equals(position)) {
+            Vector2[] pathToGoal = pathfinder.findPath(goal, this.fromPosition);
+            if (pathToGoal.length > 1) {
+                this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+            }
+        }
+    }
+
+    /**
+     * #Assessment4
+     * Notifies the fortress of any firetrucks that are within its vision radius
+     * @param fireTrucks
+     * @return whether a truck is within its vision radius
+     */
+    private boolean reportSeenTrucks(ArrayList<FireTruck> fireTrucks) {
+        for (FireTruck f : fireTrucks) {
+            Rectangle viewVolume = null;
+            if (this.getTexture() == this.lookUp) {
+               viewVolume = new Rectangle(position.x-.5f, position.y-.5f, 1f, VIEW_DISTANCE);
+            } else if (this.getTexture() == this.lookDown) {
+               viewVolume = new Rectangle(position.x-.5f, position.y+.5f-VIEW_DISTANCE, 1f, VIEW_DISTANCE);
+            } else if (this.getTexture() == this.lookLeft) {
+               viewVolume = new Rectangle(position.x+.5f-VIEW_DISTANCE, position.y-.5f, VIEW_DISTANCE, 1f);
+            } else {
+               viewVolume = new Rectangle(position.x-.5f, position.y-.5f, VIEW_DISTANCE, 1f);
+            }
+            if (viewVolume.contains(f.getPosition())) {
+                masterFortress.addTruckToSeen(f);
+            }
+        }
+       return true;
     }
 
     /**
@@ -256,7 +362,7 @@ public class Alien extends Sprite {
         if (CountClock.getTotalTime() - CountClock.getRemainTime() <= CountClock.getTotalTime() && GameScreen.fireStationExist() == true) {
             shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, (CountClock.getTotalTime() - CountClock.getRemainTime()) / CountClock.getTotalTime() * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
         }
-        else if (GameScreen.fireStationExist() == true && CountClock.getRemainTime() <= 0) {
+        else if (GameScreen.fireStationExist() && CountClock.getRemainTime() <= 0) {
             switch (ThreadLocalRandom.current().nextInt(1, 9)) {
                 case 1:
                     shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
