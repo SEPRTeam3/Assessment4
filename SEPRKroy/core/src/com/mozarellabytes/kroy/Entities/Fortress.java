@@ -123,7 +123,7 @@ public class Fortress {
     public List<FireTruck> getSeenTrucks() {
         for (int i = 0; i < seenTrucks.size(); i++) {
             FireTruck deadTruck = seenTrucks.get(i);
-            if (deadTruck.getHP() <= 0) {
+            if (deadTruck.getHP() <= 0 || deadTruck.isInvisible()) {
                 seenTrucks.remove(deadTruck);
             }
         }
