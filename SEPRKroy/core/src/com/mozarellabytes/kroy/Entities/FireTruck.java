@@ -83,6 +83,14 @@ public class FireTruck extends Sprite {
     private final Texture lookUp;
     private final Texture lookDown;
 
+    /** #Assessement4
+     * Texture for each direction the
+     * truck is facing whilst invisible*/
+    private final Texture lookLeftInvisible;
+    private final Texture lookRightInvisible;
+    private final Texture lookUpInvisible;
+    private final Texture lookDownInvisible;
+
     private boolean isInvisible;
     private boolean hasResurrection;
     /**
@@ -112,7 +120,10 @@ public class FireTruck extends Sprite {
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/firetruck/up.png"));
         this.lookDown = new Texture(Gdx.files.internal("sprites/firetruck/down.png"));
-
+        this.lookLeftInvisible = new Texture(Gdx.files.internal("sprites/firetruck/leftI.png"));
+        this.lookRightInvisible = new Texture(Gdx.files.internal("sprites/firetruck/rightI.png"));
+        this.lookDownInvisible = new Texture(Gdx.files.internal("sprites/firetruck/downI.png"));
+        this.lookUpInvisible = new Texture(Gdx.files.internal("sprites/firetruck/upI.png"));
     }
 
     /**
@@ -137,6 +148,10 @@ public class FireTruck extends Sprite {
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/firetruck/up.png"));
         this.lookDown = new Texture(Gdx.files.internal("sprites/firetruck/down.png"));
+        this.lookLeftInvisible = new Texture(Gdx.files.internal("sprites/firetruck/leftI.png"));
+        this.lookRightInvisible = new Texture(Gdx.files.internal("sprites/firetruck/rightI.png"));
+        this.lookDownInvisible = new Texture(Gdx.files.internal("sprites/firetruck/downI.png"));
+        this.lookUpInvisible = new Texture(Gdx.files.internal("sprites/firetruck/upI.png"));
     }
 
     /**
@@ -236,15 +251,29 @@ public class FireTruck extends Sprite {
      * @param nextTile  first tile in the queue (next to be followed)
      */
     private void changeSprite(Vector2 nextTile) {
-        if (previousTile != null) {
-            if (nextTile.x > previousTile.x) {
-                setTexture(lookRight);
-            } else if (nextTile.x < previousTile.x) {
-                setTexture(lookLeft);
-            } else if (nextTile.y > previousTile.y) {
-                setTexture(lookUp);
-            } else if (nextTile.y < previousTile.y) {
-                setTexture(lookDown);
+        if(!isInvisible) {
+            if (previousTile != null) {
+                if (nextTile.x > previousTile.x) {
+                    setTexture(lookRight);
+                } else if (nextTile.x < previousTile.x) {
+                    setTexture(lookLeft);
+                } else if (nextTile.y > previousTile.y) {
+                    setTexture(lookUp);
+                } else if (nextTile.y < previousTile.y) {
+                    setTexture(lookDown);
+                }
+            }
+        } else {
+            if (previousTile != null) {
+                if (nextTile.x > previousTile.x) {
+                    setTexture(lookRightInvisible);
+                } else if (nextTile.x < previousTile.x) {
+                    setTexture(lookLeftInvisible);
+                } else if (nextTile.y > previousTile.y) {
+                    setTexture(lookUpInvisible);
+                } else if (nextTile.y < previousTile.y) {
+                    setTexture(lookDownInvisible);
+                }
             }
         }
     }

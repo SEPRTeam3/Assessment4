@@ -72,7 +72,7 @@ two boxes right?
         HEALTHPACK,
         REFILLPACK,
         STICKYROAD,
-        RESURECTION,
+        RESURRECTION,
         INVISIBILITY,
         EMPTY
     }
@@ -147,7 +147,7 @@ two boxes right?
                    //Both boxes are full
                     //Probs print something to the screen saying item box full
                 } else {
-                    PickUpPowerUp();
+                    PickUpPowerUp(truck);
                     powerUpPositionSpawn.replace(truckPos, false);
                 }
             } else {
@@ -156,7 +156,7 @@ two boxes right?
         }
 
     }
-    public void PickUpPowerUp() {
+    public void PickUpPowerUp(FireTruck rez) {
         box = "Left";
         if(itemBoxSpawn.get(box)){
             box = "Right";
@@ -183,7 +183,8 @@ two boxes right?
             this.state = PowerUp.INVISIBILITY;
         } else {
             //pick up resuurection
-            this.state = PowerUp.RESURECTION;
+            this.state = PowerUp.RESURRECTION;
+            rez.setResurrection(true);
         }
         if(box == "Left") {
             leftstate = state;
@@ -237,7 +238,7 @@ two boxes right?
             case STICKYROAD:
                 mapBatch.draw(sticky_road_texture, position.x, position.y, width, height);
                 break;
-            case RESURECTION:
+            case RESURRECTION:
                 mapBatch.draw(resurrection_texture, position.x, position.y, width, height);
                 break;
             case INVISIBILITY:
@@ -266,6 +267,21 @@ two boxes right?
 
         }
     }
+    public void Resurrection(FireTruck truck) {
+            truck.setResurrection(false);
+            truck.setHP(truck.getType().getMaxHP()/2);
+            if(leftstate == PowerUp.RESURRECTION) {
+                itemBoxSpawn.replace("Left", false);
+                leftstate = PowerUp.EMPTY;
+            } else if (rightstate == PowerUp.RESURRECTION) {
+                itemBoxSpawn.replace("Right", false);
+                rightstate = PowerUp.EMPTY;
+            } else {
+                //something wwent wrong
+            }
+
+    }
+
     public void PowerUpAction(PowerUp state, FireTruck truck) {
         switch (state) {
             case HEALTHPACK:
@@ -283,8 +299,8 @@ two boxes right?
             case STICKYROAD:
 
                 break;
-            case RESURECTION:
-            truck.setResurrection(true);
+            case RESURRECTION:
+            //maybe just get rid of it for an empty space
                 break;
             case INVISIBILITY:
                 //also do some cool effect like change the sprite

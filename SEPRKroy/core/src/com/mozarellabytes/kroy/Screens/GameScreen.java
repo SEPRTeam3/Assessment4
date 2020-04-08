@@ -680,16 +680,24 @@ public class GameScreen implements Screen {
 
             // Check if truck is destroyed
             if (truck.getHP() <= 0) {
-                if (SoundFX.music_enabled) {
-                    SoundFX.sfx_fire_engine_destroyed.play();
-                }
-                mapBatch.begin();
-                explosions.add(new Explosion(3,3,(int)truck.getPosition().x-1,(int)truck.getPosition().y-1,0.025f));
-                mapBatch.end();
-                gameState.removeFireTruck();
-                station.destroyTruck(truck);
-                if (truck.equals(this.selectedTruck)) {
-                    this.selectedTruck = null;
+                if (!truck.hasResurrection()) {
+                    if (SoundFX.music_enabled) {
+                        SoundFX.sfx_fire_engine_destroyed.play();
+                    }
+                    mapBatch.begin();
+                    explosions.add(new Explosion(3, 3, (int) truck.getPosition().x - 1, (int) truck.getPosition().y - 1, 0.025f));
+                    mapBatch.end();
+                    gameState.removeFireTruck();
+                    station.destroyTruck(truck);
+                    if (truck.equals(this.selectedTruck)) {
+                        this.selectedTruck = null;
+                    }
+                } else {
+                    if (SoundFX.music_enabled) {
+                        // play sound
+                    }
+                    //[;ay aniation
+                    powerUps.Resurrection(truck);
                 }
             }
         }
