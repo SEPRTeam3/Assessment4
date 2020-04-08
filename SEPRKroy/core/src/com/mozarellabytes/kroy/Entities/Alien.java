@@ -302,6 +302,7 @@ public class Alien extends Sprite {
     private boolean reportSeenTrucks(ArrayList<FireTruck> fireTrucks) {
         for (FireTruck f : fireTrucks) {
             Rectangle viewVolume = null;
+
             if (this.getTexture() == this.lookUp) {
                viewVolume = new Rectangle(position.x-.5f, position.y-.5f, 1f, VIEW_DISTANCE);
             } else if (this.getTexture() == this.lookDown) {
@@ -312,7 +313,9 @@ public class Alien extends Sprite {
                viewVolume = new Rectangle(position.x-.5f, position.y-.5f, VIEW_DISTANCE, 1f);
             }
             if (viewVolume.contains(f.getPosition())) {
-                masterFortress.addTruckToSeen(f);
+                if(!f.isInvisible()) {
+                    masterFortress.addTruckToSeen(f);
+                }
             }
         }
        return true;

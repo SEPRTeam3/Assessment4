@@ -270,9 +270,15 @@ two boxes right?
         switch (state) {
             case HEALTHPACK:
                 truck.repair(50.0f);
+                if(truck.getHP() > 100) {
+                    truck.setHP(truck.getType().getMaxHP());
+                }
                 break;
             case REFILLPACK:
                 truck.refill(50.0f);
+                if(truck.getReserve() > 100) {
+                    truck.setReserve(truck.getType().getMaxReserve());
+                }
                 break;
             case STICKYROAD:
 
