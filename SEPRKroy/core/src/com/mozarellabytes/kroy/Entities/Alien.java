@@ -231,6 +231,11 @@ public class Alien extends Sprite {
                 List<FireTruck> seenTrucks = new ArrayList<>(masterFortress.getSeenTrucks());
                 if (seenTrucks.size() >= 1) {
                     FireTruck chasedTruck = seenTrucks.get(0);
+
+                    if(seenTrucks.get(0).getType().getName() == "stationTruck") {
+                       chasedTruck = null;
+                    }
+
                     if (chasedTruck != null) {
                         goal = new Vector2(Math.round(chasedTruck.getPosition().x), Math.round(chasedTruck.getPosition().y));
                     }
@@ -275,7 +280,8 @@ public class Alien extends Sprite {
                 if (goal.equals(fromPosition)) {
                     this.toPosition = goal;
                 } else {
-                    this.toPosition = pathfinder.findPath(goal, this.fromPosition)[1];
+                    Vector2 errorTest = new Vector2(Math.round(goal.x), Math.round(goal.y));
+                    this.toPosition = pathfinder.findPath(errorTest, this.fromPosition)[1];
                 }
             }
         }
