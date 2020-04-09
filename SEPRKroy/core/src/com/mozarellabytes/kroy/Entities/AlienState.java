@@ -1,6 +1,6 @@
 package com.mozarellabytes.kroy.Entities;
 
 public enum AlienState {
-    PATROLING,
+    PATROLLING,
     PURSUING
 }
