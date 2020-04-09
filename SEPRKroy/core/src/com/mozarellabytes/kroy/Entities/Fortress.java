@@ -39,8 +39,17 @@ public class Fortress {
     private EnemyAttackHandler attackHandler;
 
     private List<FireTruck> seenTrucks;
-
     private List<Alien> fortressAliens;
+
+    public boolean isSeenTruckDead() {
+        return seenTruckDead;
+    }
+
+    public void setSeenTruckDead(boolean seenTruckDead) {
+        this.seenTruckDead = seenTruckDead;
+    }
+
+    private boolean seenTruckDead;
 
     /**
      * Constructs Fortress at certain position and
@@ -123,9 +132,16 @@ public class Fortress {
     public List<FireTruck> getSeenTrucks() {
         for (int i = 0; i < seenTrucks.size(); i++) {
             FireTruck deadTruck = seenTrucks.get(i);
-            if (deadTruck.getHP() <= 0 || deadTruck.isInvisible()) {
+            if (deadTruck.getHP() <= 0 ) {
                 seenTrucks.remove(deadTruck);
+                seenTruckDead = true;
+            } else if (deadTruck.isInvisible()) {
+                seenTrucks.remove(deadTruck);
+                seenTruckDead = false;
+            } else {
+                seenTruckDead = false;
             }
+
         }
         return this.seenTrucks; }
 

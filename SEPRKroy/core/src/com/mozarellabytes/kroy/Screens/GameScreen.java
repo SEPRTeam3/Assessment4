@@ -498,7 +498,7 @@ public class GameScreen implements Screen {
 
         //#Assessment3
         for(Alien alien:aliens) {
-            alien.drawSprite(mapBatch,1,1);
+            alien.drawSprite(mapBatch,1,1, delta);
         }
 
         if(fireStationExist()) {

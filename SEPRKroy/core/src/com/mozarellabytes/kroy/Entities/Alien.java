@@ -2,7 +2,6 @@ package com.mozarellabytes.kroy.Entities;
 
 // #Assesment3
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,7 +15,6 @@ import com.mozarellabytes.kroy.Utilities.PathFinder;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Alien extends Sprite {
@@ -90,7 +88,9 @@ public class Alien extends Sprite {
     private final Texture littleAngry;
     private final Texture angry;
     private final Texture happyDestroy;
-
+    private final Texture surprise;
+    private final Texture confused;
+    private  final Texture killConfirmed;
     /**
      * crazyAlien appearance
      */
@@ -133,7 +133,12 @@ public class Alien extends Sprite {
      *  PATROLING - following the path designated by the waypoints list
      */
     private AlienState state;
+    private  AlienState previousState;
 
+    public boolean seen = false;
+    public boolean lost = false;
+
+    private float timer = 0.0f;
     /**
      * Constructs alien at certain position
      *
@@ -157,6 +162,7 @@ public class Alien extends Sprite {
         this.fromPosition = position.cpy();
         this.toPosition = position.cpy();
         this.state = AlienState.PATROLLING;
+        this.previousState = AlienState.PATROLLING;
         this.masterFortress = masterFortress;
         this.masterFortress.addFortressAlien(this);
 
@@ -170,11 +176,13 @@ public class Alien extends Sprite {
         this.littleAngry = new Texture(Gdx.files.internal("sprites/alien/littleAngry.png"));
         this.angry = new Texture(Gdx.files.internal("sprites/alien/Angry.png"));
         this.happyDestroy = new Texture(Gdx.files.internal("sprites/alien/happyDestroy.png"));
+        this.killConfirmed = new Texture(Gdx.files.internal("sprites/alien/kill.png"));
+        this.surprise = new Texture(Gdx.files.internal("sprites/alien/mark1.png"));
+        this.confused = new Texture(Gdx.files.internal("sprites/alien/mark2.png"));
         this.nuke1 = new Texture(Gdx.files.internal("sprites/alien/nuke1.png"));
         this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
         this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
-
         this.masterFortress = masterFortress;
 
         attackHandler = new EnemyAttackHandler(this);
@@ -204,6 +212,9 @@ public class Alien extends Sprite {
         this.littleAngry = new Texture(Gdx.files.internal("sprites/alien/littleAngry.png"));
         this.angry = new Texture(Gdx.files.internal("sprites/alien/Angry.png"));
         this.happyDestroy = new Texture(Gdx.files.internal("sprites/alien/happyDestroy.png"));
+        this.surprise = new Texture(Gdx.files.internal("sprites/alien/mark1.png"));
+        this.confused = new Texture(Gdx.files.internal("sprites/alien/mark2.png"));
+        this.killConfirmed = new Texture(Gdx.files.internal("sprites/alien/kill.png"));
         this.nuke1 = new Texture(Gdx.files.internal("sprites/alien/nuke1.png"));
         this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
         this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
@@ -247,11 +258,6 @@ public class Alien extends Sprite {
                 List<FireTruck> seenTrucks = new ArrayList<>(masterFortress.getSeenTrucks());
                 if (seenTrucks.size() >= 1) {
                     FireTruck chasedTruck = seenTrucks.get(0);
-
-                    if(seenTrucks.get(0).getType().getName() == "stationTruck") {
-                       chasedTruck = null;
-                    }
-
                     if (chasedTruck != null) {
                         goal = new Vector2(Math.round(chasedTruck.getPosition().x), Math.round(chasedTruck.getPosition().y));
                     }
@@ -343,7 +349,7 @@ public class Alien extends Sprite {
                viewVolume = new Rectangle(position.x-.5f, position.y-.5f, VIEW_DISTANCE, 1f);
             }
             if (viewVolume.contains(f.getPosition())) {
-                if(!f.isInvisible()) {
+                if(!f.isInvisible() && f.getType().getName() != "stationTruck") {
                     masterFortress.addTruckToSeen(f);
                 }
             }
@@ -387,6 +393,7 @@ public class Alien extends Sprite {
      * @param shapeMapRenderer  Renderer that the stats are being drawn to (map  dependant)
      */
     public void drawStats(ShapeRenderer shapeMapRenderer) {
+        /*
         shapeMapRenderer.rect(this.getPosition().x + 0.2f, this.getPosition().y + 1.3f, 0.3f, 0.8f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
         shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
         if (CountClock.getTotalTime() - CountClock.getRemainTime() <= CountClock.getTotalTime() && GameScreen.fireStationExist() == true) {
@@ -428,7 +435,10 @@ public class Alien extends Sprite {
         else{
             shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
         }
+
+         */
     }
+
 
 
     /**
@@ -437,8 +447,8 @@ public class Alien extends Sprite {
      * @param mapBatch  Batch that the Alien is being
      *                  drawn to (map dependant)
      */
-    public void drawSprite(Batch mapBatch, int width, int height) {
-
+    public void drawSprite(Batch mapBatch, int width, int height, float delta) {
+/*
         if(GameScreen.fireStationExist() == true && CountClock.getRemainTime() <= CountClock.getTotalTime()) {
             if ((CountClock.getRemainTime() / CountClock.getTotalTime() > 0.75f) || CountClock.getRemainTime() == CountClock.getTotalTime()) {
                 mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
@@ -457,6 +467,55 @@ public class Alien extends Sprite {
         else if(CountClock.getRemainTime() < CountClock.getTotalTime()){
             mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         }
+        */
+
+        if(previousState == state) {
+        } else {
+            if(previousState == AlienState.PATROLLING) {
+                //state change to pursue
+                seen = true;
+            } else {
+                //pursue state | state change to patrol
+                if(masterFortress.isSeenTruckDead()){
+                    //default
+                } else {
+                    lost = true;
+                }
+            }
+            previousState = state;
+        }
+
+        if(seen) {
+            timer += delta;
+            mapBatch.draw(surprise, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            if(timer >= 2) {
+                seen = false;
+                timer = 0.0f;
+            }
+        } else if (lost) {
+            timer += delta;
+            mapBatch.draw(confused, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            if(timer >= 2) {
+                lost = false;
+                timer = 0.0f;
+            }
+        } else if(masterFortress.isSeenTruckDead()) {
+            timer += delta;
+            mapBatch.draw(killConfirmed, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            if (timer >= 2) {
+                masterFortress.setSeenTruckDead(false);
+                timer = 0.0f;
+            }
+
+        } else if(state == AlienState.PATROLLING) {
+            mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        } else {
+            mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        }
+        //mapBatch.draw(surprise, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+        //mapBatch.draw(confused, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+
+
         mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
 
