@@ -190,7 +190,9 @@ public class Alien extends Sprite {
 
         this.position = new Vector2(s.x, s.y);
         this.HP = s.HP;
-
+        this.waypoints = s.waypoints;
+        this.waypointIndex = s.waypointIndex;
+        this.state = s.state;
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -512,7 +514,11 @@ public class Alien extends Sprite {
         return tempVector;
     }
 
-    public float getSpeed() {
-        return speed;
-    }
+    public float getSpeed() { return speed; }
+
+    public List<Vector2> getWaypoints() { return this.waypoints; }
+
+    public int getWaypointIndex() { return this.waypointIndex; }
+
+    public AlienState getState() { return state; }
 }

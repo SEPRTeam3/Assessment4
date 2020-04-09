@@ -72,35 +72,28 @@ public class SaveManager {
 
         // Add firetrucks to station
         for (FireTruck f : g.getStation().getTrucks()) {
-            SaveFiretruck saveF = new SaveFiretruck();
-            saveF.x = f.getPosition().x;
-            saveF.y = f.getPosition().y;
-            saveF.HP = f.getHP();
-            saveF.type = f.type;
-            s.station.trucks.add(saveF);
+            SaveFiretruck saveFiretruck = new SaveFiretruck();
+            saveFiretruck.x = f.getPosition().x;
+            saveFiretruck.y = f.getPosition().y;
+            saveFiretruck.HP = f.getHP();
+            saveFiretruck.type = f.type;
+            s.station.trucks.add(saveFiretruck);
         }
 
         s.aliens = new ArrayList();
 
         // Add aliens
         for (Alien a : g.getAliens()) {
-            SaveAlien saveA = new SaveAlien();
-            saveA.x = a.getPosition().x;
-            saveA.y = a.getPosition().y;
-            saveA.HP = a.getHP();
-            saveA.speed = a.getSpeed();
-            //saveA.path = a.getPath();
-            s.aliens.add(saveA);
+            SaveAlien saveAlien = new SaveAlien();
+            saveAlien.x = a.getPosition().x;
+            saveAlien.y = a.getPosition().y;
+            saveAlien.HP = a.getHP();
+            saveAlien.speed = a.getSpeed();
+            saveAlien.waypoints = a.getWaypoints();
+            saveAlien.waypointIndex = a.getWaypointIndex();
+            saveAlien.state = a.getState();
+            s.aliens.add(saveAlien);
         }
-
-        // Add crazy alien
-        SaveAlien saveC = new SaveAlien();
-        saveC.x = g.getCrazyAlien().getPosition().x;
-        saveC.y = g.getCrazyAlien().getPosition().y;
-        saveC.HP = g.getCrazyAlien().getHP();
-        saveC.path = new ArrayList<>();
-        saveC.path.add(g.getCrazyAlien().path.first());
-        s.crazyAlien = saveC;
 
         return s;
     }
