@@ -61,23 +61,23 @@ public class FireTruck extends Sprite {
      * <code>false</code> 'A' key is not pressed */
     private boolean attacking;
 
-    /** Whether the truck has an unresolved collision
-     * with another truck */
+    /**
+     * Whether the truck has an unresolved collision with another truck
+     */
     private boolean inCollision;
 
     /** Used to check if the truck's image should be
      * changed to match the direction it is facing */
     private Vector2 previousTile;
 
-    /** Time since fortress has attacked the truck */
-    private long timeOfLastAttack;
-
-    /** List of particles that the truck uses to attack
-     * a Fortress */
+    /**
+     * List of particles that the truck uses to attack a Fortress
+     */
     private final ArrayList<WaterParticle> spray;
 
-    /** Texture for each direction the
-     * truck is facing */
+    /**
+     * Texture for each direction the truck is facing
+     */
     private final Texture lookLeft;
     private final Texture lookRight;
     private final Texture lookUp;
@@ -92,7 +92,10 @@ public class FireTruck extends Sprite {
     private final Texture lookDownInvisible;
 
     private boolean isInvisible;
+
+    /** If the truck will be resurrected on death */
     private boolean hasResurrection;
+
     /**
      * Constructs a new FireTruck at a position and of a certain type
      * which have been passed in
@@ -115,7 +118,6 @@ public class FireTruck extends Sprite {
         this.attacking = false;
         this.inCollision = false;
         this.spray = new ArrayList();
-        this.timeOfLastAttack = System.currentTimeMillis();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/firetruck/up.png"));
@@ -127,7 +129,7 @@ public class FireTruck extends Sprite {
     }
 
     /**
-     * Overloaded variant for creating firetrucks from savedata
+     * Overloaded variant of the constructor for creating firetrucks from savedata
      */
     public FireTruck(GameScreen gameScreen, SaveFiretruck s) {
         super(new Texture(Gdx.files.internal("sprites/firetruck/down.png")));
@@ -143,7 +145,6 @@ public class FireTruck extends Sprite {
         this.attacking = false;
         this.inCollision = false;
         this.spray = new ArrayList();
-        this.timeOfLastAttack = System.currentTimeMillis();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
         this.lookUp = new Texture(Gdx.files.internal("sprites/firetruck/up.png"));

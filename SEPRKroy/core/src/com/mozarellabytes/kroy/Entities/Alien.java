@@ -109,19 +109,29 @@ public class Alien extends Sprite {
      */
     private Fortress masterFortress;
 
+    /** A list of points that the alien circularly pathfinds between in order to patrol */
     private List<Vector2> waypoints;
+
+    /** The index of the waypoint the alien is currently moving towards */
     private int waypointIndex;
 
     /** The distance the alien is between this waypoint and the next one on a scale of 0 to 1 */
     private float waypointPeriod = 0f;
 
+    /** Handles when the alien attacks trucks */
     private EnemyAttackHandler attackHandler;
 
+    /** Helper object for calculating shortest paths to locations */
     private PathFinder pathfinder;
 
     /** Where the alien is heading towards */
     private Vector2 goal;
 
+    /** The current AI state the alien is in
+     * either of
+     *  PURSUING - heading towards a seen truck
+     *  PATROLING - following the path designated by the waypoints list
+     */
     private AlienState state;
 
     /**
@@ -146,7 +156,7 @@ public class Alien extends Sprite {
         this.goal = waypoints.get(0);
         this.fromPosition = position.cpy();
         this.toPosition = position.cpy();
-        this.state = AlienState.PATROLING;
+        this.state = AlienState.PATROLLING;
         this.masterFortress = masterFortress;
         this.masterFortress.addFortressAlien(this);
 
@@ -180,7 +190,9 @@ public class Alien extends Sprite {
 
         this.position = new Vector2(s.x, s.y);
         this.HP = s.HP;
-
+        this.waypoints = s.waypoints;
+        this.waypointIndex = s.waypointIndex;
+        this.state = s.state;
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -218,16 +230,20 @@ public class Alien extends Sprite {
         }
     }
 
-    //#Assessment4
     /**
-     * Called every tick and updates the paths to simulate the alien moving along the
-     * path
+     * #Assessment4
+     * Called once a tick to update the alien's position.
+     * If the alien's fortress group has seen one or more trucks they will nondeterministically select one to pursue
+     * Once the trucks either become hidden or die they are removed from the seen list and the aliens will return to
+     * patrolling.
+     * If the alien's fortress group has not seen any trucks the aliens will patrol their set route.
+     * @param delta
+     * @param fireTrucks
      */
     public void move(float delta, ArrayList<FireTruck> fireTrucks) {
-
         switch(this.state) {
             case PURSUING:
-                // Chase the closest firetruck on the list
+                // Chase the first firetruck on the list
                 List<FireTruck> seenTrucks = new ArrayList<>(masterFortress.getSeenTrucks());
                 if (seenTrucks.size() >= 1) {
                     FireTruck chasedTruck = seenTrucks.get(0);
@@ -240,11 +256,11 @@ public class Alien extends Sprite {
                         goal = new Vector2(Math.round(chasedTruck.getPosition().x), Math.round(chasedTruck.getPosition().y));
                     }
                 } else {
-                    this.state = AlienState.PATROLING;
+                    this.state = AlienState.PATROLLING;
                 }
                 break;
-            case PATROLING:
-                // If we're at the current waypoint the new target is the next one
+            case PATROLLING:
+                // If we're at the current waypoint the new goal is the next waypoint
                 if (this.position.equals(waypoints.get(waypointIndex))) {
                     waypointIndex = (waypointIndex + 1) % waypoints.size();
                 }
@@ -257,15 +273,19 @@ public class Alien extends Sprite {
         }
 
 
-        // Move towards goal
+        // Move towards current goal
         moveTowardGoal(delta, goal);
 
        // Report any seen trucks
         reportSeenTrucks(fireTrucks);
-        System.out.println(masterFortress.getSeenTrucks());
     }
 
-    //#Assessment4
+    /**
+     * #Assessment4
+     * Given a goal position, the alien will find a path to this goal and move in the correct direction
+     * @param delta the time that has elapsed since the last render call in milliseconds
+     * @param goal the position the alien should head towards as a Vector2
+     */
     private void moveTowardGoal(float delta, Vector2 goal) {
         if (goal.equals(position)) {
             return;
@@ -288,7 +308,11 @@ public class Alien extends Sprite {
 
     }
 
-    //#Assessment4
+    /**
+     * #Assessment4
+     * Setter for 'goal', the position the alien is trying to head towards.
+     * @param goal the position the alien is heading towards as a Vector2
+     */
     private void setNewGoal(Vector2 goal) {
         this.goal = goal;
         if (!goal.equals(position)) {
@@ -329,9 +353,7 @@ public class Alien extends Sprite {
 
     /**
      * #Assesssment3
-     *
      * Check if the next tile in an alien's patrol intersects the position of a fireTruck.
-     *
      * @param nextTile the next tile in the alien's patrol.
      * @param fireTrucks the array of fireTrucks to iterate through
      * @return true or false, depending on whether the next tile in an alien's patrol intersects the position of a fireTruck.
@@ -362,7 +384,6 @@ public class Alien extends Sprite {
 
     /**
      * Draws the mini health indicators relative to the alien
-     *
      * @param shapeMapRenderer  Renderer that the stats are being drawn to (map  dependant)
      */
     public void drawStats(ShapeRenderer shapeMapRenderer) {
@@ -439,7 +460,6 @@ public class Alien extends Sprite {
         mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
 
-
     public void drawSpriteCrazyAlien(Batch mapBatch, int width, int height, ArrayList explosions){
         if (GameScreen.fireStationExist() == true) {
             if (this.getPosition().y > 9.1) {
@@ -465,16 +485,6 @@ public class Alien extends Sprite {
         }
     }
 
-    /**
-     * Helper method that returns where the alien is visually to the player. This is used when
-     * checking the range when attacking the fire trucks and getting attacked by the trucks
-     *
-     * @return a vector where the alien is visually
-     */
-    public Vector2 getVisualPosition() {
-        return new Vector2(this.position.x + 0.5f, this.position.y + 0.5f);
-    }
-
     public Vector2 getPosition() { return this.position;}
 
     public float getHP() {
@@ -485,6 +495,10 @@ public class Alien extends Sprite {
         return this.path;
     }
 
+    /**
+     * Returns the attack handler for this alien
+     * @return attackHandler
+     */
     public EnemyAttackHandler getAttackHandler() { return attackHandler; }
 
 
@@ -500,7 +514,11 @@ public class Alien extends Sprite {
         return tempVector;
     }
 
-    public float getSpeed() {
-        return speed;
-    }
+    public float getSpeed() { return speed; }
+
+    public List<Vector2> getWaypoints() { return this.waypoints; }
+
+    public int getWaypointIndex() { return this.waypointIndex; }
+
+    public AlienState getState() { return state; }
 }

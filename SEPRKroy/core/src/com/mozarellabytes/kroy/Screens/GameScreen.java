@@ -413,8 +413,8 @@ public class GameScreen implements Screen {
 
         }
 
-        crazyAlien = (new Alien(save.crazyAlien.x,save.crazyAlien.y, save.crazyAlien.path,save.crazyAlien.speed, fortresses.get(0), this.pathFinder));
-        crazyAlien.getAttackHandler().setCrazy();
+//        crazyAlien = (new Alien(save.crazyAlien.x,save.crazyAlien.y, save.crazyAlien.path,save.crazyAlien.speed, fortresses.get(0), this.pathFinder));
+//        crazyAlien.getAttackHandler().setCrazy();
 
 
         // Set the origin point to which all of the polygon's local vertices are relative to.
