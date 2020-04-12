@@ -252,6 +252,7 @@ public class Alien extends Sprite {
      * @param fireTrucks
      */
     public void move(float delta, ArrayList<FireTruck> fireTrucks) {
+        previousTile = goal;
         switch(this.state) {
             case PURSUING:
                 // Chase the first firetruck on the list
@@ -260,10 +261,12 @@ public class Alien extends Sprite {
                     FireTruck chasedTruck = seenTrucks.get(0);
                     if (chasedTruck != null) {
                         goal = new Vector2(Math.round(chasedTruck.getPosition().x), Math.round(chasedTruck.getPosition().y));
+
                     }
                 } else {
                     this.state = AlienState.PATROLLING;
                 }
+                ;
                 break;
             case PATROLLING:
                 // If we're at the current waypoint the new goal is the next waypoint
@@ -272,13 +275,15 @@ public class Alien extends Sprite {
                 }
                     // Set new goal
                 setNewGoal(waypoints.get(waypointIndex));
+
                 if (masterFortress.getSeenTrucks().size() >= 1) {
                     this.state = AlienState.PURSUING;
                 }
+
                 break;
         }
 
-
+        changeSprite(goal);
         // Move towards current goal
         moveTowardGoal(delta, goal);
 
@@ -351,6 +356,8 @@ public class Alien extends Sprite {
             if (viewVolume.contains(f.getPosition())) {
                 if(!f.isInvisible() && f.getType().getName() != "stationTruck") {
                     masterFortress.addTruckToSeen(f);
+                } else {
+                    lost = true;
                 }
             }
         }
@@ -495,7 +502,7 @@ public class Alien extends Sprite {
         } else if (lost) {
             timer += delta;
             mapBatch.draw(confused, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-            if(timer >= 2) {
+            if(timer >= 3) {
                 lost = false;
                 timer = 0.0f;
             }

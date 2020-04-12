@@ -18,6 +18,7 @@ import com.mozarellabytes.kroy.Save.Save;
 import com.mozarellabytes.kroy.Save.SaveAlien;
 import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
+import com.mozarellabytes.kroy.minigame.Entity;
 
 import java.util.ArrayList;
 
@@ -513,8 +514,9 @@ public class GameScreen implements Screen {
         explosions.removeAll(explosionsToRemove);
 
         powerUps.spawnPowerUps();
-        powerUps.ItemBoxUpdate();
-
+        if(selectedEntity != null && selectedEntity instanceof FireTruck) {
+            powerUps.ItemBoxUpdate();
+        }
         mapBatch.end();
 
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);

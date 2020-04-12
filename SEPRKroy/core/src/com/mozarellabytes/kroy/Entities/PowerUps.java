@@ -81,7 +81,7 @@ two boxes right?
     public Vector2 rightItemPosition;
 
     public PowerUps(Batch mapBatch) {
-        super(new Texture(Gdx.files.internal("container.png")));
+        //super(new Texture(Gdx.files.internal("container.png")));
 
         this.health_pack_texture = new Texture(Gdx.files.internal("HealthUp.png"));
         this.refill_pack_texture = new Texture(Gdx.files.internal("refill.png"));
@@ -104,8 +104,8 @@ two boxes right?
         leftstate = PowerUp.EMPTY;
         rightstate = PowerUp.EMPTY;
 
-        leftItemPosition = new Vector2(10,10);
-        rightItemPosition = new Vector2(10,12);
+        leftItemPosition = new Vector2(1.5f,20);
+        rightItemPosition = new Vector2(3.5f,20);
 
         item_texture_atlas = new TextureAtlas(Gdx.files.internal("Atlas'/ItemFrame.atlas"));
         item_animation = new Animation<>(.5f, item_texture_atlas.findRegions("ItemFrame"));

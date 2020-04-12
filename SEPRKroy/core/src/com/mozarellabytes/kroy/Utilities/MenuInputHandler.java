@@ -77,6 +77,8 @@ public class MenuInputHandler implements InputProcessor {
             menu.clickedSoundButton();
         } else if (menu.getSaveButton().contains(position.x, position.y)) {
             menu.clickedSaveButton();
+        } else if(menu.getDifficultyButton().contains(position.x,position.y)){
+            menu.clickedDifficultyButton();
         }
         return true;
     }
@@ -101,11 +103,14 @@ public class MenuInputHandler implements InputProcessor {
             menu.changeSound();
         } else if (menu.getSaveButton().contains(position.x, position.y)) {
             menu.toLoadScreen();
+        } else if(menu.getDifficultyButton().contains(position.x, position.y)) {
+            menu.toLevelScreen();
         } else {
             menu.idleStartButton();
             menu.idleControlsButton();
             menu.idleSoundButton();
             menu.idleSaveButton();
+            menu.idleDifficultyButton();
         }
         return true;
     }
