@@ -40,9 +40,18 @@ public class FireStation {
     /** The sprite image for the station */
     private final Texture texture;
 
+    /** The sprite image for the destroyed station */
+    private final Texture destroyedTexture;
+
     /** List of active fire trucks
      * @link FireTruck */
     private final ArrayList<FireTruck> trucks;
+
+    /**
+     * #Assessment4
+     * If the station has been destroyed
+     */
+    private boolean destroyed;
 
     /**
      * Constructs the Firestation with at a given position with locations
@@ -54,20 +63,24 @@ public class FireStation {
     public FireStation(int x, int y) {
         this.x = x;
         this.y = y;
+        this.destroyed = false;
         this.spawnTile = new Vector2(x+3, y);
         this.bayTile1 = new Vector2(x+1, y);
         this.bayTile2 = new Vector2(x+2, y);
         this.texture = new Texture(Gdx.files.internal("sprites/station/station.png"));
+        this.destroyedTexture = new Texture(Gdx.files.internal("sprites/station/ruinedStation.png"));
         this.trucks = new ArrayList<FireTruck>();
     }
 
     public FireStation(GameScreen g, SaveStation s) {
         this.x = s.x;
         this.y = s.y;
+        this.destroyed = s.destroyed;
         this.spawnTile = new Vector2(x+3, y);
         this.bayTile1 = new Vector2(x+1, y);
         this.bayTile2 = new Vector2(x+2, y);
         this.texture = new Texture(Gdx.files.internal("sprites/station/station.png"));
+        this.destroyedTexture = new Texture(Gdx.files.internal("sprites/station/ruinedStation.png"));
         this.trucks = new ArrayList<FireTruck>();
 
         for (SaveFiretruck f : s.trucks) {
@@ -95,6 +108,7 @@ public class FireStation {
      * truck will repair and refill at the same time.
      */
     public void restoreTrucks() {
+        if (destroyed) { return; }
         for (FireTruck truck : this.trucks) {
             if (truck.getPosition().equals(this.bayTile1) || truck.getPosition().equals(this.bayTile2)) {
                 repair(truck);
@@ -109,8 +123,9 @@ public class FireStation {
      * @param truck truck that is being refilled
      */
     private void refill(FireTruck truck) {
+        if (destroyed) { return; }
         if (truck.getReserve() < truck.type.getMaxReserve() && GameScreen.fireStationExist() == true) {
-            truck.refill(Math.min(0.06f, truck.getType().getMaxReserve() - truck.getReserve()));
+            truck.refill(Math.min(1f, truck.getType().getMaxReserve() - truck.getReserve()));
         }
     }
 
@@ -120,8 +135,9 @@ public class FireStation {
      * @param truck truck that is being repaired
      */
     private void repair(FireTruck truck) {
+        if (destroyed) { return; }
         if (truck.getHP() < truck.type.getMaxHP() && GameScreen.fireStationExist() == true) {
-            truck.repair(Math.min(0.04f, truck.getType().getMaxHP() - truck.getHP()));
+            truck.repair(Math.min(1f, truck.getType().getMaxHP() - truck.getHP()));
         }
     }
 
@@ -193,7 +209,11 @@ public class FireStation {
     /** Draws the firetruck to the gameScreen
      * @param mapBatch batch being used to render to the gameScreen */
     public void draw(Batch mapBatch) {
-        mapBatch.draw(this.texture, this.x, this.y, 5, 3);
+        if (!destroyed) {
+            mapBatch.draw(this.texture, this.x, this.y, 5, 3);
+        } else {
+            mapBatch.draw(this.destroyedTexture, this.x, this.y, 5, 3);
+        }
     }
 
     public ArrayList<FireTruck> getTrucks() {
@@ -203,4 +223,8 @@ public class FireStation {
     public FireTruck getTruck(int i) {
         return this.trucks.get(i);
     }
+
+    public void destroy() { this.destroyed = true; }
+
+    public boolean isDestroyed() { return this.destroyed; }
 }

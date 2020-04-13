@@ -68,6 +68,7 @@ public class SaveManager {
         s.station = new SaveStation();
         s.station.x = g.STATION_X;
         s.station.y = g.STATION_Y;
+        s.station.destroyed = g.getStation().isDestroyed();
         s.station.trucks = new ArrayList();
 
         // Add firetrucks to station

@@ -83,7 +83,8 @@ public class GameScreen implements Screen {
     private final FireStation station;
 
     /** creat the truck which stay in the station */
-    private final FireTruck stationTruck;
+    // This should never have existed
+//    private final FireTruck stationTruck;
 
     /**Creat the crazy Alien*/
     private Alien crazyAlien;
@@ -190,13 +191,12 @@ public class GameScreen implements Screen {
         station = new FireStation(STATION_X, STATION_Y);
 
         // Instantiate a dummy fireTruck at the position (5, 8) for the crazy alien to aim at and attack.
-        stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
+        // stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
 
         spawn(FireTruckType.Ocean);
         spawn(FireTruckType.Speed);
         spawn(FireTruckType.Tank);
         spawn(FireTruckType.Attack);
-        spawn(FireTruckType.Station);
         gameState.removeFireTruck();
 
         fortresses = new ArrayList<>();
@@ -385,11 +385,6 @@ public class GameScreen implements Screen {
 
         station = new FireStation(this, save.station);
 
-        // Instantiate a dummy fireTruck at the position (5, 8) for the crazy alien to aim at and attack.
-        stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
-
-
-
         fortresses = new ArrayList<>();
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
         fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate));
@@ -526,8 +521,6 @@ public class GameScreen implements Screen {
 
         }
 
-        stationTruck.drawStats(shapeMapRenderer);
-
         for (Fortress fortress : fortresses) {
             fortress.drawStats(shapeMapRenderer);
             for (Bomb bomb : fortress.getAttackHandler().getBombs()) {
@@ -543,9 +536,6 @@ public class GameScreen implements Screen {
             }
         }
 
-//        for (Bomb bomb : crazyAlien.getAttackHandler().getBombs()) {
-//            bomb.crazyAlienDrawBomb(shapeMapRenderer);
-//        }
 
         shapeMapRenderer.end();
 
@@ -876,6 +866,13 @@ public class GameScreen implements Screen {
         gameState.addFireTruck();
     }
 
+    /**
+     * Called when the mothership has reached the firestation
+     */
+    public void destroyStation() {
+
+    }
+
     /** Toggles between Play and Pause state when the Pause button is clicked */
     public void changeState() {
         if (this.state.equals(PlayState.PLAY)) {
@@ -910,7 +907,5 @@ public class GameScreen implements Screen {
     public void saveState() {
         game.setScreen(new SaveScreen(game, this));
     }
-
-    public Alien getCrazyAlien() { return this.crazyAlien; }
 }
 
