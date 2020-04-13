@@ -63,7 +63,7 @@ public class EnemyAttackHandler {
     EnemyAttackHandler(Alien entity){
         position = entity.getPosition();
         attackRange = ThreadLocalRandom.current().nextInt(2, 4);
-        attackPower = 0.4f;
+        attackPower = 3f;
         attackLevel = 1;
         delay = 100;
         bombs = new ArrayList<Bomb>();

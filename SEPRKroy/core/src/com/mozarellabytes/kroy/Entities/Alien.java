@@ -365,37 +365,6 @@ public class Alien extends Sprite {
     }
 
     /**
-     * #Assesssment3
-     * Check if the next tile in an alien's patrol intersects the position of a fireTruck.
-     * @param nextTile the next tile in the alien's patrol.
-     * @param fireTrucks the array of fireTrucks to iterate through
-     * @return true or false, depending on whether the next tile in an alien's patrol intersects the position of a fireTruck.
-     */
-    private boolean inCollision(Vector2 nextTile, ArrayList<FireTruck> fireTrucks){
-        for(FireTruck truck: fireTrucks) {
-            if(nextTile.x > position.x)
-                nextTile.x = (int) position.x + 1;
-            else if(nextTile.x < position.x)
-                nextTile.x = (int) position.x - 1;
-
-            if(nextTile.y > position.y)
-                nextTile.y = (int) position.y + 1;
-            else if(nextTile.y < position.y)
-                nextTile.y = (int) position.y - 1;
-
-
-            if(nextTile.x == Math.round(truck.getPosition().x) && nextTile.y == Math.round(truck.getPosition().y)){
-                if(truck.path.size < 1) {
-                    truck.setInvisible(false);
-                }
-                return true;
-
-            }
-        }
-        return false;
-    }
-
-    /**
      * Draws the mini health indicators relative to the alien
      * @param shapeMapRenderer  Renderer that the stats are being drawn to (map  dependant)
      */
