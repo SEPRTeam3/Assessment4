@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class PowerUps extends Sprite {
 
@@ -34,7 +31,7 @@ Key to use them
 two boxes right?
  */
 
-//inilize first spawn;//Random random = new Random();
+//initialise first spawn;//Random random = new Random();
 //int oneTwoThree = random.nextInt(3) + 1;
 
     /**
@@ -51,10 +48,15 @@ two boxes right?
     private final Texture invisibility_texture;
     private final Texture empty_texture;
 
-    private final Set<Vector2> powerUpPositions = Set.of(
-        new Vector2(3,7), new Vector2(2,7), new Vector2(4,7), new Vector2(11,2),
-        new Vector2(3,5), new Vector2(20,8)
-    );
+    private final Set<Vector2> powerUpPositions = new HashSet<>(new ArrayList<Vector2>(
+            Arrays.asList(
+                    new Vector2(3,7),
+                    new Vector2(2,7),
+                    new Vector2(4,7),
+                    new Vector2(11,2),
+                    new Vector2(3,5),
+                    new Vector2(20,8)
+            )));
 
     public HashMap<Vector2, Boolean> powerUpPositionSpawn = new HashMap<>();
     public HashMap<String, Boolean> itemBoxSpawn = new HashMap<>();
