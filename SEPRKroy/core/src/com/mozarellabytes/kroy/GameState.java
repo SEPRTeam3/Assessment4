@@ -10,6 +10,8 @@ import com.mozarellabytes.kroy.Screens.GameOverScreen;
 
 public class GameState {
 
+    private int difficulty;
+
     /** Number of fire trucks there are on screen */
     private int activeFireTrucks;
 
@@ -79,6 +81,10 @@ public class GameState {
 
     public int getTrucksInAttackRange(){
         return trucksInAttackRange;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 
 

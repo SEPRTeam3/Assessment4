@@ -147,10 +147,11 @@ public class GameScreen implements Screen {
 
     public static final int STATION_X = 3;
     public static final int STATION_Y = 8;
-    private PathFinder pathFinder;
 
+    private PathFinder pathFinder;
     public PowerUps powerUps;
-    public GameScreen(Kroy game) {
+
+    public GameScreen(Kroy game, int difficulty) {
         pathFinder = new PathFinder(this);
 
         SoundFX.stopMusic();
@@ -179,6 +180,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(new GameInputHandler(this, gui));
 
         gameState = new GameState();
+        gameState.setDifficulty(difficulty);
         camShake = new CameraShake();
 
         //Orders renderer to start rendering the background, then the player layer, then structures

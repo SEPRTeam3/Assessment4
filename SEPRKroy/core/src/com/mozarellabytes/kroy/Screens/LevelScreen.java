@@ -41,6 +41,8 @@ public class LevelScreen implements Screen {
 
     public final OrthographicCamera camera;
 
+    int difficulty = 0;
+
     public LevelScreen(final Kroy game, Screen parent, String screen) {
         this.parent = parent;
         this.screen = screen;
@@ -173,7 +175,7 @@ public class LevelScreen implements Screen {
     }
 
     public void toGameScreen() {
-        game.setScreen(new GameScreen(game));
+        game.setScreen(new GameScreen(game, difficulty));
         //game.setScreen(new MinigameScreen(this.game)); //uncomment this to play minigame when clicking the "Start" button.
         this.dispose();
     }
@@ -185,13 +187,18 @@ public class LevelScreen implements Screen {
     }
     public void clickedEasyButton() {
         currentEasyTexture = easyButtonClickedTexture;
+        difficulty = 0;
     }
 
     public void clickedMediumButton() {
         currentMediumTexture = mediumButtonClickedTexture;
+        difficulty = 1;
     }
 
-    public void clickedHardButton() {currentHardTexture = hardButtonClickedTexture;}
+    public void clickedHardButton() {
+        currentHardTexture = hardButtonClickedTexture;
+        difficulty = 2;
+    }
 
     public Rectangle getEasyButton() {
         return easyButton;

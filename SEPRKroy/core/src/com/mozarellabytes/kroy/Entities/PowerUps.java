@@ -147,7 +147,6 @@ two boxes right?
             if(powerUpPositionSpawn.get(truckPos)) {
                 if(itemBoxSpawn.get("Left") && itemBoxSpawn.get("Right")) {
                    //Both boxes are full
-                    //Probs print something to the screen saying item box full
                 } else {
                     PickUpPowerUp(truck);
                     powerUpPositionSpawn.replace(truckPos, false);
