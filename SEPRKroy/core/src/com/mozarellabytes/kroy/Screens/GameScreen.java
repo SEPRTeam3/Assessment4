@@ -349,6 +349,7 @@ public class GameScreen implements Screen {
 
     // Alternate constructor from savegame
     public GameScreen(Kroy game, Save save) {
+        pathFinder = new PathFinder(this);
         SoundFX.stopMusic();
         Queue<Vector2> vertices;
         vertices = new Queue<>();
@@ -405,7 +406,7 @@ public class GameScreen implements Screen {
 
         aliens = new Queue();
         for (SaveAlien a : save.aliens) {
-            aliens.addLast(new Alien(a, fortresses.get(0)));
+            aliens.addLast(new Alien(a, fortresses.get(0), this.pathFinder));
 
         }
 

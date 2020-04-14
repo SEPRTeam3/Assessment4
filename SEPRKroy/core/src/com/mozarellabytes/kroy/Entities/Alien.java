@@ -191,16 +191,18 @@ public class Alien extends Sprite {
     /**
      * Overloaded version of the alien constructor for loading from a save
      */
-    public Alien(SaveAlien s, Fortress masterFortress) {
+    public Alien(SaveAlien s, Fortress masterFortress, PathFinder pathfinder) {
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = s.speed;
         //this.path = s.path;
-
         this.position = new Vector2(s.x, s.y);
         this.HP = s.HP;
         this.waypoints = s.waypoints;
         this.waypointIndex = s.waypointIndex;
         this.state = s.state;
+
+        this.fromPosition = position.cpy();
+        this.goal = waypoints.get(0);
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -219,7 +221,9 @@ public class Alien extends Sprite {
         this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
         this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
+
         this.masterFortress = masterFortress;
+        this.pathfinder = pathfinder;
 
         attackHandler = new EnemyAttackHandler(this);
     }
