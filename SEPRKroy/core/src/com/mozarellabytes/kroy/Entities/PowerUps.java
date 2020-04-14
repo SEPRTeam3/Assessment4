@@ -48,7 +48,9 @@ two boxes right?
     private final Texture invisibility_texture;
     private final Texture empty_texture;
 
-    private final Set<Vector2> powerUpPositions = new HashSet<>(new ArrayList<Vector2>(
+    private final Texture sticky_road_tile_texture;
+
+    private final Set<Vector2> powerUpPositions = new HashSet<>(new ArrayList<>(
             Arrays.asList(
                     new Vector2(3,7),
                     new Vector2(2,7),
@@ -60,6 +62,12 @@ two boxes right?
 
     public HashMap<Vector2, Boolean> powerUpPositionSpawn = new HashMap<>();
     public HashMap<String, Boolean> itemBoxSpawn = new HashMap<>();
+
+    public ArrayList<Vector2> getStickyRoadPositions() {
+        return stickyRoadPositions;
+    }
+
+    private ArrayList<Vector2> stickyRoadPositions = new ArrayList<>();
 
     private String box;
     private Batch mapBatch;
@@ -107,6 +115,7 @@ two boxes right?
         this.resurrection_texture = new Texture(Gdx.files.internal("resurrection.png"));
         this.invisibility_texture = new Texture(Gdx.files.internal("Invisible.png"));
         this.empty_texture = new Texture(Gdx.files.internal("container.png"));
+        this.sticky_road_tile_texture = new Texture(Gdx.files.internal("stickyRoadTile.png"));
 
         powerUpPositionSpawn.put(new Vector2(3,7), false);
         powerUpPositionSpawn.put(new Vector2(2,7), false);
@@ -197,7 +206,6 @@ two boxes right?
         Random random = new Random();
         int rand = random.nextInt(100) + 1;
 
-        System.out.print("/n" + "      "    + rand + "      " + "/n");
 
         if(rand <= 30) {
             this.state = PowerUp.HEALTHPACK;
@@ -228,8 +236,13 @@ two boxes right?
         mapBatch.draw(currentFrame, position.x, position.y, width, height);
     }
 
-    public void drawStickyRoad(Vector2 position) {
-        //mapBatch.draw(health_pack_texture, position.x, position.y, 1, 1);
+    public void drawStickyRoad() {
+        for(Vector2 pos: stickyRoadPositions) {
+            mapBatch.draw(sticky_road_tile_texture, pos.x, pos.y, 1, 1);
+        }
+    }
+    public void removeStickyRoad(Vector2 position) {
+        stickyRoadPositions.remove(position);
     }
 
     public void ItemBoxUpdate() {
@@ -320,7 +333,7 @@ two boxes right?
                     truck.setReserve(truck.getType().getMaxReserve());
                 break;
             case STICKYROAD:
-
+                stickyRoadPositions.add(new Vector2(truck.getPosition().x, truck.getPosition().y));
                 break;
             case RESURRECTION:
             //maybe just get rid of it for an empty space

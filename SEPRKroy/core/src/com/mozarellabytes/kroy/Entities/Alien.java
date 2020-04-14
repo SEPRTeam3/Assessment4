@@ -133,12 +133,15 @@ public class Alien extends Sprite {
      *  PATROLING - following the path designated by the waypoints list
      */
     private AlienState state;
-    private  AlienState previousState;
+    private AlienState previousState;
+    private AlienState staticPreviousState;
 
     public boolean seen = false;
     public boolean lost = false;
+    public boolean stuck = false;
 
     private float timer = 0.0f;
+    private float stuckTimer = 0;
     /**
      * Constructs alien at certain position
      *
@@ -261,6 +264,7 @@ public class Alien extends Sprite {
         previousTile = goal;
         switch(this.state) {
             case PURSUING:
+                staticPreviousState = state;
                 // Chase the first firetruck on the list
                 List<FireTruck> seenTrucks = new ArrayList<>(masterFortress.getSeenTrucks());
                 if (seenTrucks.size() >= 1) {
@@ -272,9 +276,10 @@ public class Alien extends Sprite {
                 } else {
                     this.state = AlienState.PATROLLING;
                 }
-                ;
+
                 break;
             case PATROLLING:
+                staticPreviousState = state;
                 // If we're at the current waypoint the new goal is the next waypoint
                 if (this.position.equals(waypoints.get(waypointIndex))) {
                     waypointIndex = (waypointIndex + 1) % waypoints.size();
@@ -287,11 +292,23 @@ public class Alien extends Sprite {
                 }
 
                 break;
+            case STUCK:
+                stuckTimer += delta;
+                stuck = true;
+                if(stuckTimer > 5) {
+                    stuck = false;
+                    this.state = staticPreviousState;
+                    stuckTimer = 0;
+                }
+                break;
+
         }
 
         changeSprite(goal);
         // Move towards current goal
-        moveTowardGoal(delta, goal);
+        if(!stuck) {
+            moveTowardGoal(delta, goal);
+        }
 
        // Report any seen trucks
         reportSeenTrucks(fireTrucks);
@@ -450,21 +467,23 @@ public class Alien extends Sprite {
             mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         }
         */
-
-        if(previousState == state) {
-        } else {
-            if(previousState == AlienState.PATROLLING) {
-                seen = true;
+        if(!stuck) {
+            if (previousState == state) {
             } else {
-                if(masterFortress.isSeenTruckDead()) {
-                } else {
-                    lost = true;
+                if (previousState == AlienState.PATROLLING) {
+                    seen = true;
+                } else if (previousState == AlienState.PURSUING) {
+                    if (masterFortress.isSeenTruckDead()) {
+                    } else {
+                        lost = true;
+                    }
                 }
+                previousState = state;
             }
-            previousState = state;
         }
-
-        if(seen) {
+            if(stuck) {
+                mapBatch.draw(notHappy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            } else if(seen) {
             timer += delta;
             mapBatch.draw(surprise, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
             if(timer >= 2) {
@@ -485,7 +504,6 @@ public class Alien extends Sprite {
                 masterFortress.setSeenTruckDead(false);
                 timer = 0.0f;
             }
-
         } else if(state == AlienState.PATROLLING) {
             mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         } else {
@@ -557,6 +575,10 @@ public class Alien extends Sprite {
     public List<Vector2> getWaypoints() { return this.waypoints; }
 
     public int getWaypointIndex() { return this.waypointIndex; }
+
+    public void setState(AlienState state) {
+        this.state = state;
+    }
 
     public AlienState getState() { return state; }
 }

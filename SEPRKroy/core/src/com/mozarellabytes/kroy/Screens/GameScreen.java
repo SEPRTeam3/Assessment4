@@ -469,7 +469,7 @@ public class GameScreen implements Screen {
 
         mapBatch.begin();
         mapBatch.setShader(shader);
-
+        powerUps.drawStickyRoad();
 
 
 
@@ -514,6 +514,7 @@ public class GameScreen implements Screen {
         explosions.removeAll(explosionsToRemove);
 
         powerUps.spawnPowerUps(delta);
+
         if(selectedEntity != null && selectedEntity instanceof FireTruck) {
             powerUps.ItemBoxUpdate();
         }
@@ -604,7 +605,14 @@ public class GameScreen implements Screen {
 //        }
 
         //#Assessment3
-        for(Alien alien:aliens){
+
+
+        for(Alien alien:aliens) {
+            for (Vector2 pos: powerUps.getStickyRoadPositions()) {
+                if(round(alien.getPosition().x, 2) == pos.x && round(alien.getPosition().y, 2) == pos.y){
+                    alien.setState(AlienState.STUCK);
+                }
+            }
             alien.move(delta, station.getTrucks());
         }
 
@@ -628,7 +636,7 @@ public class GameScreen implements Screen {
 
             truck.move();
             truck.updateSpray();
-            System.out.print((truck.getType()));
+            //System.out.print((truck.getType()));
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
                 if(!truck.isInvisible()) {
@@ -913,6 +921,9 @@ public class GameScreen implements Screen {
     public void saveState() {
         game.setScreen(new SaveScreen(game, this));
     }
-
+    private double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
 }
 
