@@ -191,7 +191,7 @@ public class Alien extends Sprite {
     /**
      * Overloaded version of the alien constructor for loading from a save
      */
-    public Alien(SaveAlien s) {
+    public Alien(SaveAlien s, Fortress masterFortress) {
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = s.speed;
         //this.path = s.path;
@@ -219,6 +219,8 @@ public class Alien extends Sprite {
         this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
         this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
+        this.masterFortress = masterFortress;
+
         attackHandler = new EnemyAttackHandler(this);
     }
 

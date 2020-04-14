@@ -405,7 +405,7 @@ public class GameScreen implements Screen {
 
         aliens = new Queue();
         for (SaveAlien a : save.aliens) {
-            aliens.addLast(new Alien(a));
+            aliens.addLast(new Alien(a, fortresses.get(0)));
 
         }
 
