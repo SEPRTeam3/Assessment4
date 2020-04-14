@@ -57,7 +57,6 @@ public class SaveManager {
      */
     public static Save saveFromGame(GameScreen g, String name) {
         Save s = new Save();
-
         // Add name
         s.saveName = name;
 

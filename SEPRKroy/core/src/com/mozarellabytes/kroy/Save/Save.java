@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Queue;
 import com.mozarellabytes.kroy.Entities.Alien;
 import com.mozarellabytes.kroy.Entities.FireStation;
 import com.mozarellabytes.kroy.Entities.Fortress;
+import com.mozarellabytes.kroy.Entities.PowerUps;
 import com.mozarellabytes.kroy.GameState;
 
 import java.util.ArrayList;

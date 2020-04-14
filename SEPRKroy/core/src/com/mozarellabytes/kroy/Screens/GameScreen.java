@@ -513,7 +513,7 @@ public class GameScreen implements Screen {
         }
         explosions.removeAll(explosionsToRemove);
 
-        powerUps.spawnPowerUps();
+        powerUps.spawnPowerUps(delta);
         if(selectedEntity != null && selectedEntity instanceof FireTruck) {
             powerUps.ItemBoxUpdate();
         }
@@ -563,6 +563,7 @@ public class GameScreen implements Screen {
         }
         gui.renderButtons();
         gui.renderClock(flag);
+        gui.renderPowerUpText();
     }
 
 
@@ -912,5 +913,6 @@ public class GameScreen implements Screen {
     public void saveState() {
         game.setScreen(new SaveScreen(game, this));
     }
+
 }
 

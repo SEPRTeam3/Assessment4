@@ -279,12 +279,20 @@ public class GUI {
         game.font19.draw(game.batch, String.format("%.1f", truck.getHP()) + " / " + String.format("%.1f", truck.getType().getMaxHP()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine);
         game.font19.draw(game.batch, "Reserve: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 2);
         game.font19.draw(game.batch, String.format("%.1f", truck.getReserve()) + " / " + String.format("%.1f", truck.getType().getMaxReserve()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 3);
+
         game.font19.draw(game.batch, "Speed: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 4);
-        game.font19.draw(game.batch, String.format("%.1f", truck.getType().getSpeed()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 5);
-        game.font19.draw(game.batch, "Range: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 6);
-        game.font19.draw(game.batch, String.format("%.1f", truck.getType().getRange()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 7);
-        game.font19.draw(game.batch, "AP: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 8);
-        game.font19.draw(game.batch, String.format("%.2f", truck.getType().getAP()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 9);
+        game.font19.draw(game.batch, String.format("%.1f", truck.getType().getSpeed()), this.selectedX + 90, this.selectedY + this.selectedH - 50 - newLine * 4);
+        game.font19.draw(game.batch, "Range: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 5);
+        game.font19.draw(game.batch, String.format("%.1f", truck.getType().getRange()), this.selectedX + 90, this.selectedY + this.selectedH - 50 - newLine * 5);
+        game.font19.draw(game.batch, "AP: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 6);
+        game.font19.draw(game.batch, String.format("%.2f", truck.getType().getAP()), this.selectedX + 50, this.selectedY + this.selectedH - 50 - newLine * 6);
+
+        game.font19.draw(game.batch, "Key 1: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 7);
+        game.font19.draw(game.batch, String.format(gameScreen.powerUps.getLeftstate().toString()), this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 8);
+
+        game.font19.draw(game.batch, "Key 2: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 9);
+        game.font19.draw(game.batch, String.format(gameScreen.powerUps.getRightstate().toString()), this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 10);
+
         game.batch.end();
     }
 
@@ -473,6 +481,16 @@ public class GUI {
     //#Assesment3
     public void renderDialogueText(int stage){
 
+    }
+    public void renderPowerUpText() {
+        GlyphLayout layout = new GlyphLayout();
+        if (gameScreen.powerUps.isSpawning()) {
+            game.batch.setProjectionMatrix(pauseCamera.combined);
+            game.batch.begin();
+            game.font60.draw(game.batch, "Power ups are re-spawning!", pauseCamera.viewportWidth / 4f, pauseCamera.viewportHeight / 2);
+            game.font60Custom.draw(game.batch, "Power ups are re-spawning!", pauseCamera.viewportWidth / 3.99f, pauseCamera.viewportHeight / 2.01f);
+            game.batch.end();
+        }
     }
     /*
     Render the counter down clock

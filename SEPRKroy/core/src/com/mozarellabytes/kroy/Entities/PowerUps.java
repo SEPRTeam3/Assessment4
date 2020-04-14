@@ -64,9 +64,23 @@ two boxes right?
     private String box;
     private Batch mapBatch;
 
+    public boolean isSpawning() {
+        return SpawningText;
+    }
+
     private boolean Spawning = true;
+    private boolean SpawningText = false;
 
     private PowerUp state;
+
+    public PowerUp getLeftstate() {
+        return leftstate;
+    }
+
+    public PowerUp getRightstate() {
+        return rightstate;
+    }
+
     private PowerUp leftstate;
     private PowerUp rightstate;
 
@@ -81,6 +95,8 @@ two boxes right?
 
     public Vector2 leftItemPosition;
     public Vector2 rightItemPosition;
+
+    private float Timer = 0;
 
     public PowerUps(Batch mapBatch) {
         //super(new Texture(Gdx.files.internal("container.png")));
@@ -106,8 +122,8 @@ two boxes right?
         leftstate = PowerUp.EMPTY;
         rightstate = PowerUp.EMPTY;
 
-        leftItemPosition = new Vector2(1.5f,20);
-        rightItemPosition = new Vector2(3.5f,20);
+        leftItemPosition = new Vector2(0.3f,20);
+        rightItemPosition = new Vector2(2.3f,20);
 
         item_texture_atlas = new TextureAtlas(Gdx.files.internal("Atlas'/ItemFrame.atlas"));
         item_animation = new Animation<>(.5f, item_texture_atlas.findRegions("ItemFrame"));
@@ -115,9 +131,10 @@ two boxes right?
         this.mapBatch = mapBatch;
     }
 
-    public void spawnPowerUps() {
+    public void spawnPowerUps(float delta) {
         //On clock tick or whatever set Spawing true
         int spawnCount = 0;
+
         for(Map.Entry entry : powerUpPositionSpawn.entrySet()) {
             spawnCount++;
             boolean isSpawn = (boolean) entry.getValue();
@@ -132,9 +149,22 @@ two boxes right?
                 drawSprite(mapBatch, key, 1, 1);
             }
 
-            if(spawnCount >=6){
+            if(spawnCount >=6) {
                 Spawning = false;
             }
+        }
+
+        if(!Spawning) {
+            Timer += delta;
+            if(Timer >= 42) {
+                SpawningText = true;
+                if(Timer >= 45) {
+                    SpawningText = false;
+                    Timer = 0;
+                    Spawning = true;
+                }
+            }
+
         }
     }
 
@@ -170,20 +200,14 @@ two boxes right?
         System.out.print("/n" + "      "    + rand + "      " + "/n");
 
         if(rand <= 30) {
-            //pick up health
-
             this.state = PowerUp.HEALTHPACK;
         } else if(rand <= 55){
-            //pick up refill
             this.state = PowerUp.REFILLPACK;
         } else if (rand <= 75){
-            //pick up sticky
             this.state = PowerUp.STICKYROAD;
         } else if (rand <= 90){
-            //pick up ivivisable
             this.state = PowerUp.INVISIBILITY;
         } else {
-            //pick up resuurection
             this.state = PowerUp.RESURRECTION;
             rez.setResurrection(true);
         }
@@ -203,6 +227,11 @@ two boxes right?
         TextureRegion currentFrame = item_animation.getKeyFrame(elapsedTime, true);
         mapBatch.draw(currentFrame, position.x, position.y, width, height);
     }
+
+    public void drawStickyRoad(Vector2 position) {
+        //mapBatch.draw(health_pack_texture, position.x, position.y, 1, 1);
+    }
+
     public void ItemBoxUpdate() {
         for (Map.Entry entry : itemBoxSpawn.entrySet()) {
             boolean isSpawn = (boolean) entry.getValue();
@@ -252,14 +281,14 @@ two boxes right?
     }
 
     public void usePowerUp(char key, FireTruck truck) {
-        if(key == 'W') {
+        if(key == '1') {
             PowerUpAction(leftstate, truck);
             String box = "Left";
             itemBoxSpawn.replace(box, false);
             state = PowerUp.EMPTY;
             leftstate = state;
 
-        } else if(key == 'E') {
+        } else if(key == '2') {
             PowerUpAction(rightstate, truck);
             String box = "Right";
             itemBoxSpawn.replace(box, false);
@@ -278,7 +307,6 @@ two boxes right?
                 itemBoxSpawn.replace("Right", false);
                 rightstate = PowerUp.EMPTY;
             } else {
-                //something wwent wrong
             }
 
     }
@@ -321,6 +349,7 @@ two boxes right?
         return false
         }
      */
+
     public void dispose(){
         item_texture_atlas.dispose();
     }
