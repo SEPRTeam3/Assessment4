@@ -365,6 +365,8 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.setVolume(.5f);
             SoundFX.sfx_soundtrack.play();
         }
+
+        powerUps = new PowerUps(mapBatch);
     }
 
     @Override

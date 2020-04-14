@@ -452,7 +452,7 @@ public class Alien extends Sprite {
                 seen = true;
             } else {
                 //pursue state | state change to patrol
-                if(masterFortress.isSeenTruckDead()){
+                if(masterFortress.isSeenTruckDead()) {
                     //default
                 } else {
                     lost = true;

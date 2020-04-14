@@ -27,7 +27,8 @@ public class Kroy extends Game {
 	public BitmapFont font25;
 	public BitmapFont font33;
 	public BitmapFont font33Red;
-
+	public BitmapFont font60Purple;
+	public BitmapFont font60Black;
 	@Override
 	public void create () {
 //		Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
@@ -53,7 +54,12 @@ public class Kroy extends Game {
 		parameter.size = 33;
 		parameter.color = Color.FIREBRICK;
 		font33Red = generator.generateFont(parameter);
-
+		parameter.size = 60;
+		parameter.color = Color.BLACK;
+		font60Black = generator.generateFont(parameter);
+		parameter.size= 60;
+		parameter.color = Color.MAROON;
+		font60Purple = generator.generateFont(parameter);
 		this.setScreen(new SplashScreen(this));
 	}
 
@@ -73,5 +79,7 @@ public class Kroy extends Game {
 		font33Red.dispose();
 		font50.dispose();
 		font60.dispose();
+		font60Black.dispose();
+		font60Purple.dispose();
 	}
 }
