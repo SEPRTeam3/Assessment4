@@ -77,8 +77,6 @@ public class MenuInputHandler implements InputProcessor {
             menu.clickedSoundButton();
         } else if (menu.getSaveButton().contains(position.x, position.y)) {
             menu.clickedSaveButton();
-        } else if(menu.getDifficultyButton().contains(position.x,position.y)){
-            menu.clickedDifficultyButton();
         }
         return true;
     }
@@ -96,21 +94,19 @@ public class MenuInputHandler implements InputProcessor {
         Vector2 clickCoordinates = new Vector2(screenX, screenY);
         Vector3 position = menu.camera.unproject(new Vector3(clickCoordinates.x, clickCoordinates.y, 0));
         if (menu.getStartButton().contains(position.x, position.y)) {
-            menu.toGameScreen();
+            menu.toLevelScreen();
         } else if (menu.getControlsButton().contains(position.x, position.y)) {
             menu.toControlScreen();
         } else if (menu.getSoundButton().contains(position.x, position.y)) {
             menu.changeSound();
         } else if (menu.getSaveButton().contains(position.x, position.y)) {
             menu.toLoadScreen();
-        } else if(menu.getDifficultyButton().contains(position.x, position.y)) {
-            menu.toLevelScreen();
         } else {
             menu.idleStartButton();
             menu.idleControlsButton();
             menu.idleSoundButton();
             menu.idleSaveButton();
-            menu.idleDifficultyButton();
+
         }
         return true;
     }

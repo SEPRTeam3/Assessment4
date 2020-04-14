@@ -57,10 +57,6 @@ public class MenuScreen implements Screen {
     private Texture currentControlsTexture;
 
     //Assessment4
-    private Rectangle difficultyButton;
-    private Texture difficultyNeutralTexture;
-    private Texture difficultyClickedTexture;
-    private  Texture currentDifficultyTexture;
     /** Rectangle containing the position of the sound button */
     private final Rectangle soundButton;
 
@@ -113,11 +109,6 @@ public class MenuScreen implements Screen {
         controlsClickedTexture = new Texture(Gdx.files.internal("ui/controls_clicked.png"), true);
         controlsClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
 
-        difficultyNeutralTexture = new Texture(Gdx.files.internal("ui/controls_idle.png"), true);
-        difficultyNeutralTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
-        difficultyClickedTexture = new Texture(Gdx.files.internal("ui/controls_clicked.png"), true);
-        difficultyClickedTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
-
         soundOnIdleTexture = new Texture(Gdx.files.internal("ui/sound_on_idle.png"), true);
         soundOnIdleTexture.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
         soundOffIdleTexture = new Texture(Gdx.files.internal("ui/sound_off_idle.png"), true);
@@ -141,13 +132,12 @@ public class MenuScreen implements Screen {
         }
 
         currentStartTexture = startIdleTexture;
-        currentDifficultyTexture = difficultyNeutralTexture;
         currentControlsTexture = controlsIdleTexture;
         currentSaveTexture = saveOffClicked;
 
         startButton = new Rectangle();
-        startButton.width = (float) (currentStartTexture.getWidth());
-        startButton.height = (float) (currentStartTexture.getHeight());
+        startButton.width = (float) (currentStartTexture.getWidth()*0.75);
+        startButton.height = (float) (currentStartTexture.getHeight()*0.75);
         startButton.x = (int) (camera.viewportWidth/2 - startButton.width/2);
         startButton.y = (int) ((camera.viewportHeight/2 - startButton.height/2) * 0.8);
 
@@ -155,13 +145,7 @@ public class MenuScreen implements Screen {
         controlsButton.width = (float) (currentControlsTexture.getWidth()*0.75);
         controlsButton.height = (float) (currentControlsTexture.getHeight()*0.75);
         controlsButton.x = (int) (camera.viewportWidth/2 - controlsButton.width/2);
-        controlsButton.y = (int) ((camera.viewportHeight/2 - controlsButton.height/2)*0.2);
-
-        difficultyButton = new Rectangle();
-        difficultyButton.width = (float) (difficultyNeutralTexture.getWidth());
-        difficultyButton.height = (float) (difficultyNeutralTexture.getHeight());
-        difficultyButton.x = (int) (camera.viewportWidth/2 - difficultyButton.width/2);
-        difficultyButton.y = (int) ((camera.viewportHeight/2 - difficultyButton.height/2)*0.465);
+        controlsButton.y = (int) ((camera.viewportHeight/2 - controlsButton.height/2)*0.4);
 
         soundButton = new Rectangle();
         soundButton.width = 50;
@@ -205,7 +189,6 @@ public class MenuScreen implements Screen {
         game.batch.draw(backgroundImage, 0, 0, camera.viewportWidth, camera.viewportHeight);
         game.batch.draw(currentStartTexture, startButton.x, startButton.y, startButton.width, startButton.height);
         game.batch.draw(currentControlsTexture, controlsButton.x, controlsButton.y, controlsButton.width, controlsButton.height);
-        game.batch.draw(currentDifficultyTexture, difficultyButton.x, difficultyButton.y, difficultyButton.width, difficultyButton.height);
         game.batch.draw(currentSoundTexture, soundButton.x, soundButton.y, soundButton.width, soundButton.height);
         game.batch.draw(currentSaveTexture, saveButton.x, saveButton.y, saveButton.width, saveButton.height);
         game.batch.end();
@@ -239,8 +222,6 @@ public class MenuScreen implements Screen {
         currentStartTexture.dispose();
         startClickedTexture.dispose();
         startIdleTexture.dispose();
-        difficultyNeutralTexture.dispose();
-        difficultyClickedTexture.dispose();
         currentControlsTexture.dispose();
         controlsClickedTexture.dispose();
         controlsIdleTexture.dispose();
@@ -252,12 +233,6 @@ public class MenuScreen implements Screen {
         SoundFX.sfx_menu.stop();
     }
 
-    /** Changes the screen from menu screen to game screen */
-    public void toGameScreen() {
-        game.setScreen(new GameScreen(game));
-        //game.setScreen(new MinigameScreen(this.game)); //uncomment this to play minigame when clicking the "Start" button.
-        this.dispose();
-    }
 
     /** Changes the texture of the start button when it has been clicked on */
     public void clickedStartButton() {
@@ -266,13 +241,7 @@ public class MenuScreen implements Screen {
         }
         currentStartTexture = startClickedTexture;
     }
-    /** Assessment4 */
-    public void clickedDifficultyButton() {
-        if (SoundFX.music_enabled){
-            SoundFX.sfx_button_clicked.play();
-        }
-        currentDifficultyTexture = difficultyClickedTexture;
-    }
+
     /** Changes the texture of the controls button when it has been clicked on */
     public void clickedControlsButton() {
         if (SoundFX.music_enabled){
@@ -313,7 +282,6 @@ public class MenuScreen implements Screen {
         currentStartTexture = startIdleTexture;
     }
 
-    public void idleDifficultyButton() {currentDifficultyTexture = difficultyNeutralTexture;}
     /** The texture of the control button when it has not been clicked on */
     public void idleControlsButton() {
         currentControlsTexture = controlsIdleTexture;
@@ -337,7 +305,9 @@ public class MenuScreen implements Screen {
 
     public void toLoadScreen() { game.setScreen(new LoadScreen(game)); }
 
-    public  void toLevelScreen() { game.setScreen(new LevelScreen(game, this, "menu"));}
+    public  void toLevelScreen() { game.setScreen(new LevelScreen(game, this, "menu"));
+        this.dispose();}
+
     public Rectangle getStartButton() { return startButton; }
 
     public Rectangle getControlsButton() { return controlsButton; }
@@ -346,8 +316,5 @@ public class MenuScreen implements Screen {
 
     public Rectangle getSaveButton() { return saveButton; }
 
-    public Rectangle getDifficultyButton() {
-        return difficultyButton;
-    }
 
 }
