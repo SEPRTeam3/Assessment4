@@ -230,6 +230,9 @@ public class MenuScreen implements Screen {
         soundOnClickedTexture.dispose();
         soundOffIdleTexture.dispose();
         soundOffClickedTexture.dispose();
+        currentSaveTexture.dispose();
+        saveOffClicked.dispose();
+        saveOnClicked.dispose();
         SoundFX.sfx_menu.stop();
     }
 
@@ -305,8 +308,7 @@ public class MenuScreen implements Screen {
 
     public void toLoadScreen() { game.setScreen(new LoadScreen(game)); }
 
-    public  void toLevelScreen() { game.setScreen(new LevelScreen(game, this, "menu"));
-        this.dispose();}
+    public  void toLevelScreen() { game.setScreen(new LevelScreen(game, this, "menu"));}
 
     public Rectangle getStartButton() { return startButton; }
 
