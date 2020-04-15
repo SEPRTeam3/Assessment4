@@ -470,7 +470,7 @@ public class GameScreen implements Screen {
         mapBatch.begin();
         mapBatch.setShader(shader);
         powerUps.drawStickyRoad();
-
+        powerUps.setInvisibleTimer(delta);
 
 
 
@@ -635,6 +635,7 @@ public class GameScreen implements Screen {
             FireTruck truck = station.getTruck(i);
 
             truck.move();
+            truck.onHiddenTile();
             truck.updateSpray();
             //System.out.print((truck.getType()));
             // manages attacks between trucks and fortresses

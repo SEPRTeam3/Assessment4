@@ -55,9 +55,9 @@ two boxes right?
                     new Vector2(3,7),
                     new Vector2(2,7),
                     new Vector2(4,7),
-                    new Vector2(11,2),
-                    new Vector2(3,5),
-                    new Vector2(20,8)
+                    new Vector2(32,7),
+                    new Vector2(20,21),
+                    new Vector2(29,15)
             )));
 
     public HashMap<Vector2, Boolean> powerUpPositionSpawn = new HashMap<>();
@@ -105,6 +105,8 @@ two boxes right?
     public Vector2 rightItemPosition;
 
     private float Timer = 0;
+    private float invisibleTimer = 0;
+    private boolean invisibleTimerBool = false;
 
     public PowerUps(Batch mapBatch) {
         //super(new Texture(Gdx.files.internal("container.png")));
@@ -120,9 +122,9 @@ two boxes right?
         powerUpPositionSpawn.put(new Vector2(3,7), false);
         powerUpPositionSpawn.put(new Vector2(2,7), false);
         powerUpPositionSpawn.put(new Vector2(4,7), false);
-        powerUpPositionSpawn.put(new Vector2(11,2), false);
-        powerUpPositionSpawn.put(new Vector2(3,5), false);
-        powerUpPositionSpawn.put(new Vector2(20,8), false);
+        powerUpPositionSpawn.put(new Vector2(32,7), false);
+        powerUpPositionSpawn.put(new Vector2(20,21), false);
+        powerUpPositionSpawn.put(new Vector2(27,15), false);
 
         itemBoxSpawn.put("Left", false);
         itemBoxSpawn.put("Right", false);
@@ -165,9 +167,9 @@ two boxes right?
 
         if(!Spawning) {
             Timer += delta;
-            if(Timer >= 42) {
+            if(Timer >= 52) {
                 SpawningText = true;
-                if(Timer >= 45) {
+                if(Timer >= 55) {
                     SpawningText = false;
                     Timer = 0;
                     Spawning = true;
@@ -339,8 +341,8 @@ two boxes right?
             //maybe just get rid of it for an empty space
                 break;
             case INVISIBILITY:
-                //also do some cool effect like change the sprite
               truck.setInvisible(true);
+              invisibleTimerBool = true;
                 break;
             default:
 
@@ -365,5 +367,18 @@ two boxes right?
 
     public void dispose(){
         item_texture_atlas.dispose();
+    }
+    public boolean isInvisibleTimer() {
+        return invisibleTimerBool;
+    }
+
+    public void setInvisibleTimer(float delta) {
+        if(invisibleTimerBool) {
+            invisibleTimer += delta;
+            if (invisibleTimer > 10) {
+                invisibleTimer = 0;
+                invisibleTimerBool = false;
+            }
+        }
     }
 }
