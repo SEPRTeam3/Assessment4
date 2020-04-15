@@ -565,6 +565,7 @@ public class GameScreen implements Screen {
         gui.renderButtons();
         gui.renderClock(flag);
         gui.renderPowerUpText();
+        gui.renderDifficultyText();
     }
 
 
@@ -611,7 +612,14 @@ public class GameScreen implements Screen {
             for (Vector2 pos: powerUps.getStickyRoadPositions()) {
                 if(round(alien.getPosition().x, 2) == pos.x && round(alien.getPosition().y, 2) == pos.y){
                     alien.setState(AlienState.STUCK);
+                    alien.setStuckPos(pos);
                 }
+            }
+            if(alien.isStuckRemove()) {
+                powerUps.removeStickyRoad(alien.getStuckPos());
+                alien.setStuckRemove(false);
+                //really bad fix
+                alien.setPosition(alien.getPosition().x +0.05f, alien.getPosition().y + 0.05f);
             }
             alien.move(delta, station.getTrucks());
         }

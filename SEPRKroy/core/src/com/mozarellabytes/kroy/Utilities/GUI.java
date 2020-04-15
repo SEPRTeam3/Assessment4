@@ -478,12 +478,27 @@ public class GUI {
         game.batch.end();
     }
 
-    //#Assesment3
-    public void renderDialogueText(int stage){
+    public void renderDifficultyText() {
+        GlyphLayout layout = new GlyphLayout();
+        String difficulty;
+        int offset = 0;
+        if(gameScreen.gameState.getDifficulty() == 0){
+            difficulty = "Easy Mode";
+            offset = 40;
+        } else if (gameScreen.gameState.getDifficulty() == 1){
+            difficulty = "Medium Mode";
+        } else {
+            difficulty = "Hard Mode";
+            offset = 40;
+        }
+        game.batch.setProjectionMatrix(pauseCamera.combined);
+        game.batch.begin();
+        game.font33.draw(game.batch, difficulty, pauseCamera.viewportWidth / 1.29f + offset, pauseCamera.viewportHeight - 10);
+        game.font33Custom.draw(game.batch, difficulty, pauseCamera.viewportWidth / 1.289f + offset, pauseCamera.viewportHeight - 9.99f);
 
+        game.batch.end();
     }
     public void renderPowerUpText() {
-        GlyphLayout layout = new GlyphLayout();
         if (gameScreen.powerUps.isSpawning()) {
             game.batch.setProjectionMatrix(pauseCamera.combined);
             game.batch.begin();

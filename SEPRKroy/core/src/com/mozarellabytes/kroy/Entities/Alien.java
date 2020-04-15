@@ -142,6 +142,8 @@ public class Alien extends Sprite {
 
     private float timer = 0.0f;
     private float stuckTimer = 0;
+    private Vector2 stuckPos;
+    private boolean stuckRemove = false;
     /**
      * Constructs alien at certain position
      *
@@ -295,7 +297,8 @@ public class Alien extends Sprite {
             case STUCK:
                 stuckTimer += delta;
                 stuck = true;
-                if(stuckTimer > 5) {
+                if(stuckTimer > 10) {
+                    stuckRemove = true;
                     stuck = false;
                     this.state = staticPreviousState;
                     stuckTimer = 0;
@@ -541,6 +544,7 @@ public class Alien extends Sprite {
         }
     }
 
+
     public Vector2 getPosition() { return this.position;}
 
     public float getHP() {
@@ -581,4 +585,17 @@ public class Alien extends Sprite {
     }
 
     public AlienState getState() { return state; }
+    public void setStuckPos(Vector2 stuckPos) {
+        this.stuckPos = stuckPos;
+    }
+    public Vector2 getStuckPos() {return stuckPos;}
+
+    public boolean isStuckRemove() {
+        return stuckRemove;
+    }
+
+    public void setStuckRemove(boolean stuckRemove) {
+        this.stuckRemove = stuckRemove;
+    }
+
 }
