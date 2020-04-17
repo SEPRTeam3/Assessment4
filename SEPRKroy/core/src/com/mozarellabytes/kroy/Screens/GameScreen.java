@@ -711,7 +711,6 @@ public class GameScreen implements Screen {
                     if (SoundFX.music_enabled) {
                         // play sound
                     }
-                    //[;ay aniation
                     powerUps.Resurrection(truck);
                 }
             }

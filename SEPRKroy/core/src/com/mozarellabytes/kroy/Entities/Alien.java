@@ -46,8 +46,16 @@ public class Alien extends Sprite {
     /** Position of Alien */
     private Vector2 position;
 
+    public Vector2 getFromPosition() {
+        return fromPosition;
+    }
+
     /** Position on the grid the alien is coming from */
     private Vector2 fromPosition;
+
+    public Vector2 getToPosition() {
+        return toPosition;
+    }
 
     /** Position on the grid the alien is heading to */
     private Vector2 toPosition;
@@ -206,8 +214,9 @@ public class Alien extends Sprite {
         this.waypointIndex = s.waypointIndex;
         this.state = s.state;
 
-        this.fromPosition = position.cpy();
-        //this.toPosition = position.cpy();
+        this.fromPosition = s.fromPosition;
+        this.toPosition = s.toPosition;
+
         this.goal = waypoints.get(0);
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
@@ -229,6 +238,7 @@ public class Alien extends Sprite {
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
 
         this.masterFortress = masterFortress;
+        this.masterFortress.addFortressAlien(this);
         this.pathfinder = pathfinder;
 
         attackHandler = new EnemyAttackHandler(this);

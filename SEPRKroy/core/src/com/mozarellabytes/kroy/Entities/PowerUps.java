@@ -84,7 +84,8 @@ public class PowerUps extends Sprite {
 
     private float Timer = 0;
     private float invisibleTimer = 0;
-    private boolean invisibleTimerBool = false;
+
+    private boolean invisibleTimerBool;
 
     public HashMap<String, Boolean> getPowerUpPositionSpawn() {
         return powerUpPositionSpawn;
@@ -132,6 +133,7 @@ public class PowerUps extends Sprite {
 
         Spawning = true;
         loadFromSave = false;
+        invisibleTimerBool = false;
 
         this.mapBatch = mapBatch;
     }
@@ -159,7 +161,7 @@ public class PowerUps extends Sprite {
         rightstate = save.powerUps.rightstate;
 
         loadFromSave = true;
-
+        invisibleTimerBool = save.powerUps.isInvisTimer;
         this.mapBatch = mapBatch;
     }
     public Vector2 fromString (String v) {

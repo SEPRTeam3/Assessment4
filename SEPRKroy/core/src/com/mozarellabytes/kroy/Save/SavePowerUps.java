@@ -15,5 +15,6 @@ public class SavePowerUps {
     public PowerUps.PowerUp leftstate;
     public PowerUps.PowerUp rightstate;
     public boolean spawning;
+    public  boolean isInvisTimer;
 
 }

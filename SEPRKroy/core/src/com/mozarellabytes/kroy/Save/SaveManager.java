@@ -72,6 +72,7 @@ public class SaveManager {
         powerUps.leftstate = g.powerUps.getLeftstate();
         powerUps.rightstate = g.powerUps.getRightstate();
         powerUps.spawning = g.powerUps.isSpawning();
+        powerUps.isInvisTimer = g.powerUps.isInvisibleTimer();
         s.powerUps = powerUps;
 
         // Add station
@@ -88,6 +89,8 @@ public class SaveManager {
             saveFiretruck.y = f.getPosition().y;
             saveFiretruck.HP = f.getHP();
             saveFiretruck.type = f.type;
+            saveFiretruck.hasResurrection = f.hasResurrection();
+            saveFiretruck.isInvisible = f.isInvisible();
             s.station.trucks.add(saveFiretruck);
         }
 
@@ -102,6 +105,8 @@ public class SaveManager {
             saveAlien.speed = a.getSpeed();
             saveAlien.waypoints = a.getWaypoints();
             saveAlien.waypointIndex = a.getWaypointIndex();
+            saveAlien.toPosition = a.getToPosition();
+            saveAlien.fromPosition = a.getFromPosition();
             saveAlien.state = a.getState();
             s.aliens.add(saveAlien);
         }

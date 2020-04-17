@@ -156,6 +156,8 @@ public class FireTruck extends Sprite {
         this.moving = false;
         this.attacking = false;
         this.inCollision = false;
+        this.isInvisible = s.isInvisible;
+        this.hasResurrection = s.hasResurrection;
         this.spray = new ArrayList();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
