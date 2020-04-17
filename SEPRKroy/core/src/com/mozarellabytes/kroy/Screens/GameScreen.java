@@ -345,7 +345,7 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.play();
         }
 
-        powerUps = new PowerUps(mapBatch);
+        this.powerUps = new PowerUps(mapBatch);
 
     }
 
@@ -428,7 +428,7 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.play();
         }
 
-        powerUps = new PowerUps(mapBatch);
+        this.powerUps = new PowerUps(save, mapBatch);
     }
 
     @Override

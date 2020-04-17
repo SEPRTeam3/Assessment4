@@ -18,4 +18,5 @@ public class Save {
     public SaveStation station;
     public ArrayList<SaveAlien> aliens;
     public SaveAlien crazyAlien;
+    public SavePowerUps powerUps;
 }

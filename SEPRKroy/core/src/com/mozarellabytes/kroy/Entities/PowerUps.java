@@ -4,39 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.mozarellabytes.kroy.Save.Save;
 
 import java.util.*;
 
 public class PowerUps extends Sprite {
 
-/*
-Positions for new map
-(35,20)
-(11,29)
-(11,12)
-(11,2)
-(47,5)
-(32,8)
-Spawn over time
-Random locations
-Mario Kart music
-Weight randomness of item box
-Common Healing/Refill commmon
-epic Sticky and
-legendary Rez
-rarity symbol
-
-Key to use them
-
-two boxes right?
- */
-
-//initialise first spawn;//Random random = new Random();
-//int oneTwoThree = random.nextInt(3) + 1;
-
-    /**
-     * Set of item box textures, packed for animation
-     */
     private TextureAtlas item_texture_atlas;
     private Animation<TextureRegion> item_animation;
     private float elapsedTime;
@@ -60,7 +34,7 @@ two boxes right?
                     new Vector2(29,15)
             )));
 
-    public HashMap<Vector2, Boolean> powerUpPositionSpawn = new HashMap<>();
+    public HashMap<String, Boolean> powerUpPositionSpawn = new HashMap<>();
     public HashMap<String, Boolean> itemBoxSpawn = new HashMap<>();
 
     public ArrayList<Vector2> getStickyRoadPositions() {
@@ -79,7 +53,7 @@ two boxes right?
     private boolean Spawning = true;
     private boolean SpawningText = false;
 
-    private PowerUp state;
+
 
     public PowerUp getLeftstate() {
         return leftstate;
@@ -89,6 +63,7 @@ two boxes right?
         return rightstate;
     }
 
+    private PowerUp state;
     private PowerUp leftstate;
     private PowerUp rightstate;
 
@@ -108,6 +83,19 @@ two boxes right?
     private float invisibleTimer = 0;
     private boolean invisibleTimerBool = false;
 
+    public HashMap<String, Boolean> getPowerUpPositionSpawn() {
+        return powerUpPositionSpawn;
+    }
+
+    public HashMap<String, Boolean> getItemBoxSpawn() {
+        return itemBoxSpawn;
+    }
+
+    public PowerUp getState() {
+        return state;
+    }
+
+    private boolean loadFromSave = false;
     public PowerUps(Batch mapBatch) {
         //super(new Texture(Gdx.files.internal("container.png")));
 
@@ -119,12 +107,12 @@ two boxes right?
         this.empty_texture = new Texture(Gdx.files.internal("container.png"));
         this.sticky_road_tile_texture = new Texture(Gdx.files.internal("stickyRoadTile.png"));
 
-        powerUpPositionSpawn.put(new Vector2(3,7), false);
-        powerUpPositionSpawn.put(new Vector2(2,7), false);
-        powerUpPositionSpawn.put(new Vector2(4,7), false);
-        powerUpPositionSpawn.put(new Vector2(32,7), false);
-        powerUpPositionSpawn.put(new Vector2(20,21), false);
-        powerUpPositionSpawn.put(new Vector2(27,15), false);
+        powerUpPositionSpawn.put("(3.0,7.0)", false);
+        powerUpPositionSpawn.put("(2.0,7.0)", false);
+        powerUpPositionSpawn.put("(4.0,7.0)", false);
+        powerUpPositionSpawn.put("(32.0,7.0)", false);
+        powerUpPositionSpawn.put("(20.0,21.0)", false);
+        powerUpPositionSpawn.put("(29.0,15.0)", false);
 
         itemBoxSpawn.put("Left", false);
         itemBoxSpawn.put("Right", false);
@@ -139,7 +127,49 @@ two boxes right?
         item_texture_atlas = new TextureAtlas(Gdx.files.internal("Atlas'/ItemFrame.atlas"));
         item_animation = new Animation<>(.5f, item_texture_atlas.findRegions("ItemFrame"));
 
+        loadFromSave = false;
+
         this.mapBatch = mapBatch;
+    }
+
+    public PowerUps(Save save, Batch mapBatch) {
+        this.health_pack_texture = new Texture(Gdx.files.internal("HealthUp.png"));
+        this.refill_pack_texture = new Texture(Gdx.files.internal("refill.png"));
+        this.sticky_road_texture = new Texture(Gdx.files.internal("stickyRoad.png"));
+        this.resurrection_texture = new Texture(Gdx.files.internal("resurrection.png"));
+        this.invisibility_texture = new Texture(Gdx.files.internal("Invisible.png"));
+        this.empty_texture = new Texture(Gdx.files.internal("container.png"));
+        this.sticky_road_tile_texture = new Texture(Gdx.files.internal("stickyRoadTile.png"));
+
+        item_texture_atlas = new TextureAtlas(Gdx.files.internal("Atlas'/ItemFrame.atlas"));
+        item_animation = new Animation<>(.5f, item_texture_atlas.findRegions("ItemFrame"));
+
+        leftItemPosition = new Vector2(0.3f,20);
+        rightItemPosition = new Vector2(2.3f,20);
+
+        powerUpPositionSpawn = save.powerUps.powerUpPositionSpawn;
+        itemBoxSpawn = save.powerUps.itemBoxSpawn;
+        stickyRoadPositions = save.powerUps.stickyRoadPositions;
+        state = save.powerUps.state;
+        leftstate = save.powerUps.leftstate;
+        rightstate = save.powerUps.rightstate;
+
+        loadFromSave = true;
+
+        this.mapBatch = mapBatch;
+    }
+    public Vector2 fromString (String v) {
+        int s = v.indexOf(',', 1);
+        if (s != -1 && v.charAt(0) == '(' && v.charAt(v.length() - 1) == ')') {
+            try {
+                float x = Float.parseFloat(v.substring(1, s));
+                float y = Float.parseFloat(v.substring(s + 1, v.length() - 1));
+                return new Vector2(x,y);
+            } catch (NumberFormatException ex) {
+                // Throw a GdxRuntimeException
+            }
+        }
+        throw new GdxRuntimeException("Malformed Vector2: " + v);
     }
 
     public void spawnPowerUps(float delta) {
@@ -149,15 +179,15 @@ two boxes right?
         for(Map.Entry entry : powerUpPositionSpawn.entrySet()) {
             spawnCount++;
             boolean isSpawn = (boolean) entry.getValue();
-            Vector2 key = (Vector2) entry.getKey();
+            String key = (String) entry.getKey();
 
             if(!isSpawn) {
                 if(Spawning) {
-                    drawSprite(mapBatch, key, 1, 1);
+                    drawSprite(mapBatch, fromString(key), 1, 1);
                     powerUpPositionSpawn.replace(key, true);
                 }
             } else {
-                drawSprite(mapBatch, key, 1, 1);
+                drawSprite(mapBatch, fromString(key), 1, 1);
             }
 
             if(spawnCount >=6) {
@@ -185,12 +215,13 @@ two boxes right?
         Vector2 truckPos = new Vector2(Math.round(truck.getPosition().x), Math.round(truck.getPosition().y));
         if(powerUpPositions.contains(truckPos)) {
             //if it is a valid point
-            if(powerUpPositionSpawn.get(truckPos)) {
+            System.out.print(truckPos.toString());
+            if(powerUpPositionSpawn.get(truckPos.toString())) {
                 if(itemBoxSpawn.get("Left") && itemBoxSpawn.get("Right")) {
                    //Both boxes are full
                 } else {
                     PickUpPowerUp(truck);
-                    powerUpPositionSpawn.replace(truckPos, false);
+                    powerUpPositionSpawn.replace(truckPos.toString(), false);
                 }
             } else {
                 //no power up
@@ -248,12 +279,12 @@ two boxes right?
     }
 
     public void ItemBoxUpdate() {
+
         for (Map.Entry entry : itemBoxSpawn.entrySet()) {
             boolean isSpawn = (boolean) entry.getValue();
             String key = (String) entry.getKey();
-
             if (isSpawn) {
-                if (key == "Left") {
+                if (key.contentEquals("Left")) {
                     state = leftstate;
                     drawItemBox(mapBatch, leftItemPosition, 2, 2);
                 } else {
@@ -264,7 +295,8 @@ two boxes right?
                 }
             } else {
                 state = PowerUp.EMPTY;
-                if (key == "Left") {
+
+                if (key.contentEquals("Left")) {
                     drawItemBox(mapBatch, leftItemPosition, 2, 2);
                 } else {
                     drawItemBox(mapBatch, rightItemPosition, 2, 2);

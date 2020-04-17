@@ -63,6 +63,16 @@ public class SaveManager {
         // Add GameState
         s.gameState = g.gameState;
 
+        //AddPowerUps
+        SavePowerUps powerUps = new SavePowerUps();
+        powerUps.powerUpPositionSpawn = g.powerUps.getPowerUpPositionSpawn();
+        powerUps.itemBoxSpawn = g.powerUps.getItemBoxSpawn();
+        powerUps.stickyRoadPositions = g.powerUps.getStickyRoadPositions();
+        powerUps.state = g.powerUps.getState();
+        powerUps.leftstate = g.powerUps.getLeftstate();
+        powerUps.rightstate = g.powerUps.getRightstate();
+        s.powerUps = powerUps;
+
         // Add station
         s.station = new SaveStation();
         s.station.x = g.STATION_X;
