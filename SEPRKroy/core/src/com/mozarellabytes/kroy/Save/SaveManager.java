@@ -71,6 +71,7 @@ public class SaveManager {
         powerUps.state = g.powerUps.getState();
         powerUps.leftstate = g.powerUps.getLeftstate();
         powerUps.rightstate = g.powerUps.getRightstate();
+        powerUps.spawning = g.powerUps.isSpawning();
         s.powerUps = powerUps;
 
         // Add station

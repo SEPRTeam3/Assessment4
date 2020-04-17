@@ -14,6 +14,6 @@ public class SavePowerUps {
     public PowerUps.PowerUp state;
     public PowerUps.PowerUp leftstate;
     public PowerUps.PowerUp rightstate;
-
+    public boolean spawning;
 
 }

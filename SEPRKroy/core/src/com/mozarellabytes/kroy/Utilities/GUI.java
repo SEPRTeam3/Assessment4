@@ -499,7 +499,7 @@ public class GUI {
         game.batch.end();
     }
     public void renderPowerUpText() {
-        if (gameScreen.powerUps.isSpawning()) {
+        if (gameScreen.powerUps.isSpawningText()) {
             game.batch.setProjectionMatrix(pauseCamera.combined);
             game.batch.begin();
             game.font60.draw(game.batch, "Power ups are re-spawning!", pauseCamera.viewportWidth / 4f, pauseCamera.viewportHeight / 2);

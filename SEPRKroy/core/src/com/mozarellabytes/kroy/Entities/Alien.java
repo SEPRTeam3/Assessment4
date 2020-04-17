@@ -207,6 +207,7 @@ public class Alien extends Sprite {
         this.state = s.state;
 
         this.fromPosition = position.cpy();
+        //this.toPosition = position.cpy();
         this.goal = waypoints.get(0);
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));

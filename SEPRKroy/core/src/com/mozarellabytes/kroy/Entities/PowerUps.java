@@ -46,11 +46,14 @@ public class PowerUps extends Sprite {
     private String box;
     private Batch mapBatch;
 
-    public boolean isSpawning() {
+    public boolean isSpawningText() {
         return SpawningText;
     }
+    public boolean isSpawning() {
+        return Spawning;
+    }
 
-    private boolean Spawning = true;
+    private boolean Spawning;
     private boolean SpawningText = false;
 
 
@@ -127,6 +130,7 @@ public class PowerUps extends Sprite {
         item_texture_atlas = new TextureAtlas(Gdx.files.internal("Atlas'/ItemFrame.atlas"));
         item_animation = new Animation<>(.5f, item_texture_atlas.findRegions("ItemFrame"));
 
+        Spawning = true;
         loadFromSave = false;
 
         this.mapBatch = mapBatch;
