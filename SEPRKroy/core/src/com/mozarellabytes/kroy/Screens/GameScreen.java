@@ -238,10 +238,10 @@ public class GameScreen implements Screen {
         aliens.addLast(new Alien(28f,5f,vertices,0f, fortresses.get(0), this.pathFinder));
         vertices.clear();
 
-        vertices.add(new Vector2(44,26));
-        vertices.add(new Vector2(8, 5));
-        aliens.addLast(new Alien(44f,26f,vertices,0f, fortresses.get(0), this.pathFinder));
-        vertices.clear();
+//        vertices.add(new Vector2(44,26));
+//        vertices.add(new Vector2(8, 5));
+//        aliens.addLast(new Alien(44f,26f,vertices,0f, fortresses.get(0), this.pathFinder));
+//        vertices.clear();
 
         vertices.add(new Vector2(26,28));
         vertices.add(new Vector2(34,23));
