@@ -146,10 +146,11 @@ public class GameScreen implements Screen {
 
     public static final int STATION_X = 3;
     public static final int STATION_Y = 8;
-    private PathFinder pathFinder;
 
+    private PathFinder pathFinder;
     public PowerUps powerUps;
-    public GameScreen(Kroy game) {
+
+    public GameScreen(Kroy game, int difficulty) {
         pathFinder = new PathFinder(this);
 
         SoundFX.stopMusic();
@@ -177,6 +178,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(new GameInputHandler(this, gui));
 
         gameState = new GameState();
+        gameState.setDifficulty(difficulty);
         camShake = new CameraShake();
 
         //Orders renderer to start rendering the background, then the player layer, then structures
@@ -290,6 +292,7 @@ public class GameScreen implements Screen {
 
     // Alternate constructor from savegame
     public GameScreen(Kroy game, Save save) {
+        pathFinder = new PathFinder(this);
         SoundFX.stopMusic();
         Queue<Vector2> vertices;
         vertices = new Queue<>();
@@ -346,7 +349,7 @@ public class GameScreen implements Screen {
 
         aliens = new Queue();
         for (SaveAlien a : save.aliens) {
-            aliens.addLast(new Alien(a));
+            aliens.addLast(new Alien(a, fortresses.get(0), this.pathFinder));
 
         }
 
@@ -366,7 +369,7 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.play();
         }
 
-        powerUps = new PowerUps(mapBatch);
+        powerUps = new PowerUps(save, mapBatch);
     }
 
     @Override
@@ -407,8 +410,8 @@ public class GameScreen implements Screen {
 
         mapBatch.begin();
         mapBatch.setShader(shader);
-
-
+        powerUps.drawStickyRoad();
+        powerUps.setInvisibleTimer(delta);
 
 
 
@@ -454,7 +457,8 @@ public class GameScreen implements Screen {
         }
         explosions.removeAll(explosionsToRemove);
 
-        powerUps.spawnPowerUps();
+        powerUps.spawnPowerUps(delta);
+
         if(selectedEntity != null && selectedEntity instanceof FireTruck) {
             powerUps.ItemBoxUpdate();
         }
@@ -504,6 +508,8 @@ public class GameScreen implements Screen {
         }
         gui.renderButtons();
         gui.renderClock(flag);
+        gui.renderPowerUpText();
+        gui.renderDifficultyText();
     }
 
 
@@ -544,7 +550,21 @@ public class GameScreen implements Screen {
 //        }
 
         //#Assessment3
-        for(Alien alien:aliens){
+
+
+        for(Alien alien:aliens) {
+            for (Vector2 pos: powerUps.getStickyRoadPositions()) {
+                if(round(alien.getPosition().x, 2) == pos.x && round(alien.getPosition().y, 2) == pos.y){
+                    alien.setState(AlienState.STUCK);
+                    alien.setStuckPos(pos);
+                }
+            }
+            if(alien.isStuckRemove()) {
+                powerUps.removeStickyRoad(alien.getStuckPos());
+                alien.setStuckRemove(false);
+                //really bad fix
+                alien.setPosition(alien.getPosition().x +0.05f, alien.getPosition().y + 0.05f);
+            }
             alien.move(delta, station.getTrucks());
         }
 
@@ -567,8 +587,9 @@ public class GameScreen implements Screen {
             FireTruck truck = station.getTruck(i);
 
             truck.move();
+            truck.onHiddenTile();
             truck.updateSpray();
-            System.out.print((truck.getType()));
+            //System.out.print((truck.getType()));
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
                 if(!truck.isInvisible()) {
@@ -634,7 +655,6 @@ public class GameScreen implements Screen {
                     if (SoundFX.music_enabled) {
                         // play sound
                     }
-                    //[;ay aniation
                     powerUps.Resurrection(truck);
                 }
             }
@@ -856,6 +876,10 @@ public class GameScreen implements Screen {
 
     public void saveState() {
         game.setScreen(new SaveScreen(game, this));
+    }
+    private double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 }
 

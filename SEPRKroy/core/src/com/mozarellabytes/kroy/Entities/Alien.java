@@ -46,8 +46,16 @@ public class Alien extends Sprite {
     /** Position of Alien */
     private Vector2 position;
 
+    public Vector2 getFromPosition() {
+        return fromPosition;
+    }
+
     /** Position on the grid the alien is coming from */
     private Vector2 fromPosition;
+
+    public Vector2 getToPosition() {
+        return toPosition;
+    }
 
     /** Position on the grid the alien is heading to */
     private Vector2 toPosition;
@@ -133,12 +141,17 @@ public class Alien extends Sprite {
      *  PATROLING - following the path designated by the waypoints list
      */
     private AlienState state;
-    private  AlienState previousState;
+    private AlienState previousState;
+    private AlienState staticPreviousState;
 
     public boolean seen = false;
     public boolean lost = false;
+    public boolean stuck = false;
 
     private float timer = 0.0f;
+    private float stuckTimer = 0;
+    private Vector2 stuckPos;
+    private boolean stuckRemove = false;
     /**
      * Constructs alien at certain position
      *
@@ -191,16 +204,20 @@ public class Alien extends Sprite {
     /**
      * Overloaded version of the alien constructor for loading from a save
      */
-    public Alien(SaveAlien s) {
+    public Alien(SaveAlien s, Fortress masterFortress, PathFinder pathfinder) {
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = s.speed;
         //this.path = s.path;
-
         this.position = new Vector2(s.x, s.y);
         this.HP = s.HP;
         this.waypoints = s.waypoints;
         this.waypointIndex = s.waypointIndex;
         this.state = s.state;
+
+        this.fromPosition = s.fromPosition;
+        this.toPosition = s.toPosition;
+
+        this.goal = waypoints.get(0);
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -219,6 +236,11 @@ public class Alien extends Sprite {
         this.nuke2 = new Texture(Gdx.files.internal("sprites/alien/nuke2.png"));
         this.nuke3 = new Texture(Gdx.files.internal("sprites/alien/nuke3.png"));
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
+
+        this.masterFortress = masterFortress;
+        this.masterFortress.addFortressAlien(this);
+        this.pathfinder = pathfinder;
+
         attackHandler = new EnemyAttackHandler(this);
     }
 
@@ -255,6 +277,7 @@ public class Alien extends Sprite {
         previousTile = goal;
         switch(this.state) {
             case PURSUING:
+                staticPreviousState = state;
                 // Chase the first firetruck on the list
                 List<FireTruck> seenTrucks = new ArrayList<>(masterFortress.getSeenTrucks());
                 if (seenTrucks.size() >= 1) {
@@ -266,9 +289,10 @@ public class Alien extends Sprite {
                 } else {
                     this.state = AlienState.PATROLLING;
                 }
-                ;
+
                 break;
             case PATROLLING:
+                staticPreviousState = state;
                 // If we're at the current waypoint the new goal is the next waypoint
                 if (this.position.equals(waypoints.get(waypointIndex))) {
                     waypointIndex = (waypointIndex + 1) % waypoints.size();
@@ -281,11 +305,24 @@ public class Alien extends Sprite {
                 }
 
                 break;
+            case STUCK:
+                stuckTimer += delta;
+                stuck = true;
+                if(stuckTimer > 10) {
+                    stuckRemove = true;
+                    stuck = false;
+                    this.state = staticPreviousState;
+                    stuckTimer = 0;
+                }
+                break;
+
         }
 
         changeSprite(goal);
         // Move towards current goal
-        moveTowardGoal(delta, goal);
+        if(!stuck) {
+            moveTowardGoal(delta, goal);
+        }
 
        // Report any seen trucks
         reportSeenTrucks(fireTrucks);
@@ -444,24 +481,23 @@ public class Alien extends Sprite {
             mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         }
         */
-
-        if(previousState == state) {
-        } else {
-            if(previousState == AlienState.PATROLLING) {
-                //state change to pursue
-                seen = true;
+        if(!stuck) {
+            if (previousState == state) {
             } else {
-                //pursue state | state change to patrol
-                if(masterFortress.isSeenTruckDead()) {
-                    //default
-                } else {
-                    lost = true;
+                if (previousState == AlienState.PATROLLING) {
+                    seen = true;
+                } else if (previousState == AlienState.PURSUING) {
+                    if (masterFortress.isSeenTruckDead()) {
+                    } else {
+                        lost = true;
+                    }
                 }
+                previousState = state;
             }
-            previousState = state;
         }
-
-        if(seen) {
+            if(stuck) {
+                mapBatch.draw(notHappy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            } else if(seen) {
             timer += delta;
             mapBatch.draw(surprise, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
             if(timer >= 2) {
@@ -482,7 +518,6 @@ public class Alien extends Sprite {
                 masterFortress.setSeenTruckDead(false);
                 timer = 0.0f;
             }
-
         } else if(state == AlienState.PATROLLING) {
             mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         } else {
@@ -520,6 +555,7 @@ public class Alien extends Sprite {
         }
     }
 
+
     public Vector2 getPosition() { return this.position;}
 
     public float getHP() {
@@ -555,5 +591,22 @@ public class Alien extends Sprite {
 
     public int getWaypointIndex() { return this.waypointIndex; }
 
+    public void setState(AlienState state) {
+        this.state = state;
+    }
+
     public AlienState getState() { return state; }
+    public void setStuckPos(Vector2 stuckPos) {
+        this.stuckPos = stuckPos;
+    }
+    public Vector2 getStuckPos() {return stuckPos;}
+
+    public boolean isStuckRemove() {
+        return stuckRemove;
+    }
+
+    public void setStuckRemove(boolean stuckRemove) {
+        this.stuckRemove = stuckRemove;
+    }
+
 }
