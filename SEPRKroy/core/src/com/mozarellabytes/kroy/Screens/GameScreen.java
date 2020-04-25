@@ -82,12 +82,11 @@ public class GameScreen implements Screen {
     /** creat the fire station */
     private final FireStation station;
 
-    /** creat the truck which stay in the station */
-    // This should never have existed
-//    private final FireTruck stationTruck;
-
-    /**Creat the crazy Alien*/
-    private Alien crazyAlien;
+    /**
+     * #Assessment4
+     * The mothership is the ET the comes to destroy the firestation
+     */
+    private Mothership mothership;
 
     /**Control the start screen shake time, reset the screen position*/
     private int ini_shake = 0;
@@ -147,17 +146,17 @@ public class GameScreen implements Screen {
 
     public static final int STATION_X = 3;
     public static final int STATION_Y = 8;
-    private PathFinder pathFinder;
 
+    private PathFinder pathFinder;
     public PowerUps powerUps;
-    public GameScreen(Kroy game) {
+
+    public GameScreen(Kroy game, int difficulty) {
         pathFinder = new PathFinder(this);
 
         SoundFX.stopMusic();
         ArrayList<Vector2> vertices = new ArrayList<>();
         this.game = game;
 
-        crazyAlien = null;
         stationExists = true;
 
         state = PlayState.PLAY;
@@ -179,6 +178,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(new GameInputHandler(this, gui));
 
         gameState = new GameState();
+        gameState.setDifficulty(difficulty);
         camShake = new CameraShake();
 
         //Orders renderer to start rendering the background, then the player layer, then structures
@@ -189,6 +189,7 @@ public class GameScreen implements Screen {
                 mapLayers.getIndex("transparentStructures")};
 
         station = new FireStation(STATION_X, STATION_Y);
+        mothership = new Mothership(this);
 
         // Instantiate a dummy fireTruck at the position (5, 8) for the crazy alien to aim at and attack.
         // stationTruck = new FireTruck(this, new Vector2(5,8), FireTruckType.Station);
@@ -218,117 +219,59 @@ public class GameScreen implements Screen {
          */
 
         aliens = new Queue<>();
-//        vertices.add(new Vector2(13,7));
-//        vertices.add(new Vector2(18,11));
-//        vertices.add(new Vector2(13,11));
-//        aliens.addLast(new Alien(13f, 7f, vertices, 0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
+        vertices.add(new Vector2(13,7));
+        vertices.add(new Vector2(18,11));
+        vertices.add(new Vector2(13,11));
+        aliens.addLast(new Alien(13f, 7f, vertices, 0f, fortresses.get(0), this.pathFinder));
+        vertices.clear();
+
         vertices.add(new Vector2(8,5));
-        vertices.add(new Vector2(13,5));
         vertices.add(new Vector2(13,1));
-        vertices.add(new Vector2(4,1));
         vertices.add(new Vector2(4,4));
-        vertices.add(new Vector2(8,4));
-        vertices.add(new Vector2(8,5));
         aliens.addLast(new Alien(8f,5f,vertices,0f, fortresses.get(0), this.pathFinder));
-//
-//        vertices.clear();
-//        vertices.add(new Vector2(28,5));
-//        vertices.add(new Vector2(31,5));
-//        vertices.add(new Vector2(31,6));
-//        vertices.add(new Vector2(35,6));
-//        vertices.add(new Vector2(35,4));
-//        vertices.add(new Vector2(40,4));
-//        vertices.add(new Vector2(40,6));
-//        vertices.add(new Vector2(48,6));
-//        vertices.add(new Vector2(48,1));
-//        vertices.add(new Vector2(40,1));
-//        vertices.add(new Vector2(35,1));
-//        vertices.add(new Vector2(32,1));
-//        vertices.add(new Vector2(32,2));
-//        vertices.add(new Vector2(28,2));
-//        vertices.add(new Vector2(28,5));
-//        aliens.addLast(new Alien(28f,5f,vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
-//        vertices.add(new Vector2(48,28));
-//        vertices.add(new Vector2(44,28));
-//        vertices.add(new Vector2(44,26));
-//        vertices.add(new Vector2(47,26));
-//        vertices.add(new Vector2(44,26));
-//        vertices.add(new Vector2(44,24));
-//        vertices.add(new Vector2(48,24));
-//        vertices.add(new Vector2(44,24));
-//        vertices.add(new Vector2(44,26));
-//        vertices.add(new Vector2(47,26));
-//        vertices.add(new Vector2(44,26));
-//        vertices.add(new Vector2(44,28));
-//        vertices.add(new Vector2(48,28));
-//        aliens.addLast(new Alien(48f,28f,vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
-//        vertices.add(new Vector2(26,28));
-//        vertices.add(new Vector2(37,28));
-//        vertices.add(new Vector2(37,23));
-//        vertices.add(new Vector2(34,23));
-//        vertices.add(new Vector2(34,28));
-//        vertices.add(new Vector2(30,28));
-//        vertices.add(new Vector2(30,23));
-//        vertices.add(new Vector2(26,23));
-//        vertices.add(new Vector2(26,28));
-//        aliens.addLast(new Alien(26f,28f,vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
-//        vertices.add(new Vector2(17,28));
-//        vertices.add(new Vector2(17,21));
-//        vertices.add(new Vector2(14,21));
-//        vertices.add(new Vector2(14,16));
-//        vertices.add(new Vector2(12,16));
-//        vertices.add(new Vector2(12,22));
-//        vertices.add(new Vector2(8,22));
-//        vertices.add(new Vector2(8,28));
-//        vertices.add(new Vector2(17,28));
-//        aliens.addLast(new Alien(10f,28f,vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
-//        vertices.add(new Vector2(10,18));
-//        vertices.add(new Vector2(10,16));
-//        vertices.add(new Vector2(8,16));
-//        vertices.add(new Vector2(8,14));
-//        vertices.add(new Vector2(2,14));
-//        vertices.add(new Vector2(2,17));
-//        vertices.add(new Vector2(5,17));
-//        vertices.add(new Vector2(5,18));
-//        vertices.add(new Vector2(10,18));
-//        aliens.addLast(new Alien(10f,18f,vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
-//        vertices.add(new Vector2(45,18));
-//        vertices.add(new Vector2(45,15));
-//        vertices.add(new Vector2(41,15));
-//        vertices.add(new Vector2(41,18));
-//        vertices.add(new Vector2(45,18));
-//        aliens.addLast(new Alien(45f, 18f, vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
-//        vertices.add(new Vector2(42,13));
-//        vertices.add(new Vector2(42,9));
-//        vertices.add(new Vector2(37,9));
-//        vertices.add(new Vector2(37,8));
-//        vertices.add(new Vector2(36,8));
-//        vertices.add(new Vector2(32,8));
-//        vertices.add(new Vector2(32,13));
-//        vertices.add(new Vector2(42,13));
-//        aliens.addLast(new Alien(42f, 13f, vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
-//
 
-//        vertices.add(new Vector2(2.9f,25));
-//        vertices.add(new Vector2(2.9f,6));
-//        crazyAlien = (new Alien(2.9f,30f, vertices,0.0175f, fortresses.get(0), this.pathFinder));
-//        crazyAlien.getAttackHandler().setCrazy();
+        vertices.clear();
+        vertices.add(new Vector2(28,5));
+        vertices.add(new Vector2(40,4));
+        vertices.add(new Vector2(35,1));
+        vertices.add(new Vector2(32,2));
+        aliens.addLast(new Alien(28f,5f,vertices,0f, fortresses.get(0), this.pathFinder));
+        vertices.clear();
 
+//        vertices.add(new Vector2(44,26));
+//        vertices.add(new Vector2(8, 5));
+//        aliens.addLast(new Alien(44f,26f,vertices,0f, fortresses.get(0), this.pathFinder));
+//        vertices.clear();
+
+        vertices.add(new Vector2(26,28));
+        vertices.add(new Vector2(34,23));
+        vertices.add(new Vector2(26,23));
+        aliens.addLast(new Alien(26f,28f,vertices,0f, fortresses.get(0), this.pathFinder));
+        vertices.clear();
+
+        vertices.add(new Vector2(17,28));
+        vertices.add(new Vector2(14,16));
+        vertices.add(new Vector2(8,22));
+        aliens.addLast(new Alien(10f,28f,vertices,0f, fortresses.get(0), this.pathFinder));
+        vertices.clear();
+
+        vertices.add(new Vector2(10,18));
+        vertices.add(new Vector2(8,14));
+        vertices.add(new Vector2(5,17));
+        vertices.add(new Vector2(5,18));
+        aliens.addLast(new Alien(10f,18f,vertices,0f, fortresses.get(0), this.pathFinder));
+        vertices.clear();
+
+        vertices.add(new Vector2(45,18));
+        vertices.add(new Vector2(41,18));
+        vertices.add(new Vector2(45,18));
+        aliens.addLast(new Alien(45f, 18f, vertices,0f, fortresses.get(0), this.pathFinder));
+        vertices.clear();
+
+        vertices.add(new Vector2(42,13));
+        vertices.add(new Vector2(37,8));
+        vertices.add(new Vector2(32,13));
+        aliens.addLast(new Alien(42f, 13f, vertices,0f, fortresses.get(0), this.pathFinder));
         vertices.clear();
 
         // Set the origin point to which all of the polygon's local vertices are relative to.
@@ -349,12 +292,12 @@ public class GameScreen implements Screen {
 
     // Alternate constructor from savegame
     public GameScreen(Kroy game, Save save) {
+        pathFinder = new PathFinder(this);
         SoundFX.stopMusic();
         Queue<Vector2> vertices;
         vertices = new Queue<>();
         this.game = game;
 
-        crazyAlien = null;
         stationExists = true;
 
         state = PlayState.PAUSE;
@@ -384,6 +327,7 @@ public class GameScreen implements Screen {
                 mapLayers.getIndex("transparentStructures")};
 
         station = new FireStation(this, save.station);
+        mothership = new Mothership(this);
 
         fortresses = new ArrayList<>();
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
@@ -405,7 +349,7 @@ public class GameScreen implements Screen {
 
         aliens = new Queue();
         for (SaveAlien a : save.aliens) {
-            aliens.addLast(new Alien(a));
+            aliens.addLast(new Alien(a, fortresses.get(0), this.pathFinder));
 
         }
 
@@ -424,6 +368,8 @@ public class GameScreen implements Screen {
             SoundFX.sfx_soundtrack.setVolume(.5f);
             SoundFX.sfx_soundtrack.play();
         }
+
+        powerUps = new PowerUps(save, mapBatch);
     }
 
     @Override
@@ -464,8 +410,8 @@ public class GameScreen implements Screen {
 
         mapBatch.begin();
         mapBatch.setShader(shader);
-
-
+        powerUps.drawStickyRoad();
+        powerUps.setInvisibleTimer(delta);
 
 
 
@@ -497,6 +443,9 @@ public class GameScreen implements Screen {
             alien.drawSprite(mapBatch,1,1, delta);
         }
 
+        //#Assessment4
+        mothership.draw(mapBatch);
+
         if(fireStationExist()) {
 //            crazyAlien.drawSpriteCrazyAlien(mapBatch, 5, 5,explosions);
         }
@@ -508,7 +457,8 @@ public class GameScreen implements Screen {
         }
         explosions.removeAll(explosionsToRemove);
 
-        powerUps.spawnPowerUps();
+        powerUps.spawnPowerUps(delta);
+
         if(selectedEntity != null && selectedEntity instanceof FireTruck) {
             powerUps.ItemBoxUpdate();
         }
@@ -558,6 +508,8 @@ public class GameScreen implements Screen {
         }
         gui.renderButtons();
         gui.renderClock(flag);
+        gui.renderPowerUpText();
+        gui.renderDifficultyText();
     }
 
 
@@ -573,8 +525,8 @@ public class GameScreen implements Screen {
 
         station.restoreTrucks();
         station.checkForCollisions();
+        mothership.update(delta);
         gameState.setTrucksInAttackRange(0);
-
 //        if (gui.getCountClock() != null) {
 //            if (gui.getCountClock().hasEnded()) {
 //                if (crazyAlien.getPosition().y > 9) {
@@ -598,7 +550,21 @@ public class GameScreen implements Screen {
 //        }
 
         //#Assessment3
-        for(Alien alien:aliens){
+
+
+        for(Alien alien:aliens) {
+            for (Vector2 pos: powerUps.getStickyRoadPositions()) {
+                if(round(alien.getPosition().x, 2) == pos.x && round(alien.getPosition().y, 2) == pos.y){
+                    alien.setState(AlienState.STUCK);
+                    alien.setStuckPos(pos);
+                }
+            }
+            if(alien.isStuckRemove()) {
+                powerUps.removeStickyRoad(alien.getStuckPos());
+                alien.setStuckRemove(false);
+                //really bad fix
+                alien.setPosition(alien.getPosition().x +0.05f, alien.getPosition().y + 0.05f);
+            }
             alien.move(delta, station.getTrucks());
         }
 
@@ -621,8 +587,9 @@ public class GameScreen implements Screen {
             FireTruck truck = station.getTruck(i);
 
             truck.move();
+            truck.onHiddenTile();
             truck.updateSpray();
-            System.out.print((truck.getType()));
+            //System.out.print((truck.getType()));
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
                 if(!truck.isInvisible()) {
@@ -688,7 +655,6 @@ public class GameScreen implements Screen {
                     if (SoundFX.music_enabled) {
                         // play sound
                     }
-                    //[;ay aniation
                     powerUps.Resurrection(truck);
                 }
             }
@@ -723,6 +689,10 @@ public class GameScreen implements Screen {
             else {
                 SoundFX.stopTruckAttack();
             }
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+            mothership.doStationDestruction(new Vector2(0 ,0), new Vector2(10, 10), 1000f);
         }
 
 
@@ -870,7 +840,7 @@ public class GameScreen implements Screen {
      * Called when the mothership has reached the firestation
      */
     public void destroyStation() {
-
+        this.station.destroy();
     }
 
     /** Toggles between Play and Pause state when the Pause button is clicked */
@@ -906,6 +876,10 @@ public class GameScreen implements Screen {
 
     public void saveState() {
         game.setScreen(new SaveScreen(game, this));
+    }
+    private double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 }
 
