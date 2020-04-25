@@ -57,12 +57,23 @@ public class SaveManager {
      */
     public static Save saveFromGame(GameScreen g, String name) {
         Save s = new Save();
-
         // Add name
         s.saveName = name;
 
         // Add GameState
         s.gameState = g.gameState;
+
+        //AddPowerUps
+        SavePowerUps powerUps = new SavePowerUps();
+        powerUps.powerUpPositionSpawn = g.powerUps.getPowerUpPositionSpawn();
+        powerUps.itemBoxSpawn = g.powerUps.getItemBoxSpawn();
+        powerUps.stickyRoadPositions = g.powerUps.getStickyRoadPositions();
+        powerUps.state = g.powerUps.getState();
+        powerUps.leftstate = g.powerUps.getLeftstate();
+        powerUps.rightstate = g.powerUps.getRightstate();
+        powerUps.spawning = g.powerUps.isSpawning();
+        powerUps.isInvisTimer = g.powerUps.isInvisibleTimer();
+        s.powerUps = powerUps;
 
         // Add station
         s.station = new SaveStation();
@@ -78,6 +89,8 @@ public class SaveManager {
             saveFiretruck.y = f.getPosition().y;
             saveFiretruck.HP = f.getHP();
             saveFiretruck.type = f.type;
+            saveFiretruck.hasResurrection = f.hasResurrection();
+            saveFiretruck.isInvisible = f.isInvisible();
             s.station.trucks.add(saveFiretruck);
         }
 
@@ -92,6 +105,8 @@ public class SaveManager {
             saveAlien.speed = a.getSpeed();
             saveAlien.waypoints = a.getWaypoints();
             saveAlien.waypointIndex = a.getWaypointIndex();
+            saveAlien.toPosition = a.getToPosition();
+            saveAlien.fromPosition = a.getFromPosition();
             saveAlien.state = a.getState();
             s.aliens.add(saveAlien);
         }
