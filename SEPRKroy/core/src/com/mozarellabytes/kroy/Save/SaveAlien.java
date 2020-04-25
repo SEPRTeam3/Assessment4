@@ -11,8 +11,6 @@ public class SaveAlien {
     public float y;
     public float HP;
     public float speed;
-    public Vector2 toPosition;
-    public Vector2 fromPosition;
     public List<Vector2> waypoints;
     public int waypointIndex;
     public Vector2 goal;

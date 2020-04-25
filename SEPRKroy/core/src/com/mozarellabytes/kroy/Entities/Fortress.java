@@ -41,7 +41,13 @@ public class Fortress {
     private List<FireTruck> seenTrucks;
     private List<Alien> fortressAliens;
 
+    public boolean isSeenTruckDead() {
+        return seenTruckDead;
+    }
 
+    public void setSeenTruckDead(boolean seenTruckDead) {
+        this.seenTruckDead = seenTruckDead;
+    }
 
     private boolean seenTruckDead;
 
@@ -150,10 +156,5 @@ public class Fortress {
     //#Assessment 4
     public void addFortressAlien(Alien a) {
         this.fortressAliens.add(a);
-    }
-
-    public boolean isSeenTruckDead() { return seenTruckDead; }
-    public void setSeenTruckDead(boolean seenTruckDead) {
-        this.seenTruckDead = seenTruckDead;
     }
 }

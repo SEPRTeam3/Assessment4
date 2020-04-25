@@ -7,6 +7,4 @@ public class SaveFiretruck {
     public float y;
     public float HP;
     public FireTruckType type;
-    public boolean hasResurrection;
-    public boolean isInvisible;
 }

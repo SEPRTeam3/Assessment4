@@ -14,9 +14,6 @@ import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * FireTruck is an entity that the player controls. It navigates the map on the
@@ -99,15 +96,6 @@ public class FireTruck extends Sprite {
     /** If the truck will be resurrected on death */
     private boolean hasResurrection;
 
-    private final Set<Vector2> hiddenSpots = new HashSet<>(new ArrayList<>(
-            Arrays.asList(
-                    new Vector2(7,2),
-                    new Vector2(4,18),
-                    new Vector2(48,26),
-                    new Vector2(33,2),
-                    new Vector2(29,20),
-                    new Vector2(15,16)
-            )));
     /**
      * Constructs a new FireTruck at a position and of a certain type
      * which have been passed in
@@ -156,8 +144,6 @@ public class FireTruck extends Sprite {
         this.moving = false;
         this.attacking = false;
         this.inCollision = false;
-        this.isInvisible = s.isInvisible;
-        this.hasResurrection = s.hasResurrection;
         this.spray = new ArrayList();
         this.lookLeft = new Texture(Gdx.files.internal("sprites/firetruck/left.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/firetruck/right.png"));
@@ -259,15 +245,7 @@ public class FireTruck extends Sprite {
         }
         return false;
     }
-    public void onHiddenTile() {
-        if(hiddenSpots.contains(roundedPosition())) {
-            setInvisible(true);
-        } else {
-            if(!gameScreen.powerUps.isInvisibleTimer()) {
-                setInvisible(false);
-            }
-        }
-    }
+
     /**
      * Changes the direction of the truck depending on the previous tile and the next tile
      *
@@ -475,9 +453,7 @@ public class FireTruck extends Sprite {
     public void setCollision() {
         this.inCollision = true;
     }
-    public Vector2 roundedPosition(){
-        return new Vector2(Math.round(position.x), Math.round(position.y));
-    }
+
     public Vector2 getPosition() {
         return this.position;
     }

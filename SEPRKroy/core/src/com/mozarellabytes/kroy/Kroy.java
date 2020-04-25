@@ -26,14 +26,11 @@ public class Kroy extends Game {
 	public BitmapFont font50;
 	public BitmapFont font25;
 	public BitmapFont font33;
-	public BitmapFont font33Custom;
 	public BitmapFont font33Red;
-	public BitmapFont font60Purple;
-	public BitmapFont font60Black;
-	public BitmapFont font60Custom;
+
 	@Override
 	public void create () {
-//		Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+		Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
@@ -53,17 +50,9 @@ public class Kroy extends Game {
 		font25 = generator.generateFont(parameter);
 		parameter.size = 33;
 		font33 = generator.generateFont(parameter);
+		parameter.size = 33;
 		parameter.color = Color.FIREBRICK;
 		font33Red = generator.generateFont(parameter);
-		parameter.color = Color.MAROON;
-		font33Custom = generator.generateFont(parameter);
-		parameter.color = Color.BLACK;
-		parameter.size = 60;
-		font60Black = generator.generateFont(parameter);
-		parameter.color = Color.MAROON;
-		font60Purple = generator.generateFont(parameter);
-		parameter.color = Color.SALMON;
-		font60Custom = generator.generateFont(parameter);
 
 		this.setScreen(new SplashScreen(this));
 	}
@@ -82,11 +71,7 @@ public class Kroy extends Game {
 		font26.dispose();
 		font33.dispose();
 		font33Red.dispose();
-		font33Custom.dispose();
 		font50.dispose();
 		font60.dispose();
-		font60Black.dispose();
-		font60Purple.dispose();
-		font60Custom.dispose();
 	}
 }

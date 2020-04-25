@@ -1,8 +1,6 @@
 package com.mozarellabytes.kroy.Utilities;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.mozarellabytes.kroy.Screens.LevelScreen;
 
 public class LevelScreenInputHandler implements InputProcessor {
@@ -34,31 +32,11 @@ public class LevelScreenInputHandler implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        Vector2 clickCoordinates = new Vector2(screenX, screenY);
-        Vector3 position = levelScreen.camera.unproject(new Vector3(clickCoordinates.x, clickCoordinates.y, 0));
-
-        if(levelScreen.getHardButton().contains(position.x, position.y)) {
-            levelScreen.clickedHardButton();
-        } else if(levelScreen.getMediumButton().contains(position.x, position.y)){
-            levelScreen.clickedMediumButton();
-        } else if(levelScreen.getEasyButton().contains(position.x, position.y)){
-            levelScreen.clickedEasyButton();
-        }
-        return true;
+        return false;
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        Vector2 clickCoordinates = new Vector2(screenX, screenY);
-        Vector3 position = levelScreen.camera.unproject(new Vector3(clickCoordinates.x, clickCoordinates.y, 0));
-
-        if(levelScreen.getHardButton().contains(position.x, position.y) || levelScreen.getMediumButton().contains(position.x, position.y) || levelScreen.getEasyButton().contains(position.x, position.y)) {
-            levelScreen.toGameScreen();
-        } else {
-            levelScreen.Idle();
-        }
-        return true;
-    }
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {return false;}
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer){return false;}

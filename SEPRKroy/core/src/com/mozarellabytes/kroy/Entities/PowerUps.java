@@ -4,13 +4,39 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.mozarellabytes.kroy.Save.Save;
 
 import java.util.*;
 
 public class PowerUps extends Sprite {
 
+/*
+Positions for new map
+(35,20)
+(11,29)
+(11,12)
+(11,2)
+(47,5)
+(32,8)
+Spawn over time
+Random locations
+Mario Kart music
+Weight randomness of item box
+Common Healing/Refill commmon
+epic Sticky and
+legendary Rez
+rarity symbol
+
+Key to use them
+
+two boxes right?
+ */
+
+//initialise first spawn;//Random random = new Random();
+//int oneTwoThree = random.nextInt(3) + 1;
+
+    /**
+     * Set of item box textures, packed for animation
+     */
     private TextureAtlas item_texture_atlas;
     private Animation<TextureRegion> item_animation;
     private float elapsedTime;
@@ -22,49 +48,23 @@ public class PowerUps extends Sprite {
     private final Texture invisibility_texture;
     private final Texture empty_texture;
 
-    private final Texture sticky_road_tile_texture;
-
-    private final Set<Vector2> powerUpPositions = new HashSet<>(new ArrayList<>(
+    private final Set<Vector2> powerUpPositions = new HashSet<>(new ArrayList<Vector2>(
             Arrays.asList(
                     new Vector2(3,7),
                     new Vector2(2,7),
                     new Vector2(4,7),
-                    new Vector2(32,7),
-                    new Vector2(20,21),
-                    new Vector2(29,15)
+                    new Vector2(11,2),
+                    new Vector2(3,5),
+                    new Vector2(20,8)
             )));
 
-    public HashMap<String, Boolean> powerUpPositionSpawn = new HashMap<>();
+    public HashMap<Vector2, Boolean> powerUpPositionSpawn = new HashMap<>();
     public HashMap<String, Boolean> itemBoxSpawn = new HashMap<>();
-
-    public ArrayList<Vector2> getStickyRoadPositions() {
-        return stickyRoadPositions;
-    }
-
-    private ArrayList<Vector2> stickyRoadPositions = new ArrayList<>();
 
     private String box;
     private Batch mapBatch;
 
-    public boolean isSpawningText() {
-        return SpawningText;
-    }
-    public boolean isSpawning() {
-        return Spawning;
-    }
-
-    private boolean Spawning;
-    private boolean SpawningText = false;
-
-
-
-    public PowerUp getLeftstate() {
-        return leftstate;
-    }
-
-    public PowerUp getRightstate() {
-        return rightstate;
-    }
+    private boolean Spawning = true;
 
     private PowerUp state;
     private PowerUp leftstate;
@@ -82,24 +82,6 @@ public class PowerUps extends Sprite {
     public Vector2 leftItemPosition;
     public Vector2 rightItemPosition;
 
-    private float Timer = 0;
-    private float invisibleTimer = 0;
-
-    private boolean invisibleTimerBool;
-
-    public HashMap<String, Boolean> getPowerUpPositionSpawn() {
-        return powerUpPositionSpawn;
-    }
-
-    public HashMap<String, Boolean> getItemBoxSpawn() {
-        return itemBoxSpawn;
-    }
-
-    public PowerUp getState() {
-        return state;
-    }
-
-    private boolean loadFromSave = false;
     public PowerUps(Batch mapBatch) {
         //super(new Texture(Gdx.files.internal("container.png")));
 
@@ -109,14 +91,13 @@ public class PowerUps extends Sprite {
         this.resurrection_texture = new Texture(Gdx.files.internal("resurrection.png"));
         this.invisibility_texture = new Texture(Gdx.files.internal("Invisible.png"));
         this.empty_texture = new Texture(Gdx.files.internal("container.png"));
-        this.sticky_road_tile_texture = new Texture(Gdx.files.internal("stickyRoadTile.png"));
 
-        powerUpPositionSpawn.put("(3.0,7.0)", false);
-        powerUpPositionSpawn.put("(2.0,7.0)", false);
-        powerUpPositionSpawn.put("(4.0,7.0)", false);
-        powerUpPositionSpawn.put("(32.0,7.0)", false);
-        powerUpPositionSpawn.put("(20.0,21.0)", false);
-        powerUpPositionSpawn.put("(29.0,15.0)", false);
+        powerUpPositionSpawn.put(new Vector2(3,7), false);
+        powerUpPositionSpawn.put(new Vector2(2,7), false);
+        powerUpPositionSpawn.put(new Vector2(4,7), false);
+        powerUpPositionSpawn.put(new Vector2(11,2), false);
+        powerUpPositionSpawn.put(new Vector2(3,5), false);
+        powerUpPositionSpawn.put(new Vector2(20,8), false);
 
         itemBoxSpawn.put("Left", false);
         itemBoxSpawn.put("Right", false);
@@ -125,93 +106,35 @@ public class PowerUps extends Sprite {
         leftstate = PowerUp.EMPTY;
         rightstate = PowerUp.EMPTY;
 
-        leftItemPosition = new Vector2(0.3f,20);
-        rightItemPosition = new Vector2(2.3f,20);
+        leftItemPosition = new Vector2(1.5f,20);
+        rightItemPosition = new Vector2(3.5f,20);
 
         item_texture_atlas = new TextureAtlas(Gdx.files.internal("Atlas'/ItemFrame.atlas"));
         item_animation = new Animation<>(.5f, item_texture_atlas.findRegions("ItemFrame"));
 
-        Spawning = true;
-        loadFromSave = false;
-        invisibleTimerBool = false;
-
         this.mapBatch = mapBatch;
     }
 
-    public PowerUps(Save save, Batch mapBatch) {
-        this.health_pack_texture = new Texture(Gdx.files.internal("HealthUp.png"));
-        this.refill_pack_texture = new Texture(Gdx.files.internal("refill.png"));
-        this.sticky_road_texture = new Texture(Gdx.files.internal("stickyRoad.png"));
-        this.resurrection_texture = new Texture(Gdx.files.internal("resurrection.png"));
-        this.invisibility_texture = new Texture(Gdx.files.internal("Invisible.png"));
-        this.empty_texture = new Texture(Gdx.files.internal("container.png"));
-        this.sticky_road_tile_texture = new Texture(Gdx.files.internal("stickyRoadTile.png"));
-
-        item_texture_atlas = new TextureAtlas(Gdx.files.internal("Atlas'/ItemFrame.atlas"));
-        item_animation = new Animation<>(.5f, item_texture_atlas.findRegions("ItemFrame"));
-
-        leftItemPosition = new Vector2(0.3f,20);
-        rightItemPosition = new Vector2(2.3f,20);
-
-        powerUpPositionSpawn = save.powerUps.powerUpPositionSpawn;
-        itemBoxSpawn = save.powerUps.itemBoxSpawn;
-        stickyRoadPositions = save.powerUps.stickyRoadPositions;
-        state = save.powerUps.state;
-        leftstate = save.powerUps.leftstate;
-        rightstate = save.powerUps.rightstate;
-
-        loadFromSave = true;
-        invisibleTimerBool = save.powerUps.isInvisTimer;
-        this.mapBatch = mapBatch;
-    }
-    public Vector2 fromString (String v) {
-        int s = v.indexOf(',', 1);
-        if (s != -1 && v.charAt(0) == '(' && v.charAt(v.length() - 1) == ')') {
-            try {
-                float x = Float.parseFloat(v.substring(1, s));
-                float y = Float.parseFloat(v.substring(s + 1, v.length() - 1));
-                return new Vector2(x,y);
-            } catch (NumberFormatException ex) {
-                // Throw a GdxRuntimeException
-            }
-        }
-        throw new GdxRuntimeException("Malformed Vector2: " + v);
-    }
-
-    public void spawnPowerUps(float delta) {
+    public void spawnPowerUps() {
         //On clock tick or whatever set Spawing true
         int spawnCount = 0;
-
         for(Map.Entry entry : powerUpPositionSpawn.entrySet()) {
             spawnCount++;
             boolean isSpawn = (boolean) entry.getValue();
-            String key = (String) entry.getKey();
+            Vector2 key = (Vector2) entry.getKey();
 
             if(!isSpawn) {
                 if(Spawning) {
-                    drawSprite(mapBatch, fromString(key), 1, 1);
+                    drawSprite(mapBatch, key, 1, 1);
                     powerUpPositionSpawn.replace(key, true);
                 }
             } else {
-                drawSprite(mapBatch, fromString(key), 1, 1);
+                drawSprite(mapBatch, key, 1, 1);
             }
 
-            if(spawnCount >=6) {
+            if(spawnCount >=6){
                 Spawning = false;
             }
-        }
-
-        if(!Spawning) {
-            Timer += delta;
-            if(Timer >= 52) {
-                SpawningText = true;
-                if(Timer >= 55) {
-                    SpawningText = false;
-                    Timer = 0;
-                    Spawning = true;
-                }
-            }
-
         }
     }
 
@@ -221,13 +144,13 @@ public class PowerUps extends Sprite {
         Vector2 truckPos = new Vector2(Math.round(truck.getPosition().x), Math.round(truck.getPosition().y));
         if(powerUpPositions.contains(truckPos)) {
             //if it is a valid point
-            System.out.print(truckPos.toString());
-            if(powerUpPositionSpawn.get(truckPos.toString())) {
+            if(powerUpPositionSpawn.get(truckPos)) {
                 if(itemBoxSpawn.get("Left") && itemBoxSpawn.get("Right")) {
                    //Both boxes are full
+                    //Probs print something to the screen saying item box full
                 } else {
                     PickUpPowerUp(truck);
-                    powerUpPositionSpawn.replace(truckPos.toString(), false);
+                    powerUpPositionSpawn.replace(truckPos, false);
                 }
             } else {
                 //no power up
@@ -245,16 +168,23 @@ public class PowerUps extends Sprite {
         Random random = new Random();
         int rand = random.nextInt(100) + 1;
 
+        System.out.print("/n" + "      "    + rand + "      " + "/n");
 
         if(rand <= 30) {
+            //pick up health
+
             this.state = PowerUp.HEALTHPACK;
         } else if(rand <= 55){
+            //pick up refill
             this.state = PowerUp.REFILLPACK;
         } else if (rand <= 75){
+            //pick up sticky
             this.state = PowerUp.STICKYROAD;
         } else if (rand <= 90){
+            //pick up ivivisable
             this.state = PowerUp.INVISIBILITY;
         } else {
+            //pick up resuurection
             this.state = PowerUp.RESURRECTION;
             rez.setResurrection(true);
         }
@@ -274,23 +204,13 @@ public class PowerUps extends Sprite {
         TextureRegion currentFrame = item_animation.getKeyFrame(elapsedTime, true);
         mapBatch.draw(currentFrame, position.x, position.y, width, height);
     }
-
-    public void drawStickyRoad() {
-        for(Vector2 pos: stickyRoadPositions) {
-            mapBatch.draw(sticky_road_tile_texture, pos.x, pos.y, 1, 1);
-        }
-    }
-    public void removeStickyRoad(Vector2 position) {
-        stickyRoadPositions.remove(position);
-    }
-
     public void ItemBoxUpdate() {
-
         for (Map.Entry entry : itemBoxSpawn.entrySet()) {
             boolean isSpawn = (boolean) entry.getValue();
             String key = (String) entry.getKey();
+
             if (isSpawn) {
-                if (key.contentEquals("Left")) {
+                if (key == "Left") {
                     state = leftstate;
                     drawItemBox(mapBatch, leftItemPosition, 2, 2);
                 } else {
@@ -301,8 +221,7 @@ public class PowerUps extends Sprite {
                 }
             } else {
                 state = PowerUp.EMPTY;
-
-                if (key.contentEquals("Left")) {
+                if (key == "Left") {
                     drawItemBox(mapBatch, leftItemPosition, 2, 2);
                 } else {
                     drawItemBox(mapBatch, rightItemPosition, 2, 2);
@@ -334,14 +253,14 @@ public class PowerUps extends Sprite {
     }
 
     public void usePowerUp(char key, FireTruck truck) {
-        if(key == '1') {
+        if(key == 'W') {
             PowerUpAction(leftstate, truck);
             String box = "Left";
             itemBoxSpawn.replace(box, false);
             state = PowerUp.EMPTY;
             leftstate = state;
 
-        } else if(key == '2') {
+        } else if(key == 'E') {
             PowerUpAction(rightstate, truck);
             String box = "Right";
             itemBoxSpawn.replace(box, false);
@@ -360,6 +279,7 @@ public class PowerUps extends Sprite {
                 itemBoxSpawn.replace("Right", false);
                 rightstate = PowerUp.EMPTY;
             } else {
+                //something wwent wrong
             }
 
     }
@@ -367,20 +287,26 @@ public class PowerUps extends Sprite {
     public void PowerUpAction(PowerUp state, FireTruck truck) {
         switch (state) {
             case HEALTHPACK:
+                truck.repair(50.0f);
+                if(truck.getHP() > 100) {
                     truck.setHP(truck.getType().getMaxHP());
+                }
                 break;
             case REFILLPACK:
+                truck.refill(50.0f);
+                if(truck.getReserve() > 100) {
                     truck.setReserve(truck.getType().getMaxReserve());
+                }
                 break;
             case STICKYROAD:
-                stickyRoadPositions.add(new Vector2(truck.getPosition().x, truck.getPosition().y));
+
                 break;
             case RESURRECTION:
             //maybe just get rid of it for an empty space
                 break;
             case INVISIBILITY:
+                //also do some cool effect like change the sprite
               truck.setInvisible(true);
-              invisibleTimerBool = true;
                 break;
             default:
 
@@ -402,21 +328,7 @@ public class PowerUps extends Sprite {
         return false
         }
      */
-
     public void dispose(){
         item_texture_atlas.dispose();
-    }
-    public boolean isInvisibleTimer() {
-        return invisibleTimerBool;
-    }
-
-    public void setInvisibleTimer(float delta) {
-        if(invisibleTimerBool) {
-            invisibleTimer += delta;
-            if (invisibleTimer > 10) {
-                invisibleTimer = 0;
-                invisibleTimerBool = false;
-            }
-        }
     }
 }
