@@ -35,7 +35,7 @@ public class SplashScreen implements Screen {
     public SplashScreen(Kroy game) {
         this.game = game;
         backGroundLogo1 = new Texture(Gdx.files.internal("images/SEPRet Studios Logo. Splashpng.png"));
-        backgroundLogo2 = new Texture(Gdx.files.internal("images/backgroundLogo.png"), true);
+        backgroundLogo2 = new Texture(Gdx.files.internal("images/backgroundLogo.jpg"), true);
         backgroundLogo2.setFilter(Texture.TextureFilter.MipMapLinearNearest, Texture.TextureFilter.MipMapLinearNearest);
         spriteBatchTransparency = 1;
     }
