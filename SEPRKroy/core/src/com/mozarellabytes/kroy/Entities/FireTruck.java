@@ -149,7 +149,7 @@ public class FireTruck extends Sprite {
         this.gameScreen = gameScreen;
         this.type = s.type;
         this.HP = s.HP;
-        this.reserve = type.getMaxReserve();
+        this.reserve = s.type.getMaxReserve();
         this.position = new Vector2(s.x, s.y);
         this.path = new Queue();
         this.trailPath = new Queue();

@@ -110,17 +110,12 @@ public class GameScreen implements Screen {
      * the large stats in the top left corner */
     public Object selectedEntity;
 
-    public PathFinder getPathFinder() {
-        return pathFinder;
-    }
-
 
     /** Play when the game is being played
      * Pause when the pause button is clicked */
     public enum PlayState {
         PLAY, PAUSE
     }
-
 
     /**
      * Check weather the station has been destroyed or not
@@ -148,6 +143,8 @@ public class GameScreen implements Screen {
     public static final int STATION_Y = 8;
 
     private PathFinder pathFinder;
+
+    //#Assessment4
     public PowerUps powerUps;
 
     public GameScreen(Kroy game, int difficulty) {
@@ -237,11 +234,6 @@ public class GameScreen implements Screen {
         vertices.add(new Vector2(32,2));
         aliens.addLast(new Alien(28f,5f,vertices,0f, fortresses.get(0), this.pathFinder));
         vertices.clear();
-
-//        vertices.add(new Vector2(44,26));
-//        vertices.add(new Vector2(8, 5));
-//        aliens.addLast(new Alien(44f,26f,vertices,0f, fortresses.get(0), this.pathFinder));
-//        vertices.clear();
 
         vertices.add(new Vector2(26,28));
         vertices.add(new Vector2(34,23));
@@ -410,12 +402,16 @@ public class GameScreen implements Screen {
 
         mapBatch.begin();
         mapBatch.setShader(shader);
+
+        //#Assessment4
         powerUps.drawStickyRoad();
+        //#Assessment4
         powerUps.setInvisibleTimer(delta);
 
 
 
         for (FireTruck truck : station.getTrucks()) {
+            //#Assessment4
             powerUps.OnPowerUpTile(truck);
 
             if(!truck.getVisualPosition().equals(new Vector2(9.5f,8.5f))) {
@@ -457,9 +453,11 @@ public class GameScreen implements Screen {
         }
         explosions.removeAll(explosionsToRemove);
 
+        //#Assessment4
         powerUps.spawnPowerUps(delta);
 
         if(selectedEntity != null && selectedEntity instanceof FireTruck) {
+            //#Assessment4
             powerUps.ItemBoxUpdate();
         }
         mapBatch.end();
@@ -508,6 +506,8 @@ public class GameScreen implements Screen {
         }
         gui.renderButtons();
         gui.renderClock(flag);
+
+        //#Assessment4
         gui.renderPowerUpText();
         gui.renderDifficultyText();
     }
@@ -549,10 +549,8 @@ public class GameScreen implements Screen {
 //            }
 //        }
 
-        //#Assessment3
-
-
         for(Alien alien:aliens) {
+            //#Assessment4
             for (Vector2 pos: powerUps.getStickyRoadPositions()) {
                 if(round(alien.getPosition().x, 2) == pos.x && round(alien.getPosition().y, 2) == pos.y){
                     alien.setState(AlienState.STUCK);
@@ -653,8 +651,9 @@ public class GameScreen implements Screen {
                     }
                 } else {
                     if (SoundFX.music_enabled) {
-                        // play sound
+
                     }
+                    //#Assessment4
                     powerUps.Resurrection(truck);
                 }
             }

@@ -498,6 +498,8 @@ public class GUI {
 
         game.batch.end();
     }
+
+    // #Assement4
     public void renderPowerUpText() {
         if (gameScreen.powerUps.isSpawningText()) {
             game.batch.setProjectionMatrix(pauseCamera.combined);
