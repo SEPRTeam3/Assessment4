@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Save.SaveFiretruck;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
@@ -88,15 +87,21 @@ public class FireTruck extends Sprite {
 
     /** #Assessement4
      * Texture for each direction the
-     * truck is facing whilst invisible*/
+     * truck is facing whilst invisible or has resurrection or both*/
     private final Texture lookLeftInvisible;
     private final Texture lookRightInvisible;
     private final Texture lookUpInvisible;
     private final Texture lookDownInvisible;
-
+    private final Texture lookLeftResurrection;
+    private final Texture lookRightResurrection;
+    private final Texture lookUpResurrection;
+    private final Texture lookDownResurrection;
+    private final Texture lookLeftMix;
+    private final Texture lookRightMix;
+    private final Texture lookUpMix;
+    private final Texture lookDownMix;
     //#Assessement4
     private boolean isInvisible;
-
     /** If the truck will be resurrected on death */
     private boolean hasResurrection;
 
@@ -140,6 +145,14 @@ public class FireTruck extends Sprite {
         this.lookRightInvisible = new Texture(Gdx.files.internal("sprites/firetruck/rightI.png"));
         this.lookDownInvisible = new Texture(Gdx.files.internal("sprites/firetruck/downI.png"));
         this.lookUpInvisible = new Texture(Gdx.files.internal("sprites/firetruck/upI.png"));
+        this.lookLeftResurrection =  new Texture(Gdx.files.internal("sprites/firetruck/leftH.png"));
+        this.lookRightResurrection = new Texture(Gdx.files.internal("sprites/firetruck/rightH.png"));
+        this.lookUpResurrection = new Texture(Gdx.files.internal("sprites/firetruck/upH.png"));
+        this.lookDownResurrection = new Texture(Gdx.files.internal("sprites/firetruck/downH.png"));
+        this.lookLeftMix = new Texture(Gdx.files.internal("sprites/firetruck/leftM.png"));
+        this.lookRightMix = new Texture(Gdx.files.internal("sprites/firetruck/rightM.png"));
+        this.lookUpMix = new Texture(Gdx.files.internal("sprites/firetruck/upM.png"));
+        this.lookDownMix = new Texture(Gdx.files.internal("sprites/firetruck/downM.png"));
     }
 
     /**
@@ -169,6 +182,14 @@ public class FireTruck extends Sprite {
         this.lookRightInvisible = new Texture(Gdx.files.internal("sprites/firetruck/rightI.png"));
         this.lookDownInvisible = new Texture(Gdx.files.internal("sprites/firetruck/downI.png"));
         this.lookUpInvisible = new Texture(Gdx.files.internal("sprites/firetruck/upI.png"));
+        this.lookLeftResurrection =  new Texture(Gdx.files.internal("sprites/firetruck/leftH.png"));
+        this.lookRightResurrection = new Texture(Gdx.files.internal("sprites/firetruck/rightH.png"));
+        this.lookUpResurrection = new Texture(Gdx.files.internal("sprites/firetruck/upH.png"));
+        this.lookDownResurrection = new Texture(Gdx.files.internal("sprites/firetruck/downH.png"));
+        this.lookLeftMix = new Texture(Gdx.files.internal("sprites/firetruck/leftM.png"));
+        this.lookRightMix = new Texture(Gdx.files.internal("sprites/firetruck/rightM.png"));
+        this.lookUpMix = new Texture(Gdx.files.internal("sprites/firetruck/upM.png"));
+        this.lookDownMix = new Texture(Gdx.files.internal("sprites/firetruck/downM.png"));
     }
 
     /**
@@ -176,7 +197,7 @@ public class FireTruck extends Sprite {
      * path
      */
     public void move() {
-        ChangeSpriteHidden();
+        ChangeSpriteTexture();
         if (moving) {
             if (this.path.size > 0) {
                 Vector2 nextTile = path.first();
@@ -187,7 +208,7 @@ public class FireTruck extends Sprite {
                 }
                 if (!this.inCollision) {
                     changeSprite(nextTile);
-                    ChangeSpriteHidden();
+                    ChangeSpriteTexture();
                 }
                 previousTile = nextTile;
                 path.removeFirst();
@@ -290,25 +311,48 @@ public class FireTruck extends Sprite {
             }
         }
     }
-    private void ChangeSpriteHidden() {
-        if(isInvisible) {
-            if(getTexture() == lookRight) {
+    private void ChangeSpriteTexture() {
+        String texture = getTexture().toString();
+        System.out.print(texture);
+        System.out.print("\n \n \n ugahpfinkdm \n \n \n ");
+        if(isInvisible && hasResurrection) {
+            if(texture.contains("right")) {
+                setTexture(lookRightMix);
+            } else if (texture.contains("up")) {
+                setTexture(lookUpMix);
+            } else if(texture.contains("left")){
+                setTexture(lookLeftMix);
+            } else if(texture.contains("down")) {
+                setTexture(lookDownMix);
+            }
+        } else if(isInvisible) {
+            if(texture.contains("right")) {
                 setTexture(lookRightInvisible);
-            } else if (getTexture() == lookUp) {
+            } else if (texture.contains("up")) {
                 setTexture(lookUpInvisible);
-            } else if(getTexture() == lookLeft){
+            } else if(texture.contains("left")){
                 setTexture(lookLeftInvisible);
-            } else if(getTexture() == lookDown) {
+            } else if(texture.contains("down")) {
                 setTexture(lookDownInvisible);
             }
+        } else if (hasResurrection) {
+            if(texture.contains("right")) {
+                setTexture(lookRightResurrection);
+            } else if (texture.contains("up")) {
+                setTexture(lookUpResurrection);
+            } else if(texture.contains("left")){
+                setTexture(lookLeftResurrection);
+            } else if(texture.contains("down")) {
+                setTexture(lookDownResurrection);
+            }
         } else {
-            if(getTexture() == lookRightInvisible) {
+            if(texture.contains("Right")) {
                 setTexture(lookRight);
-            } else if (getTexture() == lookUpInvisible) {
+            } else if (texture.contains("Up")) {
                 setTexture(lookUp);
-            } else if(getTexture() == lookLeftInvisible){
+            } else if(texture.contains("Left")){
                 setTexture(lookLeft);
-            } else if(getTexture() == lookDownInvisible) {
+            } else if(texture.contains("Down")) {
                 setTexture(lookDown);
             }
         }
@@ -362,7 +406,6 @@ public class FireTruck extends Sprite {
             }
         }
     }
-
     /**
      * Remove the WaterParticle from the spray when it hits the Fortress
      *

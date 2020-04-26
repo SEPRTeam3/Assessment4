@@ -188,14 +188,14 @@ public class PowerUps extends Sprite {
                 if(itemBoxSpawn.get("Left") && itemBoxSpawn.get("Right")) {
                     //Both boxes are full
                 } else {
-                    PickUpPowerUp(truck);
+                    PickUpPowerUp();
                     powerUpPositionSpawn.replace(truckPos.toString(), false);
                 }
             }
         }
 
     }
-    public void PickUpPowerUp(FireTruck rez) {
+    public void PickUpPowerUp() {
         currentBoxType = "Left";
         if(itemBoxSpawn.get(currentBoxType)){
             currentBoxType = "Right";
@@ -214,7 +214,6 @@ public class PowerUps extends Sprite {
             this.state = PowerUp.INVISIBILITY;
         } else {
             this.state = PowerUp.RESURRECTION;
-            rez.setResurrection(true);
         }
         if(currentBoxType == "Left") {
             leftstate = state;
@@ -305,14 +304,7 @@ public class PowerUps extends Sprite {
     }
     public void Resurrection(FireTruck truck) {
         truck.setResurrection(false);
-        truck.setHP(truck.getType().getMaxHP()/2);
-        if(leftstate == PowerUp.RESURRECTION) {
-            itemBoxSpawn.replace("Left", false);
-            leftstate = PowerUp.EMPTY;
-        } else if (rightstate == PowerUp.RESURRECTION) {
-            itemBoxSpawn.replace("Right", false);
-            rightstate = PowerUp.EMPTY;
-        }
+        truck.setHP(truck.getType().getMaxHP()/1.5f);
     }
 
     public void PowerUpAction(PowerUp state, FireTruck truck) {
@@ -325,6 +317,9 @@ public class PowerUps extends Sprite {
                 break;
             case STICKYROAD:
                 stickyRoadPositions.add(new Vector2(truck.getPosition().x, truck.getPosition().y));
+                break;
+            case RESURRECTION:
+                truck.setResurrection(true);
                 break;
             case INVISIBILITY:
               truck.setInvisible(true);
