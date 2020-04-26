@@ -82,6 +82,7 @@ public class PowerUps extends Sprite {
     private float invisibleTimer = 0;
     private boolean invisibleTimerBool;
     public boolean isInvisibleTimer() { return invisibleTimerBool; }
+    public float getInvisibleTimer() { return invisibleTimer; }
 
     public PowerUps(Batch mapBatch) {
         this.health_pack_texture = new Texture(Gdx.files.internal("HealthUp.png"));

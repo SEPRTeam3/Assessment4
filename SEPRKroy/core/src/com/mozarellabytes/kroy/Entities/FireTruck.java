@@ -94,11 +94,13 @@ public class FireTruck extends Sprite {
     private final Texture lookUpInvisible;
     private final Texture lookDownInvisible;
 
+    //#Assessement4
     private boolean isInvisible;
 
     /** If the truck will be resurrected on death */
     private boolean hasResurrection;
 
+    //#Assessement4
     private final Set<Vector2> hiddenSpots = new HashSet<>(new ArrayList<>(
             Arrays.asList(
                     new Vector2(7,2),
@@ -174,6 +176,7 @@ public class FireTruck extends Sprite {
      * path
      */
     public void move() {
+        ChangeSpriteHidden();
         if (moving) {
             if (this.path.size > 0) {
                 Vector2 nextTile = path.first();
@@ -184,6 +187,7 @@ public class FireTruck extends Sprite {
                 }
                 if (!this.inCollision) {
                     changeSprite(nextTile);
+                    ChangeSpriteHidden();
                 }
                 previousTile = nextTile;
                 path.removeFirst();
@@ -274,29 +278,38 @@ public class FireTruck extends Sprite {
      * @param nextTile  first tile in the queue (next to be followed)
      */
     private void changeSprite(Vector2 nextTile) {
-        if(!isInvisible) {
-            if (previousTile != null) {
-                if (nextTile.x > previousTile.x) {
-                    setTexture(lookRight);
-                } else if (nextTile.x < previousTile.x) {
-                    setTexture(lookLeft);
-                } else if (nextTile.y > previousTile.y) {
-                    setTexture(lookUp);
-                } else if (nextTile.y < previousTile.y) {
-                    setTexture(lookDown);
-                }
+        if (previousTile != null) {
+            if (nextTile.x > previousTile.x) {
+                setTexture(lookRight);
+            } else if (nextTile.x < previousTile.x) {
+                setTexture(lookLeft);
+            } else if (nextTile.y > previousTile.y) {
+                setTexture(lookUp);
+            } else if (nextTile.y < previousTile.y) {
+                setTexture(lookDown);
+            }
+        }
+    }
+    private void ChangeSpriteHidden() {
+        if(isInvisible) {
+            if(getTexture() == lookRight) {
+                setTexture(lookRightInvisible);
+            } else if (getTexture() == lookUp) {
+                setTexture(lookUpInvisible);
+            } else if(getTexture() == lookLeft){
+                setTexture(lookLeftInvisible);
+            } else if(getTexture() == lookDown) {
+                setTexture(lookDownInvisible);
             }
         } else {
-            if (previousTile != null) {
-                if (nextTile.x > previousTile.x) {
-                    setTexture(lookRightInvisible);
-                } else if (nextTile.x < previousTile.x) {
-                    setTexture(lookLeftInvisible);
-                } else if (nextTile.y > previousTile.y) {
-                    setTexture(lookUpInvisible);
-                } else if (nextTile.y < previousTile.y) {
-                    setTexture(lookDownInvisible);
-                }
+            if(getTexture() == lookRightInvisible) {
+                setTexture(lookRight);
+            } else if (getTexture() == lookUpInvisible) {
+                setTexture(lookUp);
+            } else if(getTexture() == lookLeftInvisible){
+                setTexture(lookLeft);
+            } else if(getTexture() == lookDownInvisible) {
+                setTexture(lookDown);
             }
         }
     }
@@ -407,7 +420,7 @@ public class FireTruck extends Sprite {
      */
     public void drawStats(ShapeRenderer shapeMapRenderer) {
 
-        if((this.getType() == FireTruckType.Station)){
+        if((this.getType() == FireTruckType.Station)) {
             if(this.getPosition().x != 9 && GameScreen.fireStationExist() == true){
                 shapeMapRenderer.rect(this.getPosition().x - 2f, this.getPosition().y, 0.7f, 3f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
                 shapeMapRenderer.rect(this.getPosition().x - 1.9f, this.getPosition().y + 0.1f, 0.5f, 2.8f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
@@ -420,6 +433,10 @@ public class FireTruck extends Sprite {
             shapeMapRenderer.rect(this.getPosition().x + 0.266f, this.getPosition().y + 1.4f, 0.2f, this.getReserve() / this.type.getMaxReserve() * 0.6f, Color.CYAN, Color.CYAN, Color.CYAN, Color.CYAN);
             shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK, Color.FIREBRICK);
             shapeMapRenderer.rect(this.getPosition().x + 0.533f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.type.getMaxHP() * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
+            if(isInvisible && !hiddenSpots.contains(roundedPosition())) {
+                shapeMapRenderer.rect(this.getPosition().x + 0.8f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.DARK_GRAY, Color.DARK_GRAY, Color.DARK_GRAY, Color.DARK_GRAY);
+                shapeMapRenderer.rect(this.getPosition().x + 0.8f, this.getPosition().y + 1.4f, 0.2f, this.gameScreen.powerUps.getInvisibleTimer() / 10 * 0.6f, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
+            }
             for (WaterParticle particle : this.getSpray()) {
                 shapeMapRenderer.rect(particle.getPosition().x, particle.getPosition().y, particle.getSize(), particle.getSize(), particle.getColour(), particle.getColour(), particle.getColour(), particle.getColour());
             }
