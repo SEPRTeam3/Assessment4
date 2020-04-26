@@ -50,6 +50,7 @@ public class GameInputHandler implements InputProcessor {
             case Input.Keys.C:
                 gameScreen.toControlScreen();
                 break;
+                //#Assessment4
             case Input.Keys.NUM_1:
                 //Left item box
                 for (FireTruck truck : gameScreen.getStation().getTrucks()) {
@@ -58,6 +59,7 @@ public class GameInputHandler implements InputProcessor {
                     }
                 }
                 break;
+            //#Assessment4
             case Input.Keys.NUM_2:
                 //Right item box
                 for (FireTruck truck : gameScreen.getStation().getTrucks()) {
