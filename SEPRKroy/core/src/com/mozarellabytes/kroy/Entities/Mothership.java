@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.mozarellabytes.kroy.Screens.GameScreen;
+import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 /**
  * #Assessment4
@@ -44,11 +45,16 @@ public class Mothership {
     public void update(float deltaTime) {
         if (visible) {
             period += deltaTime;
-            this.position = from.lerp(to, period / phaseLength);
+            this.position = from.cpy().lerp(to, period / phaseLength);
             if (period >= phaseLength) {
                 game.destroyStation();
+                this.game.addExplosion(new Explosion(10, 10,  (int) this.position.x-2, (int) this.position.y-2, 0.05f));
+                if (SoundFX.music_enabled) {
+                    SoundFX.sfx_fortress_destroyed.play();
+                }
                 this.visible = false;
             }
         }
     }
+
 }

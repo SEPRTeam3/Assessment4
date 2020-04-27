@@ -439,18 +439,6 @@ public class GameScreen implements Screen {
             alien.drawSprite(mapBatch,1,1, delta);
         }
 
-        //#Assessment4
-        mothership.draw(mapBatch);
-
-        if(fireStationExist()) {
-//            crazyAlien.drawSpriteCrazyAlien(mapBatch, 5, 5,explosions);
-        }
-
-        for(Explosion explosion:explosions){
-            if(explosion.drawExplosion(mapBatch)){
-                explosionsToRemove.add(explosion);
-            }
-        }
         explosions.removeAll(explosionsToRemove);
 
         //#Assessment4
@@ -460,6 +448,16 @@ public class GameScreen implements Screen {
             //#Assessment4
             powerUps.ItemBoxUpdate();
         }
+
+        //#Assessment4
+        mothership.draw(mapBatch);
+
+        for(Explosion explosion:explosions){
+            if(explosion.drawExplosion(mapBatch)){
+                explosionsToRemove.add(explosion);
+            }
+        }
+
         mapBatch.end();
 
         shapeMapRenderer.begin(ShapeRenderer.ShapeType.Filled);
@@ -670,7 +668,7 @@ public class GameScreen implements Screen {
                 gameState.addFortress();
                 this.fortresses.remove(fortress);
                 mapBatch.begin();
-                explosions.add(new Explosion(10, 10, (int) fortress.getPosition().x - 5, (int) fortress.getPosition().y - 5, 0.05f));
+                explosions.add(new Explosion(10, 10, (int) fortress.getPosition().x, (int) fortress.getPosition().y, 0.05f));
                 mapBatch.end();
                 if (SoundFX.music_enabled) {
                     SoundFX.sfx_fortress_destroyed.play();
@@ -691,7 +689,7 @@ public class GameScreen implements Screen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
-            mothership.doStationDestruction(new Vector2(0 ,0), new Vector2(10, 10), 1000f);
+            mothership.doStationDestruction(new Vector2(30 ,30), new Vector2(5, 7), 10f);
         }
 
 
@@ -880,5 +878,7 @@ public class GameScreen implements Screen {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
     }
+
+    public void addExplosion(Explosion explosion) {explosions.add(explosion);}
 }
 
