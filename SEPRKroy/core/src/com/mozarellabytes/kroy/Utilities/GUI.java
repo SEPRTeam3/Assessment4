@@ -296,10 +296,10 @@ public class GUI {
         game.font19.draw(game.batch, "AP: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 6);
         game.font19.draw(game.batch, String.format("%.2f", truck.getType().getAP()), this.selectedX + 50, this.selectedY + this.selectedH - 50 - newLine * 6);
 
-        game.font19.draw(game.batch, "Key 1: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 7);
+        game.font19Gold.draw(game.batch, "Key 1: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 7);
         game.font19.draw(game.batch, String.format(gameScreen.powerUps.getLeftstate().toString()), this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 8);
 
-        game.font19.draw(game.batch, "Key 2: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 9);
+        game.font19Gold.draw(game.batch, "Key 2: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 9);
         game.font19.draw(game.batch, String.format(gameScreen.powerUps.getRightstate().toString()), this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 10);
 
         game.batch.end();

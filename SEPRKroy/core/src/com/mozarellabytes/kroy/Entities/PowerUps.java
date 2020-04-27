@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mozarellabytes.kroy.Save.Save;
 
+import java.io.IOException;
 import java.util.*;
 
 public class PowerUps extends Sprite {
@@ -144,6 +145,12 @@ public class PowerUps extends Sprite {
         invisibleTimerBool = save.powerUps.isInvisTimer;
         this.mapBatch = mapBatch;
     }
+
+    /**
+     * #Assessment4
+     * Spawns power ups periodically in locations defined by a hash map
+     * @param delta increments timer for spawning based on the render update
+     */
     public void spawnPowerUps(float delta) {
         int spawnCount = 0;
 
@@ -180,7 +187,12 @@ public class PowerUps extends Sprite {
         }
     }
 
-
+    /**
+     * #Assessment4
+     * Checks if a given fire truck is on a tile that contains a power up
+     * Triggers an action depending on if the item boxes are full or not
+     * @param truck the current truck we create a Vector2 position from
+     */
     public void OnPowerUpTile(FireTruck truck) {
         Vector2 truckPos = new Vector2(Math.round(truck.getPosition().x), Math.round(truck.getPosition().y));
         if(powerUpPositions.contains(truckPos)) {
@@ -193,8 +205,12 @@ public class PowerUps extends Sprite {
                 }
             }
         }
-
     }
+    /**
+     * #Assessment4
+     * Determines which power up the player gets randomly
+     * Picks a free box for the power up to be drawn into
+     */
     public void PickUpPowerUp() {
         currentBoxType = "Left";
         if(itemBoxSpawn.get(currentBoxType)){
@@ -225,20 +241,39 @@ public class PowerUps extends Sprite {
 
     }
 
+    /**
+     * #Assessment4
+     * Draws animated pick up box
+     * @param mapBatch gets mapBatch the game screen uses for drawing
+     * @param position position to be drawn
+     * @param width width of drawn object
+     * @param height height of drawn object
+     */
     public void drawSprite(Batch mapBatch, Vector2 position, int width, int height) {
         elapsedTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = item_animation.getKeyFrame(elapsedTime, true);
         mapBatch.draw(currentFrame, position.x, position.y, width, height);
     }
-
+    /**
+     * #Assessment4
+     * Draws a sticky road sprite from a list of sticky road positions
+     */
     public void drawStickyRoad() {
         for(Vector2 pos: stickyRoadPositions) {
             mapBatch.draw(sticky_road_tile_texture, pos.x, pos.y, 1, 1);
         }
     }
+    /**
+     * #Assessment4
+     * Removes a sticky road from the list of sticky road positions
+     */
     public void removeStickyRoad(Vector2 position) {
         stickyRoadPositions.remove(position);
     }
+    /**
+     * #Assessment4
+     *Updates the item boxes and draws the new items
+     */
     public void ItemBoxUpdate() {
         for (Map.Entry entry : itemBoxSpawn.entrySet()) {
             boolean isSpawn = (boolean) entry.getValue();
@@ -262,6 +297,14 @@ public class PowerUps extends Sprite {
             }
         }
     }
+    /**
+     * #Assessment4
+     * Draws the item depending on the state
+     * @param mapBatch gets mapBatch the game screen uses for drawing
+     * @param position position to be drawn
+     * @param width width of drawn object
+     * @param height height of drawn object
+     */
     public void drawItemBox(Batch mapBatch, Vector2 position, int width, int height) {
         switch (state) {
             case HEALTHPACK:
@@ -284,7 +327,12 @@ public class PowerUps extends Sprite {
                 break;
         }
     }
-
+    /**
+     * #Assessment4
+     * Activates the item in slot 1 or slot 2
+     * @param key the key pressed to activate the item
+     * @param truck selected truck the item will have an effect on
+     */
     public void usePowerUp(char key, FireTruck truck) {
         if(key == '1') {
             PowerUpAction(leftstate, truck);
@@ -302,11 +350,21 @@ public class PowerUps extends Sprite {
 
         }
     }
+    /**
+     * #Assessment4
+     * Activates resurrection which restores a truck's health when it dies
+     * @param truck gets max health of the truck type
+     */
     public void Resurrection(FireTruck truck) {
         truck.setResurrection(false);
         truck.setHP(truck.getType().getMaxHP()/1.5f);
     }
-
+    /**
+     * #Assessment4
+     * Sets of
+     * @param state the key pressed to activate the item
+     * @param truck selected truck the item will have an effect on
+     */
     public void PowerUpAction(PowerUp state, FireTruck truck) {
         switch (state) {
             case HEALTHPACK:
