@@ -260,7 +260,16 @@ public class GUI {
      *                 thta are being displayed
      */
     private void renderSelectedFortress(Fortress fortress) {
-        renderSelectedEntityBar(fortress.getHP(), fortress.getFortressType().getMaxHP(), Color.RED, Color.FIREBRICK, 1);
+        int difficulty = gameScreen.gameState.getDifficulty();
+        float offset;
+        if(difficulty == 0){
+            offset = 0.75f;
+        } else if (difficulty == 1){
+            offset = 1;
+        } else {
+            offset = 1.25f;
+        }
+        renderSelectedEntityBar(fortress.getHP(), fortress.getFortressType().getMaxHP()*offset, Color.RED, Color.FIREBRICK, 1);
         renderSelectedEntityText(fortress);
     }
 
@@ -304,15 +313,25 @@ public class GUI {
      *                 that are being displayed
      */
     private void renderSelectedEntityText(Fortress fortress) {
+        int difficulty = gameScreen.gameState.getDifficulty();
+        float offset;
+        if(difficulty == 0){
+            offset = 0.75f;
+        } else if (difficulty == 1){
+            offset = 1;
+        } else {
+            offset = 1.25f;
+        }
+
         int newLine = 20;
         game.batch.begin();
         game.font26.draw(game.batch, fortress.getFortressType().getName(), this.selectedX + 10, this.selectedY + this.selectedH - 10);
         game.font19.draw(game.batch, "HP: ", this.selectedX + 15, this.selectedY + this.selectedH - 50);
-        game.font19.draw(game.batch, String.format("%.1f", fortress.getHP()) + " / " + String.format("%.1f", fortress.getFortressType().getMaxHP()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine);
+        game.font19.draw(game.batch, String.format("%.1f", fortress.getHP()) + " / " + String.format("%.1f", fortress.getFortressType().getMaxHP()*offset), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine);
         game.font19.draw(game.batch, "Range: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 2);
         game.font19.draw(game.batch, String.format("%.1f", fortress.getFortressType().getRange()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 3);
         game.font19.draw(game.batch, "AP: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 4);
-        game.font19.draw(game.batch, String.format("%.1f", fortress.getFortressType().getAP()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 5);
+        game.font19.draw(game.batch, String.format("%.1f", fortress.getFortressType().getAP()*offset), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 5);
         game.font19.draw(game.batch, "Level: ", this.selectedX + 15, this.selectedY + this.selectedH - 50 - newLine * 6);//Assessment 3
         game.font19.draw(game.batch, String.format("%.0f", (float) fortress.getLevel()), this.selectedX + 20, this.selectedY + this.selectedH - 50 - newLine * 7);//Assessment 3
         game.batch.end();
@@ -479,7 +498,6 @@ public class GUI {
     }
 
     public void renderDifficultyText() {
-        GlyphLayout layout = new GlyphLayout();
         String difficulty;
         int offset = 0;
         if(gameScreen.gameState.getDifficulty() == 0){
