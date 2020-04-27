@@ -527,27 +527,14 @@ public class GameScreen implements Screen {
         station.checkForCollisions();
         mothership.update(delta);
         gameState.setTrucksInAttackRange(0);
-//        if (gui.getCountClock() != null) {
-//            if (gui.getCountClock().hasEnded()) {
-//                if (crazyAlien.getPosition().y > 9) {
-//                    crazyAlien.move(station.getTrucks());
-//                } else {
-//                    if(stationExists) {
-//                        stationExists = false;
-//                        explosions.add(new Explosion(8,8,2,7,0.1f));
-//                    }
-//                }
-//            }
-//
-//            // Once crazyAlien disappears off the screen, it should stop attacking the fireStation.
-//            if (crazyAlien.getPosition().y >= 9.1f && crazyAlien.getPosition().y < 30) {
-//                crazyAlien.getAttackHandler().setPosition(new Vector2(crazyAlien.getPosition().x + 3, crazyAlien.getPosition().y));
-//                crazyAlien.getAttackHandler().attack(stationTruck, false, SoundFX.sfx_crazy_alien_attack);
-//                if (crazyAlien.getAttackHandler().updateBombs()) {
-//                    camShake.shakeIt(.4f);
-//                }
-//            }
-//        }
+
+        //#Assessment4
+        if (!gameState.isMothershipSummoned()) {
+            if (fortresses.size() < 5) {
+                mothership.doStationDestruction(new Vector2(30, 30), new Vector2(5, 7), 10f);
+                gameState.setMothershipSummoned();
+            }
+        }
 
         for(Alien alien:aliens) {
             //#Assessment4

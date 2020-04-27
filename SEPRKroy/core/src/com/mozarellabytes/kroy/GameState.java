@@ -21,10 +21,14 @@ public class GameState {
     /** The number of trucks that have a fortress within their attack range */
     private int trucksInAttackRange;
 
+    /** If the mothership ET has destroyed the firestation yet */
+    private boolean mothershipSummoned;
+
     /** Constructor for GameState */
     public GameState() {
         this.activeFireTrucks = 0;
         this.fortressesDestroyed = 0;
+        this.mothershipSummoned = false;
     }
 
     /** Adds one to activeFireTrucks, called when a firetruck is spawned */
@@ -87,6 +91,10 @@ public class GameState {
         this.difficulty = difficulty;
     }
     public int getDifficulty() {return this.difficulty;}
+
+    public void setMothershipSummoned() { this.mothershipSummoned = true; }
+
+    public boolean isMothershipSummoned() { return this.mothershipSummoned; }
 
 
 }
