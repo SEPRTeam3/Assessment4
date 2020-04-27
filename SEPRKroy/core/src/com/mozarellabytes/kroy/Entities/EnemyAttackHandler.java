@@ -15,6 +15,10 @@ import java.util.ArrayList;
 public class EnemyAttackHandler {
 
     /**
+     * The alien that the EnemyAttackHandler is assigned to. Null if the attack handler is not assigned to an alien
+     */
+    private Alien alien;
+    /**
      * The attack range of the attack handler's parent
      */
     private float attackRange;
@@ -71,7 +75,7 @@ public class EnemyAttackHandler {
      */
     EnemyAttackHandler(Alien entity, int difficulty){
         position = entity.getPosition();
-
+        this.alien = entity;
         if(difficulty == 0) {
            attackRange = 2;
         } else if(difficulty == 1){
@@ -104,6 +108,10 @@ public class EnemyAttackHandler {
      * @param attackSound The sound to be played when an attack is made
      */
     public void attack(FireTruck target, boolean randomTarget, Sound attackSound) {
+        // #Assessment4 If the firetruck has not been seen, do not attack it.
+        if (this.alien != null && !this.alien.getMasterFortress().getSeenTrucks().contains(target)) {
+            return;
+        }
         if (timeOfLastAttack + delay < System.currentTimeMillis()) {
             this.bombs.add(new Bomb(this, target, randomTarget));
             attackSound.play();

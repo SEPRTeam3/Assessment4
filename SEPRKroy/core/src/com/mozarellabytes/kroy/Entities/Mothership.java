@@ -22,12 +22,22 @@ public class Mothership {
     private GameScreen game;
     private boolean visible;
 
+    /***
+     * Create the mothership ET that turns up to destroy the firestation
+     * @param game
+     */
     public Mothership(GameScreen game) {
        this.game = game;
        this.visible = false;
        this.texture = new Texture(Gdx.files.internal("sprites/alien/crazyAlien.png"));
     }
 
+    /***
+     *
+     * @param from
+     * @param to
+     * @param time
+     */
     public void doStationDestruction(Vector2 from, Vector2 to, float time) {
         System.out.println("The mothership is on its way");
         this.visible = true;

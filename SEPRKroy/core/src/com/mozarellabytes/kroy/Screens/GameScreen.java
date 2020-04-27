@@ -566,28 +566,12 @@ public class GameScreen implements Screen {
             alien.move(delta, station.getTrucks());
         }
 
-//        //Iterate To check that when nuke explosion, any trucks in the station.
-//        for (int i = 0; i < station.getTrucks().size(); i++) {
-//            if (crazyAlien.getPosition().y < 9.1 && fireEngineBlowUp > 0) {
-//                FireTruck truck = station.getTruck(i);
-//                fireEngineBlowUp--;
-//                if ((truck.getPosition().x == 4 && truck.getPosition().y == 8) || (truck.getPosition().x == 5 && truck.getPosition().y == 8) || (truck.getPosition().x == 6 && truck.getPosition().y == 8)) {
-//                    gameState.removeFireTruck();
-//                    station.destroyTruck(truck);
-//                }
-//                if (SoundFX.music_enabled) {
-//                    SoundFX.sfx_station_destroyed.play();
-//                }
-//            }
-//        }
-
         for (int i = 0; i < station.getTrucks().size(); i++) {
             FireTruck truck = station.getTruck(i);
 
             truck.move();
             truck.onHiddenTile();
             truck.updateSpray();
-            //System.out.print((truck.getType()));
             // manages attacks between trucks and fortresses
             for (Fortress fortress : this.fortresses) {
                 if(!truck.isInvisible()) {
@@ -689,11 +673,6 @@ public class GameScreen implements Screen {
                 SoundFX.stopTruckAttack();
             }
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
-            mothership.doStationDestruction(new Vector2(30 ,30), new Vector2(5, 7), 10f);
-        }
-
 
         shapeMapRenderer.end();
         shapeMapRenderer.setColor(Color.WHITE);

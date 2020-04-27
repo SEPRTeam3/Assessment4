@@ -550,4 +550,5 @@ public class Alien extends Sprite {
         this.stuckRemove = stuckRemove;
     }
 
+    public Fortress getMasterFortress() { return this.masterFortress; }
 }
