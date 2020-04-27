@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.Entities.Explosion;
 import com.mozarellabytes.kroy.Entities.FireTruck;
 import com.mozarellabytes.kroy.Entities.FireTruckType;
+import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Utilities.Constants;
 import com.mozarellabytes.kroy.Utilities.GUI;
@@ -46,6 +47,7 @@ public class MinigameScreen implements Screen {
      */
     private final Screen parent;
 
+    private GameState state;
     /** Camera to set the projection for the screen */
     private OrthographicCamera camera;
 
@@ -97,10 +99,11 @@ public class MinigameScreen implements Screen {
      * @param parent A reference to the screen that setScreen() to the minigame. Allows for returning back to previous screen without loss of state.
      * @param truck
      */
-    public MinigameScreen(Kroy game, Screen parent, FireTruck truck) {
+    public MinigameScreen(Kroy game, Screen parent, FireTruck truck, GameState state) {
         this.game = game;
         this.parent = parent;
         this.truck = truck;
+        this.state = state;
         // Instantiate a camera with width and height of the game window to render and display the content.
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -237,7 +240,15 @@ public class MinigameScreen implements Screen {
 //      Alien movement and logic
         for (Iterator<Alien> iter = aliens.iterator(); iter.hasNext();) {
             Alien alien = iter.next();
-            alien.moveDown(delta);
+            //Assessment 4
+            if(state.getDifficulty() == 0) {
+                alien.moveDown(delta*0.5f);
+                } else if(state.getDifficulty() == 1){
+                alien.moveDown(delta);
+            } else {
+                alien.moveDown(delta*2f);
+            }
+
 
             // Checking if an alien has reached "road level", removing it if so.
             // Game ends at this point.

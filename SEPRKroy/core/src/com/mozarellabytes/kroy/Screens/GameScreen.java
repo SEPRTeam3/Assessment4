@@ -406,8 +406,9 @@ public class GameScreen implements Screen {
         //#Assessment4
         powerUps.drawStickyRoad();
         //#Assessment4
-        powerUps.setInvisibleTimer(delta);
-
+        if(state != PlayState.PAUSE) {
+            powerUps.setInvisibleTimer(delta);
+        }
 
 
         for (FireTruck truck : station.getTrucks()) {
@@ -442,7 +443,9 @@ public class GameScreen implements Screen {
         explosions.removeAll(explosionsToRemove);
 
         //#Assessment4
-        powerUps.spawnPowerUps(delta);
+        if(state != PlayState.PAUSE) {
+            powerUps.spawnPowerUps(delta);
+        }
 
         if(selectedEntity != null && selectedEntity instanceof FireTruck) {
             //#Assessment4
@@ -705,7 +708,7 @@ public class GameScreen implements Screen {
      * Passes in the current <code>game</code> instance so the minigame can return back to the main game.
      */
     public void toMinigameScreen(FireTruck truck) {
-        game.setScreen(new MinigameScreen(game, this, truck));
+        game.setScreen(new MinigameScreen(game, this, truck, this.gameState));
     }
 
     @Override
