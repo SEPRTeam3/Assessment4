@@ -47,7 +47,16 @@ public class EnemyAttackHandler {
      * The constructor called when an instantiated attack handler has a fortress parent
      * @param entity The fortress to which the attack handler is a child
      */
-    EnemyAttackHandler(Fortress entity){
+    EnemyAttackHandler(Fortress entity, int difficulty){
+
+        if(difficulty == 0) {
+            attackPower = entity.getFortressType().getAP()*0.75f;
+        } else if(difficulty == 1){
+            attackPower = entity.getFortressType().getAP();
+        } else {
+            attackPower = entity.getFortressType().getAP()*1.25f;
+        }
+
         position = entity.getPosition();
         attackRange = entity.getFortressType().getRange();
         attackPower = entity.getFortressType().getAP();
