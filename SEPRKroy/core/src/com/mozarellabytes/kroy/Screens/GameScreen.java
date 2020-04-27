@@ -219,51 +219,51 @@ public class GameScreen implements Screen {
         vertices.add(new Vector2(13,7));
         vertices.add(new Vector2(18,11));
         vertices.add(new Vector2(13,11));
-        aliens.addLast(new Alien(13f, 7f, vertices, 0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(13f, 7f, vertices, 0f, fortresses.get(0), this.pathFinder, gameState));
         vertices.clear();
 
         vertices.add(new Vector2(8,5));
         vertices.add(new Vector2(13,1));
         vertices.add(new Vector2(4,4));
-        aliens.addLast(new Alien(8f,5f,vertices,0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(8f,5f,vertices,0f, fortresses.get(0), this.pathFinder, gameState));
 
         vertices.clear();
         vertices.add(new Vector2(28,5));
         vertices.add(new Vector2(40,4));
         vertices.add(new Vector2(35,1));
         vertices.add(new Vector2(32,2));
-        aliens.addLast(new Alien(28f,5f,vertices,0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(28f,5f,vertices,0f, fortresses.get(0), this.pathFinder, gameState));
         vertices.clear();
 
         vertices.add(new Vector2(26,28));
         vertices.add(new Vector2(34,23));
         vertices.add(new Vector2(26,23));
-        aliens.addLast(new Alien(26f,28f,vertices,0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(26f,28f,vertices,0f, fortresses.get(0), this.pathFinder, gameState));
         vertices.clear();
 
         vertices.add(new Vector2(17,28));
         vertices.add(new Vector2(14,16));
         vertices.add(new Vector2(8,22));
-        aliens.addLast(new Alien(10f,28f,vertices,0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(10f,28f,vertices,0f, fortresses.get(0), this.pathFinder, gameState));
         vertices.clear();
 
         vertices.add(new Vector2(10,18));
         vertices.add(new Vector2(8,14));
         vertices.add(new Vector2(5,17));
         vertices.add(new Vector2(5,18));
-        aliens.addLast(new Alien(10f,18f,vertices,0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(10f,18f,vertices,0f, fortresses.get(0), this.pathFinder, gameState));
         vertices.clear();
 
         vertices.add(new Vector2(45,18));
         vertices.add(new Vector2(41,18));
         vertices.add(new Vector2(45,18));
-        aliens.addLast(new Alien(45f, 18f, vertices,0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(45f, 18f, vertices,0f, fortresses.get(0), this.pathFinder, gameState));
         vertices.clear();
 
         vertices.add(new Vector2(42,13));
         vertices.add(new Vector2(37,8));
         vertices.add(new Vector2(32,13));
-        aliens.addLast(new Alien(42f, 13f, vertices,0f, fortresses.get(0), this.pathFinder));
+        aliens.addLast(new Alien(42f, 13f, vertices,0f, fortresses.get(0), this.pathFinder, gameState));
         vertices.clear();
 
         // Set the origin point to which all of the polygon's local vertices are relative to.
@@ -341,7 +341,7 @@ public class GameScreen implements Screen {
 
         aliens = new Queue();
         for (SaveAlien a : save.aliens) {
-            aliens.addLast(new Alien(a, fortresses.get(0), this.pathFinder));
+            aliens.addLast(new Alien(a, fortresses.get(0), this.pathFinder, save.gameState));
 
         }
 

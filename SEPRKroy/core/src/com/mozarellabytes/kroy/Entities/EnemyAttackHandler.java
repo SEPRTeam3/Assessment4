@@ -60,9 +60,16 @@ public class EnemyAttackHandler {
      * The constructor called when an instantiated attack handler has an alien parent
      * @param entity The alien to which the attack handler is a child
      */
-    EnemyAttackHandler(Alien entity){
+    EnemyAttackHandler(Alien entity, int difficulty){
         position = entity.getPosition();
-        attackRange = ThreadLocalRandom.current().nextInt(2, 4);
+
+        if(difficulty == 0) {
+           attackRange = 2;
+        } else if(difficulty == 1){
+            attackRange = 3;
+        } else {
+            attackRange = 4;
+        }
         attackPower = 3f;
         attackLevel = 1;
         delay = 100;

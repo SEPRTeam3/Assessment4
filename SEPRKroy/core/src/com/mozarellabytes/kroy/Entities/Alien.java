@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Save.SaveAlien;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.PathFinder;
@@ -27,7 +28,7 @@ public class Alien extends Sprite {
      * contains methods to choose paths from path type class
      * contains display methods and HUD information displaying methods
     **/
-    public final static float VIEW_DISTANCE = 4f;
+    public static float VIEW_DISTANCE;
 
     /** cursory max HP value for alien */
     private final float maxHP = 10;
@@ -66,11 +67,6 @@ public class Alien extends Sprite {
     /** Used to check if the truck's image should be
      * changed to match the direction it is facing */
     private Vector2 previousTile;
-
-    /**
-     * Control the small alien happy time after the fire station destroyed
-     */
-    private int happyTime = 0;
 
     /**
      * Control the size change of the nuke, simulate gravity
@@ -135,6 +131,7 @@ public class Alien extends Sprite {
     /** Where the alien is heading towards */
     private Vector2 goal;
 
+    private GameState gameState;
     /** The current AI state the alien is in
      * either of
      *  PURSUING - heading towards a seen truck
@@ -160,7 +157,7 @@ public class Alien extends Sprite {
      * @param waypoints a list of Vectors that form the patrol path that the alien will take
      * @param speed Determines the speed that the alien follows patrols. Unless set to 0, will be replaced with a random value between 0.05 and 0.2 in PatrolPath.java
      */
-    public Alien(float x, float y , List<Vector2> waypoints, float speed, Fortress masterFortress, PathFinder pathfinder){
+    public Alien(float x, float y , List<Vector2> waypoints, float speed, Fortress masterFortress, PathFinder pathfinder, GameState gameState){
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = speed;
         this.position = new Vector2(x,y);
@@ -178,6 +175,7 @@ public class Alien extends Sprite {
         this.previousState = AlienState.PATROLLING;
         this.masterFortress = masterFortress;
         this.masterFortress.addFortressAlien(this);
+        this.gameState = gameState;
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
         this.lookRight = new Texture(Gdx.files.internal("sprites/alien/AlienRight.png"));
@@ -198,13 +196,23 @@ public class Alien extends Sprite {
         this.nuke4 = new Texture(Gdx.files.internal("sprites/alien/nuke4.png"));
         this.masterFortress = masterFortress;
 
-        attackHandler = new EnemyAttackHandler(this);
+
+
+        int difficulty = gameState.getDifficulty();
+        if(difficulty == 0) {
+            VIEW_DISTANCE = 2f;
+        } else if (difficulty == 1){
+            VIEW_DISTANCE = 4f;
+        } else {
+            VIEW_DISTANCE = 6f;
+        }
+        attackHandler = new EnemyAttackHandler(this, difficulty);
     }
 
     /**
      * Overloaded version of the alien constructor for loading from a save
      */
-    public Alien(SaveAlien s, Fortress masterFortress, PathFinder pathfinder) {
+    public Alien(SaveAlien s, Fortress masterFortress, PathFinder pathfinder, GameState gameState) {
         super(new Texture(Gdx.files.internal("sprites/alien/AlienDown.png")));
         this.speed = s.speed;
         //this.path = s.path;
@@ -213,10 +221,8 @@ public class Alien extends Sprite {
         this.waypoints = s.waypoints;
         this.waypointIndex = s.waypointIndex;
         this.state = s.state;
-
         this.fromPosition = s.fromPosition;
         this.toPosition = s.toPosition;
-
         this.goal = waypoints.get(0);
 
         this.lookLeft = new Texture(Gdx.files.internal("sprites/alien/AlienLeft.png"));
@@ -240,8 +246,18 @@ public class Alien extends Sprite {
         this.masterFortress = masterFortress;
         this.masterFortress.addFortressAlien(this);
         this.pathfinder = pathfinder;
+        this.gameState = gameState;
 
-        attackHandler = new EnemyAttackHandler(this);
+        int difficulty = gameState.getDifficulty();
+        if(difficulty == 0) {
+            VIEW_DISTANCE = 2f;
+        } else if (difficulty == 1){
+            VIEW_DISTANCE = 4f;
+        } else {
+            VIEW_DISTANCE = 6f;
+        }
+
+        attackHandler = new EnemyAttackHandler(this, difficulty);
     }
 
     /**
