@@ -16,17 +16,13 @@ public class LevelScreen implements Screen {
     private Texture backgroundImage;
 
     private final Rectangle easyButton;
-
     private final Rectangle mediumButton;
-
     private final Rectangle hardButton;
 
     private final Texture easyButtonTexture;
     private final Texture easyButtonClickedTexture;
-
     private final Texture mediumButtonTexture;
     private final Texture mediumButtonClickedTexture;
-
     private final Texture hardButtonTexture;
     private final Texture hardButtonClickedTexture;
 
@@ -43,6 +39,13 @@ public class LevelScreen implements Screen {
 
     int difficulty = 0;
 
+    /**
+     * #Assessment4
+     * Constructor initialising the screen, including button textures and hit-boxes
+     * @param game
+     * @param parent Setting the parent screen
+     * @param screen the name of the screen that called this screen
+     */
     public LevelScreen(final Kroy game, Screen parent, String screen) {
         this.parent = parent;
         this.screen = screen;
@@ -102,7 +105,11 @@ public class LevelScreen implements Screen {
     public void show() {
 
     }
-
+    /**
+     * #Assessment4
+     * Renders the screen including buttons, title and background
+     * @param delta The time in millisecond since the last render
+     */
     @Override
     public void render(float delta) {
         camera.update();
@@ -142,7 +149,7 @@ public class LevelScreen implements Screen {
     public void hide() {
 
     }
-
+    /** Called when this screen should release all resources. */
     @Override
     public void dispose() {
         backgroundImage.dispose();
@@ -162,6 +169,7 @@ public class LevelScreen implements Screen {
         game.batch.draw(backgroundImage, 0 , 0, camera.viewportWidth, camera.viewportHeight);
         game.batch.end();
     }
+
     public void changeScreen() {
         if (this.screen.equals("game")) {
             GUI gui = new GUI(game, (GameScreen) parent);
@@ -176,25 +184,37 @@ public class LevelScreen implements Screen {
 
     public void toGameScreen() {
         game.setScreen(new GameScreen(game, difficulty));
-        //game.setScreen(new MinigameScreen(this.game)); //uncomment this to play minigame when clicking the "Start" button.
         this.dispose();
     }
-
+    /**
+     * #Assessment4
+     * Sets not clicked textures
+     */
     public void Idle(){
         currentHardTexture = hardButtonTexture;
         currentMediumTexture = mediumButtonTexture;
         currentEasyTexture = easyButtonTexture;
     }
+    /**
+     * #Assessment4
+     * Sets difficulty if easy button is clicked
+     */
     public void clickedEasyButton() {
         currentEasyTexture = easyButtonClickedTexture;
         difficulty = 0;
     }
-
+    /**
+     * #Assessment4
+     * Sets difficulty if medium button is clicked
+     */
     public void clickedMediumButton() {
         currentMediumTexture = mediumButtonClickedTexture;
         difficulty = 1;
     }
-
+    /**
+     * #Assessment4
+     * Sets difficulty if hard button is clicked
+     */
     public void clickedHardButton() {
         currentHardTexture = hardButtonClickedTexture;
         difficulty = 2;

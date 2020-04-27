@@ -100,12 +100,18 @@ public class FireTruck extends Sprite {
     private final Texture lookRightMix;
     private final Texture lookUpMix;
     private final Texture lookDownMix;
-    //#Assessement4
+    /**
+     * #Assessement4
+     * If the truck is invisible
+     **/
     private boolean isInvisible;
-    /** If the truck will be resurrected on death */
+    /**
+     * #Assessement4
+     * If the truck will be resurrected on death
+     **/
     private boolean hasResurrection;
 
-    //#Assessement4
+    //#Assessement4 the set if hidden tiles
     private final Set<Vector2> hiddenSpots = new HashSet<>(new ArrayList<>(
             Arrays.asList(
                     new Vector2(4, 8),
@@ -287,6 +293,10 @@ public class FireTruck extends Sprite {
         }
         return false;
     }
+    /**
+     * #Assessment4
+     * Sets invisibility to be true if its on a hidden tile
+     */
     public void onHiddenTile() {
         if(hiddenSpots.contains(roundedPosition())) {
             setInvisible(true);
@@ -314,10 +324,12 @@ public class FireTruck extends Sprite {
             }
         }
     }
+    /**
+     * #Assessment4
+     * Changes sprite depending on power up used
+     */
     private void ChangeSpriteTexture() {
         String texture = getTexture().toString();
-//        System.out.print(texture);
-//        System.out.print("\n \n \n ugahpfinkdm \n \n \n ");
         if(isInvisible && hasResurrection) {
             if(texture.contains("right")) {
                 setTexture(lookRightMix);

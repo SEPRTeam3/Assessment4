@@ -285,7 +285,7 @@ public class Alien extends Sprite {
      * Called once a tick to update the alien's position.
      * If the alien's fortress group has seen one or more trucks they will nondeterministically select one to pursue
      * Once the trucks either become hidden or die they are removed from the seen list and the aliens will return to
-     * patrolling.
+     * patrolling. Or if they are stuck they stop moving
      * If the alien's fortress group has not seen any trucks the aliens will patrol their set route.
      * @param delta
      * @param fireTrucks

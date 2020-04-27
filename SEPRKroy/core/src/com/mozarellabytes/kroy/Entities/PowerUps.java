@@ -12,6 +12,10 @@ import java.util.*;
 
 public class PowerUps extends Sprite {
 
+    /**
+     * #Assessment4
+     * Set of textures and animated textures
+     */
     private TextureAtlas item_texture_atlas;
     private Animation<TextureRegion> item_animation;
     private float elapsedTime;
@@ -23,7 +27,10 @@ public class PowerUps extends Sprite {
     private final Texture invisibility_texture;
     private final Texture empty_texture;
     private final Texture sticky_road_tile_texture;
-
+    /**
+     * #Assessment4
+     * Hard coded positions of power ups
+     */
     private final Set<Vector2> powerUpPositions = new HashSet<>(new ArrayList<>(
             Arrays.asList(
                     new Vector2(3,7),
@@ -34,6 +41,10 @@ public class PowerUps extends Sprite {
                     new Vector2(29,15)
             )));
 
+    /**
+     * #Assessment4
+     * Set of positions as strings and corresponding booleans to show if an item in a position exists
+     */
     public HashMap<String, Boolean> powerUpPositionSpawn = new HashMap<>();
     public HashMap<String, Boolean> itemBoxSpawn = new HashMap<>();
     private ArrayList<Vector2> stickyRoadPositions = new ArrayList<>();
@@ -46,9 +57,15 @@ public class PowerUps extends Sprite {
     private String currentBoxType;
     public Vector2 leftItemPosition;
     public Vector2 rightItemPosition;
-
+    /**
+     * #Assessment4
+     * Batch we draw with
+     */
     private Batch mapBatch;
-
+    /**
+     * #Assessment4
+     * Booleans so set spawning text and start spawning power ups
+     */
     private boolean Spawning;
     private boolean SpawningText = false;
     public boolean isSpawningText() {
@@ -58,6 +75,10 @@ public class PowerUps extends Sprite {
         return Spawning;
     }
 
+    /**
+     * #Assessment4
+     * Power up state based on type
+     */
     private PowerUp state;
     private PowerUp leftstate;
     private PowerUp rightstate;
@@ -71,6 +92,10 @@ public class PowerUps extends Sprite {
         return rightstate;
     }
 
+    /**
+     * #Assessment4
+     * Power up types
+     */
     public enum PowerUp {
         HEALTHPACK,
         REFILLPACK,
@@ -79,12 +104,21 @@ public class PowerUps extends Sprite {
         INVISIBILITY,
         EMPTY
     }
+    /**
+     * #Assessment4
+     * Timers for spawning and power ups
+     */
     private float Timer = 0;
     private float invisibleTimer = 0;
     private boolean invisibleTimerBool;
     public boolean isInvisibleTimer() { return invisibleTimerBool; }
     public float getInvisibleTimer() { return invisibleTimer; }
 
+    /**
+     * #Assessment4
+     * Constructor, setting power up positions, states and initialising textures
+     * @param mapBatch setting the mapBatch to draw power up sprites with
+     */
     public PowerUps(Batch mapBatch) {
         this.health_pack_texture = new Texture(Gdx.files.internal("HealthUp.png"));
         this.refill_pack_texture = new Texture(Gdx.files.internal("refill.png"));
@@ -119,7 +153,12 @@ public class PowerUps extends Sprite {
 
         this.mapBatch = mapBatch;
     }
-
+    /**
+     * #Assessment4
+     * Constructor from save, setting power up positions, states and initialising textures
+     * @param save getting saved data
+     * @param mapBatch setting the mapBatch to draw power up sprites with
+     */
     public PowerUps(Save save, Batch mapBatch) {
         this.health_pack_texture = new Texture(Gdx.files.internal("HealthUp.png"));
         this.refill_pack_texture = new Texture(Gdx.files.internal("refill.png"));
@@ -361,9 +400,9 @@ public class PowerUps extends Sprite {
     }
     /**
      * #Assessment4
-     * Sets of
-     * @param state the key pressed to activate the item
-     * @param truck selected truck the item will have an effect on
+     * Activates power ups
+     * @param state The state representing the power ups
+     * @param truck Current truck that we take stats from
      */
     public void PowerUpAction(PowerUp state, FireTruck truck) {
         switch (state) {
@@ -387,6 +426,11 @@ public class PowerUps extends Sprite {
                 break;
         }
     }
+    /**
+     * #Assessment4
+     * Timer for invisibility power up
+     * @param delta increments timer for invisibility based on the render update
+     */
     public void setInvisibleTimer(float delta) {
         if(invisibleTimerBool) {
             invisibleTimer += delta;
@@ -396,6 +440,12 @@ public class PowerUps extends Sprite {
             }
         }
     }
+    /**
+     * #Assessment4
+     * Converts a string into a Vector2
+     * Used for the hashmap keys as JSON saves keys as strings
+     * @param v The string Vector2
+     */
     public Vector2 fromString (String v) {
         int s = v.indexOf(',', 1);
         if (s != -1 && v.charAt(0) == '(' && v.charAt(v.length() - 1) == ')') {

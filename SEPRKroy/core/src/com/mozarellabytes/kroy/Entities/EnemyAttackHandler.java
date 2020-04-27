@@ -162,14 +162,5 @@ public class EnemyAttackHandler {
         this.attackLevel = attackLevel;
     }
 
-    /**
-     * Set's the delay of the attack handler to 1500 and its attack power to 0.8
-     */
-    public void setCrazy(){
-        delay = 1500;
-        attackPower = 0.8f;
-
-    }
-
     public void setPosition(Vector2 position) { this.position = position;}
 }
