@@ -403,85 +403,13 @@ public class Alien extends Sprite {
     }
 
     /**
-     * Draws the mini health indicators relative to the alien
-     * @param shapeMapRenderer  Renderer that the stats are being drawn to (map  dependant)
-     */
-    public void drawStats(ShapeRenderer shapeMapRenderer) {
-        /*
-        shapeMapRenderer.rect(this.getPosition().x + 0.2f, this.getPosition().y + 1.3f, 0.3f, 0.8f, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE);
-        shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
-        if (CountClock.getTotalTime() - CountClock.getRemainTime() <= CountClock.getTotalTime() && GameScreen.fireStationExist() == true) {
-            shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, (CountClock.getTotalTime() - CountClock.getRemainTime()) / CountClock.getTotalTime() * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
-        }
-        else if (GameScreen.fireStationExist() && CountClock.getRemainTime() <= 0) {
-            switch (ThreadLocalRandom.current().nextInt(1, 9)) {
-                case 1:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
-                    break;
-                case 2:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.GREEN, Color.GREEN, Color.GREEN, Color.GREEN);
-                    break;
-                case 3:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY);
-                    break;
-                case 4:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW);
-                    break;
-                case 5:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE);
-                    break;
-                case 6:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.ORANGE, Color.ORANGE, Color.ORANGE, Color.ORANGE);
-                    break;
-                case 7:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.CYAN, Color.CYAN, Color.CYAN, Color.CYAN);
-                    break;
-                case 8:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.PURPLE, Color.PURPLE, Color.PURPLE, Color.PURPLE);
-                    break;
-                default:
-                    shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK);
-            }
-        }
-        else if (happyTime < 1000){
-            shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.LIME, Color.LIME, Color.LIME, Color.LIME);
-        }
-        else{
-            shapeMapRenderer.rect(this.getPosition().x + 0.25f, this.getPosition().y + 1.4f, 0.2f, this.getHP() / this.maxHP * 0.6f, Color.RED, Color.RED, Color.RED, Color.RED);
-        }
-
-         */
-    }
-
-
-
-    /**
+     * #Assessment4
      * Draws the Alien sprite
      *
      * @param mapBatch  Batch that the Alien is being
      *                  drawn to (map dependant)
      */
     public void drawSprite(Batch mapBatch, int width, int height, float delta) {
-/*
-        if(GameScreen.fireStationExist() == true && CountClock.getRemainTime() <= CountClock.getTotalTime()) {
-            if ((CountClock.getRemainTime() / CountClock.getTotalTime() > 0.75f) || CountClock.getRemainTime() == CountClock.getTotalTime()) {
-                mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-            } else if (CountClock.getRemainTime() / CountClock.getTotalTime() < 0.75f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.5f) {
-                mapBatch.draw(notHappy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-            } else if (CountClock.getRemainTime() / CountClock.getTotalTime() < 0.5f && CountClock.getRemainTime() / CountClock.getTotalTime() > 0.25f) {
-                mapBatch.draw(littleAngry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-            } else {
-                mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-            }
-        }
-        else if(happyTime < 1000 && CountClock.getRemainTime() < CountClock.getTotalTime()){
-            mapBatch.draw(happyDestroy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-            happyTime++;
-        }
-        else if(CountClock.getRemainTime() < CountClock.getTotalTime()){
-            mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-        }
-        */
         if(!stuck) {
             if (previousState == state) {
             } else {
@@ -524,10 +452,6 @@ public class Alien extends Sprite {
         } else {
             mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
         }
-        //mapBatch.draw(surprise, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-        //mapBatch.draw(confused, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
-
-
         mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
 

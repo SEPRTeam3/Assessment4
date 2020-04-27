@@ -195,7 +195,7 @@ public class GameScreen implements Screen {
         spawn(FireTruckType.Speed);
         spawn(FireTruckType.Tank);
         spawn(FireTruckType.Attack);
-        gameState.removeFireTruck();
+        //gameState.removeFireTruck();
 
         fortresses = new ArrayList<>();
         fortresses.add(new Fortress(12, 24.5f, FortressType.Revs));
@@ -479,7 +479,6 @@ public class GameScreen implements Screen {
 
         //#Assessment3
         for(Alien alien:aliens) {
-            alien.drawStats(shapeMapRenderer);
             for (Bomb bomb : alien.getAttackHandler().getBombs()) {
                 bomb.alienDrawBomb(shapeMapRenderer);
             }
@@ -558,10 +557,10 @@ public class GameScreen implements Screen {
                     alien.setStuckPos(pos);
                 }
             }
+            //#Assessment4
             if(alien.isStuckRemove()) {
                 powerUps.removeStickyRoad(alien.getStuckPos());
                 alien.setStuckRemove(false);
-                //really bad fix
                 alien.setPosition(alien.getPosition().x +0.05f, alien.getPosition().y + 0.05f);
             }
             alien.move(delta, station.getTrucks());

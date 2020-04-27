@@ -108,6 +108,9 @@ public class FireTruck extends Sprite {
     //#Assessement4
     private final Set<Vector2> hiddenSpots = new HashSet<>(new ArrayList<>(
             Arrays.asList(
+                    new Vector2(4, 8),
+                    new Vector2(5, 8),
+                    new Vector2(6, 8),
                     new Vector2(7,2),
                     new Vector2(4,18),
                     new Vector2(48,26),
