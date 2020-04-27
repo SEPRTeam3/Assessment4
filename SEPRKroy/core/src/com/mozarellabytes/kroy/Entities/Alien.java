@@ -441,61 +441,35 @@ public class Alien extends Sprite {
             }
         }
             if(stuck) {
-                mapBatch.draw(notHappy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+                mapBatch.draw(notHappy, this.position.x, this.position.y + 1.25f, width, height);
             } else if(seen) {
             timer += delta;
-            mapBatch.draw(surprise, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            mapBatch.draw(surprise, this.position.x, this.position.y + 1.25f, width, height);
             if(timer >= 2) {
                 seen = false;
                 timer = 0.0f;
             }
         } else if (lost) {
             timer += delta;
-            mapBatch.draw(confused, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            mapBatch.draw(confused, this.position.x, this.position.y + 1.25f, width, height);
             if(timer >= 3) {
                 lost = false;
                 timer = 0.0f;
             }
         } else if(masterFortress.isSeenTruckDead()) {
             timer += delta;
-            mapBatch.draw(killConfirmed, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            mapBatch.draw(killConfirmed, this.position.x, this.position.y + 1.25f, width, height);
             if (timer >= 2) {
                 masterFortress.setSeenTruckDead(false);
                 timer = 0.0f;
             }
         } else if(state == AlienState.PATROLLING) {
-            mapBatch.draw(happy, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            mapBatch.draw(happy, this.position.x, this.position.y + 1.25f, width, height);
         } else {
-            mapBatch.draw(angry, this.position.x + 0.7f, this.position.y + 1.25f, width, height);
+            mapBatch.draw(angry, this.position.x, this.position.y + 1.25f, width, height);
         }
         mapBatch.draw(this, this.position.x, this.position.y, width, height);
     }
-
-    public void drawSpriteCrazyAlien(Batch mapBatch, int width, int height, ArrayList explosions){
-        if (GameScreen.fireStationExist() == true) {
-            if (this.getPosition().y > 9.1) {
-                mapBatch.draw(crazyAlien, this.position.x, this.position.y, width, height);
-                if(this.getPosition().y >10) {
-                    mapBatch.draw(nuke1, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
-                    mapBatch.draw(nuke2, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
-                    mapBatch.draw(nuke3, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
-                    mapBatch.draw(nuke4, this.position.x + 1.9f, this.position.y + 1.6f, 1.3f, 2);
-                }
-                else{
-                    if (SoundFX.music_enabled && dropbomb == true) {
-                        dropbomb = false;
-                        SoundFX.sfx_crazy_alien_drop_bomb.play();
-                    }
-                    accelerate += 0.02;
-                    mapBatch.draw(nuke1, this.position.x + 1.9f + accelerate/2 , this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
-                    mapBatch.draw(nuke2, this.position.x + 1.9f + accelerate/2, this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
-                    mapBatch.draw(nuke3, this.position.x + 1.9f + accelerate/2, this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
-                    mapBatch.draw(nuke4, this.position.x + 1.9f + accelerate/2, this.position.y + 0.1f + accelerate, 1.3f - accelerate, 2 - accelerate);
-                }
-            }
-        }
-    }
-
 
     public Vector2 getPosition() { return this.position;}
 
