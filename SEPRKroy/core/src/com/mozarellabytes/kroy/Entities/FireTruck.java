@@ -313,8 +313,8 @@ public class FireTruck extends Sprite {
     }
     private void ChangeSpriteTexture() {
         String texture = getTexture().toString();
-        System.out.print(texture);
-        System.out.print("\n \n \n ugahpfinkdm \n \n \n ");
+//        System.out.print(texture);
+//        System.out.print("\n \n \n ugahpfinkdm \n \n \n ");
         if(isInvisible && hasResurrection) {
             if(texture.contains("right")) {
                 setTexture(lookRightMix);

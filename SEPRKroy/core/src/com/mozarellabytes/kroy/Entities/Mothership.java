@@ -38,7 +38,7 @@ public class Mothership {
     }
 
     public void draw(Batch mapBatch) {
-        if (visible) { mapBatch.draw(this.texture, this.position.x, this.position.y, 2f, 2f);}
+        if (visible) { mapBatch.draw(this.texture, this.position.x, this.position.y, 4f, 4f);}
     }
 
     public void update(float deltaTime) {

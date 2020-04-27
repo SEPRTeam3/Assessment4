@@ -206,10 +206,10 @@ public class MinigameTruckTest {
         boolean checkAttackTruckIsFull = fireTruck3.getReserve() == Attack.getMaxReserve();
         boolean checkTankTruckIsNotFull = fireTruck4.getReserve() != Tank.getMaxReserve();
 
-        System.out.println(fireTruck1.getReserve());
-        System.out.println(fireTruck2.getReserve());
-        System.out.println(fireTruck3.getReserve());
-        System.out.println(fireTruck4.getReserve());
+//        System.out.println(fireTruck1.getReserve());
+//        System.out.println(fireTruck2.getReserve());
+//        System.out.println(fireTruck3.getReserve());
+//        System.out.println(fireTruck4.getReserve());
 
         assertTrue(checkEmptyReservesAreSame
                 && checkSpeedTruckIsFull

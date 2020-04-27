@@ -250,6 +250,7 @@ public class Alien extends Sprite {
      * @param nextTile  first tile in the queue (next to be followed)
      */
     private void changeSprite(Vector2 nextTile) {
+        Vector2 previousTile = this.getFromPosition();
         if (previousTile != null) {
             if (nextTile.x > previousTile.x) {
                 setTexture(lookRight);
@@ -318,7 +319,7 @@ public class Alien extends Sprite {
 
         }
 
-        changeSprite(goal);
+        changeSprite(this.getToPosition());
         // Move towards current goal
         if(!stuck) {
             moveTowardGoal(delta, goal);
