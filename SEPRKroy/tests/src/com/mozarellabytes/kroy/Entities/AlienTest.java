@@ -11,7 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyInt;
+//import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +27,7 @@ public class AlienTest {
 
     @Test
     public void alienMoveRightTest() {
+
         when(gameScreenMock.isRoad(anyInt(), anyInt())).thenReturn(true);
         List<Vector2> vectorList = new ArrayList<>();
         vectorList.add(new Vector2(4, 1));  //Waypoint to move towards

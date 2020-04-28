@@ -88,8 +88,7 @@ public class PathFinder {
         return ((int) (pos.x * 29 + pos.y));
     }
 
-    private void reverse(Vector2[] a)
-    {
+    private void reverse(Vector2[] a) {
         Collections.reverse(Arrays.asList(a));
     }
 
