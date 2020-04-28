@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Queue;
 import com.mozarellabytes.kroy.Entities.Alien;
 import com.mozarellabytes.kroy.Entities.FireTruck;
+import com.mozarellabytes.kroy.Entities.Fortress;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 
@@ -92,6 +93,16 @@ public class SaveManager {
             saveFiretruck.hasResurrection = f.hasResurrection();
             saveFiretruck.isInvisible = f.isInvisible();
             s.station.trucks.add(saveFiretruck);
+        }
+
+        s.saveFortresses = new ArrayList();
+        for (Fortress f : g.getFortresses()) {
+            SaveFortress saveFortress = new SaveFortress();
+            saveFortress.HP = f.getHP();
+            saveFortress.type = f.getFortressType();
+            saveFortress.x = f.getPosition().x;
+            saveFortress.y = f.getPosition().y;
+            s.saveFortresses.add(saveFortress);
         }
 
         s.aliens = new ArrayList();

@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mozarellabytes.kroy.GameState;
+import com.mozarellabytes.kroy.Save.SaveFortress;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
 
 import java.sql.Time;
@@ -70,6 +71,34 @@ public class Fortress {
         } else {
             offset = 1.25f;
             this.HP = type.getMaxHP()*1.25f;
+        }
+
+        this.area = new Rectangle(this.position.x - (float) this.fortressType.getW()/2, this.position.y - (float) this.fortressType.getH()/2,
+                this.fortressType.getW(), this.fortressType.getH());
+        attackHandler = new EnemyAttackHandler(this, difficulty);
+        this.fortressAliens = new ArrayList<>(); //#Assessment4
+        this.seenTrucks = new ArrayList<>();
+    }
+    /**
+     * Constructs Fortress at certain position and
+     * of a certain type
+     * Assessment#4
+     * @param save    x coordinate of Fortress (lower left point)
+     * @param gameState    y coordinate of Fortress (lower left point)
+     */
+    public Fortress(SaveFortress save, GameState gameState) {
+        int difficulty = gameState.getDifficulty();
+        timeSinceLevelUp = TimeUtils.millis(); //#Assessment3
+        level = 1; //#Assessment3
+        this.fortressType = save.type;
+        this.position = new Vector2(save.x, save.y);
+        this.HP = save.HP;
+        if(difficulty == 0) {
+            offset = 0.75f;
+        } else if(difficulty == 1){
+            offset = 1f;
+        } else {
+            offset = 1.25f;
         }
 
         this.area = new Rectangle(this.position.x - (float) this.fortressType.getW()/2, this.position.y - (float) this.fortressType.getH()/2,
