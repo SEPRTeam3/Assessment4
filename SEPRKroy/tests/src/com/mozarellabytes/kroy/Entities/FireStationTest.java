@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+//import org.mockito.junit.MockitoJUnit;
+//import org.mockito.junit.MockitoRule;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,8 +28,8 @@ public class FireStationTest {
     @Mock
     GameState gameStateMock;
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    //@Rule
+    //public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Test
     public void repairPassTest() {

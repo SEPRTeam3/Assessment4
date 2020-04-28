@@ -46,7 +46,7 @@ public class FortressTest {
         //Assessment 4 - mocking added for GameState
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress, 0);
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
@@ -58,7 +58,7 @@ public class FortressTest {
         //Assessment 4 - mocking added for GameState
         Fortress fortress = new Fortress(10, 10, Clifford,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0 );
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
@@ -70,7 +70,7 @@ public class FortressTest {
         //Assessment 4 - mocking added for GameState
         Fortress fortress = new Fortress(10, 10, Revs,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0 );
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
@@ -79,81 +79,90 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromWalmgateFortressBeforeRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate); // range = 8
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock); // range = 8
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(17, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromWalmgateFortressOnRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate); // range = 8
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock); // range = 8
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(18, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromWalmgateFortressAfterRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate); // range = 8
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock); // range = 8
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(19, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
     }
 
     @Test
     public void attackTruckFromCliffordFortressBeforeRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Clifford); // range = 4
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Clifford, gameStateMock); // range = 4
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(13, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromCliffordFortressOnRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Clifford); // range = 4
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Clifford, gameStateMock); // range = 4
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(14, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromCliffordFortressAfterRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Clifford); // range = 4
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Clifford, gameStateMock); // range = 4
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(15, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
     }
 
     @Test
     public void attackTruckFromRevolutionFortressBeforeRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Revs); // range = 7
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Revs, gameStateMock); // range = 7
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(16, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromRevolutionFortressOnRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Revs); // range = 7
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Revs, gameStateMock); // range = 7
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(17, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromRevolutionFortressAfterRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Revs); // range = 7
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, FortressType.Revs, gameStateMock); // range = 7
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(18, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
     }
@@ -208,9 +217,10 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromTrainStationDamageTest() {
-        Fortress fortress = new Fortress(10, 10, TrainStation);
+        //Assessment 4
+        Fortress fortress = new Fortress(10, 10, TrainStation, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
 
 //        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
@@ -220,9 +230,9 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromMinsterDamageTest() {
-        Fortress fortress = new Fortress(10, 10, Minster);
+        Fortress fortress = new Fortress(10, 10, Minster, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
 
 //        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
@@ -232,9 +242,9 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromShamblesDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Shambles);
+        Fortress fortress = new Fortress(10, 10, FortressType.Shambles, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
@@ -243,81 +253,81 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromTrainStationFortressBeforeRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.TrainStation); // range = 5
+        Fortress fortress = new Fortress(10, 10, FortressType.TrainStation, gameStateMock); // range = 5
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(14, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromTrainStationFortressOnRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.TrainStation); // range = 5
+        Fortress fortress = new Fortress(10, 10, FortressType.TrainStation, gameStateMock); // range = 5
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(15, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromTrainStationFortressAfterRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.TrainStation); // range = 5
+        Fortress fortress = new Fortress(10, 10, FortressType.TrainStation, gameStateMock); // range = 5
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(16, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
     }
 
     @Test
     public void attackTruckFromMinsterFortressBeforeRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Minster); // range = 6
+        Fortress fortress = new Fortress(10, 10, FortressType.Minster, gameStateMock); // range = 6
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(15, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromMinsterFortressOnRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Minster); // range = 6
+        Fortress fortress = new Fortress(10, 10, FortressType.Minster, gameStateMock); // range = 6
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(16, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromMinsterFortressAfterRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Minster); // range = 6
+        Fortress fortress = new Fortress(10, 10, FortressType.Minster, gameStateMock); // range = 6
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(17, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
     }
 
     @Test
     public void attackTruckFromShamblesFortressBeforeRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Shambles); // range = 9
+        Fortress fortress = new Fortress(10, 10, FortressType.Shambles, gameStateMock); // range = 9
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(18, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromShamblesFortressOnRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Shambles); // range = 9
+        Fortress fortress = new Fortress(10, 10, FortressType.Shambles, gameStateMock); // range = 9
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(19, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertTrue(withinRange);
     }
 
     @Test
     public void attackTruckFromShamblesFortressAfterRangeBoundaryTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Shambles); // range = 9
+        Fortress fortress = new Fortress(10, 10, FortressType.Shambles,gameStateMock); // range = 9
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(20, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
         boolean withinRange = handler.withinRange(fireTruck.getPosition());
         assertFalse(withinRange);
     }

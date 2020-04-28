@@ -1,6 +1,7 @@
 package com.mozarellabytes.kroy.Entities;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.GdxTestRunner;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import org.junit.Rule;
@@ -8,8 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
+//import org.mockito.junit.MockitoJUnit;
+//import org.mockito.junit.MockitoRule;
 
 import static com.mozarellabytes.kroy.Entities.FireTruckType.*;
 import static org.junit.Assert.*;
@@ -21,8 +22,11 @@ public class MinigameTruckTest {
     @Mock
     GameScreen gameScreenMock;
 
-    @Rule
-    public MockitoRule mockitoRule = MockitoJUnit.rule();
+    @Mock
+    GameState gameStateMock;
+
+    //@Rule
+    //public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     /**
      * Compares all the values passed in and checks that they are all unique
@@ -166,7 +170,7 @@ public class MinigameTruckTest {
         FireTruck fireTruck3 = new FireTruck(gameScreenMock, new Vector2(9,10), Attack);
         FireTruck fireTruck4 = new FireTruck(gameScreenMock, new Vector2(10,10), Tank);
 
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock);
         FireStation fireStation = new FireStation(8, 10);
 
         fireStation.spawn(fireTruck1);
@@ -293,7 +297,7 @@ public class MinigameTruckTest {
         FireTruck fireTruck3 = new FireTruck(gameScreenMock, new Vector2(10, 15), Tank); // Range = 7
         FireTruck fireTruck4 = new FireTruck(gameScreenMock, new Vector2(10, 15), Attack); // Range = 4
 
-        Fortress fortress = new Fortress(10, 10, FortressType.Clifford);
+        Fortress fortress = new Fortress(10, 10, FortressType.Clifford, gameStateMock);
         System.out.println(fireTruck1.fortressInRange(fortress.getPosition()));
         System.out.println(fireTruck2.fortressInRange(fortress.getPosition()));
         System.out.println(fireTruck3.fortressInRange(fortress.getPosition()));
@@ -308,7 +312,7 @@ public class MinigameTruckTest {
     @Test
     public void truckShouldDecreaseHealthOfFortress() {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock);
         fireTruck.setAttacking(true);
         float healthBefore = fortress.getHP();
         fireTruck.attack(fortress);
@@ -322,7 +326,7 @@ public class MinigameTruckTest {
     @Test
     public void truckShouldDecreaseReserveWhenAttackingFortress() {
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock);
         fireTruck.setAttacking(true);
         float reserveBefore = fireTruck.getReserve();
         fireTruck.attack(fortress);
@@ -335,7 +339,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithSpeedByDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
@@ -348,7 +352,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithSpeedByReserveTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Speed);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
@@ -361,7 +365,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithOceanByDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Ocean);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
@@ -374,7 +378,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithOceanByReserveTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Ocean);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
@@ -387,7 +391,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithTankByDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Tank);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
@@ -400,7 +404,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithTankByReserveTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Tank);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
@@ -413,7 +417,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithAttackByDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Attack);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
@@ -426,7 +430,7 @@ public class MinigameTruckTest {
 
     @Test
     public void damageFortressWithAttackByReserveTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), Attack);
         fireTruck.setAttacking(true);
         fireTruck.attack(fortress);
