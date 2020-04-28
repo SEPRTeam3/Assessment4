@@ -42,7 +42,7 @@ public class MinigameTest {
         Alien alien = new Alien(0,0);
 
         alien.moveDown(0.01f);
-        assertEquals(alien.getY(), -1.5, 0.0);
+        assertEquals(alien.getY(), -0.9, 0.1);
     }
 
     @Test

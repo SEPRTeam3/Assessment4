@@ -28,7 +28,6 @@ public class Alien extends Entity {
                 0,
                 -90*delta
         );
-
         this.updateRect();
     }
 }
