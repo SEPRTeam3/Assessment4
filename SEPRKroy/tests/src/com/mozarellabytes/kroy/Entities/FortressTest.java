@@ -1,6 +1,7 @@
 package com.mozarellabytes.kroy.Entities;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.GdxTestRunner;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import com.mozarellabytes.kroy.Utilities.SoundFX;
@@ -16,6 +17,9 @@ public class FortressTest {
 
     @Mock
     GameScreen gameScreenMock;
+
+    @Mock
+    GameState gameStateMock;
 
     @Test
     public void differentRangeTest() {
@@ -39,7 +43,8 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromWalmgateFortressDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        //Assessment 4 - mocking added for GameState
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
@@ -50,7 +55,8 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromCliffordFortressDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Clifford);
+        //Assessment 4 - mocking added for GameState
+        Fortress fortress = new Fortress(10, 10, Clifford,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 
@@ -61,7 +67,8 @@ public class FortressTest {
 
     @Test
     public void attackTruckFromRevolutionFortressDamageTest() {
-        Fortress fortress = new Fortress(10, 10, FortressType.Revs);
+        //Assessment 4 - mocking added for GameState
+        Fortress fortress = new Fortress(10, 10, Revs,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
         EnemyAttackHandler handler = new EnemyAttackHandler(fortress);
 

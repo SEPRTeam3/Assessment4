@@ -1,6 +1,7 @@
 package com.mozarellabytes.kroy.Entities;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.GdxTestRunner;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import org.junit.Rule;
@@ -23,6 +24,9 @@ public class FireStationTest {
 
     @Mock
     GameScreen gameScreenMock;
+
+    @Mock
+    GameState gameStateMock;
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -62,7 +66,7 @@ public class FireStationTest {
     @Test
     public void refillPassTest() {
         FireStation station = new FireStation(10, 10);
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock);
         station.spawn(new FireTruck(gameScreenMock, new Vector2(11, 10), Speed));
         station.getTruck(0).setAttacking(true);
         station.getTruck(0).attack(fortress);
@@ -75,7 +79,7 @@ public class FireStationTest {
     @Test
     public void refillIncorrectPositionTest() {
         FireStation station = new FireStation(10, 10);
-        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate);
+        Fortress fortress = new Fortress(10, 10, FortressType.Walmgate, gameStateMock);
         station.spawn(new FireTruck(gameScreenMock, new Vector2(20, 10), Speed));
         station.getTruck(0).setAttacking(true);
         station.getTruck(0).attack(fortress);
