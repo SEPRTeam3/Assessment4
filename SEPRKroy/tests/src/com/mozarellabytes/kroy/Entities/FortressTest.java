@@ -18,8 +18,8 @@ public class FortressTest {
     @Mock
     GameScreen gameScreenMock;
 
-    @Mock
-    GameState gameStateMock;
+
+    GameState gameStateMock=new GameState();
 
     @Test
     public void differentRangeTest() {
@@ -46,7 +46,7 @@ public class FortressTest {
         //Assessment 4 - mocking added for GameState
         Fortress fortress = new Fortress(10, 10, FortressType.Walmgate,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress, 0);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress, 1);
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
@@ -58,7 +58,7 @@ public class FortressTest {
         //Assessment 4 - mocking added for GameState
         Fortress fortress = new Fortress(10, 10, Clifford,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0 );
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,1 );
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
@@ -70,7 +70,7 @@ public class FortressTest {
         //Assessment 4 - mocking added for GameState
         Fortress fortress = new Fortress(10, 10, Revs,gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0 );
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,1 );
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
@@ -220,7 +220,7 @@ public class FortressTest {
         //Assessment 4
         Fortress fortress = new Fortress(10, 10, TrainStation, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,1);
 
 //        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
@@ -232,7 +232,7 @@ public class FortressTest {
     public void attackTruckFromMinsterDamageTest() {
         Fortress fortress = new Fortress(10, 10, Minster, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,1);
 
 //        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
@@ -244,7 +244,7 @@ public class FortressTest {
     public void attackTruckFromShamblesDamageTest() {
         Fortress fortress = new Fortress(10, 10, FortressType.Shambles, gameStateMock);
         FireTruck fireTruck = new FireTruck(gameScreenMock, new Vector2(10, 10), FireTruckType.Speed);
-        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,0);
+        EnemyAttackHandler handler = new EnemyAttackHandler(fortress,1);
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
