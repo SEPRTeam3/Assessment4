@@ -2,6 +2,7 @@ package com.mozarellabytes.kroy.Entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
+import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.GdxTestRunner;
 import com.mozarellabytes.kroy.Screens.GameScreen;
 import org.junit.Test;
@@ -19,6 +20,9 @@ public class AlienTest {
     @Mock
     GameScreen gameScreenMock;
 
+    @Mock
+    GameState gameStateMock;
+
     @Test
     public void alienMoveRightTest() {
         Queue<Vector2> vectorQueue = new Queue<>();
@@ -26,7 +30,7 @@ public class AlienTest {
 
         ArrayList<FireTruck> truckArrayList = new ArrayList<>();
 
-        Alien alien = new Alien(0, 0, vectorQueue, 1);
+        Alien alien = new Alien(0, 0, gameStateMock);
 
         alien.move(truckArrayList);
 

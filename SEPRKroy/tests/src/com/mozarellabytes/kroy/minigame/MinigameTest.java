@@ -1,6 +1,7 @@
 package com.mozarellabytes.kroy.minigame;
 
 
+import com.mozarellabytes.kroy.Entities.FireTruckType;
 import com.mozarellabytes.kroy.GdxTestRunner;
 
 import org.junit.Test;
@@ -12,7 +13,8 @@ public class MinigameTest {
 
     @Test
     public void EntityPositionEqualsRectanglePosition() {
-        MinigameTruck minigameTruck = new MinigameTruck(0, 0);
+        //assessment 4 change - new variables were added to this signature
+        MinigameTruck minigameTruck = new MinigameTruck(0, 0, 10,10, FireTruckType.Attack);
 
         assertEquals(minigameTruck.getX(), minigameTruck.getRect().x, 0.0);
         assertEquals(minigameTruck.getY(), minigameTruck.getRect().y, 0.0);
@@ -20,15 +22,16 @@ public class MinigameTest {
 
     @Test
     public void FireTruckPositionMovedToRight() {
-        MinigameTruck minigameTruck = new MinigameTruck(0, 0);
-
+        //assessment 4 change - new variables were added to this signature
+        MinigameTruck minigameTruck = new MinigameTruck(0, 0, 10,10, FireTruckType.Attack);
         minigameTruck.moveRight(0.01f);
         assertEquals(minigameTruck.getX(), 5, 0.0);
     }
 
     @Test
     public void FireTruckPositionMovedToLeft() {
-        MinigameTruck minigameTruck = new MinigameTruck(0, 0);
+        //assessment 4 change - new variables were added to this signature
+        MinigameTruck minigameTruck = new MinigameTruck(0, 0, 10,10, FireTruckType.Attack);
 
         minigameTruck.moveLeft(0.01f);
         assertEquals(minigameTruck.getX(), -5, 0.0);
