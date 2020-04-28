@@ -50,7 +50,7 @@ public class FortressTest {
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(132.0, fireTruck.getHP(), 0.0);
+        assertEquals(135.0, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class FortressTest {
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(126.0, fireTruck.getHP(), 0.0);
+        assertEquals(132.0, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class FortressTest {
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(138.0, fireTruck.getHP(), 0.0);
+        assertEquals(141.0, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -225,7 +225,7 @@ public class FortressTest {
 //        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(135, fireTruck.getHP(), 0.0);
+        assertEquals(138, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -237,7 +237,7 @@ public class FortressTest {
 //        fireTruck.setTimeOfLastAttack(System.currentTimeMillis() - 5000);
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(129, fireTruck.getHP(), 0.0);
+        assertEquals(132, fireTruck.getHP(), 0.0);
     }
 
     @Test
@@ -248,7 +248,7 @@ public class FortressTest {
 
         handler.attack(fireTruck, false, SoundFX.sfx_alien_attack);
         handler.updateBombs();
-        assertEquals(132, fireTruck.getHP(), 0.0);
+        assertEquals(135, fireTruck.getHP(), 0.0);
     }
 
     @Test

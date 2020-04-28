@@ -63,7 +63,6 @@ public class EnemyAttackHandler {
 
         position = entity.getPosition();
         attackRange = entity.getFortressType().getRange();
-        attackPower = entity.getFortressType().getAP();
         attackLevel = entity.getLevel();
         delay = entity.getFortressType().getDelay();
         bombs = new ArrayList<Bomb>();
