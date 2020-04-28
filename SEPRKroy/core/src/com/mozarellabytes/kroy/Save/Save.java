@@ -17,6 +17,7 @@ public class Save {
     public GameState gameState;
     public SaveStation station;
     public ArrayList<SaveAlien> aliens;
+    public ArrayList<SaveFortress> saveFortresses;
     public SaveAlien crazyAlien;
     public SavePowerUps powerUps;
 }

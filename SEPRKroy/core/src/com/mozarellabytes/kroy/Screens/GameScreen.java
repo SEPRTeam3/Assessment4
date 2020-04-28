@@ -16,6 +16,7 @@ import com.mozarellabytes.kroy.GameState;
 import com.mozarellabytes.kroy.Kroy;
 import com.mozarellabytes.kroy.Save.Save;
 import com.mozarellabytes.kroy.Save.SaveAlien;
+import com.mozarellabytes.kroy.Save.SaveFortress;
 import com.mozarellabytes.kroy.Utilities.*;
 import com.badlogic.gdx.utils.Queue;
 import com.mozarellabytes.kroy.minigame.Entity;
@@ -79,7 +80,7 @@ public class GameScreen implements Screen {
     /** List of Fortresses currently active on the map */
     private final ArrayList<Fortress> fortresses;
 
-    /** creat the fire station */
+    /** create the fire station */
     private final FireStation station;
 
     /**
@@ -322,14 +323,9 @@ public class GameScreen implements Screen {
         mothership = new Mothership(this);
 
         fortresses = new ArrayList<>();
-        fortresses.add(new Fortress(12, 24.5f, FortressType.Revs, gameState));
-        fortresses.add(new Fortress(30.5f, 23.5f, FortressType.Walmgate, gameState));
-        fortresses.add(new Fortress(16, 9.5f, FortressType.Clifford, gameState));
-
-        //#Assessment3 Added 3 new fortresses
-        fortresses.add(new Fortress (44.5f, 4.5f, FortressType.TrainStation, gameState));
-        fortresses.add(new Fortress (45, 22, FortressType.Minster, gameState));
-        fortresses.add(new Fortress (29, 9, FortressType.Shambles, gameState));
+        for (SaveFortress f : save.saveFortresses) {
+            fortresses.add((new Fortress(f, gameState)));
+        }
 
         //#Assesment3 Added explosion effects
         explosions = new ArrayList<>();
